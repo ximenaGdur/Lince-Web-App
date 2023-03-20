@@ -1,6 +1,14 @@
-# appweb23a-oceans4
+# Equipo Oceans4
 
-### Integrantes:
+## Problema a resolver
+...
+
+## Adaptaciones originales
+1. a
+2. b
+3. c
+
+## Integrantes:
 * Gianfranco Soto Palma.
 * Christian Ortega Hurtado.
 * Jimena Gdur Vargas.
