@@ -9,12 +9,12 @@ Todas las características podrán ser cambiadas por el dueño o creador de la p
 Para unirse a la partida los jugadores usarán un número de sala y se pondran un nickname.
 
 Algunas de las pantallas del juego serían (aún en cambios y mejoras):
-![Inicio](./img/wireframe_inicio.png)
-![Crear sala](./img/wireframe_crear_sala.png)
-![Configurar partida](./img/wireframe_configuracion.png)
-![Puntajes máximos](./img/wireframe_puntajes.png)
-![Unirse a sala](./img/wireframe_unir_sala.png)
-![Juego](./img/wireframe_juego.png)
+![Inicio](./design/wireframe_inicio.png)
+![Crear sala](./design/wireframe_crear_sala.png)
+![Configurar partida](./design/wireframe_configuracion.png)
+![Puntajes máximos](./design/wireframe_puntajes.png)
+![Unirse a sala](./design/wireframe_unir_sala.png)
+![Juego](./design/wireframe_juego.png)
 
 ## Adaptaciones originales
 
