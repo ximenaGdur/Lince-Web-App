@@ -11,6 +11,7 @@ Para unirse a la partida los jugadores usarán un número de sala y se pondran u
 Algunas de las pantallas del juego serían (aún en cambios y mejoras):
 
 ![Inicio](./design/wireframe_inicio.png)
+![Inicio](![Inicio](./design/wireframe_inicio.png))
 ![Crear sala](./design/wireframe_crear_sala.png)
 ![Configurar partida](./design/wireframe_configuracion.png)
 ![Puntajes máximos](./design/wireframe_puntajes.png)
@@ -22,8 +23,9 @@ Algunas de las pantallas del juego serían (aún en cambios y mejoras):
 1. Las fichas no poseen la misma imagen a buscar, sino una palabra que represente dicha imagen, se pueden mostrar las palabras completas de las fichas respectivas
 o bien modificar las palabras para que aparezcan recortadas o con algunas letras faltantes.
 2. Cada ficha en el tablero y en el inventario del jugador, tiene un borde de color generado aleatoriamente, estas fichas pueden ser repetidas pero con un borde de color diferente. Dependiendo de la configuración de la partida, encontrar la ficha que coincida con el borde en el tablero tendra un efecto u otro, una coincidencia de diferente color se podra ajustar para que dé menos puntaje de igual manera, esto se podra configurar para decidir los puntos o los parametros beneficiosos.
-3. Además de las fichas que cada jugador tiene, poseen una cantidad de comodines para afectar el juego de los otros jugadores en la misma partida, como por ejemplo un comodín de blur que se activa y pone en blur las fichas de los demás jugadores por unos segundos. Estos comodines serán escogibles por cada jugador al inicio de la partida. En el modo fácil los comodines se renuevan cada nueva ronda de la misma partida, mientras que en el modo difícil los comodines no serán revovados y serán únicos para toda la partida de cada jugador.
-Para esta funcionalidad se debe mostrar en una sección de la pantalla un registro de que jugador en la partida uso que comodín.
+3. Con el fin de hacer juego competitivo, se activaran por medio de comodines diferentes castigos que pueden afectar ya sea el jugador que se encuentra en primer lugar o bien para aquel jugador que esta en la ultima posición.
+El jugador al inicio del juego escogerá la cantidad de fichas comodínes que cada jugador podra utilizar dentro de la partida. La asignación del efecto que tendran estos comodines será al azar.
+Dentro de los ejemplos de comodines se encuentra el intercambiar elementos, que se ponga borroso la partida de uno de los jugadores, agregar más fichas al tablero de uno de los jugadores, que al primer lugar se le descuente un porcentaje del tiempo disponible para jugar, entre otros.
 
 ## Creditos
 
