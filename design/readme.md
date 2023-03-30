@@ -1,47 +1,69 @@
-# Wireframes relacionados al juego °Muy Lentos!
+# Wireframes
 
-La siguiente im·gen representa el mapa del sitio:
+## Mapa del sitio
+
+La siguiente im√°gen representa el mapa del sitio:
 
 ![Mapa del sitio](siteMap.svg)
 
-Como se puede observar existen dos caminos dependiendo de el rol que se escogiÛ.
-En caso de ser un anfitriÛn, este se encarga de crear una sala y configurar el modo de juego.
+Como se puede observar existen dos caminos dependiendo de el rol que se escogi√≥.
+En caso de ser un anfitri√≥n, este se encarga de crear una sala y configurar el modo de juego.
 Por esto mismo, su sala de espera es diferente para permitirle realizar estos cambios.
 
-En el caso del invitado, este debe ingresar un cÛdigo de sala proporcionado por su anfitriÛn.
+En el caso del invitado, este debe ingresar un c√≥digo de sala proporcionado por su anfitri√≥n.
 Su sala de espera permite que este observe los cambios que se realizan al modo de juego.
 
-Al final, ambos roles culminan en la sala del juego. 
-En esta pantalla pueden jugar °Muy Lentos! con sus amigos.
+Al final, ambos roles culminan en la sala del juego.
+En esta pantalla pueden jugar ***¬°Muy Lentos!*** con sus amigos.
 
-## P·gina Principal
+## P√°gina Principal
 
-...
+Esta ser√° la primera pantalla que ver√° un usuario al ingresar al juego, en esta encontra los botones para poder crear o unirse a una.
 
+### Instruciones del juego
+
+Al dar click en el bot√≥n "¬øC√≥mo jugar?" de la barra, se podr√°n vizualizar las  instrucciones del juego por medio de un video explicativo.
+![Instrucciones](homeInstructions.svg)
+
+### Tabla de mejores puntajes
+
+Al dar click en el bot√≥n "Clasificaci√≥n" de la barra, en el cuadro de texto se mostrara un historial de los 3 mejores puntajes que han existido en el juego.
+
+![Mejores puntajes](homeLeaderboard.svg)
+
+### Cr√©ditos
+
+Al dar click en el bot√≥n "Cr√©ditos" de la barra, se mostrar√° la informaci√≥n al respecto sobre los desarrolladores del juego ***¬°Muy Lentos!*** y las debidas referencias de todo material de terceros utilizado para el desarrollo del mismo.
+
+![Cr√©ditos](homeCredits.svg)
 
 ## Sala de Espera
 
-### Para un anfitriÛn:
+### Para un anfitri√≥n
 
-En el caso de un anfitriÛn, este tiene los permisos necesarios para configurar el juego a su gusto.
-Adem·s de esto, el anfitriÛn puede modificar los nombres de los jugadores y al hacer click en el botÛn de SALIR, terminar· la sesiÛn y ser· redireccionado a la p·gina de inicio.
+En el caso de un anfitri√≥n, este tiene los permisos necesarios para configurar el juego a su gusto.
+Adem√°s de esto, el anfitri√≥n puede modificar los nombres de los jugadores y al hacer click en el bot√≥n de SALIR, terminar√° la sesi√≥n y ser√° redireccionado a la p√°gina de inicio.
 
-![Sala de espera para anfitriÛn](waitingRoomHost.svg)
+![Sala de espera para anfitri√≥n](waitingRoomHost.svg)
 
-### Para un invitado:
+### Para un invitado
 
-En el caso de un invitado, este puede observar los cambios hechos a la configuraciÛn del juego por parte del anfitriÛn en tiempo real.
-Sin emabargo, no puede editar nada. Al hacer click en el botÛn de SALIR, se saldr· de la sesiÛn y ser· redireccionado a la p·gina de inicio.
+En el caso de un invitado, este puede observar los cambios hechos a la configuraci√≥n del juego por parte del anfitri√≥n en tiempo real.
+Sin emabargo, no puede editar nada. Al hacer click en el bot√≥n de SALIR, se saldr√° de la sesi√≥n y ser√° redireccionado a la p√°gina de inicio.
 
 ![Sala de espera para invitado](waitingRoomGuest.svg)
 
-### InformaciÛn disponible al mantener en el mouse sobre el Ìcono 'i':
+### Informaci√≥n disponible al mantener en el mouse sobre el √≠cono 'i'
 
-Al mantener el mouse sobre el Ìcono, en caso de una p·gina web, se mostrar· m·s informaciÛn acerca de ese campo.
-Ambos roles de la p·gina (anfitriÛn e invitado) pueden ver esta informaciÛn.
+Al mantener el mouse sobre el √≠cono, en caso de una p√°gina web, se mostrar√° m√°s informaci√≥n acerca de ese campo.
+Ambos roles de la p√°gina (anfitri√≥n e invitado) pueden ver esta informaci√≥n.
 
-![Sala de espera para con m·s informaciÛn](waitingRoomInit.svg)
+![Sala de espera con m√°s informaci√≥n](waitingRoomInit.svg)
 
 ## Tablero del juego
 
-...
+Como se observan en las siguientes im√°genes, dichas corresponden a im√°genes de partidas ya iniciados o en curso donde se puede ver la manta o tablero de im√°genes, las fichas que yo como jugador tengo, el tiempo de la partida, los puntajes y posiciones de todos en la misma partida y si existe o se activar√° alg√∫n comod√≠n/mejora/sanci√≥n para alguno de los jugadores. Adem√°s se puede observar el mensaje de advertencia que le saldr√≠a a un jugador en caso de que quiera abandonar una partida antes de que esta termine.
+
+![Pantalla de juego](gameScreen.svg)
+
+![Mensaje de advertencia](gameScreenError.svg)
