@@ -9,7 +9,8 @@ En dicha adaptación existe un tablero lleno con imágenes de diferentes categor
 Además se le proporciona a cada jugador una cantidad de fichas.
 El objetivo del juego es que cada jugador durante una partida con un tiempo específico, encuentre la mayor cantidad de coincidencias entre sus fichas y el tablero que le fue dado.
 
-El anfitrión de la partida es el encargado de crear la sala donde se desarrollará el juego. Algunas características podrán ser cambiadas por el anfitrión de la partida, tales como: el tiempo máximo de una partida (en segundos), la cantidad de fichas que cada jugador debe buscar y la cantidad de fichas en la manta.
+El anfitrión de la partida es el encargado de crear la sala donde se desarrollará el juego.
+Algunas características podrán ser cambiadas por el anfitrión de la partida, tales como: el tiempo máximo de una partida (en segundos), la cantidad de fichas que cada jugador debe buscar y la cantidad de fichas en la manta.
 Este además puede escoger varias opciones de modalidad de juego que se mencionarán en el apartado de adaptaciones propias.
 
 Para unirse a la partida, los invitados usarán un número de sala.
@@ -32,5 +33,5 @@ Desarrollado para el curso Desarrollo de Aplicaciones Web (CI-0137) que pertenec
 
 * Gianfranco Soto Palma.
 * Cristian Ortega Hurtado.
-* Ximena Gdur Vargas.
+* Jimena Gdur Vargas.
 * Derrick Allen Smith.
