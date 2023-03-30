@@ -11,7 +11,6 @@ Para unirse a la partida los jugadores usarán un número de sala y se pondran u
 Algunas de las pantallas del juego serían (aún en cambios y mejoras):
 
 ![Inicio](./design/wireframe_inicio.png)
-![Inicio](![Inicio](./design/wireframe_inicio.png))
 ![Crear sala](./design/wireframe_crear_sala.png)
 ![Configurar partida](./design/wireframe_configuracion.png)
 ![Puntajes máximos](./design/wireframe_puntajes.png)
