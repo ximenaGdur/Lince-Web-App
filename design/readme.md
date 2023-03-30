@@ -1,5 +1,19 @@
 # Wireframes relacionados al juego ¡Muy Lentos!
 
+La siguiente imágen representa el mapa del sitio:
+
+![Mapa del sitio](siteMap.svg)
+
+Como se puede observar existen dos caminos dependiendo de el rol que se escogió.
+En caso de ser un anfitrión, este se encarga de crear una sala y configurar el modo de juego.
+Por esto mismo, su sala de espera es diferente para permitirle realizar estos cambios.
+
+En el caso del invitado, este debe ingresar un código de sala proporcionado por su anfitrión.
+Su sala de espera permite que este observe los cambios que se realizan al modo de juego.
+
+Al final, ambos roles culminan en la sala del juego. 
+En esta pantalla pueden jugar ¡Muy Lentos! con sus amigos.
+
 ## Página Principal
 
 ...
