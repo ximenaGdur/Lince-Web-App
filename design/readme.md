@@ -86,72 +86,128 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 
 #### returnToMain:
 ```
+	userConfirmation = askConfirmation()
+
+	if userConfirmation = yes:
+		mainRoomURL = sendMessage(userNickname, "get mainRoom")
+		// no se si necesita información extra
+		// no se si mandar el nickname es necesario, el server tiene que saber a quien mandarle esto
+		redirectTo(mainRoomURL)
 ```
 
 #### createSession(userNickname):
 ```
+	userInformation.json << userNickname = newNickame
+	waitingRoomURL, roomId = sendMessage(userNickname, "get userInformation.json")
+	// no se si el mandar asi el nickname o dentro del json
+	configuration.json << roomId
+	redirectTo(waitingRoomURL)
 ```
 
-#### joinSession(userNickname, roomId:
+#### joinSession(userNickname, roomId):
 ```
+	userInformation.json << userNickname = newNickame << room = roomId
+	waitingRoomURL = sendMessage(userNickname, "get waitingRoomGuest userInformation.json")
+	redirectTo(waitingRoomURL)
 ```
 
 #### changeNickname(newNickame):
 ```
+	configuration.json << userNickname = newNickame
+	pageChange = sendMessage(userNickname, "post configuration.json")
+	updatePage(pageChange)
 ```
 
-#### changeMaxTime(maxTime):
+#### changeMaxTime(chosenTime):
 ```
-```
-
-#### changeChipsPerPlayer:
-```
-	
+	configuration.json << maxTime = chosenTime
+	pageChange = sendMessage(userNickname, "post configuration.json")
+	updatePage(pageChange)
 ```
 
-#### changeChipsPerRound:
+#### changeChipsPerPlayer(chipAmount):
 ```
-	
-```
-
-#### changeFirstAdaptation:
-```
-	
+	configuration.json << chipsPerPlayer = chipAmount 
+	pageChange = sendMessage(userNickname, "post configuration.json")
+	updatePage(pageChange)
 ```
 
-#### changeSecondAdaptation:
+#### changeChipsPerRound(chipAmount):
 ```
-	
+	configuration.json << chipsPerRound  = chipAmount
+	pageChange = sendMessage(userNickname, "post configuration.json")
+	updatePage(pageChange)
 ```
 
-#### changeThirdAdaptation:
+#### changeFirstAdaptation(option):
 ```
-	
+	if option  = 0:
+		configuration.json << firstAdaptationA = yes
+	if option = 1:
+		configuration.json << firstAdaptationB = yes
+
+	pageChange = sendMessage(userNickname, "post configuration.json")
+	updatePage(pageChange)
+```
+
+#### changeSecondAdaptation(option):
+```
+	if option  = 0:
+		configuration.json << secondAdaptationA = yes
+	if option = 1:
+		configuration.json << secondAdaptationB = yes
+
+	pageChange = sendMessage(userNickname, "post configuration.json")
+	updatePage(pageChange)
+```
+
+#### changeThirdAdaptation(option):
+```
+	if option  = 0:
+		configuration.json << thirdAdaptationA = yes
+	if option = 1:
+		configuration.json << thirdAdaptationB = yes
+
+	pageChange = sendMessage(userNickname, "post configuration.json")
+	updatePage(pageChange)
 ```
 
 #### startGame:
 ```
-	
+	mainGameURL = sendMessage(userNickname, "get mainGame configuration.json")
+	redirectTo(mainGameURL)
 ```
 
-#### executePlayerEvent:
+#### executePlayerEvent(eventType, eventTime):
 ```
-	
+	eventInformation.json << player = userNickname << type = eventType << time = eventTime //  talvez poner en json el tipo de mensaje
+	pageChange = sendMessage(userNickname, "post eventInformation.json") // creo que ocupo hacer un get del cambio :(
+	updatePage(pageChange)
+	// con lo que me retorna, actualiza mi pagina y la de los demas
 ```
 
-#### pieceMatched:
+#### pieceMatched(rowClicked, columnClicked):
 ```
+	matchInformation.json << player = userNickname << matchRow = rowClicked << matchColumn = columnClicked
+	valid = sendMessage(userNickname, "post matchInformation.json")
 	
+	if valid = true
+		incrementScore(rowClicked, columnClicked)
+	else
+		// no se, pido algo o que
+	// debe retornarme si fue valido y luego llamo increment score o que
 ```
 
 #### incrementScore:
 ```
-	
+	pageChange = sendMessage(userNickname, "get incrementScore")
+	updatePage(pageChange)
 ```
 
 #### finishGame:
 ```
-	
+	finishGameURL = sendMessage(userNickname, "get finishGameURL")
+	redirectTo(finishGameURL)
 ```
 
 ### Para el servidor
