@@ -145,16 +145,16 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 	updatePage(pageChange)
 ```
 
-#### changeCardsPerPlayer(chipAmount):
+#### changeCardsPerPlayer(cardAmount):
 ```
-	configuration.json << cardsPerPlayer = chipAmount 
+	configuration.json << type = "changeCardsPerPlayer" << from = userNickname << to = server << cardsPerPlayer = cardAmount 
 	pageChange = sendMessage(userNickname, "post configuration.json")
 	updatePage(pageChange)
 ```
 
-#### changeCardsPerRound(chipAmount):
+#### changeCardsPerRound(cardAmount):
 ```
-	configuration.json << cardsPerRound  = chipAmount
+	configuration.json << type = "changeCardsPerRound" << from = userNickname << to = server << cardsPerRound  = cardAmount
 	pageChange = sendMessage(userNickname, "post configuration.json")
 	updatePage(pageChange)
 ```
@@ -162,9 +162,9 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 #### changeFirstAdaptation(option):
 ```
 	if option  = 0:
-		configuration.json << firstAdaptationA = yes
+		configuration.json << type = "changeFirstAdaptation" << from = userNickname << to = server << firstAdaptationA = yes
 	if option = 1:
-		configuration.json << firstAdaptationB = yes
+		configuration.json << type = "changeFirstAdaptation" << from = userNickname << to = server << firstAdaptationB = yes
 
 	pageChange = sendMessage(userNickname, "post configuration.json")
 	updatePage(pageChange)
@@ -173,9 +173,9 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 #### changeSecondAdaptation(option):
 ```
 	if option  = 0:
-		configuration.json << secondAdaptationA = yes
+		configuration.json << type = "changeSecondAdaptation" << from = userNickname << to = server << secondAdaptationA = yes
 	if option = 1:
-		configuration.json << secondAdaptationB = yes
+		configuration.json << type = "changeSecondAdaptation" << from = userNickname << to = server << secondAdaptationB = yes
 
 	pageChange = sendMessage(userNickname, "post configuration.json")
 	updatePage(pageChange)
@@ -184,9 +184,9 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 #### changeThirdAdaptation(option):
 ```
 	if option  = 0:
-		configuration.json << thirdAdaptationA = yes
+		configuration.json << type = "changeThirdAdaptation" << from = userNickname << to = server << thirdAdaptationA = yes
 	if option = 1:
-		configuration.json << thirdAdaptationB = yes
+		configuration.json << type = "changeThirdAdaptation" << from = userNickname << to = server << thirdAdaptationB = yes
 
 	pageChange = sendMessage(userNickname, "post configuration.json")
 	updatePage(pageChange)
