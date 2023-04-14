@@ -71,6 +71,11 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 # Protocolo de paso de mensajes
 
 ## Eventos de usuario y red en wireframes
+![Eventos Pantalla Inicio](EventosPantallaInicio.PNG)
+
+![Eventos Sala Espera](EventosSalaEsperaHostGuest.PNG)
+
+![Eventos Juego](EventosPantallaJuego.PNG)
 
 ## Estructura de los mensajes JSON
 
