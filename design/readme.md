@@ -82,8 +82,8 @@ Las siguientes imágenes muestran los eventos principales en cada pantalla de ju
 
 ## Estructura de los mensajes JSON
 
-La estructura básica de los mensajes incluye siempre: el tipo de mensaje, el emisor y el destinatario.
-Además, los mensajes de los clientes incluyen when, lo cual explica en qué momento se manda el mensaje.
+La estructura básica de los mensajes incluye siempre: el tipo de mensaje, el emisor y el receptor.
+Además, los mensajes de los clientes incluyen la razón por la que se manda el mensaje.
 En el caso del servidor, este puede mandarle un objeto html al cliente.
 
 Algunos ejemplos de mensajes se muestran a continuación.
