@@ -80,6 +80,10 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 
 ## Máquinas de estados
 
+### Para el cliente:
+![Instrucciones](automataCliente.svg)
+
+
 ## Algoritmos de las transiciones de la máquina de estados
 
 ### Para el cliente
@@ -90,14 +94,12 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 
 	if userConfirmation = yes:
 		mainRoomURL = sendMessage(userNickname, "get mainRoom")
-		// no se si necesita información extra
-		// no se si mandar el nickname es necesario, el server tiene que saber a quien mandarle esto
 		redirectTo(mainRoomURL)
 ```
 
 #### createSession(userNickname):
 ```
-	userInformation.json << userNickname = newNickame
+	userInformation.json << type = "createSession" << from = newNickame << to = server << userNickname = newNickame
 	waitingRoomURL, roomId = sendMessage(userNickname, "get userInformation.json")
 	// no se si el mandar asi el nickname o dentro del json
 	configuration.json << roomId
@@ -106,14 +108,14 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 
 #### joinSession(userNickname, roomId):
 ```
-	userInformation.json << userNickname = newNickame << room = roomId
+	userInformation.json << type = "joinSession" << from = userNickname << to = server << userNickname = newNickame << room = roomId
 	waitingRoomURL = sendMessage(userNickname, "get waitingRoomGuest userInformation.json")
 	redirectTo(waitingRoomURL)
 ```
 
 #### changeNickname(newNickame):
 ```
-	configuration.json << userNickname = newNickame
+	configuration.json << type = "changeNickname" << from = userNickname << to = server << userNickname = newNickame
 	pageChange = sendMessage(userNickname, "post configuration.json")
 	updatePage(pageChange)
 ```
@@ -180,28 +182,23 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 
 #### executePlayerEvent(eventType, eventTime):
 ```
-	eventInformation.json << player = userNickname << type = eventType << time = eventTime //  talvez poner en json el tipo de mensaje
+	eventInformation.json << player = userNickname << type = eventType << time = eventTime
 	pageChange = sendMessage(userNickname, "post eventInformation.json") // creo que ocupo hacer un get del cambio :(
 	updatePage(pageChange)
 	// con lo que me retorna, actualiza mi pagina y la de los demas
 ```
 
-#### pieceMatched(rowClicked, columnClicked):
+#### cardMatched(rowClicked, columnClicked):
 ```
 	matchInformation.json << player = userNickname << matchRow = rowClicked << matchColumn = columnClicked
 	valid = sendMessage(userNickname, "post matchInformation.json")
 	
 	if valid = true
-		incrementScore(rowClicked, columnClicked)
+		pageChange = sendMessage(userNickname, "get incrementScore")
+		updatePage(pageChange)
 	else
-		// no se, pido algo o que
-	// debe retornarme si fue valido y luego llamo increment score o que
-```
-
-#### incrementScore:
-```
-	pageChange = sendMessage(userNickname, "get incrementScore")
-	updatePage(pageChange)
+		pageChange = sendMessage(userNickname, "get wrongMatch")
+		updatePage(pageChange)
 ```
 
 #### finishGame:
@@ -212,77 +209,90 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 
 ### Para el servidor
 
-#### returnToMainReceived:
+#### returnToMainReceived(userNickname):
 ```
-	
-```
-
-#### createSessionReceived:
-```
-	
+	sendMessageTo(userNickname, mainPage.html)
 ```
 
-#### joinSessionReceived:
+#### createSessionReceived(userNickname):
 ```
-	
-```
-
-#### nicknameReceived:
-```
-	
+	waitingRoomHost.html = assembleWaitingRoomHost()
+	sendMessageTo(userNickname, waitingRoomHost.html)
 ```
 
-#### maxTimeReceived:
+#### joinSessionReceived(userNickname):
 ```
-	
+	waitingRoomGuest.html = assembleWaitingRoomGuest()
+	sendMessageTo(userNickname, waitingRoomGuest.html)
 ```
 
-#### chipsPerPlayerReceived:
+#### nicknameReceived(userNickname):
 ```
-	
+	waitingRoomGuest.html = updateWaitingRoomGuest(userNickname)
+	broadcast(waitingRoomGuest.html)
+```
+
+#### maxTimeReceived(maxTime):
+```
+	waitingRoomGuest.html = updateWaitingRoomGuest(maxTime)
+	broadcast(waitingRoomGuest.html)
+```
+
+#### chipsPerPlayerReceived(cards):
+```
+	waitingRoomGuest.html = updateWaitingRoomGuest(cards)
+	broadcast(waitingRoomGuest.html)
 ```
 
 #### chipsPerRoundReceived:
 ```
-	
+	waitingRoomGuest.html = updateWaitingRoomGuest(cards)
+	broadcast(waitingRoomGuest.html)
 ```
 
-#### firstAdaptationReceived:
+#### firstAdaptationReceived(option):
 ```
-	
-```
-
-#### secondAdaptationReceived:
-```
-	
+	waitingRoomGuest.html = updateWaitingRoomGuest(option)
+	broadcast(waitingRoomGuest.html)
 ```
 
-#### thirdAdaptationReceived:
+#### secondAdaptationReceived(option):
 ```
-	
-```
-
-#### startGameReceived:
-```
-	
+	waitingRoomGuest.html = updateWaitingRoomGuest(option)
+	broadcast(waitingRoomGuest.html)
 ```
 
-#### playerEventReceived:
+#### thirdAdaptationReceived(option):
 ```
-	
-```
-
-#### matchReceived:
-```
-	
+	waitingRoomGuest.html = updateWaitingRoomGuest(option)
+	broadcast(waitingRoomGuest.html)
 ```
 
-#### scoreReceived:
+#### startGameReceived(configu):
 ```
-	
+	waitingRoomGuest.html = assembleGame()
+	broadcast(waitingRoomGuest.html)
+```
+
+#### playerEventReceived(playerNickname):
+```
+	waitingRoomGuest.html = updateWaitingRoomGuest(option)
+	broadcast(waitingRoomGuest.html)
+```
+
+#### matchReceived(playerNickname, x, y, cardInfo):
+```
+	if cardInfo = getCard(x,y):
+		waitingRoomGuest.html = updateWaitingRoomGuest(true, playerNickname, score)
+		broadcast(waitingRoomGuest.html)
+	else:
+		waitingRoomGuest.html = updateWaitingRoomGuest(false)
+		sendMessageTo(playerNickname, waitingRoomGuest.html)
 ```
 
 #### finishGameReceived:
 ```
-	
+	if time = 0 || cards = 0:
+		endGameURL = assembleEndRoom()
+		broadcast(endGameURL)
 ```
