@@ -136,7 +136,7 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 
 #### changeMaxTime(chosenTime):
 ```
-	configuration.json << maxTime = chosenTime
+	configuration.json << type = "changeMaxTime" << from = userNickname << to = server << maxTime = chosenTime
 	pageChange = sendMessage(userNickname, "post configuration.json")
 	updatePage(pageChange)
 ```
