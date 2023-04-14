@@ -76,14 +76,22 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 
 ## Simulación de sesión de juego - texto
 
+
 ## Simulación de sesión de juego - JSON
 
 ## Máquinas de estados
-![Máquina de estado Main Page](Aut%C3%B3matasMainPage.svg)
+
+### Para el servidor:
+
 ![Máquina de estado Servidor](AutómataServidor.svg)
 
 ### Para el cliente:
-![Instrucciones](automataCliente.svg)
+
+![Máquina de estado Cliente](automataCliente.svg)
+
+### De la página principal:
+
+![Máquina de estado Main Page](Aut%C3%B3matasMainPage.svg)
 
 
 ## Algoritmos de las transiciones de la máquina de estados
@@ -103,7 +111,6 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 ```
 	userInformation.json << type = "createSession" << from = newNickame << to = server << userNickname = newNickame
 	waitingRoomURL, roomId = sendMessage(userNickname, "get userInformation.json")
-	// no se si el mandar asi el nickname o dentro del json
 	configuration.json << roomId
 	redirectTo(waitingRoomURL)
 ```
