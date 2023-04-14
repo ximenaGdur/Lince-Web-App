@@ -76,6 +76,10 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 
 ## Simulación de sesión de juego - texto
 
+![Primera parte del mensaje](message1.svg)
+![Segunda parte del mensaje](message2.svg)
+![Tercera parte del mensaje](message3.svg)
+![Cuarta parte del mensaje](message4.svg)
 
 ## Simulación de sesión de juego - JSON
 
