@@ -138,14 +138,14 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 
 #### changeChipsPerPlayer(chipAmount):
 ```
-	configuration.json << chipsPerPlayer = chipAmount 
+	configuration.json << cardsPerPlayer = chipAmount 
 	pageChange = sendMessage(userNickname, "post configuration.json")
 	updatePage(pageChange)
 ```
 
 #### changeChipsPerRound(chipAmount):
 ```
-	configuration.json << chipsPerRound  = chipAmount
+	configuration.json << cardsPerRound  = chipAmount
 	pageChange = sendMessage(userNickname, "post configuration.json")
 	updatePage(pageChange)
 ```
@@ -247,13 +247,13 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 	broadcast(waitingRoomGuest.html)
 ```
 
-#### chipsPerPlayerReceived(cards):
+#### cardsPerPlayerReceived(cards):
 ```
 	waitingRoomGuest.html = updateWaitingRoomGuest(cards)
 	broadcast(waitingRoomGuest.html)
 ```
 
-#### chipsPerRoundReceived:
+#### cardsPerRoundReceived:
 ```
 	waitingRoomGuest.html = updateWaitingRoomGuest(cards)
 	broadcast(waitingRoomGuest.html)
