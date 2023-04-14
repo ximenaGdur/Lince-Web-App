@@ -79,6 +79,8 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 ## Simulación de sesión de juego - JSON
 
 ## Máquinas de estados
+![Máquina de estado Main Page](Aut%C3%B3matasMainPage.svg)
+![Máquina de estado Servidor](AutómataServidor.svg)
 
 ## Algoritmos de las transiciones de la máquina de estados
 
