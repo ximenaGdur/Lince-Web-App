@@ -108,6 +108,7 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 ### Para el cliente
 
 #### returnToMain
+
 ```
 	userConfirmation = askConfirmation()
 
@@ -117,6 +118,7 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 ```
 
 #### createSession(userNickname)
+
 ```
 	userInformation.json << type = "createSession" << from = newNickame << to = server << userNickname = newNickame
 	waitingRoomURL, roomId = sendMessage(userNickname, "get userInformation.json")
@@ -125,6 +127,7 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 ```
 
 #### joinSession(userNickname, roomId)
+
 ```
 	userInformation.json << type = "joinSession" << from = userNickname << to = server << userNickname = newNickame << room = roomId
 	waitingRoomURL = sendMessage(userNickname, "get waitingRoomGuest userInformation.json")
@@ -132,6 +135,7 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 ```
 
 #### changeNickname(newNickame)
+
 ```
 	configuration.json << type = "changeNickname" << from = userNickname << to = server << userNickname = newNickame
 	pageChange = sendMessage(userNickname, "post configuration.json")
@@ -139,20 +143,23 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 ```
 
 #### changeMaxTime(chosenTime)
+
 ```
 	configuration.json << type = "changeMaxTime" << from = userNickname << to = server << maxTime = chosenTime
 	pageChange = sendMessage(userNickname, "post configuration.json")
 	updatePage(pageChange)
 ```
 
-#### changeCardsPerPlayer(cardAmount):
+#### changeCardsPerPlayer(cardAmount)
+
 ```
 	configuration.json << type = "changeCardsPerPlayer" << from = userNickname << to = server << cardsPerPlayer = cardAmount 
 	pageChange = sendMessage(userNickname, "post configuration.json")
 	updatePage(pageChange)
 ```
 
-#### changeCardsPerRound(cardAmount):
+#### changeCardsPerRound(cardAmount)
+
 ```
 	configuration.json << type = "changeCardsPerRound" << from = userNickname << to = server << cardsPerRound  = cardAmount
 	pageChange = sendMessage(userNickname, "post configuration.json")
@@ -160,6 +167,7 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 ```
 
 #### changeFirstAdaptation(option)
+
 ```
 	if option  = 0:
 		configuration.json << type = "changeFirstAdaptation" << from = userNickname << to = server << firstAdaptationA = yes
@@ -183,6 +191,7 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 ```
 
 #### changeThirdAdaptation(option)
+
 ```
 	if option  = 0:
 		configuration.json << type = "changeThirdAdaptation" << from = userNickname << to = server << thirdAdaptationA = yes
@@ -204,7 +213,7 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 
 ```
 	eventInformation.json << player = userNickname << type = eventType << time = eventTime
-	pageChange = sendMessage(userNickname, "post eventInformation.json") // creo que ocupo hacer un get del cambio :(
+	pageChange = sendMessage(userNickname, "post eventInformation.json")
 	updatePage(pageChange)
 	// con lo que me retorna, actualiza mi pagina y la de los demas
 ```
