@@ -136,14 +136,14 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 	updatePage(pageChange)
 ```
 
-#### changeChipsPerPlayer(chipAmount):
+#### changeCardsPerPlayer(chipAmount):
 ```
 	configuration.json << cardsPerPlayer = chipAmount 
 	pageChange = sendMessage(userNickname, "post configuration.json")
 	updatePage(pageChange)
 ```
 
-#### changeChipsPerRound(chipAmount):
+#### changeCardsPerRound(chipAmount):
 ```
 	configuration.json << cardsPerRound  = chipAmount
 	pageChange = sendMessage(userNickname, "post configuration.json")
