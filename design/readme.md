@@ -144,6 +144,7 @@ Algunos ejemplos de mensajes se muestran a continuación.
 ### Para el cliente
 
 #### returnToMain
+
 ```
 	userConfirmation = askConfirmation()
 
@@ -153,6 +154,7 @@ Algunos ejemplos de mensajes se muestran a continuación.
 ```
 
 #### createSession(userNickname)
+
 ```
 	userInformation.json << type = "createSession" << from = newNickame << to = server << userNickname = newNickame
 	waitingRoomURL, roomId = sendMessage(userNickname, "get userInformation.json")
@@ -161,6 +163,7 @@ Algunos ejemplos de mensajes se muestran a continuación.
 ```
 
 #### joinSession(userNickname, roomId)
+
 ```
 	userInformation.json << type = "joinSession" << from = userNickname << to = server << userNickname = newNickame << room = roomId
 	waitingRoomURL = sendMessage(userNickname, "get waitingRoomGuest userInformation.json")
@@ -168,6 +171,7 @@ Algunos ejemplos de mensajes se muestran a continuación.
 ```
 
 #### changeNickname(newNickame)
+
 ```
 	configuration.json << type = "changeNickname" << from = userNickname << to = server << userNickname = newNickame
 	pageChange = sendMessage(userNickname, "post configuration.json")
@@ -175,20 +179,23 @@ Algunos ejemplos de mensajes se muestran a continuación.
 ```
 
 #### changeMaxTime(chosenTime)
+
 ```
 	configuration.json << type = "changeMaxTime" << from = userNickname << to = server << maxTime = chosenTime
 	pageChange = sendMessage(userNickname, "post configuration.json")
 	updatePage(pageChange)
 ```
 
-#### changeCardsPerPlayer(cardAmount):
+#### changeCardsPerPlayer(cardAmount)
+
 ```
 	configuration.json << type = "changeCardsPerPlayer" << from = userNickname << to = server << cardsPerPlayer = cardAmount 
 	pageChange = sendMessage(userNickname, "post configuration.json")
 	updatePage(pageChange)
 ```
 
-#### changeCardsPerRound(cardAmount):
+#### changeCardsPerRound(cardAmount)
+
 ```
 	configuration.json << type = "changeCardsPerRound" << from = userNickname << to = server << cardsPerRound  = cardAmount
 	pageChange = sendMessage(userNickname, "post configuration.json")
@@ -196,6 +203,7 @@ Algunos ejemplos de mensajes se muestran a continuación.
 ```
 
 #### changeFirstAdaptation(option)
+
 ```
 	if option  = 0:
 		configuration.json << type = "changeFirstAdaptation" << from = userNickname << to = server << firstAdaptationA = yes
@@ -219,6 +227,7 @@ Algunos ejemplos de mensajes se muestran a continuación.
 ```
 
 #### changeThirdAdaptation(option)
+
 ```
 	if option  = 0:
 		configuration.json << type = "changeThirdAdaptation" << from = userNickname << to = server << thirdAdaptationA = yes
@@ -240,7 +249,7 @@ Algunos ejemplos de mensajes se muestran a continuación.
 
 ```
 	eventInformation.json << player = userNickname << type = eventType << time = eventTime
-	pageChange = sendMessage(userNickname, "post eventInformation.json") // creo que ocupo hacer un get del cambio :(
+	pageChange = sendMessage(userNickname, "post eventInformation.json")
 	updatePage(pageChange)
 	// con lo que me retorna, actualiza mi pagina y la de los demas
 ```
