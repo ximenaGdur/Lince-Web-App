@@ -67,3 +67,166 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 ![Pantalla de juego](gameScreen.svg)
 
 ![Mensaje de advertencia](gameScreenError.svg)
+
+# Protocolo de paso de mensajes
+
+## Eventos de usuario y red en wireframes
+
+## Estructura de los mensajes JSON
+
+## Simulación de sesión de juego - texto
+
+## Simulación de sesión de juego - JSON
+
+## Máquinas de estados
+
+## Algoritmos de las transiciones de la máquina de estados
+
+### Para el cliente
+
+#### returnToMain:
+```
+```
+
+#### createSession(userNickname):
+```
+```
+
+#### joinSession(userNickname, roomId:
+```
+```
+
+#### changeNickname(newNickame):
+```
+```
+
+#### changeMaxTime(maxTime):
+```
+```
+
+#### changeChipsPerPlayer:
+```
+	
+```
+
+#### changeChipsPerRound:
+```
+	
+```
+
+#### changeFirstAdaptation:
+```
+	
+```
+
+#### changeSecondAdaptation:
+```
+	
+```
+
+#### changeThirdAdaptation:
+```
+	
+```
+
+#### startGame:
+```
+	
+```
+
+#### executePlayerEvent:
+```
+	
+```
+
+#### pieceMatched:
+```
+	
+```
+
+#### incrementScore:
+```
+	
+```
+
+#### finishGame:
+```
+	
+```
+
+### Para el servidor
+
+#### returnToMainReceived:
+```
+	
+```
+
+#### createSessionReceived:
+```
+	
+```
+
+#### joinSessionReceived:
+```
+	
+```
+
+#### nicknameReceived:
+```
+	
+```
+
+#### maxTimeReceived:
+```
+	
+```
+
+#### chipsPerPlayerReceived:
+```
+	
+```
+
+#### chipsPerRoundReceived:
+```
+	
+```
+
+#### firstAdaptationReceived:
+```
+	
+```
+
+#### secondAdaptationReceived:
+```
+	
+```
+
+#### thirdAdaptationReceived:
+```
+	
+```
+
+#### startGameReceived:
+```
+	
+```
+
+#### playerEventReceived:
+```
+	
+```
+
+#### matchReceived:
+```
+	
+```
+
+#### scoreReceived:
+```
+	
+```
+
+#### finishGameReceived:
+```
+	
+```
