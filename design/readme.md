@@ -76,14 +76,22 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 
 ## Simulación de sesión de juego - texto
 
+
 ## Simulación de sesión de juego - JSON
 
 ## Máquinas de estados
-![Máquina de estado Main Page](Aut%C3%B3matasMainPage.svg)
+
+### Para el servidor:
+
 ![Máquina de estado Servidor](AutómataServidor.svg)
 
 ### Para el cliente:
-![Instrucciones](automataCliente.svg)
+
+![Máquina de estado Cliente](automataCliente.svg)
+
+### De la página principal:
+
+![Máquina de estado Main Page](Aut%C3%B3matasMainPage.svg)
 
 
 ## Algoritmos de las transiciones de la máquina de estados
@@ -103,7 +111,6 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 ```
 	userInformation.json << type = "createSession" << from = newNickame << to = server << userNickname = newNickame
 	waitingRoomURL, roomId = sendMessage(userNickname, "get userInformation.json")
-	// no se si el mandar asi el nickname o dentro del json
 	configuration.json << roomId
 	redirectTo(waitingRoomURL)
 ```
@@ -129,16 +136,16 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 	updatePage(pageChange)
 ```
 
-#### changeChipsPerPlayer(chipAmount):
+#### changeCardsPerPlayer(chipAmount):
 ```
-	configuration.json << type = "changeChipsPerPlayer" << from = userNickname << to = server << chipsPerPlayer = chipAmount 
+	configuration.json << cardsPerPlayer = chipAmount 
 	pageChange = sendMessage(userNickname, "post configuration.json")
 	updatePage(pageChange)
 ```
 
-#### changeChipsPerRound(chipAmount):
+#### changeCardsPerRound(chipAmount):
 ```
-	configuration.json << type = "changeChipsPerRound" << from = userNickname << to = server << chipsPerRound  = chipAmount
+	configuration.json << cardsPerRound  = chipAmount
 	pageChange = sendMessage(userNickname, "post configuration.json")
 	updatePage(pageChange)
 ```
@@ -240,13 +247,13 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 	broadcast(waitingRoomGuest.html)
 ```
 
-#### chipsPerPlayerReceived(cards):
+#### cardsPerPlayerReceived(cards):
 ```
 	waitingRoomGuest.html = updateWaitingRoomGuest(cards)
 	broadcast(waitingRoomGuest.html)
 ```
 
-#### chipsPerRoundReceived:
+#### cardsPerRoundReceived:
 ```
 	waitingRoomGuest.html = updateWaitingRoomGuest(cards)
 	broadcast(waitingRoomGuest.html)
