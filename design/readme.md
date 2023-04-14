@@ -122,21 +122,21 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 
 #### changeMaxTime(chosenTime):
 ```
-	configuration.json << maxTime = chosenTime
+	configuration.json << type = "changeMaxTime" << from = userNickname << to = server << maxTime = chosenTime
 	pageChange = sendMessage(userNickname, "post configuration.json")
 	updatePage(pageChange)
 ```
 
 #### changeChipsPerPlayer(chipAmount):
 ```
-	configuration.json << chipsPerPlayer = chipAmount 
+	configuration.json << type = "changeChipsPerPlayer" << from = userNickname << to = server << chipsPerPlayer = chipAmount 
 	pageChange = sendMessage(userNickname, "post configuration.json")
 	updatePage(pageChange)
 ```
 
 #### changeChipsPerRound(chipAmount):
 ```
-	configuration.json << chipsPerRound  = chipAmount
+	configuration.json << type = "changeChipsPerRound" << from = userNickname << to = server << chipsPerRound  = chipAmount
 	pageChange = sendMessage(userNickname, "post configuration.json")
 	updatePage(pageChange)
 ```
