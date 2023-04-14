@@ -72,6 +72,8 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 
 ## Eventos de usuario y red en wireframes
 
+Las siguientes imágenes muestran los eventos principales en cada pantalla de juego.
+
 ![Eventos Pantalla Inicio](EventosPantallaInicio.PNG)
 
 ![Eventos Sala Espera](EventosSalaEsperaHostGuest.PNG)
@@ -79,6 +81,30 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 ![Eventos Juego](EventosPantallaJuego.PNG)
 
 ## Estructura de los mensajes JSON
+
+La estructura básica de los mensajes incluye siempre: el tipo de mensaje, el emisor y el destinatario.
+Además, los mensajes de los clientes incluyen when, lo cual explica en qué momento se manda el mensaje.
+En el caso del servidor, este puede mandarle un objeto html al cliente.
+
+Algunos ejemplos de mensajes se muestran a continuación.
+
+```
+{
+    "Type": "start_game",
+    "From": "client",
+    "To": "server",
+    "When": "when a host client presses the start game button"
+}
+```
+
+```
+{
+    "Type": "start_game",
+    "From": "server",
+    "To": "client",
+    "Object":  mainGame.html
+}
+```
 
 ## Simulación de sesión de juego - texto
 
@@ -88,6 +114,16 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 ![Cuarta parte del mensaje](message4.svg)
 
 ## Simulación de sesión de juego - JSON
+
+![Primera parte del mensaje](captura1.svg)
+![Segundo parte del mensaje](captura2.svg)
+![Tercero parte del mensaje](captura3.svg)
+![Cuarto parte del mensaje](captura4.svg)
+![Quinta parte del mensaje](captura5.svg)
+![Sexta parte del mensaje](captura6.svg)
+![Sétima parte del mensaje](captura7.svg)
+![Octava parte del mensaje](captura8.svg)
+![Novena parte del mensaje](captura9.svg)
 
 ## Máquinas de estados
 
