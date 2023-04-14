@@ -71,6 +71,7 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 # Protocolo de paso de mensajes
 
 ## Eventos de usuario y red en wireframes
+
 ![Eventos Pantalla Inicio](EventosPantallaInicio.PNG)
 
 ![Eventos Sala Espera](EventosSalaEsperaHostGuest.PNG)
@@ -90,24 +91,23 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 
 ## Máquinas de estados
 
-### Para el servidor:
+### Para el servidor
 
 ![Máquina de estado Servidor](AutómataServidor.svg)
 
-### Para el cliente:
+### Para el cliente
 
 ![Máquina de estado Cliente](automataCliente.svg)
 
-### De la página principal:
+### De la página principal
 
 ![Máquina de estado Main Page](Aut%C3%B3matasMainPage.svg)
-
 
 ## Algoritmos de las transiciones de la máquina de estados
 
 ### Para el cliente
 
-#### returnToMain:
+#### returnToMain
 ```
 	userConfirmation = askConfirmation()
 
@@ -116,7 +116,7 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 		redirectTo(mainRoomURL)
 ```
 
-#### createSession(userNickname):
+#### createSession(userNickname)
 ```
 	userInformation.json << type = "createSession" << from = newNickame << to = server << userNickname = newNickame
 	waitingRoomURL, roomId = sendMessage(userNickname, "get userInformation.json")
@@ -124,42 +124,42 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 	redirectTo(waitingRoomURL)
 ```
 
-#### joinSession(userNickname, roomId):
+#### joinSession(userNickname, roomId)
 ```
 	userInformation.json << type = "joinSession" << from = userNickname << to = server << userNickname = newNickame << room = roomId
 	waitingRoomURL = sendMessage(userNickname, "get waitingRoomGuest userInformation.json")
 	redirectTo(waitingRoomURL)
 ```
 
-#### changeNickname(newNickame):
+#### changeNickname(newNickame)
 ```
 	configuration.json << type = "changeNickname" << from = userNickname << to = server << userNickname = newNickame
 	pageChange = sendMessage(userNickname, "post configuration.json")
 	updatePage(pageChange)
 ```
 
-#### changeMaxTime(chosenTime):
+#### changeMaxTime(chosenTime)
 ```
 	configuration.json << type = "changeMaxTime" << from = userNickname << to = server << maxTime = chosenTime
 	pageChange = sendMessage(userNickname, "post configuration.json")
 	updatePage(pageChange)
 ```
 
-#### changeCardsPerPlayer(chipAmount):
+#### changeCardsPerPlayer(chipAmount)
 ```
 	configuration.json << cardsPerPlayer = chipAmount 
 	pageChange = sendMessage(userNickname, "post configuration.json")
 	updatePage(pageChange)
 ```
 
-#### changeCardsPerRound(chipAmount):
+#### changeCardsPerRound(chipAmount)
 ```
 	configuration.json << cardsPerRound  = chipAmount
 	pageChange = sendMessage(userNickname, "post configuration.json")
 	updatePage(pageChange)
 ```
 
-#### changeFirstAdaptation(option):
+#### changeFirstAdaptation(option)
 ```
 	if option  = 0:
 		configuration.json << firstAdaptationA = yes
@@ -170,7 +170,8 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 	updatePage(pageChange)
 ```
 
-#### changeSecondAdaptation(option):
+#### changeSecondAdaptation(option)
+
 ```
 	if option  = 0:
 		configuration.json << secondAdaptationA = yes
@@ -181,7 +182,7 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 	updatePage(pageChange)
 ```
 
-#### changeThirdAdaptation(option):
+#### changeThirdAdaptation(option)
 ```
 	if option  = 0:
 		configuration.json << thirdAdaptationA = yes
@@ -192,13 +193,15 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 	updatePage(pageChange)
 ```
 
-#### startGame:
+#### startGame
+
 ```
 	mainGameURL = sendMessage(userNickname, "get mainGame configuration.json")
 	redirectTo(mainGameURL)
 ```
 
-#### executePlayerEvent(eventType, eventTime):
+#### executePlayerEvent(eventType, eventTime)
+
 ```
 	eventInformation.json << player = userNickname << type = eventType << time = eventTime
 	pageChange = sendMessage(userNickname, "post eventInformation.json") // creo que ocupo hacer un get del cambio :(
@@ -206,7 +209,8 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 	// con lo que me retorna, actualiza mi pagina y la de los demas
 ```
 
-#### cardMatched(rowClicked, columnClicked):
+#### cardMatched(rowClicked, columnClicked)
+
 ```
 	matchInformation.json << player = userNickname << matchRow = rowClicked << matchColumn = columnClicked
 	valid = sendMessage(userNickname, "post matchInformation.json")
@@ -219,7 +223,8 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 		updatePage(pageChange)
 ```
 
-#### finishGame:
+#### finishGame
+
 ```
 	finishGameURL = sendMessage(userNickname, "get finishGameURL")
 	redirectTo(finishGameURL)
@@ -227,78 +232,91 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 
 ### Para el servidor
 
-#### returnToMainReceived(userNickname):
+#### returnToMainReceived(userNickname)
+
 ```
 	sendMessageTo(userNickname, mainPage.html)
 ```
 
-#### createSessionReceived(userNickname):
+#### createSessionReceived(userNickname)
+
 ```
 	waitingRoomHost.html = assembleWaitingRoomHost()
 	sendMessageTo(userNickname, waitingRoomHost.html)
 ```
 
-#### joinSessionReceived(userNickname):
+#### joinSessionReceived(userNickname)
+
 ```
 	waitingRoomGuest.html = assembleWaitingRoomGuest()
 	sendMessageTo(userNickname, waitingRoomGuest.html)
 ```
 
-#### nicknameReceived(userNickname):
+#### nicknameReceived(userNickname)
+
 ```
 	waitingRoomGuest.html = updateWaitingRoomGuest(userNickname)
 	broadcast(waitingRoomGuest.html)
 ```
 
-#### maxTimeReceived(maxTime):
+#### maxTimeReceived(maxTime)
+
 ```
 	waitingRoomGuest.html = updateWaitingRoomGuest(maxTime)
 	broadcast(waitingRoomGuest.html)
 ```
 
-#### cardsPerPlayerReceived(cards):
+#### cardsPerPlayerReceived(cards)
+
 ```
 	waitingRoomGuest.html = updateWaitingRoomGuest(cards)
 	broadcast(waitingRoomGuest.html)
 ```
 
-#### cardsPerRoundReceived:
+#### cardsPerRoundReceived
+
 ```
 	waitingRoomGuest.html = updateWaitingRoomGuest(cards)
 	broadcast(waitingRoomGuest.html)
 ```
 
-#### firstAdaptationReceived(option):
+#### firstAdaptationReceived(option)
+
 ```
 	waitingRoomGuest.html = updateWaitingRoomGuest(option)
 	broadcast(waitingRoomGuest.html)
 ```
 
-#### secondAdaptationReceived(option):
+#### secondAdaptationReceived(option)
+
 ```
 	waitingRoomGuest.html = updateWaitingRoomGuest(option)
 	broadcast(waitingRoomGuest.html)
 ```
 
-#### thirdAdaptationReceived(option):
+#### thirdAdaptationReceived(option)
+
 ```
 	waitingRoomGuest.html = updateWaitingRoomGuest(option)
 	broadcast(waitingRoomGuest.html)
 ```
 
-#### startGameReceived(configu):
+#### startGameReceived(configu)
+
 ```
 	waitingRoomGuest.html = assembleGame()
 	broadcast(waitingRoomGuest.html)
 ```
 
-#### playerEventReceived(playerNickname):
+#### playerEventReceived(playerNickname)
+
 ```
 	waitingRoomGuest.html = updateWaitingRoomGuest(option)
 	broadcast(waitingRoomGuest.html)
 ```
 
-#### matchReceived(playerNickname, x, y, cardInfo):
+#### matchReceived(playerNickname, x, y, cardInfo)
+
 ```
 	if cardInfo = getCard(x,y):
 		waitingRoomGuest.html = updateWaitingRoomGuest(true, playerNickname, score)
@@ -308,7 +326,8 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 		sendMessageTo(playerNickname, waitingRoomGuest.html)
 ```
 
-#### finishGameReceived:
+#### finishGameReceived
+
 ```
 	if time = 0 || cards = 0:
 		endGameURL = assembleEndRoom()
