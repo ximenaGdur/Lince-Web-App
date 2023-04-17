@@ -109,20 +109,31 @@ Algunos ejemplos de mensajes se muestran a continuación.
 ## Simulación de sesión de juego - texto
 
 ![Primera parte del mensaje](message1.svg)
+
 ![Segunda parte del mensaje](message2.svg)
+
 ![Tercera parte del mensaje](message3.svg)
+
 ![Cuarta parte del mensaje](message4.svg)
 
 ## Simulación de sesión de juego - JSON
 
 ![Primera parte del mensaje](captura1.svg)
+
 ![Segundo parte del mensaje](captura2.svg)
+
 ![Tercero parte del mensaje](captura3.svg)
+
 ![Cuarto parte del mensaje](captura4.svg)
+
 ![Quinta parte del mensaje](captura5.svg)
+
 ![Sexta parte del mensaje](captura6.svg)
+
 ![Sétima parte del mensaje](captura7.svg)
+
 ![Octava parte del mensaje](captura8.svg)
+
 ![Novena parte del mensaje](captura9.svg)
 
 ## Máquinas de estados
