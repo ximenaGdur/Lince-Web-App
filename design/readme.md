@@ -20,6 +20,9 @@ En esta pantalla pueden jugar ***¡Muy Lentos!*** con sus amigos.
 
 Esta será la primera pantalla que verá un usuario al ingresar al juego, en esta encontra los botones para poder crear o unirse a una.
 
+Como se observa en la siguiente imágen, usted podrá crear o ingresar a una sala solamente si ya ingresó su apodo.
+![Página principal](homeBasic.svg)
+
 ### Instruciones del juego
 
 Al dar click en el botón "¿Cómo jugar?" de la barra, se podrán vizualizar las  instrucciones del juego por medio de un video explicativo.

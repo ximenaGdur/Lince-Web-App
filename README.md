@@ -1,6 +1,6 @@
 # ¡Muy Lentos! Juego Online
 
-![Pantalla de juego](./design/homeInstructions.svg)
+![Pantalla de juego](./design/homeBasic.svg)
 
 ## Problema a resolver
 
