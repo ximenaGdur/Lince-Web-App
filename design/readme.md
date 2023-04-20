@@ -75,13 +75,9 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 
 ## Eventos de usuario y red en wireframes
 
-Las siguientes imágenes muestran los eventos principales en cada pantalla de juego.
+Los eventos principales de cada pantalla de juego son:
 
-![Eventos Pantalla Inicio](EventosPantallaInicio.PNG)
 
-![Eventos Sala Espera](EventosSalaEsperaHostGuest.PNG)
-
-![Eventos Juego](EventosPantallaJuego.PNG)
 
 ## Estructura de los mensajes JSON
 
@@ -148,10 +144,6 @@ Algunos ejemplos de mensajes se muestran a continuación.
 ### Para el cliente
 
 ![Máquina de estado Cliente](images/automata/automatonClient.svg)
-
-### De la página principal
-
-![Máquina de estado Main Page](Aut%C3%B3matasMainPage.svg)
 
 ## Algoritmos de las transiciones de la máquina de estados
 
