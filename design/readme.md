@@ -47,7 +47,7 @@ Al dar click en el botón "Créditos" de la barra, se mostrará la información 
 En el caso de un anfitrión, este tiene los permisos necesarios para configurar el juego a su gusto.
 Además de esto, el anfitrión puede modificar los nombres de los jugadores y al hacer click en el botón de SALIR, terminará la sesión y será redireccionado a la página de inicio.
 
-![Sala de espera para anfitrión](images/wireframes/waitingRoomHost.svg)
+![Sala de espera para anfitrión](images/wireframes/waitingRoomInit.svg)
 
 ### Para un invitado
 
@@ -61,7 +61,7 @@ Sin emabargo, no puede editar nada. Al hacer click en el botón de SALIR, se sal
 Al mantener el mouse sobre el ícono, en caso de una página web, se mostrará más información acerca de ese campo.
 Ambos roles de la página (anfitrión e invitado) pueden ver esta información.
 
-![Sala de espera con más información](images/wireframes/waitingRoomInit.svg)
+![Sala de espera con más información](images/wireframes/waitingRoomHost.svg)
 
 ## Tablero del juego
 
@@ -174,25 +174,409 @@ La estructura básica de los mensajes incluye siempre: el tipo de mensaje, el em
 Además, los mensajes de los clientes incluyen la razón por la que se manda el mensaje.
 En el caso del servidor, este puede mandarle un objeto html al cliente.
 
-Algunos ejemplos de mensajes se muestran a continuación.
+#### Mensajes cliente
 
-```
+##### Main Page
+
+1. Instrucciones  
+
+~~~ JSON
+{  
+    "Type": "instructions",  
+    "From": "client",  
+    "To": "server",  
+    "When": "when a client presses the instructions button"  
+}
+~~~
+
+~~~ JSON
+2. Clasificación  
+{  
+    "Type": "classification",  
+    "From": "client",  
+    "To": "server",  
+    "When": "when a client presses the classification button"  
+}
+~~~
+
+~~~ JSON
+3. Créditos  
+{  
+    "Type": "credits",  
+    "From": "client",  
+    "To": "server",  
+    "When": "when a client presses the credits button"  
+}
+~~~
+
+~~~ JSON
+4. enterNickName  
+{  
+"Type": "enterNickName",  
+    "From": "client",  
+    "To": "server",  
+    "When": "when a client writes in the nickname field",  
+    "Nickname": "Gian"  
+}
+~~~
+
+~~~ JSON
+5. Crear sesión  
+{  
+    "Type": "createRoom",  
+    "From": "client",  
+    "To": "server",
+    "When": "when a client presses the create room button with a valid nickname",  
+    "Nickname": "Xime"  
+}
+~~~
+
+~~~ JSON
+6. Unir a sala  
+{  
+    "Type": "joinRoom",  
+    "From": "client",  
+    "To": "server",  
+    "When": "when a client presses the join room button",  
+    "Nickname": "Cris",  
+    "Room": 1234  
+}
+~~~
+
+##### Room Code PopUp
+
+~~~ JSON
+checkRoomCode
 {
-    "Type": "start_game",
+    "Type": "checkRoomCode",
     "From": "client",
     "To": "server",
-    "When": "when a host client presses the start game button"
+    "When": "when a client writes in the room number field",
+    "Room": 1234
 }
-```
+~~~
 
-```
+~~~ JSON
+Cancelar
 {
-    "Type": "start_game",
-    "From": "server",
-    "To": "client",
-    "Object":  mainGame.html
+    "Type": "cancelCode",
+    "From": "client",
+    "To": "server",
+    "When": "when a customer presses the cancel button to join the room",
 }
-```
+~~~
+
+~~~ JSON
+Unirse
+{
+    "Type": "joinRoom",
+    "From": "client",
+    "To": "server",
+    "When": "when a customer presses the button to join a room after the room is validated",
+    "Nickname": "Cris",
+    "Room": 1234
+}
+~~~
+
+##### Host Waiting Room
+
+~~~ JSON
+1. chooseCardsPerRound
+{
+    "Type": "chooseCardsPerRound",
+    "From": "client",
+    "To": "server",
+    "When": "when a host client change the amount of card per round",
+    "CardsPerRound": 130,
+    "Nickname": "Cris",
+    "Room": 1234
+}
+~~~
+
+~~~ JSON
+2. chooseMaxTime
+{
+    "Type": "chooseMaxTime",
+    "From": "client",
+    "To": "server",
+    "When": "when a host client change the max time",
+    "MaxTime": 40,
+    "Nickname": "Cris",
+    "Room": 1234
+}
+~~~
+
+~~~ JSON
+3. chooseCardsPerPlayer
+{
+    "Type": "chooseCardsPerPlayer",
+    "From": "client",
+    "To": "server",
+    "When": "when a host client change the cards per player",
+    "CardsPerPlayer": 10,
+    "Nickname": "Cris",
+    "Room": 1234
+}
+~~~
+
+~~~ JSON
+4. chooseAdp1a
+{
+    "Type": "chooseAdp1a",
+    "From": "client",
+    "To": "server",
+    "When": "when a host client selects the adaptation 1a",
+    "Room": 1234
+}
+~~~
+
+~~~ JSON
+5. chooseAdp1b
+{
+    "Type": "chooseAdp1b",
+    "From": "client",
+    "To": "server",
+    "When": "when a host client selects the adaptation 1b",
+    "Room": 1234
+}
+~~~
+
+~~~ JSON
+6. chooseAdp2a
+{
+    "Type": "chooseAdp2a",
+    "From": "client",
+    "To": "server",
+    "When": "when a host client selects the adaptation 2a",
+    "Room": 1234
+}
+~~~
+
+~~~ JSON
+7. chooseAdp2b
+{
+    "Type": "chooseAdp2b",
+    "From": "client",
+    "To": "server",
+    "When": "when a host client selects the adaptation 2b",
+    "Room": 1234
+}
+~~~
+
+~~~ JSON
+8. chooseAdp3a
+{
+    "Type": "chooseAdp3a",
+    "From": "client",
+    "To": "server",
+    "When": "when a host client selects the adaptation 3a",
+    "Room": 1234
+}
+~~~
+
+~~~ JSON
+9. chooseAdp3b
+{
+    "Type": "chooseAdp3b",
+    "From": "client",
+    "To": "server",
+    "When": "when a host client selects the adaptation 3b",
+    "Room": 1234
+}
+~~~
+
+~~~ JSON
+10. Salir
+{
+    "Type": "returnToMain",
+    "From": "client",
+    "To": "server",
+    "When": "when a host client selects the leave botton",
+    "Nickname": "Cris2",
+    "Room": 1234
+}
+~~~
+
+~~~ JSON
+11. Comenzar
+{
+    "Type": "startGame",
+    "From": "client",
+    "To": "server",
+    "When": "when a host client selects the start game botton",
+    "Nickname": "Cris2",
+    "Room": 1234
+}
+~~~
+
+##### Guest Waiting Room
+
+1. Salir
+
+~~~ JSON
+{
+    "Type": "returnToMain",
+    "From": "client",
+    "To": "server",
+    "When": "when a client selects the leave botton",
+    "Nickname": "Cris",
+    "Room": 1234
+}
+~~~
+
+##### Game Page:
+
+~~~ JSON
+1. match
+{
+    "Type": "match",
+    "From": "client",
+    "To": "server",
+    "When": "when a player makes a match",
+    "Nickname": "Cris",
+    "Room": 1234,
+    "Column": 2,
+    "Row": 4,
+    "Card": "red bunny"
+}
+~~~
+
+~~~ JSON
+2. timesUp
+{
+    "Type": "timesUp",
+    "From": "client",
+    "To": "server",
+    "When": "when time runs out",
+    "Nickname": "Cris",
+    "Room": 1234
+}
+~~~
+
+~~~ JSON
+3. applyBlur
+{
+    "Type": "applyBlur",
+    "From": "client",
+    "To": "server",
+    "When": "when a client applies blur to other players",
+    "Nickname": "Cris",
+    "Room": 1234
+}
+~~~
+
+~~~ JSON
+4. applyExtraCards
+{
+"Type": "multiplyPoints",
+    "From": "client",
+    "To": "server",
+    "When": "when a client adds cards to other players",
+    "Nickname": "Cris",
+    "Room": 1234
+}
+~~~
+
+~~~ JSON
+5. cardsFinished
+{
+    "Type": "cardsFinished",
+    "From": "client",
+    "To": "server",
+    "When": "when time runs out",
+    "Nickname": "Cris",
+    "Room": 1234
+}
+~~~
+
+~~~ JSON
+6. Salir
+{   "Type": "returnToMain",
+    "From": "client",
+    "To": "server",
+    "When": "when a client select the leave botton",
+    "Nickname": "Cris",
+    "Room": 1234
+}
+~~~
+
+##### Exit to Main PopUp
+
+~~~ JSON
+1. Cancelar
+{
+    "Type": "acceptReturnToMain",
+    "From": "client",
+    "To": "server",
+    "When": "When a client presses the accept return to home button",
+    "Nickname": "Cris",
+    "Room": 1234
+}
+~~~
+
+~~~ JSON
+2. Aceptar
+{
+    "Type": "acceptReturnToMain",
+    "From": "client",
+    "To": "server",
+    "When": "When a client presses the accept return to home button",
+    "Nickname": "Cris",
+    "Room": 1234
+}
+~~~
+
+##### Winner PopUp
+
+~~~ JSON
+1. Continuar partida
+{
+    "Type": "returnToWaitingRoom",
+    "From": "client",
+    "To": "server",
+    "When": "when a client presses the button to return to the waiting room",
+    "Nickname": "Cris",
+    "Room": 1234
+}
+~~~
+
+~~~ JSON
+2. Ir a Inicio
+{
+    "Type": "returnToMain",
+    "From": "client",
+    "To": "server",
+    "When": "when a customer presses the leave room button",
+    "Nickname": "Cris",
+    "Room": 1234
+}
+~~~
+
+##### Loser PopUp
+
+~~~ JSON
+1. Continuar partida
+{
+    "Type": "returnToWaitingRoom",
+    "From": "client",
+    "To": "server",
+    "When": "When a client presses the return to home button",
+    "Nickname": "Cris",
+    "Room": 1234
+}
+~~~
+
+~~~ JSON
+2. Ir a Inicio
+{
+    "Type": "returnToMain",
+    "From": "client",
+    "To": "server",
+    "When": "When a client presses the return to home button",
+    "Nickname": "Cris",
+    "Room": 1234
+}
+~~~
 
 ### Simulación de sesión de juego - texto
 
@@ -241,133 +625,132 @@ Algunos ejemplos de mensajes se muestran a continuación.
 #### returnToMain
 
 ```
-	userConfirmation = askConfirmation()
+    userConfirmation = askConfirmation()
 
-	if userConfirmation = yes:
-		mainRoomURL = sendMessage(userNickname, "get mainRoom")
-		redirectTo(mainRoomURL)
+    if userConfirmation = yes:
+        mainRoomURL = sendMessage(userNickname, "get mainRoom")
+        redirectTo(mainRoomURL)
 ```
 
 #### createSession(userNickname)
 
-```
-	userInformation.json << type = "createSession" << from = newNickame << to = server << userNickname = newNickame
-	waitingRoomURL, roomId = sendMessage(userNickname, "get userInformation.json")
-	configuration.json << roomId
-	redirectTo(waitingRoomURL)
-```
+~~~
+    userInformation.json << type = "createSession" << from = newNickame << to = server << userNickname = newNickame
+    waitingRoomURL, roomId = sendMessage(userNickname, "get userInformation.json")
+    configuration.json << roomId
+    redirectTo(waitingRoomURL)
+~~~
 
 #### joinSession(userNickname, roomId)
 
 ```
-	userInformation.json << type = "joinSession" << from = userNickname << to = server << userNickname = newNickame << room = roomId
-	waitingRoomURL = sendMessage(userNickname, "get waitingRoomGuest userInformation.json")
-	redirectTo(waitingRoomURL)
+    userInformation.json << type = "joinSession" << from = userNickname << to = server << userNickname = newNickame << room = roomId
+    waitingRoomURL = sendMessage(userNickname, "get waitingRoomGuest userInformation.json")
+    redirectTo(waitingRoomURL)
 ```
 
 #### changeNickname(newNickame)
 
 ```
-	configuration.json << type = "changeNickname" << from = userNickname << to = server << userNickname = newNickame
-	pageChange = sendMessage(userNickname, "post configuration.json")
-	updatePage(pageChange)
+    configuration.json << type = "changeNickname" << from = userNickname << to = server << userNickname = newNickame
+    pageChange = sendMessage(userNickname, "post configuration.json")
+    updatePage(pageChange)
 ```
 
 #### changeMaxTime(chosenTime)
 
 ```
-	configuration.json << type = "changeMaxTime" << from = userNickname << to = server << maxTime = chosenTime
-	pageChange = sendMessage(userNickname, "post configuration.json")
-	updatePage(pageChange)
+    configuration.json << type = "changeMaxTime" << from = userNickname << to = server << maxTime = chosenTime
+    pageChange = sendMessage(userNickname, "post configuration.json")
+    updatePage(pageChange)
 ```
 
 #### changeCardsPerPlayer(cardAmount)
 
 ```
-	configuration.json << type = "changeCardsPerPlayer" << from = userNickname << to = server << cardsPerPlayer = cardAmount 
-	pageChange = sendMessage(userNickname, "post configuration.json")
-	updatePage(pageChange)
+    configuration.json << type = "changeCardsPerPlayer" << from = userNickname << to = server << cardsPerPlayer = cardAmount 
+    pageChange = sendMessage(userNickname, "post configuration.json")
+    updatePage(pageChange)
 ```
 
 #### changeCardsPerRound(cardAmount)
 
 ```
-	configuration.json << type = "changeCardsPerRound" << from = userNickname << to = server << cardsPerRound  = cardAmount
-	pageChange = sendMessage(userNickname, "post configuration.json")
-	updatePage(pageChange)
+    configuration.json << type = "changeCardsPerRound" << from = userNickname << to = server << cardsPerRound  = cardAmount
+    pageChange = sendMessage(userNickname, "post configuration.json")
+    updatePage(pageChange)
 ```
 
 #### changeFirstAdaptation(option)
 
 ```
-	if option  = 0:
-		configuration.json << type = "changeFirstAdaptation" << from = userNickname << to = server << firstAdaptationA = yes
-	if option = 1:
-		configuration.json << type = "changeFirstAdaptation" << from = userNickname << to = server << firstAdaptationB = yes
+    if option  = 0:
+        configuration.json << type = "changeFirstAdaptation" << from = userNickname << to = server << firstAdaptationA = yes
+    if option = 1:
+        configuration.json << type = "changeFirstAdaptation" << from = userNickname << to = server << firstAdaptationB = yes
 
-	pageChange = sendMessage(userNickname, "post configuration.json")
-	updatePage(pageChange)
+    pageChange = sendMessage(userNickname, "post configuration.json")
+    updatePage(pageChange)
 ```
 
 #### changeSecondAdaptation(option)
 
 ```
-	if option  = 0:
-		configuration.json << type = "changeSecondAdaptation" << from = userNickname << to = server << secondAdaptationA = yes
-	if option = 1:
-		configuration.json << type = "changeSecondAdaptation" << from = userNickname << to = server << secondAdaptationB = yes
+    if option  = 0:
+        configuration.json << type = "changeSecondAdaptation" << from = userNickname << to = server << secondAdaptationA = yes
+    if option = 1:
+        configuration.json << type = "changeSecondAdaptation" << from = userNickname << to = server << secondAdaptationB = yes
 
-	pageChange = sendMessage(userNickname, "post configuration.json")
-	updatePage(pageChange)
+    pageChange = sendMessage(userNickname, "post configuration.json")
+    updatePage(pageChange)
 ```
 
 #### changeThirdAdaptation(option)
 
 ```
-	if option  = 0:
-		configuration.json << type = "changeThirdAdaptation" << from = userNickname << to = server << thirdAdaptationA = yes
-	if option = 1:
-		configuration.json << type = "changeThirdAdaptation" << from = userNickname << to = server << thirdAdaptationB = yes
+    if option  = 0:
+        configuration.json << type = "changeThirdAdaptation" << from = userNickname << to = server << thirdAdaptationA = yes
+    if option = 1:
+        configuration.json << type = "changeThirdAdaptation" << from = userNickname << to = server << thirdAdaptationB = yes
 
-	pageChange = sendMessage(userNickname, "post configuration.json")
-	updatePage(pageChange)
+    pageChange = sendMessage(userNickname, "post configuration.json")
+    updatePage(pageChange)
 ```
 
 #### startGame
 
 ```
-	mainGameURL = sendMessage(userNickname, "get mainGame configuration.json")
-	redirectTo(mainGameURL)
+    mainGameURL = sendMessage(userNickname, "get mainGame configuration.json")
+    redirectTo(mainGameURL)
 ```
 
 #### executePlayerEvent(eventType, eventTime)
 
 ```
-	eventInformation.json << player = userNickname << type = eventType << time = eventTime
-	pageChange = sendMessage(userNickname, "post eventInformation.json")
-	updatePage(pageChange)
-	// con lo que me retorna, actualiza mi pagina y la de los demas
+    eventInformation.json << player = userNickname << type = eventType << time = eventTime
+    pageChange = sendMessage(userNickname, "post eventInformation.json")
+    updatePage(pageChange)
+    // con lo que me retorna, actualiza mi pagina y la de los demas
 ```
 
 #### cardMatched(rowClicked, columnClicked)
 
 ```
-	matchInformation.json << player = userNickname << matchRow = rowClicked << matchColumn = columnClicked
-	valid = sendMessage(userNickname, "post matchInformation.json")
-	
-	if valid = true
-		pageChange = sendMessage(userNickname, "get incrementScore")
-		updatePage(pageChange)
-	else
-		pageChange = sendMessage(userNickname, "get wrongMatch")
-		updatePage(pageChange)
+    matchInformation.json << player = userNickname << matchRow = rowClicked << matchColumn = columnClicked
+    valid = sendMessage(userNickname, "post matchInformation.json")
+    if valid = true
+        pageChange = sendMessage(userNickname, "get incrementScore")
+        updatePage(pageChange)
+    else
+        pageChange = sendMessage(userNickname, "get wrongMatch")
+        updatePage(pageChange)
 ```
 
 #### finishGame
 
 ```
-	finishGameURL = sendMessage(userNickname, "get finishGameURL")
-	redirectTo(finishGameURL)
+    finishGameURL = sendMessage(userNickname, "get finishGameURL")
+    redirectTo(finishGameURL)
 ```
 
 ### Para el servidor
@@ -375,101 +758,101 @@ Algunos ejemplos de mensajes se muestran a continuación.
 #### returnToMainReceived(userNickname)
 
 ```
-	sendMessageTo(userNickname, mainPage.html)
+    sendMessageTo(userNickname, mainPage.html)
 ```
 
 #### createSessionReceived(userNickname)
 
 ```
-	waitingRoomHost.html = assembleWaitingRoomHost()
-	sendMessageTo(userNickname, waitingRoomHost.html)
+    waitingRoomHost.html = assembleWaitingRoomHost()
+    sendMessageTo(userNickname, waitingRoomHost.html)
 ```
 
 #### joinSessionReceived(userNickname)
 
 ```
-	waitingRoomGuest.html = assembleWaitingRoomGuest()
-	sendMessageTo(userNickname, waitingRoomGuest.html)
+    waitingRoomGuest.html = assembleWaitingRoomGuest()
+    sendMessageTo(userNickname, waitingRoomGuest.html)
 ```
 
 #### nicknameReceived(userNickname)
 
 ```
-	waitingRoomGuest.html = updateWaitingRoomGuest(userNickname)
-	broadcast(waitingRoomGuest.html)
+    waitingRoomGuest.html = updateWaitingRoomGuest(userNickname)
+    broadcast(waitingRoomGuest.html)
 ```
 
 #### maxTimeReceived(maxTime)
 
 ```
-	waitingRoomGuest.html = updateWaitingRoomGuest(maxTime)
-	broadcast(waitingRoomGuest.html)
+    waitingRoomGuest.html = updateWaitingRoomGuest(maxTime)
+    broadcast(waitingRoomGuest.html)
 ```
 
 #### cardsPerPlayerReceived(cards)
 
 ```
-	waitingRoomGuest.html = updateWaitingRoomGuest(cards)
-	broadcast(waitingRoomGuest.html)
+    waitingRoomGuest.html = updateWaitingRoomGuest(cards)
+    broadcast(waitingRoomGuest.html)
 ```
 
 #### cardsPerRoundReceived
 
 ```
-	waitingRoomGuest.html = updateWaitingRoomGuest(cards)
-	broadcast(waitingRoomGuest.html)
+    waitingRoomGuest.html = updateWaitingRoomGuest(cards)
+    broadcast(waitingRoomGuest.html)
 ```
 
 #### firstAdaptationReceived(option)
 
 ```
-	waitingRoomGuest.html = updateWaitingRoomGuest(option)
-	broadcast(waitingRoomGuest.html)
+    waitingRoomGuest.html = updateWaitingRoomGuest(option)
+    broadcast(waitingRoomGuest.html)
 ```
 
 #### secondAdaptationReceived(option)
 
 ```
-	waitingRoomGuest.html = updateWaitingRoomGuest(option)
-	broadcast(waitingRoomGuest.html)
+    waitingRoomGuest.html = updateWaitingRoomGuest(option)
+    broadcast(waitingRoomGuest.html)
 ```
 
 #### thirdAdaptationReceived(option)
 
 ```
-	waitingRoomGuest.html = updateWaitingRoomGuest(option)
-	broadcast(waitingRoomGuest.html)
+    waitingRoomGuest.html = updateWaitingRoomGuest(option)
+    broadcast(waitingRoomGuest.html)
 ```
 
 #### startGameReceived(configu)
 
 ```
-	waitingRoomGuest.html = assembleGame()
-	broadcast(waitingRoomGuest.html)
+    waitingRoomGuest.html = assembleGame()
+    broadcast(waitingRoomGuest.html)
 ```
 
 #### playerEventReceived(playerNickname)
 
 ```
-	waitingRoomGuest.html = updateWaitingRoomGuest(option)
-	broadcast(waitingRoomGuest.html)
+    waitingRoomGuest.html = updateWaitingRoomGuest(option)
+    broadcast(waitingRoomGuest.html)
 ```
 
 #### matchReceived(playerNickname, x, y, cardInfo)
 
 ```
-	if cardInfo = getCard(x,y):
-		waitingRoomGuest.html = updateWaitingRoomGuest(true, playerNickname, score)
-		broadcast(waitingRoomGuest.html)
-	else:
-		waitingRoomGuest.html = updateWaitingRoomGuest(false)
-		sendMessageTo(playerNickname, waitingRoomGuest.html)
+    if cardInfo = getCard(x,y):
+        waitingRoomGuest.html = updateWaitingRoomGuest(true, playerNickname, score)
+        broadcast(waitingRoomGuest.html)
+    else:
+        waitingRoomGuest.html = updateWaitingRoomGuest(false)
+        sendMessageTo(playerNickname, waitingRoomGuest.html)
 ```
 
 #### finishGameReceived
 
 ```
-	if time = 0 || cards = 0:
-		endGameURL = assembleEndRoom()
-		broadcast(endGameURL)
+    if time = 0 || cards = 0:
+        endGameURL = assembleEndRoom()
+        broadcast(endGameURL)
 ```
