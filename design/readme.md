@@ -85,11 +85,9 @@ Los eventos principales de cada pantalla de juego son:
 4. handleRanking
 5. Créditos
 6. handleCredits
-7. showInfoHost
-8. showInfoGuest
-9. enterNickName
-10. Crear sesión
-11. Unir a sala
+7. enterNickName
+8. Crear sesión
+9. Unir a sala
 
 #### Room Code PopUp
 
@@ -115,7 +113,7 @@ Los eventos principales de cada pantalla de juego son:
 11. showInfAdp3b
 12. handleNewPlayer
 13. removePlayer
-14. salir
+14. Salir
 15. Comenzar
 
 ##### Guest
@@ -131,7 +129,7 @@ Los eventos principales de cada pantalla de juego son:
 9. handleAdp2b
 10. handleAdp3a
 11. handleAdp3b
-12. salir
+12. Salir
 13. handleStartGame
 
 #### Game Page
@@ -151,7 +149,7 @@ Los eventos principales de cada pantalla de juego son:
 13. cardsFinished
 14. winGame
 15. loseGame
-16. Ir a Inicio
+16. Salir
 
 #### Exit to Main PopUp
 
