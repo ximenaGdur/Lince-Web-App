@@ -69,7 +69,9 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 
 ![Pantalla de juego](images/wireframes/gameScreen.svg)
 
-![Mensaje de advertencia](images/wireframes/gameScreenError.svg)
+![Mensaje de advertencia](images/wireframes/gameScreenExit.svg)
+
+![Pantalla de juego](images/wireframes/gameScreenWords.svg)
 
 ## PopUps del juego
 
