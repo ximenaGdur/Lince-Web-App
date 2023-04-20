@@ -608,11 +608,19 @@ Unirse
 
 ### Máquinas de estados
 
+Las siguientes imágenes muestran las máquinas de estado del cliente y del servidor
+
 #### Para el servidor
 
 ![Máquina de estado Servidor](AutómataServidor.svg)
 
 #### Para el cliente
+
+En el caso del cliente, este pasa por tres estados principales: la página principal, la sala de espera y la pantalla de juego.
+Estas tres se representan con un color azul. 
+
+También pasa por estados más pequeños cuando se abre una ventana emergente o pop-up. 
+Estas se representan con un color morado.
 
 ![Máquina de estado Cliente](images/automata/automatonClient.svg)
 
