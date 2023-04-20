@@ -115,7 +115,7 @@ Los eventos principales de cada pantalla de juego son:
 11. showInfAdp3b
 12. handleNewPlayer
 13. removePlayer
-14. salir
+14. Salir
 15. Comenzar
 
 ##### Guest
@@ -131,7 +131,7 @@ Los eventos principales de cada pantalla de juego son:
 9. handleAdp2b
 10. handleAdp3a
 11. handleAdp3b
-12. salir
+12. Salir
 13. handleStartGame
 
 #### Game Page
@@ -151,7 +151,7 @@ Los eventos principales de cada pantalla de juego son:
 13. cardsFinished
 14. winGame
 15. loseGame
-16. Ir a Inicio
+16. Salir
 
 #### Exit to Main PopUp
 
