@@ -176,9 +176,8 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 
 ##### Main Page
 
-1. Instrucciones  
-
 ~~~ JSON
+1. Instrucciones 
 {  
     "Type": "instructions",  
     "From": "client",  
@@ -244,7 +243,7 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 ##### Room Code PopUp
 
 ~~~ JSON
-checkRoomCode
+1. checkRoomCode
 {
     "Type": "checkRoomCode",
     "From": "client",
@@ -255,7 +254,7 @@ checkRoomCode
 ~~~
 
 ~~~ JSON
-Cancelar
+2. Cancelar
 {
     "Type": "cancelCode",
     "From": "client",
@@ -265,7 +264,7 @@ Cancelar
 ~~~
 
 ~~~ JSON
-Unirse
+3. Unirse
 {
     "Type": "joinRoom",
     "From": "client",
@@ -409,9 +408,8 @@ Unirse
 
 ##### Guest Waiting Room
 
-1. Salir
-
 ~~~ JSON
+1. Salir
 {
     "Type": "returnToMain",
     "From": "client",
