@@ -85,11 +85,9 @@ Los eventos principales de cada pantalla de juego son:
 4. handleRanking
 5. Créditos
 6. handleCredits
-7. showInfoHost
-8. showInfoGuest
-9. enterNickName
-10. Crear sesión
-11. Unir a sala
+7. enterNickName
+8. Crear sesión
+9. Unir a sala
 
 #### Room Code PopUp
 
