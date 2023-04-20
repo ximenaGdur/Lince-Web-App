@@ -1,98 +1,100 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8"/>
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
 		<meta name="keywords" content="Lince, Yo lo vi primero, Muy Lentos"/>
 		<meta name="author" content="Jimena Gdur Vargas"/>
 		<title>¡Muy Lentos!</title>
-		<link rel="icon" type="image/x-icon" href="../design/images/Iconos/favicon.png"/>
+		<link rel="icon" type="image/x-icon" href="../design/images/icons/favicon.png"/>
 	</head>
 	<body>
-		<section id="mainPage">
-			<header>
-				<h1 class="headerTitle">¡Muy Lentos!</h1>
-			</header>
-			<main>
-				<!-- Contains main content of page -->
-				<section class="mainContent">
-					<h1 class="pageTitle">Bienvenido al juego ¡Muy Lentos!</h1>
-					<!-- Allows user to add a nickname for the game -->
-					<section class="nickname">
+		<header>
+			<h1 class="headerTitle">¡Muy Lentos!</h1>
+		</header>
+		<main>
+			<h1 class="pageTitle">Bienvenido al juego ¡Muy Lentos!</h1>
+			<!-- Contains main content of page -->
+			<section class="mainContent">
+				<!-- Allows user to add a nickname for the game -->
+				<ul class="nickname">
+					<li class="buttons">
 						<input class="textInput" type="text" />
-					</section>
-					<!-- Contains buttons -->
-					<section class="buttons">
-						<!-- Jumps to waiting room for host -->
-						<section id="createRoom">
-							<button class="button" type="button">
-								Crear sala
-							</button>
-							<i class="informationIcon" />
-						</section>
-						<!-- Jumps to waiting room for guest -->
-						<section id="joinRoom">
-							<button class="button" type="button">
-								Unir a sala
-							</button>
-							<i class="informationIcon" />
-						</section>
-					</section>
-				</section>
+					</li>
+				</ul>
+				<!-- Contains buttons -->
+				<ul class="buttons">
+					<!-- Jumps to waiting room for host -->
+					<li id="createRoom" class="button">
+						<button type="button">
+							Crear sala
+						</button>
+						<img class="informationIcon" src="../design/Images/icons/boton-de-informacion.png" alt="información"/>
+					</li>
+					<!-- Jumps to waiting room for guest -->
+					<li id="joinRoom" class="button">
+						<button type="button">
+							Unir a sala
+						</button>
+						<img class="informationIcon" src="../design/Images/icons/boton-de-informacion.png" alt="información"/>
+					</li>
+				</ul>
 
-				<!-- Contains tab section -->
-				<section class="tabSection">
-					<!-- Contains tab links -->
-					<section class="tablinks">
-						<button class="button" type="button">
+				<!-- Contains tab links -->
+				<ul class="tablinks">
+					<li class="button">
+						<button type="button">
 							¿Cómo Jugar?
 						</button>
-						<button class="button" type="button">
+					</li>
+					<li class="button">
+						<button type="button">
 							Clasificación
 						</button>
-						<button class="button" type="button">
+					</li>
+					<li class="button">
+						<button type="button">
 							Créditos
 						</button>
-					</section>
-					<!-- Contains tab content -->
-					<section class="tabContent">
-						<!-- Contains instruction's video -->
-						<section class="video">
-							<h2 class="sectionTitle">
-								¿Cómo jugar nuestro juego?
-							</h2>
-							<video class="video" title="Video con las instrucciones del juego" controls="controls">
-								<source src="instructions.mp4" type="video/mp4"/>
-							</video>
-						</section>
-						<!-- Contains ranking -->
-						<section class="ranking">
-							<h2 class="sectionTitle">
-								Clasificación
-							</h2>
-						</section>
-						<!-- Contains site's credits -->
-						<section class="credits">
-							<h2 class="sectionTitle">
-								Información acerca de los desarrolladores
-							</h2>
-							<p class="text">
-								Desarrollado para el curso de Desarrollo de Aplicaciones Web en el primer semestre del 2023
-							</p>
-							<h3 class="sectionSubTitle">
-								Desarrolladores
-							</h3>
-							<ul class="developerList">
-								<li class="developer">Derrick Allen Smith</li>
-								<li class="developer">Jimena Gdur Vargas</li>
-								<li class="developer">Cristian Ortega Hurtado</li>
-								<li class="developer">Gianfranco Soto Palma</li>
-							</ul>
-						</section>
-					</section>
-				</section>
-			</main>
-		</section>
+					</li>
+				</ul>
+				<!-- Contains tab content -->
+				<ul class="tabContent">
+					<!-- Contains instruction's video -->
+					<li class="video">
+						<h2 class="sectionTitle">
+							¿Cómo jugar nuestro juego?
+						</h2>
+						<video class="video" title="Video con las instrucciones del juego" controls="controls">
+							<source src="instructions.mp4" type="video/mp4" />
+						</video>
+					</li>
+					<!-- Contains ranking -->
+					<li class="ranking">
+						<h2 class="sectionTitle">
+							Clasificación
+						</h2>
+					</li>
+					<!-- Contains site's credits -->
+					<li class="credits">
+						<h2 class="sectionTitle">
+							Información acerca de los desarrolladores
+						</h2>
+						<p class="text">
+							Desarrollado para el curso de Desarrollo de Aplicaciones Web en el primer semestre del 2023
+						</p>
+						<h3 class="sectionSubTitle">
+							Desarrolladores
+						</h3>
+						<ul class="developerList">
+							<li class="developer">Derrick Allen Smith</li>
+							<li class="developer">Jimena Gdur Vargas</li>
+							<li class="developer">Cristian Ortega Hurtado</li>
+							<li class="developer">Gianfranco Soto Palma</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
+		</main>
 	</body>
 </html>
