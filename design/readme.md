@@ -71,15 +71,104 @@ Como se observan en las siguientes imágenes, dichas corresponden a imágenes de
 
 ![Mensaje de advertencia](images/wireframes/gameScreenError.svg)
 
-# Protocolo de paso de mensajes
+## Protocolo de paso de mensajes
 
-## Eventos de usuario y red en wireframes
+### Eventos de usuario en wireframes
 
 Los eventos principales de cada pantalla de juego son:
 
+#### Pantalla de inicio
 
+1. Instrucciones
+2. handleInstructions
+3. Clasificación
+4. handleRanking
+5. Créditos
+6. handleCredits
+7. showInfoHost
+8. showInfoGuest
+9. enterNickName
+10. Crear sesión
+11. Unir a sala
 
-## Estructura de los mensajes JSON
+#### Room Code PopUp
+
+1. checkRoomCode
+2. handleCodeValidation
+3. Cancelar
+4. Unirse
+
+#### Sala de espera
+
+##### Host
+
+1. chooseCardsPerRound
+2. chooseMaxTime
+3. chooseCardsPerPlayer
+4. chooseAdp1a
+5. chooseAdp1b
+6. chooseAdp2a
+7. chooseAdp2b
+8. showInfAdp2b
+9. chooseAdp3a
+10. chooseAdp3b
+11. showInfAdp3b
+12. handleNewPlayer
+13. removePlayer
+14. salir
+15. Comenzar
+
+##### Guest
+
+1. handleMaxTime
+2. handleCardsPerRound
+3. handleCardsPerPlayer
+4. handleNewPlayer
+5. removePlayer
+6. handleAdp1a
+7. handleAdp1b
+8. handleAdp2a
+9. handleAdp2b
+10. handleAdp3a
+11. handleAdp3b
+12. salir
+13. handleStartGame
+
+#### Game Page
+
+1. match
+2. handleCorrectMatch
+3. handleWrongMatch
+4. handlePScore
+5. handleScores
+6. timesUp
+7. applyBlur
+8. handleBlur
+9. multiplyPoints
+10. deductPoints
+11. applyExtraCards
+12. handleExtraCards
+13. cardsFinished
+14. winGame
+15. loseGame
+16. Ir a Inicio
+
+#### Exit to Main PopUp
+
+1. Cancelar
+2. Aceptar
+
+#### Winner PopUp
+
+1. Continuar partida
+2. Ir a Inicio
+
+#### Loser PopUp
+
+1. Continuar partida
+1. Ir a Inicio
+
+### Estructura de los mensajes JSON
 
 La estructura básica de los mensajes incluye siempre: el tipo de mensaje, el emisor y el receptor.
 Además, los mensajes de los clientes incluyen la razón por la que se manda el mensaje.
@@ -105,7 +194,7 @@ Algunos ejemplos de mensajes se muestran a continuación.
 }
 ```
 
-## Simulación de sesión de juego - texto
+### Simulación de sesión de juego - texto
 
 ![Primera parte del mensaje](images/textProtocol/message1.svg)
 
@@ -115,7 +204,7 @@ Algunos ejemplos de mensajes se muestran a continuación.
 
 ![Cuarta parte del mensaje](images/textProtocol/message4.svg)
 
-## Simulación de sesión de juego - JSON
+### Simulación de sesión de juego - JSON
 
 ![Primera parte del mensaje](images/jsonProtocol/captura1.svg)
 
@@ -135,19 +224,19 @@ Algunos ejemplos de mensajes se muestran a continuación.
 
 ![Novena parte del mensaje](images/jsonProtocol/captura9.svg)
 
-## Máquinas de estados
+### Máquinas de estados
 
-### Para el servidor
+#### Para el servidor
 
 ![Máquina de estado Servidor](AutómataServidor.svg)
 
-### Para el cliente
+#### Para el cliente
 
 ![Máquina de estado Cliente](images/automata/automatonClient.svg)
 
-## Algoritmos de las transiciones de la máquina de estados
+### Algoritmos de las transiciones de la máquina de estados
 
-### Para el cliente
+#### Cliente
 
 #### returnToMain
 
