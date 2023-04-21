@@ -856,6 +856,52 @@ Estas se representan con un color morado.
     broadcast(waitingRoomGuest.html)
 ~~~
 
+#### handleCorrectMatch(playerNickname,pos x pos y)
+
+~~~ pseudo
+    if option = "true"
+        game.html = updateGame(option)
+        broadcast(game.html)
+~~~ 
+
+#### handleWrongMatch(playerNickname,pos x pos y)
+
+~~~ pseudo
+    if option = "false"
+        game.html = updateGame(option)
+        broadcast(game.html)
+~~~
+
+#### handleScores(playerNickname)
+
+~~~ pseudo
+    if option Add= "true"
+        score ++
+        game.html = updateGame(option)
+        broadcast(game.html)
+    else 
+        score --
+        game.html = updateGame(option)
+        broadcast(game.html)
+~~~
+
+#### timesUp(playerNickname, matchStatus)
+
+~~~ pseudo
+    broadcast(game.html)
+    while time != "0"
+        timesUp = false
+    game.html = updateGame(option)
+    broadcast(game.html,timesUp)  
+~~~ 
+
+#### applyBlur(playerNickname)
+
+~~~ pseudo
+        game.html = updateGame(playerNickname,blur)
+        broadcast(game.html,timesUp)
+~~~ 
+
 #### matchReceived(playerNickname, x, y, cardInfo)
 
 ~~~ pseudo
