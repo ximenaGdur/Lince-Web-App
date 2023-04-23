@@ -42,7 +42,7 @@ Desarrollado para el curso Desarrollo de Aplicaciones Web (CI-0137) que pertenec
 
 ### Recursos de terceros
 
-### Imagenes obtenidas de los siguientes autores:
+#### Imagenes obtenidas de los siguientes autores:
  - Freepik
  - Good Ware
  - Iconic Panda
