@@ -618,15 +618,15 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 
 ![Novena parte del mensaje](images/jsonProtocol/captura9.svg)
 
-### Máquinas de estados
+## Máquinas de estados
 
 Las siguientes imágenes muestran las máquinas de estado del cliente y del servidor
 
-#### Para el servidor
+### Para el servidor
 
 ![Máquina de estado Servidor](AutómataServidor.svg)
 
-#### Para el cliente
+### Para el cliente
 
 En el caso del cliente, este pasa por tres estados principales: la página principal, la sala de espera y la pantalla de juego.
 Estas tres se representan con un color azul.
@@ -636,21 +636,53 @@ Estas se representan con un color morado.
 
 ![Máquina de estado Cliente](images/automata/automatonClient.svg)
 
-### Algoritmos de las transiciones de la máquina de estados
+## Algoritmos de las transiciones de la máquina de estados del Cliente
 
-#### Cliente
-
-#### returnToMain
+### showRanking
 
 ~~~ pseudo
-    userConfirmation = askConfirmation()
 
-    if userConfirmation = yes:
-        mainRoomURL = sendMessage(userNickname, "get mainRoom")
-        redirectTo(mainRoomURL)
 ~~~
 
-#### createSession(userNickname)
+### showCredits
+
+~~~ pseudo
+
+~~~
+
+### showInstructions
+
+~~~ pseudo
+
+~~~
+
+### enterNickName
+
+~~~ pseudo
+
+~~~
+
+### showCodePopUp
+
+~~~ pseudo
+
+~~~
+
+### cancelCodePopUp
+
+~~~ pseudo
+
+~~~
+
+### joinSession(userNickname, roomId)
+
+~~~ pseudo
+    userInformation.json << type = "joinSession" << from = userNickname << to = server << userNickname = newNickame << room = roomId
+    waitingRoomURL = sendMessage(userNickname, "get waitingRoomGuest userInformation.json")
+    redirectTo(waitingRoomURL)
+~~~
+
+### createSession(userNickname)
 
 ~~~ pseudo
     userInformation.json << type = "createSession" << from = newNickame << to = server << userNickname = newNickame
@@ -659,39 +691,7 @@ Estas se representan con un color morado.
     redirectTo(waitingRoomURL)
 ~~~
 
-#### joinSession(userNickname, roomId)
-
-~~~ pseudo
-    userInformation.json << type = "joinSession" << from = userNickname << to = server << userNickname = newNickame << room = roomId
-    waitingRoomURL = sendMessage(userNickname, "get waitingRoomGuest userInformation.json")
-    redirectTo(waitingRoomURL)
-~~~
-
-#### changeNickname(newNickame)
-
-~~~ pseudo
-    configuration.json << type = "changeNickname" << from = userNickname << to = server << userNickname = newNickame
-    pageChange = sendMessage(userNickname, "post configuration.json")
-    updatePage(pageChange)
-~~~
-
-#### changeMaxTime(chosenTime)
-
-~~~ pseudo
-    configuration.json << type = "changeMaxTime" << from = userNickname << to = server << maxTime = chosenTime
-    pageChange = sendMessage(userNickname, "post configuration.json")
-    updatePage(pageChange)
-~~~
-
-#### changeCardsPerPlayer(cardAmount)
-
-~~~ pseudo
-    configuration.json << type = "changeCardsPerPlayer" << from = userNickname << to = server << cardsPerPlayer = cardAmount 
-    pageChange = sendMessage(userNickname, "post configuration.json")
-    updatePage(pageChange)
-~~~
-
-#### changeCardsPerRound(cardAmount)
+### changeCardsPerRound(cardAmount)
 
 ~~~ pseudo
     configuration.json << type = "changeCardsPerRound" << from = userNickname << to = server << cardsPerRound  = cardAmount
@@ -699,7 +699,23 @@ Estas se representan con un color morado.
     updatePage(pageChange)
 ~~~
 
-#### changeFirstAdaptation(option)
+### changeCardsPerPlayer(cardAmount)
+
+~~~ pseudo
+    configuration.json << type = "changeCardsPerPlayer" << from = userNickname << to = server << cardsPerPlayer = cardAmount 
+    pageChange = sendMessage(userNickname, "post configuration.json")
+    updatePage(pageChange)
+~~~
+
+### changeMaxTime(chosenTime)
+
+~~~ pseudo
+    configuration.json << type = "changeMaxTime" << from = userNickname << to = server << maxTime = chosenTime
+    pageChange = sendMessage(userNickname, "post configuration.json")
+    updatePage(pageChange)
+~~~
+
+### changeFirstAdaptation(option)
 
 ~~~ pseudo
     if option  = 0:
@@ -711,7 +727,7 @@ Estas se representan con un color morado.
     updatePage(pageChange)
 ~~~
 
-#### changeSecondAdaptation(option)
+### changeSecondAdaptation(option)
 
 ~~~ pseudo
     if option  = 0:
@@ -723,7 +739,7 @@ Estas se representan con un color morado.
     updatePage(pageChange)
 ~~~
 
-#### changeThirdAdaptation(option)
+### changeThirdAdaptation(option)
 
 ~~~ pseudo
     if option  = 0:
@@ -735,23 +751,38 @@ Estas se representan con un color morado.
     updatePage(pageChange)
 ~~~
 
-#### startGame
+### removePlayer
+
+~~~ pseudo
+
+~~~
+
+### startGame
 
 ~~~ pseudo
     mainGameURL = sendMessage(userNickname, "get mainGame configuration.json")
     redirectTo(mainGameURL)
 ~~~
 
-#### executePlayerEvent(eventType, eventTime)
+### multiplyPoints
 
 ~~~ pseudo
-    eventInformation.json << player = userNickname << type = eventType << time = eventTime
-    pageChange = sendMessage(userNickname, "post eventInformation.json")
-    updatePage(pageChange)
-    // con lo que me retorna, actualiza mi pagina y la de los demas
+
 ~~~
 
-#### cardMatched(rowClicked, columnClicked)
+### applyBlur
+
+~~~ pseudo
+
+~~~
+
+### timesUP
+
+~~~ pseudo
+
+~~~
+
+### cardMatched(rowClicked, columnClicked)
 
 ~~~ pseudo
     matchInformation.json << player = userNickname << matchRow = rowClicked << matchColumn = columnClicked
@@ -764,107 +795,174 @@ Estas se representan con un color morado.
         updatePage(pageChange)
 ~~~
 
-#### finishGame
+### cardsFiniched
+
+~~~ pseudo
+
+~~~
+
+### applyExtraCards
+
+~~~ pseudo
+
+~~~
+
+### deductPoints
+
+~~~ pseudo
+
+~~~
+
+### winGame
+
+~~~ pseudo
+
+~~~
+
+### loseGame
+
+~~~ pseudo
+
+~~~
+
+### continueGame
+
+~~~ pseudo
+
+~~~
+
+### returnToMain
+
+~~~ pseudo
+    userConfirmation = askConfirmation()
+
+    if userConfirmation = yes:
+        mainRoomURL = sendMessage(userNickname, "get mainRoom")
+        redirectTo(mainRoomURL)
+~~~
+
+### acceptReturnMain
+
+~~~ pseudo
+
+~~~
+
+### cancelReturnMain
+
+~~~ pseudo
+
+~~~
+
+### executePlayerEvent(eventType, eventTime)
+
+~~~ pseudo
+    eventInformation.json << player = userNickname << type = eventType << time = eventTime
+    pageChange = sendMessage(userNickname, "post eventInformation.json")
+    updatePage(pageChange)
+    // con lo que me retorna, actualiza mi pagina y la de los demas
+~~~
+
+### finishGame
 
 ~~~ pseudo
     finishGameURL = sendMessage(userNickname, "get finishGameURL")
     redirectTo(finishGameURL)
 ~~~
 
-### Para el servidor
+## Algoritmos de las transiciones de la máquina de estados del Servidor
 
-#### returnToMainReceived(userNickname)
+### returnToMainReceived(userNickname)
 
 ~~~ pseudo
     sendMessageTo(userNickname, mainPage.html)
 ~~~
 
-#### createSessionReceived(userNickname)
+### createSessionReceived(userNickname)
 
 ~~~ pseudo
     waitingRoomHost.html = assembleWaitingRoomHost()
     sendMessageTo(userNickname, waitingRoomHost.html)
 ~~~
 
-#### joinSessionReceived(userNickname)
+### joinSessionReceived(userNickname)
 
 ~~~ pseudo
     waitingRoomGuest.html = assembleWaitingRoomGuest()
     sendMessageTo(userNickname, waitingRoomGuest.html)
 ~~~
 
-#### nicknameReceived(userNickname)
+### nicknameReceived(userNickname)
 
 ~~~ pseudo
     waitingRoomGuest.html = updateWaitingRoomGuest(userNickname)
     broadcast(waitingRoomGuest.html)
 ~~~
 
-#### maxTimeReceived(maxTime)
+### maxTimeReceived(maxTime)
 
 ~~~ pseudo
     waitingRoomGuest.html = updateWaitingRoomGuest(maxTime)
     broadcast(waitingRoomGuest.html)
 ~~~
 
-#### cardsPerPlayerReceived(cards)
+### cardsPerPlayerReceived(cards)
 
 ~~~ pseudo
     waitingRoomGuest.html = updateWaitingRoomGuest(cards)
     broadcast(waitingRoomGuest.html)
 ~~~
 
-#### cardsPerRoundReceived
+### cardsPerRoundReceived
 
 ~~~ pseudo
     waitingRoomGuest.html = updateWaitingRoomGuest(cards)
     broadcast(waitingRoomGuest.html)
 ~~~
 
-#### firstAdaptationReceived(option)
+### firstAdaptationReceived(option)
 
 ~~~ pseudo
     waitingRoomGuest.html = updateWaitingRoomGuest(option)
     broadcast(waitingRoomGuest.html)
 ~~~
 
-#### secondAdaptationReceived(option)
+### secondAdaptationReceived(option)
 
 ~~~ pseudo
     waitingRoomGuest.html = updateWaitingRoomGuest(option)
     broadcast(waitingRoomGuest.html)
 ~~~
 
-#### thirdAdaptationReceived(option)
+### thirdAdaptationReceived(option)
 
 ~~~ pseudo
     waitingRoomGuest.html = updateWaitingRoomGuest(option)
     broadcast(waitingRoomGuest.html)
 ~~~
 
-#### startGameReceived(configu)
+### startGameReceived(configu)
 
 ~~~ pseudo
     waitingRoomGuest.html = assembleGame()
     broadcast(waitingRoomGuest.html)
 ~~~
 
-#### playerEventReceived(playerNickname)
+### playerEventReceived(playerNickname)
 
 ~~~ pseudo
     waitingRoomGuest.html = updateWaitingRoomGuest(option)
     broadcast(waitingRoomGuest.html)
 ~~~
 
-#### handleCorrectMatch(playerNickname,pos x pos y)
+### handleCorrectMatch(playerNickname,pos x pos y)
 
 ~~~ pseudo
     if option = "true"
         game.html = updateGame(option)
         broadcast(game.html)
-~~~ 
+~~~
 
-#### handleWrongMatch(playerNickname,pos x pos y)
+### handleWrongMatch(playerNickname,pos x pos y)
 
 ~~~ pseudo
     if option = "false"
@@ -872,7 +970,7 @@ Estas se representan con un color morado.
         broadcast(game.html)
 ~~~
 
-#### handleScores(playerNickname)
+### handleScores(playerNickname)
 
 ~~~ pseudo
     if option Add= "true"
@@ -885,7 +983,7 @@ Estas se representan con un color morado.
         broadcast(game.html)
 ~~~
 
-#### timesUp(playerNickname, matchStatus)
+### timesUp(playerNickname, matchStatus)
 
 ~~~ pseudo
     broadcast(game.html)
@@ -893,16 +991,16 @@ Estas se representan con un color morado.
         timesUp = false
     game.html = updateGame(option)
     broadcast(game.html,timesUp)  
-~~~ 
+~~~
 
-#### applyBlur(playerNickname)
+### applyBlur(playerNickname)  
 
 ~~~ pseudo
         game.html = updateGame(playerNickname,blur)
         broadcast(game.html,timesUp)
-~~~ 
+~~~
 
-#### matchReceived(playerNickname, x, y, cardInfo)
+### matchReceived(playerNickname, x, y, cardInfo)
 
 ~~~ pseudo
     if cardInfo = getCard(x,y):
@@ -913,7 +1011,7 @@ Estas se representan con un color morado.
         sendMessageTo(playerNickname, waitingRoomGuest.html)
 ~~~
 
-#### finishGameReceived
+### finishGameReceived
 
 ~~~ pseudo
     if time = 0 || cards = 0:
