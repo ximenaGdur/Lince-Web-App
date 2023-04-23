@@ -42,29 +42,12 @@ Desarrollado para el curso Desarrollo de Aplicaciones Web (CI-0137) que pertenec
 
 ### Recursos de terceros
 
-Todos los íconos de animales creados por Freepik - Flaticon
-
-Ícono de carro creado por BZZRINCANTATION - Flaticon
-Ícono de grúa creado por Iconic Panda - Flaticon
-Ícono de helicoptero creado por Konkapp - Flaticon
-Ícono de hoverboard creado por smashingstocks - Flaticon
-Ícono de patines creado por Konkapp - Flaticon
-Ícono de tren creado por rungreangfangsai - Flaticon
-Demás íconos de transportes creados por Freepik - Flaticon
-
-Ícono de manzana creado por Vector Squad - Flaticon
-Ícono de banano creado por Icongeek26 - Flaticon
-Ícono de brócoli creado por Icongeek26 - Flaticon
-Ícono de zanahoria creado por Royyan Wijaya - Flaticon
-Ícono de pepino creado por andinur - Flaticon
-Ícono de champiñon creado por SA Family - Flaticon
-Ícono de pescado frito creado por shmai - Flaticon
-Ícono de chuleta creado por shmai - Flaticon
-Ícono de atun creado por Umeicon - Flaticon
-Ícono de frijoles creado por justicon - Flaticon
-Ícono de camarón creado por Good Ware - Flaticon
-Ícono de ramen creado por justicon - Flaticon
-Demás íconos de comida creados por Freepik - Flaticon
-
-Favicon creado por Whitevector - Flaticon
-Ícono de información creado por Freepik - Flaticon
+### Imagenes obtenidas de los siguientes autores:
+ - Freepik
+ - Good Ware
+ - Iconic Panda
+ - justicon
+ - Konkapp
+ - nawicon
+ - Whitevector
+ 
