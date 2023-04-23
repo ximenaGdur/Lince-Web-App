@@ -871,17 +871,11 @@ Estas se representan con un color morado.
 
 ## Algoritmos de las transiciones de la máquina de estados del Servidor
 
-### returnToMainReceived(userNickname)
+### nicknameReceived(userNickname)
 
 ~~~ pseudo
-    sendMessageTo(userNickname, mainPage.html)
-~~~
-
-### createSessionReceived(userNickname)
-
-~~~ pseudo
-    waitingRoomHost.html = assembleWaitingRoomHost()
-    sendMessageTo(userNickname, waitingRoomHost.html)
+    waitingRoomGuest.html = updateWaitingRoomGuest(userNickname)
+    broadcast(waitingRoomGuest.html)
 ~~~
 
 ### joinSessionReceived(userNickname)
@@ -891,17 +885,17 @@ Estas se representan con un color morado.
     sendMessageTo(userNickname, waitingRoomGuest.html)
 ~~~
 
-### nicknameReceived(userNickname)
+### createSessionReceived(userNickname)
 
 ~~~ pseudo
-    waitingRoomGuest.html = updateWaitingRoomGuest(userNickname)
-    broadcast(waitingRoomGuest.html)
+    waitingRoomHost.html = assembleWaitingRoomHost()
+    sendMessageTo(userNickname, waitingRoomHost.html)
 ~~~
 
-### maxTimeReceived(maxTime)
+### cardsPerRoundReceived
 
 ~~~ pseudo
-    waitingRoomGuest.html = updateWaitingRoomGuest(maxTime)
+    waitingRoomGuest.html = updateWaitingRoomGuest(cards)
     broadcast(waitingRoomGuest.html)
 ~~~
 
@@ -912,10 +906,10 @@ Estas se representan con un color morado.
     broadcast(waitingRoomGuest.html)
 ~~~
 
-### cardsPerRoundReceived
+### maxTimeReceived(maxTime)
 
 ~~~ pseudo
-    waitingRoomGuest.html = updateWaitingRoomGuest(cards)
+    waitingRoomGuest.html = updateWaitingRoomGuest(maxTime)
     broadcast(waitingRoomGuest.html)
 ~~~
 
@@ -940,11 +934,23 @@ Estas se representan con un color morado.
     broadcast(waitingRoomGuest.html)
 ~~~
 
+### playerToRemoveReceived
+
+~~~ pseudo
+
+~~~
+
 ### startGameReceived(configu)
 
 ~~~ pseudo
     waitingRoomGuest.html = assembleGame()
     broadcast(waitingRoomGuest.html)
+~~~
+
+### returnToMainReceived(userNickname)
+
+~~~ pseudo
+    sendMessageTo(userNickname, mainPage.html)
 ~~~
 
 ### playerEventReceived(playerNickname)
