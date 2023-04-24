@@ -644,13 +644,31 @@ Estas se representan con un color morado.
 
 ~~~
 
+### handleRanking
+
+~~~ pseudo
+
+~~~
+
 ### showCredits
 
 ~~~ pseudo
 
 ~~~
 
+### handleCredits
+
+~~~ pseudo
+
+~~~
+
 ### showInstructions
+
+~~~ pseudo
+
+~~~
+
+### handleInstructions
 
 ~~~ pseudo
 
@@ -680,6 +698,54 @@ Estas se representan con un color morado.
     userInformation.json << type = "joinSession" << from = userNickname << to = server << userNickname = newNickame << room = roomId
     waitingRoomURL = sendMessage(userNickname, "get waitingRoomGuest userInformation.json")
     redirectTo(waitingRoomURL)
+~~~
+
+### handleCarsPerRound
+
+~~~ pseudo
+
+~~~
+
+### handleCarsPerPlayer
+
+~~~ pseudo
+
+~~~
+
+### handleMaxTime
+
+~~~ pseudo
+
+~~~
+
+### handleFirstAdaptation
+
+~~~ pseudo
+
+~~~
+
+### handleSecondAdaptation
+
+~~~ pseudo
+
+~~~
+
+### handleThirdAdaptation
+
+~~~ pseudo
+
+~~~
+
+### handleNewPlayer
+
+~~~ pseudo
+
+~~~
+
+### handleStartGame
+
+~~~ pseudo
+
 ~~~
 
 ### createSession(userNickname)
@@ -776,7 +842,25 @@ Estas se representan con un color morado.
 
 ~~~
 
+### handleBlur
+
+~~~ pseudo
+
+~~~
+
 ### timesUP
+
+~~~ pseudo
+
+~~~
+
+### handlePersonalScore
+
+~~~ pseudo
+
+~~~
+
+### handleScores
 
 ~~~ pseudo
 
@@ -795,6 +879,18 @@ Estas se representan con un color morado.
         updatePage(pageChange)
 ~~~
 
+### handleWrongMatch
+
+~~~ pseudo
+
+~~~
+
+### handleCorrectMatch
+
+~~~ pseudo
+
+~~~
+
 ### cardsFiniched
 
 ~~~ pseudo
@@ -802,6 +898,12 @@ Estas se representan con un color morado.
 ~~~
 
 ### applyExtraCards
+
+~~~ pseudo
+
+~~~
+
+### handleExtraCards
 
 ~~~ pseudo
 
