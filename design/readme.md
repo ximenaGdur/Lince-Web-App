@@ -624,7 +624,7 @@ Las siguientes imágenes muestran las máquinas de estado del cliente y del serv
 
 ### Para el servidor
 
-![Máquina de estado Servidor](AutómataServidor.svg)
+![Máquina de estado Servidor](images/automata/automataServer.svg)
 
 ### Para el cliente
 
@@ -634,7 +634,7 @@ Estas tres se representan con un color azul.
 También pasa por estados más pequeños cuando se abre una ventana emergente o pop-up.
 Estas se representan con un color morado.
 
-![Máquina de estado Cliente](images/automata/automatonClient.svg)
+![Máquina de estado Cliente](images/automata/automataClient.svg)
 
 ## Algoritmos de las transiciones de la máquina de estados del Cliente
 
