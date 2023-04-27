@@ -700,51 +700,56 @@ Estas se representan con un color morado.
     redirectTo(waitingRoomURL)
 ~~~
 
-### handleCarsPerRound
+### handleCardsPerRound(numCards)
 
 ~~~ pseudo
+    ListCards cards = ListCards(numCards)
+    return ListCards()
 
 ~~~
 
-### handleCarsPerPlayer
+### handleCardsPerPlayer(numCards)
 
 ~~~ pseudo
-
+    foreach player in players:
+        ListCards cards = ListCards (numCards)
+        player.cards = cards
 ~~~
 
-### handleMaxTime
+### handleMaxTime(maxTime)
 
 ~~~ pseudo
-
+    game.maxTime = this.maxTime
 ~~~
 
-### handleFirstAdaptation
+### handleFirstAdaptation(adaption)
 
 ~~~ pseudo
-
+    game.firstAdaption = adaption
 ~~~
 
-### handleSecondAdaptation
+### handleSecondAdaptation(adaption)
 
 ~~~ pseudo
-
+    game.secondAdaption = adaption
 ~~~
 
-### handleThirdAdaptation
+### handleThirdAdaptation(adaption)
 
 ~~~ pseudo
-
+    game.thirdAdaption = adaption
 ~~~
 
-### handleNewPlayer
+### handleNewPlayer(newPlayer)
 
 ~~~ pseudo
-
+    players.push(newPlayer)
 ~~~
 
 ### handleStartGame
 
 ~~~ pseudo
+    game.status = started
 
 ~~~
 
