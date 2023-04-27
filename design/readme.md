@@ -638,58 +638,77 @@ Estas se representan con un color morado.
 
 ## Algoritmos de las transiciones de la máquina de estados del Cliente
 
-### showRanking
+### showRanking()
 
 ~~~ pseudo
-
+    from = client.url;
+    to = server.url;
+    typeMessage = getRanking;
+    when = "when a client presses the classification button";
+    sendMessage(from, to, typeMessage, when);
 ~~~
 
-### handleRanking
+### handleRanking(message)
 
 ~~~ pseudo
-
+    rankingButton.disable;
+    changeRanking(message);
 ~~~
 
-### showCredits
+### showCredits()
 
 ~~~ pseudo
-
+    from = client.url;
+    to = server.url;
+    typeMessage = getCredits;
+    when = "when a client presses the credits button";
+    sendMessage(from, to, typeMessage, when);
 ~~~
 
-### handleCredits
+### handleCredits(message)
 
 ~~~ pseudo
-
+    creditsButton.disable;
+    changeCredits(message);
 ~~~
 
-### showInstructions
+### showInstructions()
 
 ~~~ pseudo
-
+    from = client.url;
+    to = server.url;
+    typeMessage = getInstructions;
+    when = "when a client presses the instructions button";
+    sendMessage(from, to, typeMessage, when);
 ~~~
 
-### handleInstructions
+### handleInstructions(message)
 
 ~~~ pseudo
-
+    instructionsButton.disable;
+    changeInstructions(message);
 ~~~
 
-### enterNickName
+### enterNickName()
 
 ~~~ pseudo
-
+    from = client.url;
+    to = server.url;
+    typeMessage = validateNickname;
+    when = "when a client types in the nickname field"
+    sendMessage(from, to, typeMessage, when);
 ~~~
 
-### showCodePopUp
+### showCodePopUp()
 
 ~~~ pseudo
-
+    codePopUP.show();
 ~~~
 
-### cancelCodePopUp
+### cancelCodePopUp()
 
 ~~~ pseudo
-
+    codePopUP.hide();
 ~~~
 
 ### joinSession(userNickname, roomId)
@@ -700,10 +719,10 @@ Estas se representan con un color morado.
     redirectTo(waitingRoomURL)
 ~~~
 
-### handleCarsPerRound
+### handleCarsPerRound(message)
 
 ~~~ pseudo
-
+    cardsPerRound = message.object;
 ~~~
 
 ### handleCarsPerPlayer
@@ -915,22 +934,31 @@ Estas se representan con un color morado.
 
 ~~~
 
-### winGame
+### winGame(message)
 
 ~~~ pseudo
-
+    nicknameWinner = message.nickname;
+    winnerPopUp.show;
 ~~~
 
-### loseGame
+### loseGame(message)
 
 ~~~ pseudo
-
+    nicknameLoser = message.nickname;
+    positionLoser = message.position;
+    loserPopUp.show;
 ~~~
 
 ### continueGame
 
 ~~~ pseudo
-
+    from = client.url;
+    to = server.url;
+    typeMessage = returnToWaitingRoom;
+    when = "When a client presses the return to waiting room button";
+    nickname = "Cris";
+    room = 1234;
+    sendMessage(from, to, typeMessage, when, nickname, room);
 ~~~
 
 ### returnToMain
@@ -946,13 +974,25 @@ Estas se representan con un color morado.
 ### acceptReturnMain
 
 ~~~ pseudo
-
+    from = client.url;
+    to = server.url;
+    typeMessage = acceptReturnMain;
+    when = "When a client agrees to return to the home page";
+    nickname = "Cris";
+    room = 1234;
+    sendMessage(from, to, typeMessage, when, nickname, room);
 ~~~
 
 ### cancelReturnMain
 
 ~~~ pseudo
-
+    from = client.url;
+    to = server.url;
+    typeMessage = acceptReturnMain;
+    when = "When a client not agrees to return to the home page";
+    nickname = "Cris";
+    room = 1234;
+    sendMessage(from, to, typeMessage, when, nickname, room);
 ~~~
 
 ### executePlayerEvent(eventType, eventTime)
@@ -973,132 +1013,106 @@ Estas se representan con un color morado.
 
 ## Algoritmos de las transiciones de la máquina de estados del Servidor
 
-### nicknameReceived(userNickname)
-
-~~~ pseudo
-    waitingRoomGuest.html = updateWaitingRoomGuest(userNickname)
-    broadcast(waitingRoomGuest.html)
-~~~
-
-### joinSessionReceived(userNickname)
-
-~~~ pseudo
-    waitingRoomGuest.html = assembleWaitingRoomGuest()
-    sendMessageTo(userNickname, waitingRoomGuest.html)
-~~~
-
-### createSessionReceived(userNickname)
-
-~~~ pseudo
-    waitingRoomHost.html = assembleWaitingRoomHost()
-    sendMessageTo(userNickname, waitingRoomHost.html)
-~~~
-
-### cardsPerRoundReceived
-
-~~~ pseudo
-    waitingRoomGuest.html = updateWaitingRoomGuest(cards)
-    broadcast(waitingRoomGuest.html)
-~~~
-
-### cardsPerPlayerReceived(cards)
-
-~~~ pseudo
-    waitingRoomGuest.html = updateWaitingRoomGuest(cards)
-    broadcast(waitingRoomGuest.html)
-~~~
-
-### maxTimeReceived(maxTime)
-
-~~~ pseudo
-    waitingRoomGuest.html = updateWaitingRoomGuest(maxTime)
-    broadcast(waitingRoomGuest.html)
-~~~
-
-### firstAdaptationReceived(option)
-
-~~~ pseudo
-    waitingRoomGuest.html = updateWaitingRoomGuest(option)
-    broadcast(waitingRoomGuest.html)
-~~~
-
-### secondAdaptationReceived(option)
-
-~~~ pseudo
-    waitingRoomGuest.html = updateWaitingRoomGuest(option)
-    broadcast(waitingRoomGuest.html)
-~~~
-
-### thirdAdaptationReceived(option)
-
-~~~ pseudo
-    waitingRoomGuest.html = updateWaitingRoomGuest(option)
-    broadcast(waitingRoomGuest.html)
-~~~
-
-### playerToRemoveReceived
+### closeConnection()
 
 ~~~ pseudo
 
 ~~~
 
-### startGameReceived(configu)
+### joinRoom()
 
 ~~~ pseudo
-    waitingRoomGuest.html = assembleGame()
-    broadcast(waitingRoomGuest.html)
+
 ~~~
 
-### returnToMainReceived(userNickname)
+### setAdb1a(message)
 
 ~~~ pseudo
-    sendMessageTo(userNickname, mainPage.html)
+    firstAdaptation = 1a;
+    broadcast(sendMessage({"Type": "chooseAdp1a", "From": "server", "To": "client", "When": "when a host client selects the adaptation 1a"}))
 ~~~
 
-### playerEventReceived(playerNickname)
+### setAdb1b(message)
 
 ~~~ pseudo
-    waitingRoomGuest.html = updateWaitingRoomGuest(option)
-    broadcast(waitingRoomGuest.html)
+    firstAdaptation = 1b;
+    broadcast(sendMessage({"Type": "chooseAdp1b", "From": "server", "To": "client", "When": "when a host client selects the adaptation 1b"}))
 ~~~
 
-### handleCorrectMatch(playerNickname,pos x pos y)
+### setAdb2a(message)
 
 ~~~ pseudo
-    if option = "true"
-        game.html = updateGame(option)
-        broadcast(game.html)
+    firstAdaptation = 2a;
+    broadcast(sendMessage({"Type": "chooseAdp2a", "From": "server", "To": "client", "When": "when a host client selects the adaptation 2a"}))
 ~~~
 
-### handleWrongMatch(playerNickname,pos x pos y)
+### setAdb2b(message)
 
 ~~~ pseudo
-    if option = "false"
-        game.html = updateGame(option)
-        broadcast(game.html)
+    firstAdaptation = 2b;
+    broadcast(sendMessage({"Type": "chooseAdp2b", "From": "server", "To": "client", "When": "when a host client selects the adaptation 2b"}))
 ~~~
 
-### handleScores(playerNickname)
+### setAdb3a(message)
 
 ~~~ pseudo
-    if option Add= "true"
-        score ++
-        game.html = updateGame(option)
-        broadcast(game.html)
-    else 
-        score --
-        game.html = updateGame(option)
-        broadcast(game.html)
+    firstAdaptation = 3a;
+    broadcast(sendMessage({"Type": "chooseAdp3a", "From": "server", "To": "client", "When": "when a host client selects the adaptation 3a"}))
 ~~~
 
-### timesUp(playerNickname, matchStatus)
+### setAdb3b(message)
 
 ~~~ pseudo
-    broadcast(game.html)
-    while time != "0"
-        timesUp = false
-    game.html = updateGame(option)
-    broadcast(game.html,timesUp)  
+    firstAdaptation = 3b;
+    broadcast(sendMessage({"Type": "chooseAdp3b", "From": "server", "To": "client", "When": "when a host client selects the adaptation 3b"}))
+~~~
+
+### setMaxTime(message)
+
+~~~ pseudo
+    maxTime = message.maxTime;
+    broadcast(sendMessage({"Type": "setMaxTime", "From": "server", "To": "client", "When": "when a host client change the max time", "MaxTime": 40}))
+~~~
+
+### setCardsPerPlayer(message)
+
+~~~ pseudo
+    cardsPerPlayer = message.cardsPerPlayer;
+    broadcast(sendMessage({"Type": "setCardsPerPlayer", "From": "server", "To": "client", "When": "when a host client change the cards per player", "CardsPerPlayer": 10}))
+~~~
+
+### setCardsPerRound(message)
+
+~~~ pseudo
+    cardsPerRound = message.CardsPerRound;
+    broadcast(sendMessage({"Type": "setCardsPerRound", "From": "server", "To": "client", "When": "when a host client change the cards per round", "CardsPerRound": 130}))
+~~~
+
+### removePlayer(message)
+
+~~~ pseudo
+    nickname = message.Nickname;
+    room = message.Room;
+    remove(nickname, room);
+    broadcast(sendMessage({"Type": "removePlayer", "From": "server", "To": "client", "When": "when a client selects the leave botton", “Nickname”: “Cris”, "Room": 1234}))
+~~~
+
+### timesUp(message)
+
+~~~ pseudo
+    broadcast(sendMessage({"Type": "timesUp", "From": "server", "To": "client", "When": "when times up in a game"}))
+~~~
+
+### isCorectMatch(message)
+
+~~~ pseudo
+    if(message.PlayerCard == message.BoardCard) {
+        sendMessage({"Type": "CorectMatch", "From": "server", "To": "client", "When": "When a client makes a successful match", "Score": +1})
+        broadcast(sendMessage({"Type": "CorectMatch", "From": "server", "To": "client", "When": "When a client makes a successful match", "ScoresTable": }))
+    } else {
+        sendMessage({"Type": "IncorrectMatch", "From": "server", "To": "client", "When": "When a client makes a wrong match", "Score": -1})
+        broadcast(sendMessage({"Type": "IncorrectMatch", "From": "server", "To": "client", "When": "When a client makes a wrong match", "ScoresTable": }))
+    }
 ~~~
 
 ### applyBlur(playerNickname)  
@@ -1106,23 +1120,4 @@ Estas se representan con un color morado.
 ~~~ pseudo
         game.html = updateGame(playerNickname,blur)
         broadcast(game.html,timesUp)
-~~~
-
-### matchReceived(playerNickname, x, y, cardInfo)
-
-~~~ pseudo
-    if cardInfo = getCard(x,y):
-        waitingRoomGuest.html = updateWaitingRoomGuest(true, playerNickname, score)
-        broadcast(waitingRoomGuest.html)
-    else:
-        waitingRoomGuest.html = updateWaitingRoomGuest(false)
-        sendMessageTo(playerNickname, waitingRoomGuest.html)
-~~~
-
-### finishGameReceived
-
-~~~ pseudo
-    if time = 0 || cards = 0:
-        endGameURL = assembleEndRoom()
-        broadcast(endGameURL)
 ~~~
