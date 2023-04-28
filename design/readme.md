@@ -940,74 +940,112 @@ Estas se representan con un color morado.
 ### handleBlur
 
 ~~~ pseudo
-
+    from = server.url;
+    to = client.url;
+    typeMessage = applyBlur;
+    when = "blur activated";
+    sendMessage(from, to, typeMessage, when, room);
+    applyBlur(users);
 ~~~
 
-### timesUP
+### timesUp
 
 ~~~ pseudo
-
+    from = server.url;
+    to = client.url;
+    typeMessage = timesUp;
+    when = "time runs out";
+    sendMessage(from, to, typeMessage, when, ranking);
+    if ranking#1 is me
+        popUp("you are the winner")
+    else
+        popUp ("you finished in _ position")
 ~~~
 
-### handlePersonalScore
+### handlePersonalScore (lowerScore or incrementScore)
 
 ~~~ pseudo
-
+    from = server.url;
+    to = client.url;
+    typeMessage = scores;
+    when = "score has changed";
+    newScore =myScore(add or substract)
+    myScore=newScore   
+    return myScore
+    
 ~~~
 
 ### handleScores
 
 ~~~ pseudo
-
+    from = server.url;
+    to = client.url;
+    typeMessage = scores;
+    when = "scores have changed";
+    sendMessage(from, to, typeMessage, when, ranking);
 ~~~
 
 ### cardMatched(rowClicked, columnClicked)
 
 ~~~ pseudo
-    matchInformation.json << player = userNickname << matchRow = rowClicked << matchColumn = columnClicked
-    valid = sendMessage(userNickname, "post matchInformation.json")
-    if valid = true
-        pageChange = sendMessage(userNickname, "get incrementScore")
+    from = client.url;
+    to = server.url;
+    typeMessage = matchCards;
+    when = "match is chosen";    
+    if card(rowClicked & columnClicked) = myCard
+        matchIsCorrect = true
         updatePage(pageChange)
     else
-        pageChange = sendMessage(userNickname, "get wrongMatch")
+        matchIsCorrect = false
         updatePage(pageChange)
 ~~~
 
-### handleWrongMatch
+### handleMatchResponse (matchIsCorrect)
 
 ~~~ pseudo
-
+    from = server.url;
+    to = client.url;
+    typeMessage = matchResponse;
+    if matchIsCorrect
+        when = "match done";
+        incrementScore
+    else
+        when = "not a match";
+        lowerScore
+    sendMessage(from, to, typeMessage, when);
+    updateScore(myScore);
 ~~~
 
-### handleCorrectMatch
+### cardsFinished
 
 ~~~ pseudo
-
-~~~
-
-### cardsFiniched
-
-~~~ pseudo
-
+    from = client.url;
+    to = server.url;
+    typeMessage = cardsOnHand;
+    when = "out of cards";
+    sendMessage(from, to, typeMessage, when, room);
 ~~~
 
 ### applyExtraCards
 
 ~~~ pseudo
-
+    from = client.url;
+    to = server.url;
+    typeMessage = cardsOnHand;
+    when = "extra cards added";
+    for player in room
+        sendMessage(from, to, typeMessage, when, room);
 ~~~
 
 ### handleExtraCards
 
 ~~~ pseudo
-
-~~~
-
-### deductPoints
-
-~~~ pseudo
-
+    from = server.url;
+    to = client.url;
+    typeMessage = cardsOnHand;
+    when = "cards added to hand";
+    sendMessage(from, to, typeMessage, when, room, # of cards);
+    extraCardsOnHand(# of cards, user);
 ~~~
 
 ### winGame(message)
