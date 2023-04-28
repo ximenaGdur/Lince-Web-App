@@ -728,45 +728,93 @@ Estas se representan con un color morado.
 ### handleCardsPerPlayer(numCards)
 
 ~~~ pseudo
-    foreach player in players:
-        ListCards cards = ListCards (numCards)
-        player.cards = cards
+    {    
+        "from": "server",
+        "to":   ["guest1", "guest2",..., "guestN"],
+        cards:[
+            {
+                "userName": "guest1",
+                "cardList": ["cheese.png","glasses",...,"pig"]
+            },
+            {
+                "userName": "guest2",
+                "cardList": ["overall.png","horse",...,"watch"]
+            }
+        ],
+        "game": {
+            "cardsPerPlayer": {numCards}
+        }
+    }
 ~~~
 
 ### handleMaxTime(maxTime)
 
 ~~~ pseudo
-    game.maxTime = this.maxTime
+    {
+        "from": "server",
+        "to": ["guest1", "guest2",..., "guestN"],
+        "game": {
+            "setMaxTime": "maxTime"
+        }
+    }
 ~~~
 
 ### handleFirstAdaptation(adaption)
 
 ~~~ pseudo
-    game.firstAdaption = adaption
+    {
+        "from": "server",
+        "to": ["guest1", "guest2",..., "guestN"],
+        "game": {
+            "setFirstAdaption": "adaption"
+        }
+    }
 ~~~
 
 ### handleSecondAdaptation(adaption)
 
 ~~~ pseudo
-    game.secondAdaption = adaption
+    {
+        "from": "server",
+        "to": ["guest1", "guest2",..., "guestN"],
+        "game": {
+            "setSecondAdaption": "adaption"
+        }
+    }
 ~~~
 
 ### handleThirdAdaptation(adaption)
 
 ~~~ pseudo
-    game.thirdAdaption = adaption
+    {
+        "from": "server",
+        "to": ["guest1", "guest2",..., "guestN"],
+        "game": {
+            "setThirdAdaption": "adaption"
+        }
+    }
 ~~~
 
 ### handleNewPlayer(newPlayer)
 
 ~~~ pseudo
-    players.push(newPlayer)
+    {
+        "from": "server"
+        "to": ["guest1", "guest2",..., "guestN"],
+        "players": ["guest1", "guest2",..., "guestN","newPlayer"] 
+    }
 ~~~
 
 ### handleStartGame
 
 ~~~ pseudo
-    game.status = started
+    {
+        from: "server"
+        to: ["guest1", "guest2",..., "guestN"],
+        "game": {
+            "gameStatus": "start"
+        }
+    }
 
 ~~~
 
@@ -839,10 +887,15 @@ Estas se representan con un color morado.
     updatePage(pageChange)
 ~~~
 
-### removePlayer
+### removePlayer(playerNickName)
 
 ~~~ pseudo
-
+    "from": "server",
+    "to": ["guest1", "guest2",..., "guestN"],
+    "players": ["guest1", "guest2",..., "guestN","newPlayer"],
+    "game": {
+        "removed":  ["playerNickName"]
+    }
 ~~~
 
 ### startGame
@@ -855,13 +908,33 @@ Estas se representan con un color morado.
 ### multiplyPoints
 
 ~~~ pseudo
-
+    {
+        "from": "server",
+        "to": ["guest1", "guest2",..., "guestN"],
+        "players": [
+            {
+                "nickName": "guest1",
+                "score": "2134" * 1.5
+            }
+        ]
+    }
 ~~~
 
 ### applyBlur
 
 ~~~ pseudo
-
+    "from": "server",
+    "to": ["guest1", "guest2",..., "guestN"],
+    "game": {
+        "effect":[
+            {
+                "from": "user1",
+                "to": ["user3"],
+                "type": "blur",
+                "durationTime": "50000"
+            }
+        ]
+    }
 ~~~
 
 ### handleBlur
