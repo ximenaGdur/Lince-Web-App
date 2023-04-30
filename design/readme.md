@@ -5,17 +5,15 @@ La siguiente imágen representa el mapa del sitio:
 ![Mapa del sitio](images/mapSite/siteMap.svg)
 
 Como se puede observar existen dos caminos dependiendo del rol que se escogió.
-Si escogió ser un anfitrión, este es dirigido a la sala de espera de su cuarto. 
+Si escogió ser un anfitrión, este es dirigido a la sala de espera de su cuarto.
 En caso de ser invitado, este debe ingresar un código de sala proporcionado por su anfitrión.
 En ambos casos, el jugador tiene la posibilidad de devolverse a la página de inicio.
 
-Al final, ambos roles culminan en la sala del juego, en la cual pueden jugar ***¡Muy Lentos!*** con sus amigos. 
+Al final, ambos roles culminan en la sala del juego, en la cual pueden jugar ***¡Muy Lentos!*** con sus amigos.
 Al final de la ronda, los jugadores los jugadores se enfrentan a una pantalla emergente que muestra si ganaron.
 De aquí tienen la posibilidad de unirse nuevamente a la sala o devolverse a la página de inicio.
 
-
-
-# Wireframes
+## Wireframes
 
 A continuación se muestran los wireframes de las pantallas de juego.
 
@@ -76,13 +74,12 @@ Una imágen más detallada de esta ventana se muestra a continuación.
 
 ![PopUp código incorrecto](images/wireframes/popUpCodeIncorrect.svg)
 
-
 ## Sala de Espera
 
-Esta pantalla se le muestra a un usuario que desea participar de una sesión. 
+Esta pantalla se le muestra a un usuario que desea participar de una sesión.
 Esta pantalla tiene diferentes opciones que dependen del rol que el jugador escogió.
 
-Al mantener el mouse sobre el ícono i, se muestra más información acerca las funcionalidades del juego y las configuraciones que se pueden realizar. 
+Al mantener el mouse sobre el ícono i, se muestra más información acerca las funcionalidades del juego y las configuraciones que se pueden realizar.
 Ambos roles de la página (anfitrión e invitado) pueden ver esta información.
 
 Esta información se muestra en la siguiente imágen.
@@ -102,16 +99,16 @@ Al hacer click en el botón de COMENZAR, comienza la sesión de juego y los juga
 ### Para un invitado
 
 En caso de escoger unirse a una sala existente, el usuario puede observar los cambios hechos por el anfitrióna a la configuración del juego en tiempo real.
-Sin emabargo, no puede editar nada. 
+Sin emabargo, no puede editar nada.
 
 Al hacer click en el botón de SALIR, se saldrá de la sesión y será redireccionado a la página de inicio.
 
 ![Sala de espera para invitado](images/wireframes/waitingRoomGuest.svg)
 
-
 ## Sala de juego
 
 Esta pantalla se muestra cuando el anfitrión decide iniciar el juego y contiene:
+
 - Tablero con fichas: es compartido entre todos los jugadores y se actualiza conforme los jugadores hacen parejas.
 - Mano del jugador actual: contiene la cantidad de fichas que se configuró antes de iniciar la ronda.
 - El tiempo que durará la partida
@@ -137,13 +134,9 @@ En la siguiente pantalla se muestra el estado de la sala de juego luego de que 1
 
 ![Pantalla de juego avanzada usando funcionalidad de palabras](images/wireframes/gameScreenWords.svg)
 
-
-Por último, al terminar la partida se le muestra una ventana emergente personalizada según su estado como ganador o perdedor del juego. 
+Por último, al terminar la partida se le muestra una ventana emergente personalizada según su estado como ganador o perdedor del juego.
 El usuario puede escoger continuar con la partida o volver a la pantalla de inicio.
 En este caso, si el anfitrión se sale, cierra la sala.
-
-
-
 
 ![PopUp perdedor](images/wireframes/popUpLoser.svg)
 
