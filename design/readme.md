@@ -638,65 +638,25 @@ Estas se representan con un color morado.
 
 ## Algoritmos de las transiciones de la máquina de estados del Cliente
 
-### showRanking()
+### enterNickName(playerNickname)
 
 ~~~ pseudo
-    from = client.url;
-    to = server.url;
-    typeMessage = getRanking;
-    when = "when a client presses the classification button";
-    sendMessage(from, to, typeMessage, when);
+    nickname = playerNickname;
+    btnCreateSession.enable;
+    btnJoinSession.enable;
 ~~~
 
-### handleRanking(message)
+### closeTab()
 
 ~~~ pseudo
-    rankingButton.disable;
-    changeRanking(message);
+    sendMessage({"Type": "closeTab", "From": "client", "To": "server", "When": "when a client logs off", "Session": "client.url"})
 ~~~
 
-### showCredits()
+### createSession()
 
 ~~~ pseudo
-    from = client.url;
-    to = server.url;
-    typeMessage = getCredits;
-    when = "when a client presses the credits button";
-    sendMessage(from, to, typeMessage, when);
-~~~
-
-### handleCredits(message)
-
-~~~ pseudo
-    creditsButton.disable;
-    changeCredits(message);
-~~~
-
-### showInstructions()
-
-~~~ pseudo
-    from = client.url;
-    to = server.url;
-    typeMessage = getInstructions;
-    when = "when a client presses the instructions button";
-    sendMessage(from, to, typeMessage, when);
-~~~
-
-### handleInstructions(message)
-
-~~~ pseudo
-    instructionsButton.disable;
-    changeInstructions(message);
-~~~
-
-### enterNickName()
-
-~~~ pseudo
-    from = client.url;
-    to = server.url;
-    typeMessage = validateNickname;
-    when = "when a client types in the nickname field"
-    sendMessage(from, to, typeMessage, when);
+    sendMessage({"Type": "createSession", "From": "client", "To": "server", "When": "when a client creates a session", "Nickname": "Cris"});
+    redirectTo(waitingRoomURL);
 ~~~
 
 ### showCodePopUp()
@@ -711,12 +671,53 @@ Estas se representan con un color morado.
     codePopUP.hide();
 ~~~
 
-### joinSession(userNickname, roomId)
+### checkRoomCode()
 
 ~~~ pseudo
-    userInformation.json << type = "joinSession" << from = userNickname << to = server << userNickname = newNickame << room = roomId
-    waitingRoomURL = sendMessage(userNickname, "get waitingRoomGuest userInformation.json")
-    redirectTo(waitingRoomURL)
+    sendMessage({"Type": "checkRoomCode", "From": "client", "To": "server", "When": "when a client types a session code to join", "SessionCode": 1234});
+~~~
+
+### joinSession()
+
+~~~ pseudo
+    sendMessage({"Type": "joinSession", "From": "client", "To": "server", "When": "when a client presses the join session button", "Nickname": "Cris", "SessionCode": 1234});
+    redirectTo(waitingRoomURL);
+~~~
+
+### chooseAdp1a()
+
+~~~ pseudo
+    sendMessage({"Type": "chooseAdp1a", "From": "client", "To": "server", "When": "when a host client selects the adaptation 1a", "Nickname": "Cris", "SessionCode": 1234});
+~~~
+
+### chooseAdp1b()
+
+~~~ pseudo
+    sendMessage({"Type": "chooseAdp1b", "From": "client", "To": "server", "When": "when a host client selects the adaptation 1b", "Nickname": "Cris", "SessionCode": 1234});
+~~~
+
+### chooseAdp2a()
+
+~~~ pseudo
+    sendMessage({"Type": "chooseAdp2a", "From": "client", "To": "server", "When": "when a host client selects the adaptation 2a", "Nickname": "Cris", "SessionCode": 1234});
+~~~
+
+### chooseAdp2b()
+
+~~~ pseudo
+    sendMessage({"Type": "chooseAdp2b", "From": "client", "To": "server", "When": "when a host client selects the adaptation 2b", "Nickname": "Cris", "SessionCode": 1234});
+~~~
+
+### chooseAdp3a()
+
+~~~ pseudo
+    sendMessage({"Type": "chooseAdp3a", "From": "client", "To": "server", "When": "when a host client selects the adaptation 3a", "Nickname": "Cris", "SessionCode": 1234});
+~~~
+
+### chooseAdp3b()
+
+~~~ pseudo
+    sendMessage({"Type": "chooseAdp3b", "From": "client", "To": "server", "When": "when a host client selects the adaptation 3b", "Nickname": "Cris", "SessionCode": 1234});
 ~~~
 
 ### handleCardsPerRound(message)
@@ -818,15 +819,6 @@ Estas se representan con un color morado.
 
 ~~~
 
-### createSession(userNickname)
-
-~~~ pseudo
-    userInformation.json << type = "createSession" << from = newNickame << to = server << userNickname = newNickame
-    waitingRoomURL, roomId = sendMessage(userNickname, "get userInformation.json")
-    configuration.json << roomId
-    redirectTo(waitingRoomURL)
-~~~
-
 ### changeCardsPerRound(cardAmount)
 
 ~~~ pseudo
@@ -847,42 +839,6 @@ Estas se representan con un color morado.
 
 ~~~ pseudo
     configuration.json << type = "changeMaxTime" << from = userNickname << to = server << maxTime = chosenTime
-    pageChange = sendMessage(userNickname, "post configuration.json")
-    updatePage(pageChange)
-~~~
-
-### changeFirstAdaptation(option)
-
-~~~ pseudo
-    if option  = 0:
-        configuration.json << type = "changeFirstAdaptation" << from = userNickname << to = server << firstAdaptationA = yes
-    if option = 1:
-        configuration.json << type = "changeFirstAdaptation" << from = userNickname << to = server << firstAdaptationB = yes
-
-    pageChange = sendMessage(userNickname, "post configuration.json")
-    updatePage(pageChange)
-~~~
-
-### changeSecondAdaptation(option)
-
-~~~ pseudo
-    if option  = 0:
-        configuration.json << type = "changeSecondAdaptation" << from = userNickname << to = server << secondAdaptationA = yes
-    if option = 1:
-        configuration.json << type = "changeSecondAdaptation" << from = userNickname << to = server << secondAdaptationB = yes
-
-    pageChange = sendMessage(userNickname, "post configuration.json")
-    updatePage(pageChange)
-~~~
-
-### changeThirdAdaptation(option)
-
-~~~ pseudo
-    if option  = 0:
-        configuration.json << type = "changeThirdAdaptation" << from = userNickname << to = server << thirdAdaptationA = yes
-    if option = 1:
-        configuration.json << type = "changeThirdAdaptation" << from = userNickname << to = server << thirdAdaptationB = yes
-
     pageChange = sendMessage(userNickname, "post configuration.json")
     updatePage(pageChange)
 ~~~
@@ -1127,16 +1083,24 @@ Estas se representan con un color morado.
 
 ## Algoritmos de las transiciones de la máquina de estados del Servidor
 
-### closeConnection()
+### closeConnection(message)
 
 ~~~ pseudo
-
+    client = message.Client;
+    connection.close(client);
 ~~~
 
-### joinRoom()
+### joinRoom(message)
 
 ~~~ pseudo
-
+    client = message.Client;
+    room = message.Room;
+    if(client == host) {
+        newRoom = createRoom(client);
+    } else {
+        newPlayer = addPlayer(client);
+        broadcast(sendMessage({"Type": "joinRoom", "From": "server", "To": "client", "When": "when a guest client wants to join a room, “Nickname”: “client”, "Room": room"}))
+    }
 ~~~
 
 ### setAdb1a(message)
@@ -1229,9 +1193,23 @@ Estas se representan con un color morado.
     }
 ~~~
 
-### applyBlur(playerNickname)  
+### receiveFinished(message)  
 
 ~~~ pseudo
-        game.html = updateGame(playerNickname,blur)
-        broadcast(game.html,timesUp)
+    winner = message.nickname;
+    broadcast(gameOver, sendmessage({"Type": "gameOver", "From": "server", "To": "client", "When": "When a client runs out of cards", "Winner": winner, "ScoresTable": }));
+~~~
+
+### applyBlur(message)  
+
+~~~ pseudo
+    client = message.client;
+    broadcast(sendMessage({"Type": "blurApplied", "From": "server", "To": "client", "When": "When the blur is activated on the player who goes first", "BlurryPlayer": "message.nickname"}))
+~~~
+
+### applyExtraCards(message)  
+
+~~~ pseudo
+    client = message.client;
+    broadcast(sendMessage({"Type": "extraCardsApplied", "From": "server", "To": "client", "When": "when activated for players not in first place", "ExtraCardsPlayers": {"Cris", "Xime", "Gian"}}))
 ~~~
