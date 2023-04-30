@@ -1,85 +1,149 @@
-# Wireframes
-
-## Mapa del sitio
+# Mapa del sitio
 
 La siguiente imágen representa el mapa del sitio:
 
 ![Mapa del sitio](images/mapSite/siteMap.svg)
 
-Como se puede observar existen dos caminos dependiendo de el rol que se escogió.
-En caso de ser un anfitrión, este se encarga de crear una sala y configurar el modo de juego.
-Por esto mismo, su sala de espera es diferente para permitirle realizar estos cambios.
+Como se puede observar existen dos caminos dependiendo del rol que se escogió.
+Si escogió ser un anfitrión, este es dirigido a la sala de espera de su cuarto. 
+En caso de ser invitado, este debe ingresar un código de sala proporcionado por su anfitrión.
+En ambos casos, el jugador tiene la posibilidad de devolverse a la página de inicio.
 
-En el caso del invitado, este debe ingresar un código de sala proporcionado por su anfitrión.
-Su sala de espera permite que este observe los cambios que se realizan al modo de juego.
+Al final, ambos roles culminan en la sala del juego, en la cual pueden jugar ***¡Muy Lentos!*** con sus amigos. 
+Al final de la ronda, los jugadores los jugadores se enfrentan a una pantalla emergente que muestra si ganaron.
+De aquí tienen la posibilidad de unirse nuevamente a la sala o devolverse a la página de inicio.
 
-Al final, ambos roles culminan en la sala del juego.
-En esta pantalla pueden jugar ***¡Muy Lentos!*** con sus amigos.
+
+
+# Wireframes
+
+A continuación se muestran los wireframes de las pantallas de juego.
 
 ## Página Principal
 
-Esta será la primera pantalla que verá un usuario al ingresar al juego, en esta encontra los botones para poder crear o unirse a una.
+Esta es la primera pantalla que ve un usuario al ingresar al sitio web. En esta puede ver información acerca del juego y sus creadores y también podrá crear o unirse a una sala de juego.
 
-Como se observa en la siguiente imágen, usted podrá crear o ingresar a una sala solamente si ya ingresó su apodo.
-![Página principal](images/wireframes/homeBasic.svg)
+Como se observa en la siguiente imágen, el usuario podrá crear o ingresar a una sala solamente si ya ingresó su apodo.
+
+![Página principal con botones deshabilitados](images/wireframes/homeBasic.svg)
+
+Una vez ingresado el apodo, se habilitan los botones como se evidencia en las siguientes secciones.
 
 ### Instruciones del juego
 
-Al dar click en el botón "¿Cómo jugar?" de la barra, se podrán vizualizar las  instrucciones del juego por medio de un video explicativo.
+Al dar click en el botón "¿Cómo jugar?" de la barra, se podrán vizualizar las instrucciones del juego por medio de un video explicativo.
+
 ![Instrucciones](images/wireframes/homeInstructions.svg)
+
+#### Ventana emergente para ingresar el código de sala
+
+En la imágen anterior se muestra una ventana emergente que se despliega al hacer click sobre el botón de Unir a Sala.
+
+Una imágen más detallada de esta ventana se muestra a continuación.
+
+![PopUp ingresar código](images/wireframes/popUpCodeEmpty.svg)
 
 ### Tabla de mejores puntajes
 
-Al dar click en el botón "Clasificación" de la barra, en el cuadro de texto se mostrara un historial de los 3 mejores puntajes que han existido en el juego.
+Al dar click en el botón "Clasificación" de la barra, se mostrara un historial de los 3 mejores puntajes que los jugadores han alcanzado en el juego.
+
+Si el usuario pasa el mouse sobre el ícono de la i, puede conocer más acerca de la opción de crear o unirse a la sala. Esta información se muestra en la siguiente imágen.
 
 ![Mejores puntajes](images/wireframes/homeLeaderboard.svg)
 
+#### Ventana emergente con código de sala correcto
+
+En la imágen anterior se muestra la ventana emergente que se despliega al tratar de unirse a una sala existente.
+Esta imágen muestra un ejemplo en el que el usuario ingresa un código de sala real, por lo que se le habilita el botón que le permite ingresar a la sala.
+
+Una imágen más detallada de esta ventana se muestra a continuación.
+
+![PopUp código correcto](images/wireframes/popUpCodeCorrect.svg)
+
 ### Créditos
 
-Al dar click en el botón "Créditos" de la barra, se mostrará la información al respecto sobre los desarrolladores del juego ***¡Muy Lentos!*** y las debidas referencias de todo material de terceros utilizado para el desarrollo del mismo.
+Al dar click en el botón "Créditos" de la barra, se mostrará la información relacionada a los desarrolladores del juego ***¡Muy Lentos!*** y las debidas referencias de todo material de terceros utilizado para el desarrollo del mismo.
 
 ![Créditos](images/wireframes/homeCredits.svg)
 
+#### Ventana emergente con código de sala incorrecta
+
+En la imágen anterior se muestra la ventana emergente que se despliega al tratar de unirse a una sala que no existe.
+Esta imágen muestra un ejemplo en el que el usuario ingresa un código incorrecto.
+En este caso, se le indica al usuario que esa sala no existe, por lo que no se le puede habilitar el botón para ingresar a la sala.
+
+Una imágen más detallada de esta ventana se muestra a continuación.
+
+![PopUp código incorrecto](images/wireframes/popUpCodeIncorrect.svg)
+
+
 ## Sala de Espera
+
+Esta pantalla se le muestra a un usuario que desea participar de una sesión. 
+Esta pantalla tiene diferentes opciones que dependen del rol que el jugador escogió.
+
+Al mantener el mouse sobre el ícono i, se muestra más información acerca las funcionalidades del juego y las configuraciones que se pueden realizar. 
+Ambos roles de la página (anfitrión e invitado) pueden ver esta información.
+
+Esta información se muestra en la siguiente imágen.
+
+![Sala de espera con más información](images/wireframes/waitingRoomHost.svg)
 
 ### Para un anfitrión
 
-En el caso de un anfitrión, este tiene los permisos necesarios para configurar el juego a su gusto.
-Además de esto, el anfitrión puede modificar los nombres de los jugadores y al hacer click en el botón de SALIR, terminará la sesión y será redireccionado a la página de inicio.
+En caso de escoger alojar una sala, el usuario tiene la posibilidad de configurar el tiempo que va a durar la ronda, la cantidad de fichas en la mano del jugador, la cantidad de fichas durante la ronda y las modalidades de juego que desea activas.
+
+Al hacer click en el botón de SALIR, terminará la sesión y los jugadores serán redireccionado a la página de inicio.
+
+Al hacer click en el botón de COMENZAR, comienza la sesión de juego y los jugadores son redireccionados a la pantalla de juego.
 
 ![Sala de espera para anfitrión](images/wireframes/waitingRoomInit.svg)
 
 ### Para un invitado
 
-En el caso de un invitado, este puede observar los cambios hechos a la configuración del juego por parte del anfitrión en tiempo real.
-Sin emabargo, no puede editar nada. Al hacer click en el botón de SALIR, se saldrá de la sesión y será redireccionado a la página de inicio.
+En caso de escoger unirse a una sala existente, el usuario puede observar los cambios hechos por el anfitrióna a la configuración del juego en tiempo real.
+Sin emabargo, no puede editar nada. 
+
+Al hacer click en el botón de SALIR, se saldrá de la sesión y será redireccionado a la página de inicio.
 
 ![Sala de espera para invitado](images/wireframes/waitingRoomGuest.svg)
 
-### Información disponible al mantener en el mouse sobre el ícono 'i'
 
-Al mantener el mouse sobre el ícono, en caso de una página web, se mostrará más información acerca de ese campo.
-Ambos roles de la página (anfitrión e invitado) pueden ver esta información.
+## Sala de juego
 
-![Sala de espera con más información](images/wireframes/waitingRoomHost.svg)
+Esta pantalla se muestra cuando el anfitrión decide iniciar el juego y contiene:
+- Tablero con fichas: es compartido entre todos los jugadores y se actualiza conforme los jugadores hacen parejas.
+- Mano del jugador actual: contiene la cantidad de fichas que se configuró antes de iniciar la ronda.
+- El tiempo que durará la partida
+- Los puntajes y posiciones de todos en la misma partida
+- Si se activó la funcionalidad de los comodines, se mostrará si se aplicó alguno.
 
-## Tablero del juego
+La siguiente pantalla es la sala de juego en su estado inicial.
 
-Como se observan en las siguientes imágenes, dichas corresponden a imágenes de partidas ya iniciados o en curso donde se puede ver la manta o tablero de imágenes, las fichas que yo como jugador tengo, el tiempo de la partida, los puntajes y posiciones de todos en la misma partida y si existe o se activará algún comodín/mejora/sanción para alguno de los jugadores. Además se puede observar el mensaje de advertencia que le saldría a un jugador en caso de que quiera abandonar una partida antes de que esta termine.
+![Pantalla de juego inicial](images/wireframes/initialGameScreen.svg)
 
-![Pantalla de juego](images/wireframes/gameScreen.svg)
+En la siguiente pantalla se muestra el estado de la sala de juego luego de que 15 segundos pasaron. Además, en esta partida se habilitó la funcionalidad de los comodines y la de los colores.
 
-![Mensaje de advertencia](images/wireframes/gameScreenExit.svg)
+Además en esta pantalla se puede el ventana emergente que le saldría a un jugador en caso de que quiera abandonar una partida antes de que esta termine.
+Si el anfitrión se sale, se termina la partida inmediatamente y se cierra la sala.
 
-![Pantalla de juego](images/wireframes/gameScreenWords.svg)
+![Pantalla de juego avanzada usando funcionalidad de colores](images/wireframes/gameScreenColors.svg)
 
-## PopUps del juego
+A continuación una imágen más detallada de esta ventana.
 
-![PopUp ingresar código](images/wireframes/popUpCodeEmpty.svg)
+![Ventana emergente al intentar salir de la partida](images/wireframes/popUpExitGame.svg)
 
-![PopUp código incorrecto](images/wireframes/popUpCodeIncorrect.svg)
+En la siguiente pantalla se muestra el estado de la sala de juego luego de que 15 segundos pasaron. Además, en esta partida se habilitó la funcionalidad de las palabras.
 
-![PopUp código correcto](images/wireframes/popUpCodeCorrect.svg)
+![Pantalla de juego avanzada usando funcionalidad de palabras](images/wireframes/gameScreenWords.svg)
+
+
+Por último, al terminar la partida se le muestra una ventana emergente personalizada según su estado como ganador o perdedor del juego. 
+El usuario puede escoger continuar con la partida o volver a la pantalla de inicio.
+En este caso, si el anfitrión se sale, cierra la sala.
+
+
+
 
 ![PopUp perdedor](images/wireframes/popUpLoser.svg)
 
