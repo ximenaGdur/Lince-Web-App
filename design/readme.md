@@ -780,124 +780,68 @@ Estas se representan con un color morado.
 ### handleCardsPerRound(message)
 
 ~~~ pseudo
-    cardsPerRound = message.object;
+    cardsPerRound = message;
 ~~~
 
 ### handleCardsPerPlayer(numCards)
 
 ~~~ pseudo
-    {    
-        "from": "server",
-        "to":   ["guest1", "guest2",..., "guestN"],
-        cards:[
-            {
-                "userName": "guest1",
-                "cardList": ["cheese.png","glasses",...,"pig"]
-            },
-            {
-                "userName": "guest2",
-                "cardList": ["overall.png","horse",...,"watch"]
-            }
-        ],
-        "game": {
-            "cardsPerPlayer": {numCards}
-        }
-    }
+    cardsPerPlayer = numCards
 ~~~
 
 ### handleMaxTime(maxTime)
 
 ~~~ pseudo
-    {
-        "from": "server",
-        "to": ["guest1", "guest2",..., "guestN"],
-        "game": {
-            "setMaxTime": "maxTime"
-        }
-    }
+    maxTime = maxTime
 ~~~
 
 ### handleFirstAdaptation(adaption)
 
 ~~~ pseudo
-    {
-        "from": "server",
-        "to": ["guest1", "guest2",..., "guestN"],
-        "game": {
-            "setFirstAdaption": "adaption"
-        }
-    }
+    setFirstAdaption = adaption
 ~~~
 
 ### handleSecondAdaptation(adaption)
 
 ~~~ pseudo
-    {
-        "from": "server",
-        "to": ["guest1", "guest2",..., "guestN"],
-        "game": {
-            "setSecondAdaption": "adaption"
-        }
-    }
+    setSecondAdaption = adaption
 ~~~
 
 ### handleThirdAdaptation(adaption)
 
 ~~~ pseudo
-    {
-        "from": "server",
-        "to": ["guest1", "guest2",..., "guestN"],
-        "game": {
-            "setThirdAdaption": "adaption"
-        }
-    }
+    setThirdAdaption = adaption
 ~~~
 
 ### handleNewPlayer(newPlayer)
 
 ~~~ pseudo
-    {
-        "from": "server"
-        "to": ["guest1", "guest2",..., "guestN"],
-        "players": ["guest1", "guest2",..., "guestN","newPlayer"] 
-    }
+    players.push(newPlayer)
 ~~~
 
 ### handleStartGame
 
 ~~~ pseudo
-    {
-        from: "server"
-        to: ["guest1", "guest2",..., "guestN"],
-        "game": {
-            "gameStatus": "start"
-        }
-    }
-
+    gameStatus = start
+    redirect(gamePage)
 ~~~
 
 ### changeCardsPerRound(cardAmount)
 
 ~~~ pseudo
-    configuration.json << type = "changeCardsPerRound" << from = userNickname << to = server << cardsPerRound  = cardAmount
-    pageChange = sendMessage(userNickname, "post configuration.json")
-    updatePage(pageChange)
+    cardsPerRound  = cardAmount
 ~~~
 
-### changeCardsPerPlayer(cardAmount)
+### changeCardsPerPlayer(numCards)
 
 ~~~ pseudo
-    configuration.json << type = "changeCardsPerPlayer" << from = userNickname << to = server << cardsPerPlayer = cardAmount 
-    pageChange = sendMessage(userNickname, "post configuration.json")
-    updatePage(pageChange)
+    cardsPerPlayer = numCards
 ~~~
 
 ### changeMaxTime(chosenTime)
 
 ~~~ pseudo
-    configuration.json << type = "changeMaxTime" << from = userNickname << to = server << maxTime = chosenTime
-    pageChange = sendMessage(userNickname, "post configuration.json")
-    updatePage(pageChange)
+    maxTime = chosenTime
 ~~~
 
 ### removePlayer(playerNickName)
