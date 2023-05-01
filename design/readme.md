@@ -785,124 +785,68 @@ Estas se representan con un color morado.
 ### handleCardsPerRound(message)
 
 ~~~ pseudo
-    cardsPerRound = message.object;
+    cardsPerRound = message;
 ~~~
 
 ### handleCardsPerPlayer(numCards)
 
 ~~~ pseudo
-    {    
-        "from": "server",
-        "to":   ["guest1", "guest2",..., "guestN"],
-        cards:[
-            {
-                "userName": "guest1",
-                "cardList": ["cheese.png","glasses",...,"pig"]
-            },
-            {
-                "userName": "guest2",
-                "cardList": ["overall.png","horse",...,"watch"]
-            }
-        ],
-        "game": {
-            "cardsPerPlayer": {numCards}
-        }
-    }
+    cardsPerPlayer = numCards
 ~~~
 
 ### handleMaxTime(maxTime)
 
 ~~~ pseudo
-    {
-        "from": "server",
-        "to": ["guest1", "guest2",..., "guestN"],
-        "game": {
-            "setMaxTime": "maxTime"
-        }
-    }
+    maxTime = maxTime
 ~~~
 
 ### handleFirstAdaptation(adaption)
 
 ~~~ pseudo
-    {
-        "from": "server",
-        "to": ["guest1", "guest2",..., "guestN"],
-        "game": {
-            "setFirstAdaption": "adaption"
-        }
-    }
+    setFirstAdaption = adaption
 ~~~
 
 ### handleSecondAdaptation(adaption)
 
 ~~~ pseudo
-    {
-        "from": "server",
-        "to": ["guest1", "guest2",..., "guestN"],
-        "game": {
-            "setSecondAdaption": "adaption"
-        }
-    }
+    setSecondAdaption = adaption
 ~~~
 
 ### handleThirdAdaptation(adaption)
 
 ~~~ pseudo
-    {
-        "from": "server",
-        "to": ["guest1", "guest2",..., "guestN"],
-        "game": {
-            "setThirdAdaption": "adaption"
-        }
-    }
+    setThirdAdaption = adaption
 ~~~
 
 ### handleNewPlayer(newPlayer)
 
 ~~~ pseudo
-    {
-        "from": "server"
-        "to": ["guest1", "guest2",..., "guestN"],
-        "players": ["guest1", "guest2",..., "guestN","newPlayer"] 
-    }
+    players.push(newPlayer)
 ~~~
 
 ### handleStartGame
 
 ~~~ pseudo
-    {
-        from: "server"
-        to: ["guest1", "guest2",..., "guestN"],
-        "game": {
-            "gameStatus": "start"
-        }
-    }
-
+    gameStatus = start
+    redirect(gamePage)
 ~~~
 
 ### changeCardsPerRound(cardAmount)
 
 ~~~ pseudo
-    configuration.json << type = "changeCardsPerRound" << from = userNickname << to = server << cardsPerRound  = cardAmount
-    pageChange = sendMessage(userNickname, "post configuration.json")
-    updatePage(pageChange)
+    cardsPerRound  = cardAmount
 ~~~
 
-### changeCardsPerPlayer(cardAmount)
+### changeCardsPerPlayer(numCards)
 
 ~~~ pseudo
-    configuration.json << type = "changeCardsPerPlayer" << from = userNickname << to = server << cardsPerPlayer = cardAmount 
-    pageChange = sendMessage(userNickname, "post configuration.json")
-    updatePage(pageChange)
+    cardsPerPlayer = numCards
 ~~~
 
 ### changeMaxTime(chosenTime)
 
 ~~~ pseudo
-    configuration.json << type = "changeMaxTime" << from = userNickname << to = server << maxTime = chosenTime
-    pageChange = sendMessage(userNickname, "post configuration.json")
-    updatePage(pageChange)
+    maxTime = chosenTime
 ~~~
 
 ### removePlayer(playerNickName)
@@ -958,58 +902,36 @@ Estas se representan con un color morado.
 ### handleBlur
 
 ~~~ pseudo
-    from = server.url;
-    to = client.url;
-    typeMessage = applyBlur;
-    when = "blur activated";
-    sendMessage(from, to, typeMessage, when, room);
-    applyBlur(users);
+    applyBlur();
 ~~~
 
 ### timesUp
 
 ~~~ pseudo
-    from = server.url;
-    to = client.url;
-    typeMessage = timesUp;
-    when = "time runs out";
-    sendMessage(from, to, typeMessage, when, ranking);
+    broadcast(sendMessage({"Type": "timesUp", "From": "server", "To": "client", "When": "when time runs out"}))
     if ranking#1 is me
-        popUp("you are the winner")
+        popUp("you are the winner");
     else
-        popUp ("you finished in _ position")
+        popUp("you finished in _ position");
 ~~~
 
-### handlePersonalScore (lowerScore or incrementScore)
+### handlePersonalScore (newScore)
 
 ~~~ pseudo
-    from = server.url;
-    to = client.url;
-    typeMessage = scores;
-    when = "score has changed";
-    newScore =myScore(add or substract)
-    myScore=newScore   
+    newScore = myScore +- newScore(lowerScore or incrementScore)
+    myScore = newScore   
     return myScore
-    
 ~~~
 
-### handleScores
+### handleScores(scores)
 
 ~~~ pseudo
-    from = server.url;
-    to = client.url;
-    typeMessage = scores;
-    when = "scores have changed";
-    sendMessage(from, to, typeMessage, when, ranking);
+    ranking = scores;
 ~~~
 
 ### cardMatched(rowClicked, columnClicked)
 
-~~~ pseudo
-    from = client.url;
-    to = server.url;
-    typeMessage = matchCards;
-    when = "match is chosen";    
+~~~ pseudo    
     if card(rowClicked & columnClicked) = myCard
         matchIsCorrect = true
         updatePage(pageChange)
@@ -1021,49 +943,29 @@ Estas se representan con un color morado.
 ### handleMatchResponse (matchIsCorrect)
 
 ~~~ pseudo
-    from = server.url;
-    to = client.url;
-    typeMessage = matchResponse;
     if matchIsCorrect
-        when = "match done";
         incrementScore
     else
-        when = "not a match";
         lowerScore
-    sendMessage(from, to, typeMessage, when);
     updateScore(myScore);
 ~~~
 
 ### cardsFinished
 
 ~~~ pseudo
-    from = client.url;
-    to = server.url;
-    typeMessage = cardsOnHand;
-    when = "out of cards";
-    sendMessage(from, to, typeMessage, when, room);
+    sendMessage({"Type": "cardsFinished", "From": "client", "To": "server", "When": "cards on hand are finished", "Nickname": "Cris", "SessionCode": 1234});
 ~~~
 
 ### applyExtraCards
 
 ~~~ pseudo
-    from = client.url;
-    to = server.url;
-    typeMessage = cardsOnHand;
-    when = "extra cards added";
-    for player in room
-        sendMessage(from, to, typeMessage, when, room);
+    sendMessage({"Type": "extraCards", "From": "client", "To": "server", "When": "extra cards are being added", "Nickname": "Cris", "SessionCode": 1234});
 ~~~
 
-### handleExtraCards
+### handleExtraCards(extraCards)
 
 ~~~ pseudo
-    from = server.url;
-    to = client.url;
-    typeMessage = cardsOnHand;
-    when = "cards added to hand";
-    sendMessage(from, to, typeMessage, when, room, # of cards);
-    extraCardsOnHand(# of cards, user);
+    cards[] = cards[] +- extraCards[];
 ~~~
 
 ### winGame(message)
@@ -1084,56 +986,17 @@ Estas se representan con un color morado.
 ### continueGame
 
 ~~~ pseudo
-    from = client.url;
-    to = server.url;
-    typeMessage = returnToWaitingRoom;
-    when = "When a client presses the return to waiting room button";
-    nickname = "Cris";
-    room = 1234;
-    sendMessage(from, to, typeMessage, when, nickname, room);
+    sendMessage({"Type": "continueGame", "From": "client", "To": "server", "When": "game continues", "Nickname": "Cris", "SessionCode": 1234});
+    redirectTo(waitingRoomURL)
 ~~~
 
 ### returnToMain
 
 ~~~ pseudo
     userConfirmation = askConfirmation()
-
     if userConfirmation = yes:
         mainRoomURL = sendMessage(userNickname, "get mainRoom")
         redirectTo(mainRoomURL)
-~~~
-
-### acceptReturnMain
-
-~~~ pseudo
-    from = client.url;
-    to = server.url;
-    typeMessage = acceptReturnMain;
-    when = "When a client agrees to return to the home page";
-    nickname = "Cris";
-    room = 1234;
-    sendMessage(from, to, typeMessage, when, nickname, room);
-~~~
-
-### cancelReturnMain
-
-~~~ pseudo
-    from = client.url;
-    to = server.url;
-    typeMessage = acceptReturnMain;
-    when = "When a client not agrees to return to the home page";
-    nickname = "Cris";
-    room = 1234;
-    sendMessage(from, to, typeMessage, when, nickname, room);
-~~~
-
-### executePlayerEvent(eventType, eventTime)
-
-~~~ pseudo
-    eventInformation.json << player = userNickname << type = eventType << time = eventTime
-    pageChange = sendMessage(userNickname, "post eventInformation.json")
-    updatePage(pageChange)
-    // con lo que me retorna, actualiza mi pagina y la de los demas
 ~~~
 
 ### finishGame
