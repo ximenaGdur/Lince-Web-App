@@ -119,22 +119,27 @@ La siguiente pantalla es la sala de juego en su estado inicial.
 
 ![Pantalla de juego inicial](images/wireframes/initialGameScreen.svg)
 
-En la siguiente pantalla se muestra el estado de la sala de juego luego de que 15 segundos pasaron. Además, en esta partida se habilitó la funcionalidad de los comodines y la de los colores.
+En las siguientes pantalla se muestra el estado de la sala de juego luego de que 15 segundos pasaron. 
 
-Además en esta pantalla se puede el ventana emergente que le saldría a un jugador en caso de que quiera abandonar una partida antes de que esta termine.
-Si el anfitrión se sale, se termina la partida inmediatamente y se cierra la sala.
+En esta partida se habilitó la funcionalidad de los comodines y la de los colores.
 
 ![Pantalla de juego avanzada usando funcionalidad de colores](images/wireframes/gameScreenColors.svg)
+
+En esta partida se habilitó la funcionalidad de los colores y las palabras.
+
+![Pantalla de juego avanzada usando funcionalidad de palabras](images/wireframes/gameScreenWords.svg)
+
+En caso que el jugador desee abandonar una partida antes de que esta termine, se le muestra una ventana emergente.
+El usuario puede escoger salirse o permanecer en la partida.
+Si el anfitrión se sale, cierra la sala.
+
+![Pantalla de juego donde el jugador pidió salirse de la partida](images/wireframes/exitGameScreen.svg)
 
 A continuación una imágen más detallada de esta ventana.
 
 ![Ventana emergente al intentar salir de la partida](images/wireframes/popUpExitGame.svg)
 
-En la siguiente pantalla se muestra el estado de la sala de juego luego de que 15 segundos pasaron. Además, en esta partida se habilitó la funcionalidad de las palabras.
-
-![Pantalla de juego avanzada usando funcionalidad de palabras](images/wireframes/gameScreenWords.svg)
-
-Por último, al terminar la partida se le muestra una ventana emergente personalizada según su estado como ganador o perdedor del juego.
+Por último, al terminar la partida, se le muestra al usuario una ventana emergente personalizada según su estado como ganador o perdedor del juego.
 El usuario puede escoger continuar con la partida o volver a la pantalla de inicio.
 En este caso, si el anfitrión se sale, cierra la sala.
 
