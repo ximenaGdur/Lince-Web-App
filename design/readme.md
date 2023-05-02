@@ -791,84 +791,84 @@ Estas se representan con un color morado.
 #### enterNickName(playerNickname)
 
 ~~~ js
-    nickname = playerNickname
-    btnCreateSession.enable
-    btnJoinSession.enable
+nickname = playerNickname
+btnCreateSession.enable
+btnJoinSession.enable
 ~~~
 
 #### closeTab()
 
 ~~~ js
-    sendMessage({
-        "Type": "closeTab", 
-        "From": "client", 
-        "To": "server", 
-        "When": "when a client logs off"
-    })
+sendMessage({
+    "Type": "closeTab", 
+    "From": "client", 
+    "To": "server", 
+    "When": "when a client logs off"
+})
 ~~~
 
 #### createSession(playerNickname)
 
 ~~~ js
-    sendMessage({
-        "Type": "createSession", 
-        "From": "client", 
-        "To": "server", 
-        "When": "when a client presses the create room button with a valid nickname", 
-        "Nickname": playerNickname
-    })
-    // As a host
-    redirectTo(waitingRoomURL)
+sendMessage({
+    "Type": "createSession", 
+    "From": "client", 
+    "To": "server", 
+    "When": "when a client presses the create room button with a valid nickname", 
+    "Nickname": playerNickname
+})
+// As a host
+redirectTo(waitingRoomURL)
 ~~~
 
 #### showCodePopUp()
 
 ~~~ js
-    codePopUP.show()
+codePopUP.show()
 ~~~
 
 #### cancelCodePopUp()
 
 ~~~ js
-    codePopUP.hide()
+codePopUP.hide()
 ~~~
 
 #### checkRoomCode(code)
 
 ~~~ js
-    sendMessage({
-        "Type": "checkRoomCode", 
-        "From": "client", 
-        "To": "server", 
-        "When": "when a client types a room code", 
-        "SessionCode": code
-    })
+sendMessage({
+    "Type": "checkRoomCode", 
+    "From": "client", 
+    "To": "server", 
+    "When": "when a client types a room code", 
+    "SessionCode": code
+})
 ~~~
 
 #### handleCodeValidation(codeExists)
 
 ~~~ js
-    if codeExists == true
-        codePopUP.isCorrect()
-        btnJoin.enable
-    else
-        codePopUP.isWrong()
+if codeExists == true
+    codePopUP.isCorrect()
+    btnJoin.enable
+else
+    codePopUP.isWrong()
 ~~~
 
 #### joinSession(name, code)
 
 ~~~ js
-    codePopUP.hide()
-    sendMessage({
-        "Type": "joinSession", 
-        "From": "client", 
-        "To": "server", 
-        "When": "when a client presses the join session button", 
-        "Nickname": name, 
-        "SessionCode": code
-    })
-    // As a guest
-    redirectTo(waitingRoomURL)
+codePopUP.hide()
+sendMessage({
+    "Type": "joinSession", 
+    "From": "client", 
+    "To": "server", 
+    "When": "when a client presses the join session button", 
+    "Nickname": name, 
+    "SessionCode": code
+})
+// As a guest
+redirectTo(waitingRoomURL)
 ~~~
 
 ### Sala de espera
@@ -876,236 +876,245 @@ Estas se representan con un color morado.
 #### chooseAdp1a(name, code)
 
 ~~~ js
-    sendMessage({
-        "Type": "chooseAdp1a", 
-        "From": "client", 
-        "To": "server", 
-        "When": "when a host client selects the adaptation 1a", 
-        "Nickname": name, 
-        "SessionCode": code
-    })
+sendMessage({
+    "Type": "chooseAdp1a", 
+    "From": "client", 
+    "To": "server", 
+    "When": "when a host client selects the adaptation 1a", 
+    "Nickname": name, 
+    "SessionCode": code
+})
 ~~~
 
 #### chooseAdp1b(name, code)
 
 ~~~ js
-    sendMessage({
-        "Type": "chooseAdp1b", 
-        "From": "client", 
-        "To": "server", 
-        "When": "when a host client selects the adaptation 1b", 
-        "Nickname": name, 
-        "SessionCode": code
-    })
+sendMessage({
+    "Type": "chooseAdp1b", 
+    "From": "client", 
+    "To": "server", 
+    "When": "when a host client selects the adaptation 1b", 
+    "Nickname": name, 
+    "SessionCode": code
+})
 ~~~
 
 #### chooseAdp2a(name, code)
 
 ~~~ js
-    sendMessage({
-        "Type": "chooseAdp2a", 
-        "From": "client", 
-        "To": "server", 
-        "When": "when a host client selects the adaptation 2a", 
-        "Nickname": name, 
-        "SessionCode": code
-    })
+sendMessage({
+    "Type": "chooseAdp2a", 
+    "From": "client", 
+    "To": "server", 
+    "When": "when a host client selects the adaptation 2a", 
+    "Nickname": name, 
+    "SessionCode": code
+})
 ~~~
 
 #### chooseAdp2b(name, code)
 
 ~~~ js
-    sendMessage({
-        "Type": "chooseAdp2b", 
-        "From": "client", 
-        "To": "server", 
-        "When": "when a host client selects the adaptation 2b", 
-        "Nickname": name, 
-        "SessionCode": code
-    })
+sendMessage({
+    "Type": "chooseAdp2b", 
+    "From": "client", 
+    "To": "server", 
+    "When": "when a host client selects the adaptation 2b", 
+    "Nickname": name, 
+    "SessionCode": code
+})
 ~~~
 
 #### chooseAdp3a(name, code)
 
 ~~~ js
-    sendMessage({
-        "Type": "chooseAdp3a", 
-        "From": "client", 
-        "To": "server", 
-        "When": "when a host client selects the adaptation 3a", 
-        "Nickname": name, 
-        "SessionCode": code
-    })
+sendMessage({
+    "Type": "chooseAdp3a", 
+    "From": "client", 
+    "To": "server", 
+    "When": "when a host client selects the adaptation 3a", 
+    "Nickname": name, 
+    "SessionCode": code
+})
 ~~~
 
 #### chooseAdp3b(name, code)
 
 ~~~ js
-    sendMessage({
-        "Type": "chooseAdp3b", 
-        "From": "client", 
-        "To": "server", 
-        "When": "when a host client selects the adaptation 3b", 
-        "Nickname": name, 
-        "SessionCode": code
-    })
+sendMessage({
+    "Type": "chooseAdp3b", 
+    "From": "client", 
+    "To": "server", 
+    "When": "when a host client selects the adaptation 3b", 
+    "Nickname": name, 
+    "SessionCode": code
+})
 ~~~
 
 #### chooseMaxTime(time, name, code)
 
 ~~~ js
-    sendMessage({
-        "Type": "chooseMaxTime", 
-        "From": "client", 
-        "To": "server", 
-        "When": "when a host client change the max time", 
-        "MaxTime": time, 
-        "Nickname": name, 
-        "SessionCode": code
-    })
+sendMessage({
+    "Type": "chooseMaxTime", 
+    "From": "client", 
+    "To": "server", 
+    "When": "when a host client change the max time", 
+    "MaxTime": time, 
+    "Nickname": name, 
+    "SessionCode": code
+})
 ~~~
 
 #### chooseCardsPerRound(numCards, name, code)
 
 ~~~ js
-    sendMessage({
-        "Type": "chooseMaxTime", 
-        "From": "client", 
-        "To": "server", 
-        "When": "when a host client change the amount of card per round", 
-        "CardsPerRound": numCards, 
-        "Nickname": name, 
-        "SessionCode": code
-    })
+sendMessage({
+    "Type": "chooseMaxTime", 
+    "From": "client", 
+    "To": "server", 
+    "When": "when a host client change the amount of card per round", 
+    "CardsPerRound": numCards, 
+    "Nickname": name, 
+    "SessionCode": code
+})
 ~~~
 
 #### chooseCardsPerPlayer(numCards, name, code)
 
 ~~~ js
-    sendMessage({
-        "Type": "chooseCardsPerPlayer",
-        "From": "client",
-        "To": "server",
-        "When": "when a host client change the cards per player",
-        "CardsPerPlayer": numCards,
-        "Nickname": name,
-        "SessionCode": code
-    })
+sendMessage({
+    "Type": "chooseCardsPerPlayer",
+    "From": "client",
+    "To": "server",
+    "When": "when a host client change the cards per player",
+    "CardsPerPlayer": numCards,
+    "Nickname": name,
+    "SessionCode": code
+})
 ~~~
 
 #### handleNewPlayer(playerNickName)
 
 ~~~ js
-    players.push(playerNickName)
-    updatePlayerList()
+players.push(playerNickName)
+updatePlayerList()
 ~~~
 
 #### removePlayer(playerNickName)
 
 ~~~ js
-    players.pop(playerNickName)
-    updatePlayerList()
+players.pop(playerNickName)
+updatePlayerList()
 ~~~
 
 #### handleCardsPerRound(numCards)
 
 ~~~ js
-    cardsPerRound = numCards
+cardsPerRound = numCards
+updateScreen()
 ~~~
 
 #### handleCardsPerPlayer(numCards)
 
 ~~~ js
-    cardsPerPlayer = numCards
+cardsPerPlayer = numCards
+updateScreen()
 ~~~
 
 #### handleMaxTime(time)
 
 ~~~ js
-    maxTime = time
+maxTime = time
+updateScreen()
 ~~~
 
 #### handleAdp1a()
 
 ~~~ js
-    adp1a = true
+adp1a = true
+updateScreen()
 ~~~
 
 #### handleAdp1b()
 
 ~~~ js
-    adp1b = true
+adp1b = true
+updateScreen()
 ~~~
 
 #### handleAdp2a()
 
 ~~~ js
-    adp2a = true
+adp2a = true
+updateScreen()
 ~~~
 
 #### handleAdp2b()
 
 ~~~ js
-    adp2b = true
+adp2b = true
+updateScreen()
 ~~~
 
 #### handleAdp3a()
 
 ~~~ js
-    adp3a = true
+adp3a = true
+updateScreen()
 ~~~
 
 #### handleAdp3b()
 
 ~~~ js
-    adp3b = true
+adp3b = true
+updateScreen()
 ~~~
 
 #### showExitPopUp()
 
 ~~~ js
-    exitPopUp.show()
+exitPopUp.show()
 ~~~
 
 #### returnToMain(name, code)
 
 ~~~ js
-    exitPopUp.hide()
-    sendMessage({
-        "Type": "returnToMain",
-        "From": "client",
-        "To": "server",
-        "When": "when a host client selects the leave botton",
-        "Nickname": name,
-        "SessionCode": code
-    })
-    redirectTo(mainRoomURL)
+exitPopUp.hide()
+sendMessage({
+    "Type": "returnToMain",
+    "From": "client",
+    "To": "server",
+    "When": "when a host client selects the leave botton",
+    "Nickname": name,
+    "SessionCode": code
+})
+redirectTo(mainRoomURL)
 ~~~
 
 #### cancelExitPopUp()
 
 ~~~ js
-    exitPopUp.hide()
+exitPopUp.hide()
 ~~~
 
 #### startGame(name, code)
 
 ~~~ js
-    sendMessage({
-        "Type": "startGame",
-        "From": "client",
-        "To": "server",
-        "When": "when a host client selects the start game botton",
-        "Nickname": name,
-        "SessionCode": code
-    })
-    redirectTo(gamePageURL)
+sendMessage({
+    "Type": "startGame",
+    "From": "client",
+    "To": "server",
+    "When": "when a host client selects the start game botton",
+    "Nickname": name,
+    "SessionCode": code
+})
+redirectTo(gamePageURL)
 ~~~
 
 #### handleStartGame(gamePageURL)
 
 ~~~ js
-    redirectTo(gamePageURL)
+redirectTo(gamePageURL)
 ~~~
 
 ### Pantalla de juego
@@ -1113,112 +1122,112 @@ Estas se representan con un color morado.
 #### match(playerCard, boardCard, name, code)
 
 ~~~ js    
-    sendMessage({
-        "Type": "match",
-        "From": "client",
-        "To": "server",
-        "When": "when a player makes a match",
-        "Nickname": name,
-        "SessionCode": code,
-        "Column": boardCard.getColumn(),
-        "Row": boardCard.getRow(),
-        "Card": playerCard.getDescription()
-    })
+sendMessage({
+    "Type": "match",
+    "From": "client",
+    "To": "server",
+    "When": "when a player makes a match",
+    "Nickname": name,
+    "SessionCode": code,
+    "Column": boardCard.getColumn(),
+    "Row": boardCard.getRow(),
+    "Card": playerCard.getDescription()
+})
 ~~~
 
 #### handleMatchResponse(isCorrect, newScore, playerCard, oldBoardCard, newBoardCard)
 
 ~~~ js
-    playerScore = newScore
-    updateScore()
-    if isCorrect == true:
-        hand.remove(playerCard)
-        board.update(oldBoardCard, newBoardCard)
-    else:
-        showMistake()
+playerScore = newScore
+updateScore()
+if isCorrect == true:
+    hand.remove(playerCard)
+    board.update(oldBoardCard, newBoardCard)
+else
+    showMistake()
 ~~~
 
 #### applyBlur(name, code)
 ~~~ js    
-    sendMessage({
-        "Type": "applyBlur",
-        "From": "client",
-        "To": "server",
-        "When": "when a client applies blur to other players",
-        "Nickname": name,
-        "SessionCode": code
-    })
+sendMessage({
+    "Type": "applyBlur",
+    "From": "client",
+    "To": "server",
+    "When": "when a client applies blur to other players",
+    "Nickname": name,
+    "SessionCode": code
+})
 ~~~
 
 #### handleBlur()
 
 ~~~ js
-    gameTiles.makeBlurred()
+gameTiles.makeBlurred()
 ~~~
 
 #### applyExtraCards(name, code)
 
 ~~~ js
-    sendMessage({
-        "Type": "applyExtraCards", 
-        "From": "client", 
-        "To": "server", 
-        "When": "when a client adds cards to other players", 
-        "Nickname": name, 
-        "SessionCode": code
-    });
+sendMessage({
+    "Type": "applyExtraCards", 
+    "From": "client", 
+    "To": "server", 
+    "When": "when a client adds cards to other players", 
+    "Nickname": name, 
+    "SessionCode": code
+})
 ~~~
 
 #### handleExtraCards(extraCards[])
 
 ~~~ js
-    for card in extraCards
-        playerCards.push(card);
+for card in extraCards
+    playerCards.push(card)
     updatePlayerHand()
 ~~~
 
 #### handleScores(scores[])
 
 ~~~ js
-    for playerIndex < playerAmount
-        players[playerIndex].updateScore(scores[playerIndex])
+for playerIndex < playerAmount
+    players[playerIndex].updateScore(scores[playerIndex])
 ~~~
 
 #### handleTimesUp(ranking[])
 
 ~~~ js
-    if ranking[0] == playerName
-        winnerPopUp.show(ranking)
-    else
-        loserPopUp.show(ranking)
+if ranking[0] == playerName
+    winnerPopUp.show(ranking)
+else
+    loserPopUp.show(ranking)
 ~~~
 
 #### handleCardsFinished(name, code)
 
 ~~~ js
-    sendMessage({
-        "Type": "handleCardsFinished", 
-        "From": "client", 
-        "To": "server", 
-        "When": "when player's cards run out", 
-        "Nickname": name, 
-        "SessionCode": code
-    });
+sendMessage({
+    "Type": "handleCardsFinished", 
+    "From": "client", 
+    "To": "server", 
+    "When": "when player's cards run out", 
+    "Nickname": name, 
+    "SessionCode": code
+})
 ~~~
 
 #### continueGame(name, code)
 
 ~~~ js
-    sendMessage({
-        "Type": "continueGame", 
-        "From": "client", 
-        "To": "server", 
-        "When": "player wants to continue", 
-        "Nickname": name, 
-        "SessionCode": code
-    });
+sendMessage({
+    "Type": "continueGame", 
+    "From": "client", 
+    "To": "server", 
+    "When": "player wants to continue", 
+    "Nickname": name, 
+    "SessionCode": code
+})
 
-    redirectTo(waitingRoomURL)
+redirectTo(waitingRoomURL)
 ~~~
 
 ## Del Servidor
@@ -1228,47 +1237,47 @@ Estas se representan con un color morado.
 #### validateCode(client, room)
 
 ~~~ js
-    if code in availableRooms
-        sendMessage({
-            "Type": "handleCodeValidation", 
-            "From": "server", 
-            "To": client, 
-            "When": "When the server validates room",
-            "isValid": "true"
-        })
-    else
-        sendMessage({
-            "Type": "handleCodeValidation", 
-            "From": "server", 
-            "To": client, 
-            "When": "When the server validates room",
-            "isValid": "false"
-        })
+if code in availableRooms
+    sendMessage({
+        "Type": "handleCodeValidation", 
+        "From": "server", 
+        "To": client, 
+        "When": "When the server validates room",
+        "isValid": "true"
+    })
+else
+    sendMessage({
+        "Type": "handleCodeValidation", 
+        "From": "server", 
+        "To": client, 
+        "When": "When the server validates room",
+        "isValid": "false"
+    })
 ~~~
 
 #### createSession(nickname)
 
 ~~~ js
-    newRoom = createRoom()
-    newRoom.addHost(nickname)
-    // send waiting room
+newRoom = createRoom()
+newRoom.addHost(nickname)
+// send waiting room
 ~~~
 
 #### joinToSession(nickname, roomCode)
 
 ~~~ js
-    for player in rooms[roomCode].getPlayers()
-        sendMessage({
-            "Type": "handleNewPlayer", 
-            "From": "server", 
-            "To": player, 
-            "When": "When the server lets clients know a new player has been added", 
-            "Nickname": nickname, 
-            "SessionCode": roomCode
-        })
-    
-    rooms[roomCode].addPlayer(nickname)
-    // send waiting room
+for player in rooms[roomCode].getPlayers()
+    sendMessage({
+        "Type": "handleNewPlayer", 
+        "From": "server", 
+        "To": player, 
+        "When": "When the server lets clients know a new player has been added", 
+        "Nickname": nickname, 
+        "SessionCode": roomCode
+    })
+
+rooms[roomCode].addPlayer(nickname)
+// send waiting room
 ~~~
 
 ### Sala de Espera
@@ -1276,135 +1285,135 @@ Estas se representan con un color morado.
 #### setAdp1a(nickname, roomCode)
 
 ~~~ js
-    for player in rooms[roomCode].getPlayers()
-        if player != nickname
-            sendMessage({
-                "Type": "chooseAdp1a", 
-                "From": "server", 
-                "To": player, 
-                "When": "When the server lets players know adaptation 1a has been activated"
-            })
+for player in rooms[roomCode].getPlayers()
+    if player != nickname
+        sendMessage({
+            "Type": "chooseAdp1a", 
+            "From": "server", 
+            "To": player, 
+            "When": "When the server lets players know adaptation 1a has been activated"
+        })
 ~~~
 
 #### setAdp1b(nickname, roomCode)
 
 ~~~ js
-    for player in rooms[roomCode].getPlayers()
-        if player != nickname
-            sendMessage({
-                "Type": "chooseAdp1b", 
-                "From": "server", 
-                "To": player, 
-                "When": "When the server lets players know adaptation 1b has been activated"
-            })
+for player in rooms[roomCode].getPlayers()
+    if player != nickname
+        sendMessage({
+            "Type": "chooseAdp1b", 
+            "From": "server", 
+            "To": player, 
+            "When": "When the server lets players know adaptation 1b has been activated"
+        })
 ~~~
 
 #### setAdp2a(nickname, roomCode)
 
 ~~~ js
-    for player in rooms[roomCode].getPlayers()
-        if player != nickname
-            sendMessage({
-                "Type": "chooseAdp2a", 
-                "From": "server", 
-                "To": player, 
-                "When": "When the server lets players know adaptation 2a has been activated"
-            })
+for player in rooms[roomCode].getPlayers()
+    if player != nickname
+        sendMessage({
+            "Type": "chooseAdp2a", 
+            "From": "server", 
+            "To": player, 
+            "When": "When the server lets players know adaptation 2a has been activated"
+        })
 ~~~
 
 #### setAdp2b(nickname, roomCode)
 
 ~~~ js
-    for player in rooms[roomCode].getPlayers()
-        if player != nickname
-            sendMessage({
-                "Type": "chooseAdp2b", 
-                "From": "server", 
-                "To": player, 
-                "When": "When the server lets players know adaptation 2b has been activated"
-            })
+for player in rooms[roomCode].getPlayers()
+    if player != nickname
+        sendMessage({
+            "Type": "chooseAdp2b", 
+            "From": "server", 
+            "To": player, 
+            "When": "When the server lets players know adaptation 2b has been activated"
+        })
 ~~~
 
 #### setAdp3a(nickname, roomCode)
 
 ~~~ js
-   for player in rooms[roomCode].getPlayers()
-        if player != nickname
-            sendMessage({
-                "Type": "chooseAdp3a", 
-                "From": "server", 
-                "To": player, 
-                "When": "When the server lets players know adaptation 3a has been activated"
-            })
+for player in rooms[roomCode].getPlayers()
+    if player != nickname
+        sendMessage({
+            "Type": "chooseAdp3a", 
+            "From": "server", 
+            "To": player, 
+            "When": "When the server lets players know adaptation 3a has been activated"
+        })
 ~~~
 
 #### setAdp3b(nickname, roomCode)
 
 ~~~ js
-    for player in rooms[roomCode].getPlayers()
-        if player != nickname
-            sendMessage({
-                "Type": "chooseAdp3b", 
-                "From": "server", 
-                "To": player, 
-                "When": "When the server lets players know adaptation 3b has been activated"
-            })
+for player in rooms[roomCode].getPlayers()
+    if player != nickname
+        sendMessage({
+            "Type": "chooseAdp3b", 
+            "From": "server", 
+            "To": player, 
+            "When": "When the server lets players know adaptation 3b has been activated"
+        })
 ~~~
 
 #### setMaxTime(maxTime, nickname, roomCode)
 
 ~~~ js
-    for player in rooms[roomCode].getPlayers()
-        if player != nickname
-            sendMessage({
-                "Type": "chooseMaxTime", 
-                "From": "server", 
-                "To": player, 
-                "When": "When the server lets players know to change the max time", 
-                "MaxTime": maxTime
-            })
+for player in rooms[roomCode].getPlayers()
+    if player != nickname
+        sendMessage({
+            "Type": "chooseMaxTime", 
+            "From": "server", 
+            "To": player, 
+            "When": "When the server lets players know to change the max time", 
+            "MaxTime": maxTime
+        })
 ~~~
 
 #### setCardsPerPlayer(cards, nickname, roomCode)
 
 ~~~ js
-    for player in rooms[roomCode].getPlayers()
-        if player != nickname
-            sendMessage({
-                "Type": "chooseCardsPerPlayer", 
-                "From": "server", 
-                "To": player, 
-                "When": "When the server lets players know to change the cards per player", 
-                "CardsPerPlayer": cards
-            })
+for player in rooms[roomCode].getPlayers()
+    if player != nickname
+        sendMessage({
+            "Type": "chooseCardsPerPlayer", 
+            "From": "server", 
+            "To": player, 
+            "When": "When the server lets players know to change the cards per player", 
+            "CardsPerPlayer": cards
+        })
 ~~~
 
 #### setCardsPerRound(cards, nickname, roomCode)
 
 ~~~ js
-    for player in rooms[roomCode].getPlayers()
-        if player != nickname
-            sendMessage({
-                "Type": "chooseCardsPerPlayer", 
-                "From": "server", 
-                "To": player, 
-                "When": "When the server lets players know to change the cards per round", 
-                "CardsPerRound": cards
-            })
+for player in rooms[roomCode].getPlayers()
+    if player != nickname
+        sendMessage({
+            "Type": "chooseCardsPerPlayer", 
+            "From": "server", 
+            "To": player, 
+            "When": "When the server lets players know to change the cards per round", 
+            "CardsPerRound": cards
+        })
 ~~~
 
 #### updatePlayers(nickname, roomCode)
 
 ~~~ js
-    rooms[roomCode].removePlayer(nickname)
-    for player in rooms[roomCode].getPlayers()
-        sendMessage({
-            "Type": "removePlayer", 
-            "From": "server", 
-            "To": player, 
-            "When": "When the server lets players know a player left the room",
-            "Nickname": nickname
-        })
+rooms[roomCode].removePlayer(nickname)
+for player in rooms[roomCode].getPlayers()
+    sendMessage({
+        "Type": "removePlayer", 
+        "From": "server", 
+        "To": player, 
+        "When": "When the server lets players know a player left the room",
+        "Nickname": nickname
+    })
 ~~~
 
 ### Pantalla de juego
@@ -1412,100 +1421,100 @@ Estas se representan con un color morado.
 #### startGame(roomCode)
 
 ~~~ js
-    for player in rooms[roomCode].getPlayers()
-        sendMessage({
-            "Type": "handleStartGame", 
-            "From": "server", 
-            "To": player, 
-            "When": "When the server lets players know game has started"
+for player in rooms[roomCode].getPlayers()
+    sendMessage({
+        "Type": "handleStartGame", 
+        "From": "server", 
+        "To": player, 
+        "When": "When the server lets players know game has started"
 ~~~
 
 #### timesUp()
 
 ~~~ js
-    when rooms[roomCode].getTime() == 0
-        ranking = makeJSON(rooms[roomCode].getRanking())
+when rooms[roomCode].getTime() == 0
+    ranking = makeJSON(rooms[roomCode].getRanking())
 
-        for player in rooms[roomCode].getPlayers()
-            sendMessage({
-                "Type": "handleTimesUp", 
-                "From": "server", 
-                "To": player, 
-                "When": "When the server lets players know times up",
-                "Ranking": ranking
-            }))
+    for player in rooms[roomCode].getPlayers()
+        sendMessage({
+            "Type": "handleTimesUp", 
+            "From": "server", 
+            "To": player, 
+            "When": "When the server lets players know times up",
+            "Ranking": ranking
+        }))
 ~~~
 
 #### receiveFinished(nickname, roomCode)  
 
 ~~~ js
-    ranking = makeJSON(rooms[roomCode].getRanking())
+ranking = makeJSON(rooms[roomCode].getRanking())
 
-    for player in rooms[roomCode].getPlayers()
-        sendMessage({
-            "Type": "handleCardsFinished", 
-            "From": "server", 
-            "To": player, 
-            "When": "When the server lets players know round is finished",
-            "Ranking": ranking
-        }))
+for player in rooms[roomCode].getPlayers()
+    sendMessage({
+        "Type": "handleCardsFinished", 
+        "From": "server", 
+        "To": player, 
+        "When": "When the server lets players know round is finished",
+        "Ranking": ranking
+    }))
 ~~~
 
 #### isCorectMatch(player, roomCode, column, row, card)
 
 ~~~ js
-    if rooms[roomCode].getCard(column, row) == card
-        rooms[roomCode].getPlayerScore(player) += 100
-    else
-        rooms[roomCode].getPlayerScore(player) -= 50
-    
-    sendMessage({
-        "Type": "handleMatchResponse", 
-        "From": "server", 
-        "To": player, 
-        "When": "When the server tells player if their match was correct or not", 
-        "Score": rooms[roomCode].getPlayerScore(player)
-    })
+if rooms[roomCode].getCard(column, row) == card
+    rooms[roomCode].getPlayerScore(player) += 100
+else
+    rooms[roomCode].getPlayerScore(player) -= 50
 
-    ranking = makeJSON(rooms[roomCode].getRanking())
-    for player in rooms[roomCode].getPlayers()
-        if player != nickname
-            sendMessage({
-                "Type": "handleScores", 
-                "From": "server", 
-                "To": player, 
-                "When": "When the server lets players know to update scores", 
-                "Ranking": ranking
-            })
+sendMessage({
+    "Type": "handleMatchResponse", 
+    "From": "server", 
+    "To": player, 
+    "When": "When the server tells player if their match was correct or not", 
+    "Score": rooms[roomCode].getPlayerScore(player)
+})
+
+ranking = makeJSON(rooms[roomCode].getRanking())
+for player in rooms[roomCode].getPlayers()
+    if player != nickname
+        sendMessage({
+            "Type": "handleScores", 
+            "From": "server", 
+            "To": player, 
+            "When": "When the server lets players know to update scores", 
+            "Ranking": ranking
+        })
 ~~~
 
 #### applyBlur(nickname, roomCode)  
 
 ~~~ js
-    for player in rooms[roomCode].getPlayers()
-        if player != nickname
-            sendMessage({
-                "Type": "handleBlur", 
-                "From": "server", 
-                "To": nickname, 
-                "When": "When the server lets players know to activate blur", 
-            })
+for player in rooms[roomCode].getPlayers()
+    if player != nickname
+        sendMessage({
+            "Type": "handleBlur", 
+            "From": "server", 
+            "To": nickname, 
+            "When": "When the server lets players know to activate blur", 
+        })
 ~~~
 
 #### applyExtraCards(nickname, roomCode)  
 
 ~~~ js
-    for player in rooms[roomCode].getPlayers()
-        cards = generateNewCards(roomCode)
-        extraCards.add(player, cards)
+for player in rooms[roomCode].getPlayers()
+    cards = generateNewCards(roomCode)
+    extraCards.add(player, cards)
 
-    for player in rooms[roomCode].getPlayers()
-        if player != nickname
-            sendMessage({
-                "Type": "handleExtraCards", 
-                "From": "server", 
-                "To": player, 
-                "When": "When the server lets players know to apply extra cards", 
-                "ExtraCards": extraCards
-            }))
+for player in rooms[roomCode].getPlayers()
+    if player != nickname
+        sendMessage({
+            "Type": "handleExtraCards", 
+            "From": "server", 
+            "To": player, 
+            "When": "When the server lets players know to apply extra cards", 
+            "ExtraCards": extraCards
+        }))
 ~~~
