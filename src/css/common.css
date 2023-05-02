@@ -1,0 +1,36 @@
+:root {
+    --whiteSmoke: #F6F3F4;
+    --isabelline: #EEE7E8;
+    --mimiPink: #E6CCD7;
+    --pinkLavender: #D9A4BC;
+    --thulianPink: #CC7BA1;
+    --skyMagenta: #C56CA2;
+    --plum: #9A4C95;
+    --finn: #743D74;
+    --violet: #4D2D52;
+    --darkPurple: #100E1B;
+}
+
+body {
+    background-color:var(--violet);
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.header {
+    background-color:var(--finn);
+    color:var(--darkPurple);
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: center;
+}
+
+.gameLogo {
+    padding-right: 2%;
+}
+

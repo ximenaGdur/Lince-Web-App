@@ -6,53 +6,53 @@
 		<meta name="keywords" content="Lince, Yo lo vi primero, Muy Lentos"/>
 		<meta name="author" content="Jimena Gdur Vargas"/>
 		<title>¡Muy Lentos!</title>
-		<link rel="icon" type="image/x-icon" href="../design/images/icons/favicon.png"/>
+		<link rel="icon" type="image/x-icon" href="../../design/images/icons/favicon.png"/>
+		<link rel="stylesheet" href="../css/homePage.css"/>
 	</head>
 	<body>
-		<header>
+		<header class="header">
 			<h1 class="headerTitle">¡Muy Lentos!</h1>
+			<img class="gameLogo" src="../../design/images/icons/logo.png" alt="logo de la juego"/>
 		</header>
 		<main>
 			<h1 class="pageTitle">Bienvenido al juego ¡Muy Lentos!</h1>
 			<!-- Contains main content of page -->
 			<section class="mainContent">
-				<!-- Allows user to add a nickname for the game -->
-				<ul class="nickname">
-					<li class="buttons">
-						<input class="textInput" type="text" />
-					</li>
-				</ul>
-				<!-- Contains buttons -->
-				<ul class="buttons">
-					<!-- Jumps to waiting room for host -->
-					<li id="createRoom" class="button">
-						<button type="button">
-							Crear sala
-						</button>
-						<img class="informationIcon" src="../design/Images/icons/informationIcon.png" alt="información"/>
-					</li>
-					<!-- Jumps to waiting room for guest -->
-					<li id="joinRoom" class="button">
-						<button type="button">
-							Unir a sala
-						</button>
-						<img class="informationIcon" src="../design/Images/icons/informationIcon.png" alt="información"/>
-					</li>
-				</ul>
+				<article class="inputAndButtons">
+					<!-- Allows user to add a nickname for the game -->
+					<input class="textInput" id="nickname" type="text" placeholder="Ingrese su apodo"/>
+					<!-- Contains buttons -->
+					<ul class="buttons">
+						<!-- Jumps to waiting room for host -->
+						<li type="buttonContainer">
+							<button id="createRoom">
+								Crear sala
+							</button>
+							<img class="informationIcon" src="../../design/Images/icons/informationIcon.png" alt="información"/>
+						</li>
+						<!-- Jumps to waiting room for guest -->
+						<li type="buttonContainer">
+							<button id="joinRoom">
+								Unir a sala
+							</button>
+							<img class="informationIcon" src="../../design/Images/icons/informationIcon.png" alt="información"/>
+						</li>
+					</ul>
+				</article>
 
 				<!-- Contains tab links -->
 				<ul class="tablinks">
-					<li class="button">
+					<li class="buttonContainer">
 						<button type="button">
 							¿Cómo Jugar?
 						</button>
 					</li>
-					<li class="button">
+					<li class="buttonContainer">
 						<button type="button">
 							Clasificación
 						</button>
 					</li>
-					<li class="button">
+					<li class="buttonContainer">
 						<button type="button">
 							Créditos
 						</button>

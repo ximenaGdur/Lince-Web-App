@@ -1,0 +1,66 @@
+/**
+  * CSS used for the home page.
+  * Created by Jimena Gdur Vargas.
+  */
+
+@import "common.css";
+
+.pageTitle {
+  color: var(--plum);
+  display: flex;
+  justify-content: center;
+  font: 5vw;
+}
+
+.inputAndButtons { 
+  display: flex;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.textInput {
+  border-style: solid;
+  border-color: var(--skyMagenta);
+  background-color: var(--pinkLavender);
+  color: var(--darkPurple);
+  height: 100%;
+  width: 30%;
+  padding: 1%;
+  text-align: center;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 20px;
+}
+
+::placeholder {
+  text-align: center;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 20px;
+  color: var(--plum);
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-left: 0;
+}
+
+/**
+.buttonContainer {
+  background-color: var(--skyMagenta);
+  color: var(--darkPurple);
+  padding: 1%;
+  width: 100%;
+  height: 100%;
+}
+
+button {
+  background-color: var(--skyMagenta);
+  color: var(--darkPurple);
+  text-align: center;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 15px;
+}
+*/
