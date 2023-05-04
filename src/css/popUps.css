@@ -46,7 +46,19 @@ body {
 }
 
 .btnCancel,
-.btnAccept {
+.btnAccept,
+.btnJoin {
     color: #100E1B;
-    margin-left: 2em;
+    margin-left: 2.7em;
+}
+
+.codeSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1em;
+}
+
+.codeSection p {
+    margin: 0;
 }
