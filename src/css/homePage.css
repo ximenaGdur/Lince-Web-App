@@ -217,3 +217,62 @@ video {
   color: var(--skyMagenta);
   font-weight: bold;
 }
+
+@media screen and (max-width: 933px) {
+  html {
+    display: flex;
+    flex-direction: column
+  }
+  body {
+    display: flex;
+    flex-direction: column
+  }
+  .header {
+    background-color:var(--finn);
+    color:var(--isabelline);
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 0 auto;
+    width: 100vw;
+}
+  #instructionButton, #rankingButton, #creditsButton {
+    height: 2em;
+    width: 40vw;
+    font-size: 3vw;
+    margin: 0 auto;
+  }
+  /** Style for tabs. **/
+  #instructionButton, #rankingButton, #creditsButton {
+    height: 2em;
+    width: 28.5vw;
+  }
+  .tabContent {
+    border-style: solid;
+    border-color: var(--plum);
+    width: 85vw;
+    margin-top: 0.01em;
+    margin-bottom: 2em;
+    font-size: 3vw;
+    border-radius: 3px;
+    margin-left: 0 auto;
+    margin-right: 0 auto;
+  }
+  video {
+    height: 45vw;
+    width: 85vw;
+  }
+  /** Style for ranking section. **/
+  #ranking {
+    display: flex;
+    justify-content: center;
+  }
+  #credits {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
