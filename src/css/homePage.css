@@ -5,18 +5,6 @@
 
 @import "common.css";
 
-/****************** PAGE TITLE ******************/
-
-/** Style for page's main title. **/
-.pageTitle {
-  color: var(--plum);
-  display: flex;
-  justify-content: center;
-  font-size: 2.3em;
-  margin-bottom: 1em;
-  font-weight: bold;
-}
-
 /****************** INPUT AND BUTTONS ******************/
 
 /** Style for container for input and buttons. **/

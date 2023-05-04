@@ -11,6 +11,18 @@
     --darkPurple: #100E1B;
 }
 
+/****************** PAGE TITLE ******************/
+
+/** Style for page's main title. **/
+.pageTitle {
+    color: var(--plum);
+    display: flex;
+    justify-content: center;
+    font-size: 2.3em;
+    margin-bottom: 1em;
+    font-weight: bold;
+  }
+
 body {
     background-color:var(--isabelline);
     margin: 0;

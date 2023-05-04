@@ -1,15 +1,11 @@
-body{
-    background-color: #e6ccd7;
-}
+@import "common.css";
 
-.headerTitle{
-    color: #4d2d52;
-    text-align: center;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+body{
+    background-color: var(--isabelline);
 }
 
 .subtittle{
-    color: #4d2d52;
+    color: var(--plum);
     background-color: #cc7ba1;
     border-style: groove;
     border-width: 0.3em;
