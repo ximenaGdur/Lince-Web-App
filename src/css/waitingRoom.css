@@ -2,32 +2,31 @@
 
 body{
     background-color: var(--isabelline);
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 0.9em;
+    font-weight: bold;
 }
 
 .subtittle{
-    color: var(--plum);
-    background-color: #cc7ba1;
-    border-style: groove;
-    border-width: 0.3em;
-    text-align: center;
+    color: var(--violet);
     display: flex;
-    flex-direction: row;
     justify-content: center;
-    line-height: 1.5;
-    margin: 1em 0 1em 0;
+    font-size: 2.3em;
+    margin-bottom: 1em;
+    font-weight: bold;
 }
 
 .configuration{
-    font-family: Georgia, 'Times New Roman', Times, serif;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
     align-items: stretch;
+    margin: 0.5rem;
 }
 
 .configurationOption{
-    color: #4d2d52;
-    background-color: #d9a4bc;
+    color: var(--violet);
+    background-color: var(--isabelline);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -40,6 +39,7 @@ body{
 
 .configurationOptionTitle{
     border-style: ridge;
+    border-color: var(--plum);
     width: 14rem;
     height: 2rem;
 }
@@ -56,6 +56,7 @@ body{
 
 .configurationOptionValue{
     border-style: ridge;
+    border-color: var(--plum);
     width: 17rem;
     height: 2rem;
     display: flex;
@@ -63,15 +64,19 @@ body{
     align-items: center;
 }
 
-.inputRange{
-    width: 14rem;
-    cursor: grab;
+
+.inputRange::-webkit-slider-runnable-track{
+  background: var(--skyMagenta);
+  width: 14rem;
+  cursor: grab;
+  border-radius: 1rem;
 }
 
 .configurationOptionInformation{
     flex-grow: 1;
     text-align: center;
     border-style: ridge;
+    border-color: var(--plum);
     width: 35rem;
 }
 
@@ -81,8 +86,8 @@ body{
 }
 
 .adaptationConfiguration{
-    color: #4d2d52;
-    background-color: #d9a4bc;
+    color: var(--violet);
+    background-color: var(--isabelline);
     list-style: none;
     column-count: 3;
     padding: 0;
@@ -95,6 +100,7 @@ body{
 
 .adaptationDescription{
     border-style: ridge;
+    border-color: var(--plum);
     width: 25rem;
     height: 14rem;
     text-align: center;
@@ -107,6 +113,7 @@ body{
 .adaptationOption{
     flex-grow: 1;
     border-style: ridge;
+    border-color: var(--plum);
     width: 25rem;
     height: 14rem;
     display: flex;
@@ -125,13 +132,13 @@ body{
 }
 
 .players{
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    color: #4d2d52;
+    color: var(--skyMagenta);
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     align-content: stretch;
     align-items: stretch;
+    margin: 0.5rem;
 }
 
 .player{
@@ -142,6 +149,7 @@ body{
 }
 
 .btnInformation{
+    background-color: var(--violet);
     display: flex;
     align-items: stretch;
     border: none;

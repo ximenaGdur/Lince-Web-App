@@ -1,40 +1,57 @@
+/**
+  * CSS used for the home page.
+  * Created by Jimena Gdur Vargas.
+  */
+
+@import "common.css";
+
+/* Align the pop-up to the center */
 body {
     margin: auto;
     width: 30%;
-    height: 50vh;
-    border: 3px solid #100E1B;
+    height: 30vh;
+    border: 3px solid var(--violet);
     padding: 0.5em;
-    background-color: #F6F3F4;
+    background-color: var(--whiteSmoke);
 }
 
-
+/* Place the close button to the left top corner */
 .btnPopUpClose {
     position: relative;
     left: 86%;
     margin: 0.6em 0 0.6em 0;
+    border-style: solid;
+    border-color: var(--plum);
+    background-color: var(--plum);
+    color: var(--isabelline);
+    text-align: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bold;
+    font-size: 0.8em;
+    cursor: pointer;
 }
 
-.btnPopUpClose:hover {
-    opacity: 1;
-}
-
+/* Title centered for pop-ups */
 .popUpTitle {
     position: relative;
     text-align: center;
     margin: 0.5em;
-    color: #743d74;
+    color: var(--plum);
 }
 
 .messageContent {
     text-align: center;
     max-width: 100%;
-    color: #100E1B;
+    color: var(--darkPurple);
 }
 
 .messageContent p {
     margin: 0.8em 4em;
+    color: var(--finn);
+    font-weight: bold;
 }
 
+/* Alignment of buttons */
 .buttons {
     max-width: 100%;
     margin: 2em 7.5em;
@@ -45,19 +62,42 @@ body {
     width: 80%;
 }
 
+/* Alignment of buttons */
 .btnCancel,
 .btnAccept,
 .btnJoin {
-    color: #100E1B;
+    color: var(--darkPurple);
     margin-left: 2.7em;
+    border-radius: 3px;
+    border-style: solid;
+    border-color: var(--plum);
+    background-color: var(--plum);
+    color: var(--isabelline);
+    text-align: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bold;
+    font-size: 0.8em;
+    cursor: pointer;
 }
 
+/* Alignment of buttons */
 .btnContinue,
 .btnHome {
-    color: #100E1B;
+    color: var(--darkPurple);
     margin: -1em 1.4em 5em 0em;
+    border-radius: 3px;
+    border-style: solid;
+    border-color: var(--plum);
+    background-color: var(--plum);
+    color: var(--isabelline);
+    text-align: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bold;
+    font-size: 0.7em;
+    cursor: pointer;
 }
 
+/* centered the code input for room */
 .codeSection {
     display: flex;
     flex-direction: column;
@@ -65,19 +105,25 @@ body {
     margin-top: 1em;
 }
 
+/* border of the table */
 table {
     display: flex;
     flex-direction: column;
     align-items: center;
     border-collapse: collapse;
-    /* margin-top: 1em; */
 }
 
+/* font with bold weight */
 .codeSection p {
     margin: 0;
+    color: var(--finn);
+    font-weight: bold;
 }
 
+/* table border */
 td {
     border: 1px solid;
-    color: #100E1B;
+    color: var(--finn);
+    font-weight: bold;
+    padding: 0 0.6em;
 }
