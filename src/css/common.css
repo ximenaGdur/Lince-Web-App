@@ -1,3 +1,4 @@
+/** Global variables. **/
 :root {
     --whiteSmoke: #F6F3F4;
     --isabelline: #EEE7E8;
@@ -23,6 +24,7 @@
     font-weight: bold;
 }
 
+/** Global styles. **/
 body {
     background-color:var(--isabelline);
     margin: 0;
@@ -30,10 +32,12 @@ body {
     cursor: default;
 }
 
+/** Removes dot from list item. **/
 ul {
     list-style-type: none;
 }
 
+/** Website's header. **/
 .header {
     background-color:var(--finn);
     color:var(--isabelline);
@@ -46,6 +50,24 @@ ul {
     margin: 0 auto;
 }
 
+/* Styles for header on screens smaller than 933px */
+@media screen and (max-width: 933px) {
+  /** Same header as before, but width changes with device size.**/
+  .header {
+    background-color:var(--finn);
+    color:var(--isabelline);
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 0 auto;
+    width: 100vw;
+  }
+}
+
+/** Logo's style used in header. **/
 .gameLogo {
     padding-right: 2%;
 }

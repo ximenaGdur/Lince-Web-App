@@ -218,38 +218,31 @@ video {
   font-weight: bold;
 }
 
+/* Styles for header on screens smaller than 933px */
 @media screen and (max-width: 933px) {
+  /** Adding flex to whole document **/
   html {
     display: flex;
     flex-direction: column
   }
+  /** Adding flex to whole body **/
   body {
     display: flex;
     flex-direction: column
   }
-  .header {
-    background-color:var(--finn);
-    color:var(--isabelline);
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.2em;
-    font-weight: bold;
-    margin: 0 auto;
-    width: 100vw;
-}
+  /** Same as before, but width and font size changes with device size.**/
   #instructionButton, #rankingButton, #creditsButton {
     height: 2em;
     width: 40vw;
     font-size: 3vw;
     margin: 0 auto;
   }
-  /** Style for tabs. **/
+  /** Same as before, but width changes with device size.**/
   #instructionButton, #rankingButton, #creditsButton {
     height: 2em;
     width: 28.5vw;
   }
+  /** Same as before, but width and font size changes with device size.**/
   .tabContent {
     border-style: solid;
     border-color: var(--plum);
@@ -261,15 +254,17 @@ video {
     margin-left: 0 auto;
     margin-right: 0 auto;
   }
+  /** Same as before, but width and height changes with device size.**/
   video {
     height: 45vw;
     width: 85vw;
   }
-  /** Style for ranking section. **/
+  /** Same as before, but instead of two columns, there is one.**/
   #ranking {
     display: flex;
     justify-content: center;
   }
+  /** Same as before, but instead of two columns, there is one.**/
   #credits {
     display: flex;
     flex-direction: column;
