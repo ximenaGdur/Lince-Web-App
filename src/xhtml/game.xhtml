@@ -6,17 +6,15 @@
     <meta name="keywords" content="Lince, Yo lo vi primero, Muy Lentos" />
     <meta name="author" content="Gianfranco Soto Palma" />
     <title>¡Muy Lentos!</title>
-    <link rel="stylesheet" href="muyLentos.css" />
+    <link rel="stylesheet" href="game.css" />
     <link rel="icon" type="image/x-icon" href="../design/images/icons/favicon.png" />
 </head>
     <body>
         <header>
             <h1 class="headerTitle">¡Muy Lentos!</h1>
+            <button class="btnAbandonar" type="button">Abandonar partida </button>
         </header>
         <main>
-            <button class="buttons" type="button">Abandonar partida </button> 
-            <h3>Tiempo</h3>
-            <p>0:00</p> <!-- Tiempo se actualiza para ser dinamico-->
             <img class="images"  src="../design/Images/icons/board/airplane.png" alt="Avión"/>
             <img class="images"  src="../design/Images/icons/board/balloon.png" alt="Globo"/>
             <img class="images"  src="../design/Images/icons/board/bike.png" alt="Bicicleta"/>
@@ -117,29 +115,34 @@
             <img class="images"  src="../design/Images/icons/board/shorts.png" alt="Pantalones cortos"/>
             <img class="images"  src="../design/Images/icons/board/watch.png" alt="Reloj"/>
             <img class="images"  src="../design/Images/icons/board/hoodie.png" alt="Sueter"/>
-
-            <img class="images"  src="../design/Images/icons/board/.png" alt=""/>
-            <img class="images"  src="../design/Images/icons/board/.png" alt=""/>
-            <img class="images"  src="../design/Images/icons/board/.png" alt=""/>
-            <img class="images"  src="../design/Images/icons/board/.png" alt=""/>
-            <img class="images"  src="../design/Images/icons/board/.png" alt=""/>
-            <ul class="Ranking">
-                <li class="Jugador1">Jugador1</li>
-                <li class="pts1">200</li>
-                <li class="Jugador2">Jugador2</li>
-                <li class="pts2">100</li>
-            </ul>  
-            <p>Jugador afectado por mejora</p>
-            <ul class="InformaciónMejora">
-                <li>Nickname</li>
-                <li>Tipo de mejora activada</li>
-                <li>Tiempo para que se active la mejora</li>
-            </ul>
-            <p>misFichas</p>
-            <ul class="misFichas">
-                <li><img class="images"  src="../design/Images/icons/board/carrot.png" alt="Zanahoria"/></li>
-                <li><img class="images"  src="../design/Images/icons/board/airplane.png" alt="Avión"/></li>
-            </ul>
+            <section class="board">
+                <ul class="table">
+                    <li><img class="boardImages"  src="../design/Images/icons/board/hoodie.png" alt="Sueter"/></li>
+                    <li><img class="boardImages"  src="../design/Images/icons/board/shorts.png" alt="Pantalones cortos"/></li>
+                    <li><img class="boardImages"  src="../design/Images/icons/board/shrimp.png" alt="Camarón"/></li>
+                    <li><img class="boardImages"  src="../design/Images/icons/board/carrot.png" alt="Zanahoria"/></li>
+                    <li><img class="boardImages"  src="../design/Images/icons/board/airplane.png" alt="Avión"/></li>
+                </ul>
+                <h3 class="misFichasTitle">Mis fíchas</h3>
+                <ul class="misFichas">
+                    <li><img class="myImages"  src="../design/Images/icons/board/carrot.png" alt="Zanahoria"/></li>
+                    <li><img class="myImages"  src="../design/Images/icons/board/airplane.png" alt="Avión"/></li>
+                </ul>
+            </section>
+            <aside class="aside">
+                <h3 class="time">Tiempo 0:00</h3>
+                <h3 class="puntaje">Puntaje: 100</h3>
+                <img class="imagenMejora"  src="../design/Images/icons/efectoBlur.png" alt="Borroso"/>
+                <ul class="informaciónMejora">
+                    <li><img class="imagenMejora"  src="../design/images/icons/profile/bear.png" alt="Oso"/></li>
+                    <li>Jugador 1 aplicó Blur</li>
+                    <li>Tiempo para que se active la mejora: 0:05</li>
+                </ul>
+                <ul class="ranking">
+                    <li><img class="profileImages"  src="../design/images/icons/profile/bear.png" alt="Oso"/>Jugador1 - 200</li>
+                    <li><img class="profileImages"  src="../design/images/icons/profile/hedgehog.png" alt="Erizo"/>Jugador2 - 100</li>
+                </ul>
+            </aside>
         </main>
     </body>
 </html>

@@ -1,0 +1,155 @@
+body{
+    background-color: #e6ccd7;
+}
+
+.headerTitle{
+    color: #4d2d52;
+    text-align: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.subtittle{
+    color: #4d2d52;
+    background-color: #cc7ba1;
+    border-style: groove;
+    border-width: 0.3em;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    line-height: 1.5;
+    margin: 1em 0 1em 0;
+}
+
+.configuration{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+}
+
+.configurationOption{
+    color: #4d2d52;
+    background-color: #d9a4bc;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    list-style: none;
+    column-count: 3;
+    padding: 0;
+    margin: 0em;
+}
+
+.configurationOptionTitle{
+    border-style: ridge;
+    width: 14rem;
+    height: 2rem;
+}
+
+.confOptTittleDescription{
+    margin: 0 1.5rem;
+    height: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.configurationOptionValue{
+    border-style: ridge;
+    width: 17rem;
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inputRange{
+    width: 14rem;
+    cursor: grab;
+}
+
+.configurationOptionInformation{
+    flex-grow: 1;
+    text-align: center;
+    border-style: ridge;
+    width: 35rem;
+}
+
+.confOptInfDescription{
+    margin: 0;
+    height: 2rem;
+}
+
+.adaptationConfiguration{
+    color: #4d2d52;
+    background-color: #d9a4bc;
+    list-style: none;
+    column-count: 3;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+.adaptationDescription{
+    border-style: ridge;
+    width: 25rem;
+    height: 14rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.adaptationOption{
+    flex-grow: 1;
+    border-style: ridge;
+    width: 25rem;
+    height: 14rem;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+#adaptation1{
+    margin: 1em 0 0 0;
+}
+
+#adaptation3{
+    margin: 0 0 1em 0;
+}
+
+.players{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: #4d2d52;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: stretch;
+    align-items: stretch;
+}
+
+.player{
+    column-count: 4;
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem;
+}
+
+.btnInformation{
+    display: flex;
+    align-items: stretch;
+    border: none;
+    border-radius: 1rem;
+    padding: 0;
+    cursor: help;
+}
