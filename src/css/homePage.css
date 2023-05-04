@@ -5,13 +5,21 @@
 
 @import "common.css";
 
+/****************** PAGE TITLE ******************/
+
+/** Style for page's main title. **/
 .pageTitle {
   color: var(--plum);
   display: flex;
   justify-content: center;
-  font: 5vw;
+  font-size: 2.3em;
+  margin-bottom: 1em;
+  font-weight: bold;
 }
 
+/****************** INPUT AND BUTTONS ******************/
+
+/** Style for container for input and buttons. **/
 .inputAndButtons { 
   display: flex;
   justify-content: center;
@@ -20,47 +28,204 @@
   align-items: center;
 }
 
-.textInput {
-  border-style: solid;
-  border-color: var(--skyMagenta);
-  background-color: var(--pinkLavender);
-  color: var(--darkPurple);
-  height: 100%;
-  width: 30%;
-  padding: 1%;
-  text-align: center;
-  font-family: Georgia, 'Times New Roman', Times, serif;
-  font-size: 20px;
+/** Style for small title above nickname input. **/
+#nicknameTitle {
+  font-size: 1em;
+  color: var(--plum);
+  margin: 0.2em;
 }
 
+/** Style for input for player's nickname. **/
+.textInput {
+  border-style: solid;
+  border-color: var(--pinkLavender);
+  background-color: var(--pinkLavender);
+  color: var(--whiteSmoke);
+  padding: 0em;
+  height: 3em;
+  width: 17.7em;
+  text-align: center;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 1.2em;
+  font-weight: bold;
+  border-radius: 6px;
+}
+
+/** Style for placeholder text shown in input box. **/
 ::placeholder {
   text-align: center;
   font-family: Georgia, 'Times New Roman', Times, serif;
-  font-size: 20px;
-  color: var(--plum);
+  font-size: 1.2em;
+  color: var(--finn);
+  font-weight: bold;
 }
 
+/** Style for container for both buttons. **/
 .buttons {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding-left: 0;
+  padding-left: 0em;
+  margin: 0em;
 }
 
-/**
+/** Style for container for button and icon. **/
 .buttonContainer {
-  background-color: var(--skyMagenta);
-  color: var(--darkPurple);
-  padding: 1%;
-  width: 100%;
-  height: 100%;
+  background-color: var(--plum);
+  border-style: solid;
+  border-color: var(--plum);
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  width: 10em;
+  align-items: center;
+  margin-top: 0.09em;
+  margin-left: 0.3em;
+  margin-right: 0.3em;
 }
 
+/** Style for style for all buttons in this page. **/
 button {
-  background-color: var(--skyMagenta);
-  color: var(--darkPurple);
+  border-style: solid;
+  border-color: var(--plum);
+  background-color: var(--plum);
+  color: var(--isabelline);
   text-align: center;
   font-family: Georgia, 'Times New Roman', Times, serif;
-  font-size: 15px;
+  font-weight: bold;
+  font-size: 1.2em;
+  cursor: pointer;
+  border-radius: 3px;
+  margin-left: 0.1em;
+  margin-right: 0.1em;
 }
-*/
+
+/** Style for buttons below input. **/
+#createRoomButton, #joinRoomButton {
+  padding: 0.2em;
+  width: 6em;
+  border-style: hidden;
+}
+
+/** Style for information icon. **/
+.informationIcon {
+  cursor: help;
+}
+
+/****************** TAB SECTION ******************/
+
+/** Style for container of buttons for tabs. **/
+.tabLinks {
+  display: flex;
+  justify-content: center;
+  padding-left: 0em;
+  margin-top: 3em;
+  margin-bottom: 0em;
+}
+
+/** Style for tabs. **/
+#instructionButton, #rankingButton, #creditsButton {
+  height: 2em;
+  width: 15em;
+}
+
+/** Style for container of content options. **/
+.contentOptions {
+  text-align: center;
+  margin: 0em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-left: 0em;
+}
+
+/** Style for every content box in tab section. **/
+.tabContent {
+  border-style: solid;
+  border-color: var(--plum);
+  width: 60.3em;
+  margin-top: 0.01em;
+  margin-bottom: 2em;
+  font-size: 0.9em;
+  border-radius: 3px;
+}
+
+/** Style for main title of content box. **/
+.sectionTitle {
+  color: var(--violet);
+  font-weight: bold;
+  margin-top: 0.5em;
+  display: flex;
+  justify-content: center;
+}
+
+/** Style for sub-title of content box. **/
+.sectionSubTitle {
+  color: var(--finn);
+  font-size: 1.3em;
+  font-weight: bold;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+
+/** Style for normal text in content box. **/
+.text {
+  color: var(--plum);
+  font-size: 1em;
+  font-weight: bold;
+  margin : 0.6em;
+  width: 25em;
+}
+
+/** Style for instructions section. **/
+#instructions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/** Style for video. **/
+video {
+  height: 28em;
+  width: 55em;
+}
+
+/** Style for ranking section. **/
+#ranking {
+  display: flex;
+}
+
+/** Style for credits section. **/
+#credits {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+/** Style for about section of credits. **/
+#aboutSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2em;
+}
+
+/** Style for developers section of credits. **/
+#developers {
+  display: flex;
+}
+
+/** Style for lists in credit's section. **/
+.developerList, .creditsList {
+  list-style-type: square;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/** Style for individual elements of lists in credit's section. **/
+.developer, .artist {
+  color: var(--skyMagenta);
+  font-weight: bold;
+}

@@ -19,20 +19,21 @@
 			<!-- Contains main content of page -->
 			<section class="mainContent">
 				<article class="inputAndButtons">
+					<h6 id="nicknameTitle">Apodo para el juego</h6>
 					<!-- Allows user to add a nickname for the game -->
 					<input class="textInput" id="nickname" type="text" placeholder="Ingrese su apodo"/>
 					<!-- Contains buttons -->
 					<ul class="buttons">
 						<!-- Jumps to waiting room for host -->
-						<li type="buttonContainer">
-							<button id="createRoom">
+						<li class="buttonContainer">
+							<button id="createRoomButton">
 								Crear sala
 							</button>
 							<img class="informationIcon" src="../../design/Images/icons/informationIcon.png" alt="información"/>
 						</li>
 						<!-- Jumps to waiting room for guest -->
-						<li type="buttonContainer">
-							<button id="joinRoom">
+						<li class="buttonContainer">
+							<button id="joinRoomButton">
 								Unir a sala
 							</button>
 							<img class="informationIcon" src="../../design/Images/icons/informationIcon.png" alt="información"/>
@@ -41,27 +42,27 @@
 				</article>
 
 				<!-- Contains tab links -->
-				<ul class="tablinks">
-					<li class="buttonContainer">
-						<button type="button">
+				<ul class="tabLinks">
+					<li>
+						<button type="button" id="instructionButton">
 							¿Cómo Jugar?
 						</button>
 					</li>
-					<li class="buttonContainer">
-						<button type="button">
+					<li>
+						<button type="button" id="rankingButton">
 							Clasificación
 						</button>
 					</li>
-					<li class="buttonContainer">
-						<button type="button">
+					<li>
+						<button type="button" id="creditsButton">
 							Créditos
 						</button>
 					</li>
 				</ul>
 				<!-- Contains tab content -->
-				<ul class="tabContent">
+				<ul class="contentOptions">
 					<!-- Contains instruction's video -->
-					<li class="video">
+					<li class="tabContent" id="instructions">
 						<h2 class="sectionTitle">
 							¿Cómo jugar nuestro juego?
 						</h2>
@@ -70,28 +71,43 @@
 						</video>
 					</li>
 					<!-- Contains ranking -->
-					<li class="ranking">
+					<li class="tabContent" id="ranking">
 						<h2 class="sectionTitle">
 							Clasificación
 						</h2>
 					</li>
 					<!-- Contains site's credits -->
-					<li class="credits">
-						<h2 class="sectionTitle">
-							Información acerca de los desarrolladores
-						</h2>
-						<p class="text">
-							Desarrollado para el curso de Desarrollo de Aplicaciones Web en el primer semestre del 2023
-						</p>
-						<h3 class="sectionSubTitle">
-							Desarrolladores
-						</h3>
-						<ul class="developerList">
-							<li class="developer">Derrick Allen Smith</li>
-							<li class="developer">Jimena Gdur Vargas</li>
-							<li class="developer">Cristian Ortega Hurtado</li>
-							<li class="developer">Gianfranco Soto Palma</li>
-						</ul>
+					<li class="tabContent" id="credits">
+						<article id="aboutSection">
+							<h2 class="sectionTitle">
+								Sobre los desarrolladores
+							</h2>
+							<p class="text">
+								Desarrollado para el curso de Desarrollo de Aplicaciones Web en el primer semestre del 2023.
+							</p>
+							<article id="developers">
+								<h3 class="sectionSubTitle">Desarrolladores</h3>
+								<ul class="developerList">
+									<li class="developer">Derrick Allen Smith</li>
+									<li class="developer">Jimena Gdur Vargas</li>
+									<li class="developer">Cristian Ortega Hurtado</li>
+									<li class="developer">Gianfranco Soto Palma</li>
+								</ul>
+							</article>
+						</article>
+						<article id="artists">
+							<h2 class="sectionTitle">Recursos de terceros</h2>
+							<p class="text">Imagenes obtenidas de los siguientes autores:</p>
+							<ul class="creditsList">
+								<li class="artist">Freepik</li>
+								<li class="artist">Good Ware</li>
+								<li class="artist">Iconic Panda</li>
+								<li class="artist">justicon</li>
+								<li class="artist">Konkapp</li>
+								<li class="artist">nawicon</li>
+								<li class="artist">Whitevector</li>
+							</ul>
+						</article>
 					</li>
 				</ul>
 			</section>

@@ -12,9 +12,10 @@
 }
 
 body {
-    background-color:var(--violet);
+    background-color:var(--isabelline);
     margin: 0;
     font-family: Georgia, 'Times New Roman', Times, serif;
+    cursor: default;
 }
 
 ul {
@@ -23,11 +24,13 @@ ul {
 
 .header {
     background-color:var(--finn);
-    color:var(--darkPurple);
+    color:var(--isabelline);
     display: flex;
     flex-direction: row-reverse;
     justify-content: center;
     align-items: center;
+    font-size: 1.2em;
+    font-weight: bold;
 }
 
 .gameLogo {
