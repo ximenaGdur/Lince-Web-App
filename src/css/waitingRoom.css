@@ -77,11 +77,14 @@ body{
 }
 
 /** Style for each input typr range**/
-.inputRange::-webkit-slider-runnable-track{
-  background: var(--skyMagenta);
-  width: 14rem;
-  cursor: grab;
-  border-radius: 1rem;
+.inputRange {
+    background: linear-gradient(to right, var(--mimiPink) 0%, var(--pinkLavender) 50%, var(--thulianPink) 50%, var(--skyMagenta) 100%);
+    border-style: solid;
+    border-color: var(--finn);
+    width: 14rem;
+    cursor: grab;
+    border-radius: 1rem;
+    transition: background 450ms ease-in;
 }
 
 /** Style for each configuration option information**/

@@ -235,7 +235,6 @@ video {
     height: 2em;
     width: 40vw;
     font-size: 3vw;
-    margin: 0 auto;
   }
   /** Same as before, but width changes with device size.**/
   #instructionButton, #rankingButton, #creditsButton {
@@ -251,8 +250,6 @@ video {
     margin-bottom: 2em;
     font-size: 3vw;
     border-radius: 3px;
-    margin-left: 0 auto;
-    margin-right: 0 auto;
   }
   /** Same as before, but width and height changes with device size.**/
   video {
