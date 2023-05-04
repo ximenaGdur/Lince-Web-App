@@ -1,5 +1,13 @@
+/**
+  * CSS used for the home page.
+  * Created by Jimena Gdur Vargas.
+  */
+
+  @import "common.css";
+  
+/****************** INPUT AND BUTTONS ******************/
 body{
-    background-color: #EEE7EB;
+    background-color: var(--isabelline);
 }
 
 .images {
@@ -9,31 +17,36 @@ body{
 }
 
 .boardImages{
-    border: 0.20em solid #100E1B;
+    border: 0.20em solid var(--darkPurple);
     margin: 0em;
     max-width:4em;
     max-height:4em;
 }
 
-.headerTitle{
-    display: flex;
-    margin-left: 5em;
-}
-
 .btnAbandonar{
-    background-color: #B56896;
-    display: flex;
+    border-style: solid;
+    border-color: var(--plum);
+    color: var(--isabelline);
+    text-align: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bold;
+    font-size: 1.2em;
+    cursor: pointer;
+    border-radius: 3px;
+    margin-right: 0.1em;
     max-width: 10em;
     max-height: 5em;
-    margin-left: 44.8em;
+    margin-left: 28em;
+    margin-top: 1em;
+    background-color: var(--skyMagenta);    
 }
 
 .table {
     list-style: none;
     display: flex;
     flex-wrap: wrap;
-    background-color: #E6CCD7;
-    border: 0.10em solid #100E1B;
+    background-color: var(--mimiPink);
+    border: 0.10em solid var(--darkPurple);
     width:47.3em;
     height:25em;
     margin-left: 0em;
@@ -47,19 +60,21 @@ body{
 }
 
 .informaciónMejora{
-    background-color: #743D74;
-    color: #EEE7EB;
+    background-color: var(--finn);
+    color: var(--isabelline);
     display: flex;
     flex-direction: column;
     list-style-type: none;
     align-items: center;
+    padding-right: 1em;
     padding-left: 1em;
+    padding-bottom: 1em;
     width: 21.5em;
 }
 
 .ranking{
-    background-color: #743D74;
-    color: #EEE7EB;
+    background-color: var(--finn);
+    color: var(--isabelline);
     display: flex;
     flex-direction: column;
     align-content:center;
@@ -83,7 +98,7 @@ ul.ranking li{
 }
 
 .misFichas{
-    background-color: #743D74;
+    background-color: var(--finn);
     display: flex;
     width:45em;
 }
@@ -93,7 +108,7 @@ ul.misFichas li{
     display: flex;
     flex-direction:row;
     border-style: solid;
-    background-color: #E6CCD7;
+    background-color: var(--mimiPink);
     max-width:4em;
     max-height:4em;
     margin-top: 1em;
@@ -125,13 +140,13 @@ main {
 
 /* animations */
 .boardImages:hover{
-    background-color: #D9A4BC;
+    background-color: var(--pinkLavender);
 }
 
 .myImages:hover {
-    background-color: #D9A4BC;
+    background-color: var(--pinkLavender);
 }
 
 .btnAbandonar:hover {
-    background-color: #9D558B;
+    background-color: var(--plum);
 }
