@@ -57,9 +57,9 @@ body{
     display: flex;
     flex-direction: column;
     list-style-type: none;
-    align-items: flex-start;
+    align-items: center;
     padding-left: 1em;
-    width: 20em;
+    width: 21.5em;
 }
 
 .ranking{
@@ -70,9 +70,16 @@ body{
     align-content:center;
     list-style: none;
     align-items: flex-start;
-    padding-left: 1em;
-    width:20em;
+    width:19.8em;
     height:5em;
+}
+.profileImages{
+    width:1em;
+    height:1em;
+}
+
+ul.ranking li{
+    margin-top: 0.5em;
 }
 
 .misFichasTitle{
@@ -112,7 +119,7 @@ main {
 }
 
 .aside{
-    gap: 3rem;
+    gap: 2em;
     display: flex;
     flex-direction: column;
     align-items:center;
