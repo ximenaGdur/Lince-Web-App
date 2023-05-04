@@ -69,9 +69,11 @@ body{
 
 .inputRange{
     width: 14rem;
+    cursor: grab;
 }
 
 .configurationOptionInformation{
+    flex-grow: 1;
     text-align: center;
     border-style: ridge;
     width: 35rem;
@@ -107,10 +109,12 @@ body{
 }
 
 .adaptationOption{
+    flex-grow: 1;
     border-style: ridge;
     width: 25rem;
     height: 14rem;
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     justify-content: center;
     align-items: flex-end;
@@ -139,4 +143,13 @@ body{
     list-style: none;
     padding: 0;
     margin: 0.5rem;
+}
+
+.btnInformation{
+    display: flex;
+    align-items: stretch;
+    border: none;
+    border-radius: 1rem;
+    padding: 0;
+    cursor: help;
 }
