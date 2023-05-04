@@ -9,6 +9,8 @@ body{
 }
 
 .boardImages{
+    border: 0.20em solid #100E1B;
+    margin: 0em;
     max-width:4em;
     max-height:4em;
 }
@@ -36,13 +38,6 @@ body{
     height:25em;
     margin-left: 0em;
     padding: 0em;
-}
-
-.boardImages{
-    border: 0.20em solid #100E1B;
-    margin: 0em;
-    max-width:4em;
-    max-height:4em;
 }
 
 .imagenMejora{
@@ -73,6 +68,7 @@ body{
     width:19.8em;
     height:5em;
 }
+
 .profileImages{
     width:1em;
     height:1em;
@@ -123,11 +119,19 @@ main {
     display: flex;
     flex-direction: column;
     align-items:center;
+    flex: 1 0 0; /* ordena la vista en la pantalla */
+    order: 2;
 }
 
-/* ordena la vista en la pantalla */
-.aside { flex: 1 0 0; }
-.board    { flex: 3 0px; }
-.board    { order: 1; }
-.aside { order: 2; } 
+/* animations */
+.boardImages:hover{
+    background-color: #D9A4BC;
+}
 
+.myImages:hover {
+    background-color: #D9A4BC;
+}
+
+.btnAbandonar:hover {
+    background-color: #9D558B;
+}
