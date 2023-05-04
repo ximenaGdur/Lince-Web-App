@@ -1,5 +1,11 @@
+/**
+  * CSS used for the home page.
+  * Created by Cristian Ortega Hurtado.
+  */
+
 @import "common.css";
 
+/** Style for body of de page**/
 body{
     background-color: var(--isabelline);
     font-family: Georgia, 'Times New Roman', Times, serif;
@@ -7,6 +13,7 @@ body{
     font-weight: bold;
 }
 
+/** Style for subtittle of de page**/
 .subtittle{
     color: var(--violet);
     display: flex;
@@ -16,6 +23,7 @@ body{
     font-weight: bold;
 }
 
+/** Style for section configuration**/
 .configuration{
     display: flex;
     flex-direction: column;
@@ -24,6 +32,7 @@ body{
     margin: 0.5rem;
 }
 
+/** Style for each configuration option**/
 .configurationOption{
     color: var(--violet);
     background-color: var(--isabelline);
@@ -37,6 +46,7 @@ body{
     margin: 0em;
 }
 
+/** Style for each configuration option tittle**/
 .configurationOptionTitle{
     border-style: ridge;
     border-color: var(--plum);
@@ -44,6 +54,7 @@ body{
     height: 2rem;
 }
 
+/** Style for each configuration option tittle**/
 .confOptTittleDescription{
     margin: 0 1.5rem;
     height: 2rem;
@@ -54,6 +65,7 @@ body{
     align-items: center;
 }
 
+/** Style for each configuration option value**/
 .configurationOptionValue{
     border-style: ridge;
     border-color: var(--plum);
@@ -64,7 +76,7 @@ body{
     align-items: center;
 }
 
-
+/** Style for each input typr range**/
 .inputRange::-webkit-slider-runnable-track{
   background: var(--skyMagenta);
   width: 14rem;
@@ -72,6 +84,7 @@ body{
   border-radius: 1rem;
 }
 
+/** Style for each configuration option information**/
 .configurationOptionInformation{
     flex-grow: 1;
     text-align: center;
@@ -80,11 +93,13 @@ body{
     width: 35rem;
 }
 
+/** Style for each configuration option information description**/
 .confOptInfDescription{
     margin: 0;
     height: 2rem;
 }
 
+/** Style for each list of adaptation configuration**/
 .adaptationConfiguration{
     color: var(--violet);
     background-color: var(--isabelline);
@@ -98,6 +113,7 @@ body{
     align-items: stretch;
 }
 
+/** Style for each adaptation description**/
 .adaptationDescription{
     border-style: ridge;
     border-color: var(--plum);
@@ -110,6 +126,7 @@ body{
     align-items: center;
 }
 
+/** Style for each adaptation option**/
 .adaptationOption{
     flex-grow: 1;
     border-style: ridge;
@@ -123,14 +140,17 @@ body{
     align-items: flex-end;
 }
 
+/** Style for margin of adaptation 1**/
 #adaptation1{
     margin: 1em 0 0 0;
 }
 
+/** Style for margin of adaptation 3**/
 #adaptation3{
     margin: 0 0 1em 0;
 }
 
+/** Style for section players**/
 .players{
     color: var(--skyMagenta);
     display: flex;
@@ -141,6 +161,7 @@ body{
     margin: 0.5rem;
 }
 
+/** Style for each player**/
 .player{
     column-count: 4;
     list-style: none;
@@ -148,6 +169,7 @@ body{
     margin: 0.5rem;
 }
 
+/** Style for each information button**/
 .btnInformation{
     background-color: var(--violet);
     display: flex;
