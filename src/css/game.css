@@ -3,8 +3,8 @@
   * Created by Jimena Gdur Vargas.
   */
 
-  @import "common.css";
-  
+@import "common.css";
+
 /****************** INPUT AND BUTTONS ******************/
 body{
     background-color: var(--isabelline);
@@ -41,6 +41,7 @@ body{
     background-color: var(--skyMagenta);    
 }
 
+/****************** BOARD ******************/
 .table {
     list-style: none;
     display: flex;
@@ -93,6 +94,7 @@ ul.ranking li{
     margin-top: 0.5em;
 }
 
+/****************** INVENTORY ******************/
 .misFichasTitle{
     display: flex;
 }
