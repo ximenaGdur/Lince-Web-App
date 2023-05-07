@@ -188,6 +188,7 @@ Los eventos principales para un cliente en cada pantalla de juego son:
 2. handleCardsPerRound
 3. handleCardsPerPlayer
 4. handleAdp1a
+5. handleAdp1b
 6. handleAdp2a
 7. handleAdp2b
 8. handleAdp3a
