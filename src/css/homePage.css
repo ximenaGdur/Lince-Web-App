@@ -16,88 +16,60 @@
   align-items: center;
 }
 
-/** Style for small title above nickname input. **/
-#nicknameTitle {
-  font-size: 1em;
-  color: var(--plum);
-  margin: 0.2em;
-}
-
 /** Style for input for player's nickname. **/
 .textInput {
   border-style: solid;
   border-color: var(--pinkLavender);
   background-color: var(--pinkLavender);
   color: var(--whiteSmoke);
-  padding: 0em;
-  height: 3em;
-  width: 17.7em;
+  padding: 0vw;
+  height: 4vw;
+  width: 29.2vw;
   text-align: center;
   font-family: Georgia, 'Times New Roman', Times, serif;
-  font-size: 1.2em;
+  font-size: 1.8vw;
   font-weight: bold;
-  border-radius: 6px;
+  border-radius: 0.9vw;
 }
 
 /** Style for placeholder text shown in input box. **/
 ::placeholder {
   text-align: center;
   font-family: Georgia, 'Times New Roman', Times, serif;
-  font-size: 1.2em;
-  color: var(--finn);
+  font-size: 1.8vw;
+  color: var(--plum);
   font-weight: bold;
 }
 
 /** Style for container for both buttons. **/
 .buttons {
   display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding-left: 0em;
-  margin: 0em;
+  flex-direction: row;
+  padding-left: 0vw;
+  margin: 0vw;
 }
 
 /** Style for container for button and icon. **/
-.buttonContainer {
-  background-color: var(--plum);
-  border-style: solid;
-  border-color: var(--plum);
-  border-radius: 6px;
-  display: flex;
-  justify-content: center;
-  width: 10em;
-  align-items: center;
-  margin-top: 0.09em;
-  margin-left: 0.3em;
-  margin-right: 0.3em;
+.textAndInformation {
+  margin-left: 0.2vw;
+  margin-right: 0.2vw;
 }
 
-/** Style for style for all buttons in this page. **/
-button {
-  border-style: solid;
-  border-color: var(--plum);
-  background-color: var(--plum);
-  color: var(--isabelline);
-  text-align: center;
-  font-family: Georgia, 'Times New Roman', Times, serif;
-  font-weight: bold;
-  font-size: 1.2em;
-  cursor: pointer;
-  border-radius: 3px;
-  margin-left: 0.1em;
-  margin-right: 0.1em;
+/** Animations for buttons **/
+.textAndInformation:hover{
+  background-color: var(--finn);
+}
+
+.textAndInformation:hover button {
+  background-color: var(--finn);
 }
 
 /** Style for buttons below input. **/
 #createRoomButton, #joinRoomButton {
-  padding: 0.2em;
-  width: 6em;
+  width: 11vw;
+  padding: 0vw;
+  font-size: 1.7vw;
   border-style: hidden;
-}
-
-/** Style for information icon. **/
-.informationIcon {
-  cursor: help;
 }
 
 /****************** TAB SECTION ******************/
@@ -106,21 +78,23 @@ button {
 .tabLinks {
   display: flex;
   justify-content: center;
-  padding-left: 0em;
-  margin-top: 3em;
-  margin-bottom: 0em;
+  padding-left: 0vw;
+  margin-top: 4vw;
+  margin-bottom: 0vw;
 }
 
 /** Style for tabs. **/
 #instructionButton, #rankingButton, #creditsButton {
-  height: 2em;
-  width: 15em;
+  height: 3.5vw;
+  width: 29.2vw;
+  font-size: 2vw;
+  border-width: 0.2vw;
 }
 
 /** Style for container of content options. **/
 .contentOptions {
   text-align: center;
-  margin: 0em;
+  margin: 0vw;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -130,144 +104,115 @@ button {
 /** Style for every content box in tab section. **/
 .tabContent {
   border-style: solid;
-  border-color: var(--plum);
-  width: 60.3em;
-  margin-top: 0.01em;
-  margin-bottom: 2em;
-  font-size: 0.9em;
-  border-radius: 3px;
-}
-
-/** Style for main title of content box. **/
-.sectionTitle {
-  color: var(--violet);
-  font-weight: bold;
-  margin-top: 0.5em;
+  border-color: var(--finn);
+  border-radius: 0.3vw;
+  width: 88vw;
+  margin-top: 0.09vw;
+  margin-bottom: 2vw;
+  padding-top: 1vw;
+  padding-bottom: 2vw;
+  font-size: 0.9vw;
+  border-width: 0.2vw;
   display: flex;
-  justify-content: center;
-}
-
-/** Style for sub-title of content box. **/
-.sectionSubTitle {
-  color: var(--finn);
-  font-size: 1.3em;
-  font-weight: bold;
-  margin-top: 1em;
-  margin-bottom: 0.5em;
+  flex-direction: column;
 }
 
 /** Style for normal text in content box. **/
 .text {
-  color: var(--plum);
-  font-size: 1em;
-  font-weight: bold;
-  margin : 0.6em;
-  width: 25em;
+    margin : 0.6vw;
+    width: 25vw;
 }
 
 /** Style for instructions section. **/
 #instructions {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /** Style for video. **/
 video {
-  height: 28em;
-  width: 55em;
+    height: 40vw;
+    width: 80vw;
 }
 
 /** Style for ranking section. **/
 #ranking {
-  display: flex;
+    display: flex;
 }
 
 /** Style for credits section. **/
 #credits {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
 }
 
 /** Style for about section of credits. **/
 #aboutSection {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2em;
 }
 
 /** Style for developers section of credits. **/
 #developers {
-  display: flex;
+    display: flex;
 }
 
 /** Style for lists in credit's section. **/
 .developerList, .creditsList {
-  list-style-type: square;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+    list-style-type: square;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 /** Style for individual elements of lists in credit's section. **/
-.developer, .artist {
-  color: var(--skyMagenta);
-  font-weight: bold;
+.developer p, .artist p {
+    color: var(--skyMagenta);
+    font-weight: bold;
 }
 
 /* Styles for header on screens smaller than 933px */
 @media screen and (max-width: 933px) {
-  /** Adding flex to whole document **/
-  html {
-    display: flex;
-    flex-direction: column
-  }
-  /** Adding flex to whole body **/
-  body {
-    display: flex;
-    flex-direction: column
-  }
-  /** Same as before, but width and font size changes with device size.**/
-  #instructionButton, #rankingButton, #creditsButton {
-    height: 2em;
-    width: 40vw;
-    font-size: 3vw;
-    margin: 0 auto;
-  }
-  /** Same as before, but width changes with device size.**/
-  #instructionButton, #rankingButton, #creditsButton {
-    height: 2em;
-    width: 28.5vw;
-  }
-  /** Same as before, but width and font size changes with device size.**/
-  .tabContent {
-    border-style: solid;
-    border-color: var(--plum);
-    width: 85vw;
-    margin-top: 0.01em;
-    margin-bottom: 2em;
-    font-size: 3vw;
-    border-radius: 3px;
-    margin-left: 0 auto;
-    margin-right: 0 auto;
-  }
-  /** Same as before, but width and height changes with device size.**/
-  video {
-    height: 45vw;
-    width: 85vw;
-  }
-  /** Same as before, but instead of two columns, there is one.**/
-  #ranking {
-    display: flex;
-    justify-content: center;
-  }
-  /** Same as before, but instead of two columns, there is one.**/
-  #credits {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+    /** Style for input for player's nickname. **/
+    .textInput {
+        width: 42.4vw;
+        font-size: 2.8vw;
+    }
+    /** Style for placeholder text shown in input box. **/
+    ::placeholder {
+        font-size: 2.8vw;
+    }
+    #createRoomButton, #joinRoomButton {
+        width: 18vw;
+        padding: 0vw;
+        margin-top: 0.4vw;
+        font-size: 2.6vw;
+        border-style: hidden;
+    }
+    /** Style for tabs. **/
+    #instructionButton, #rankingButton, #creditsButton {
+        font-size: 2.6vw;
+        height: 4.5vw;
+        margin-bottom: 0.4vw;
+    }
+    /** Style for developers section of credits. **/
+    #credits {
+        flex-direction: column;
+    }
+    /** Style for normal text in content box. **/
+    .text {
+        margin : 0.6vw;
+        width: 50vw;
+    }
+    #developers {
+        flex-direction: column;
+    }
+    .developerList {
+        padding: 0vw;
+    }
 }

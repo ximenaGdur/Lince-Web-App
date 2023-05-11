@@ -5,26 +5,8 @@
 
 @import "common.css";
 
-/** Style for body of de page**/
-body{
-    background-color: var(--isabelline);
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: 0.9em;
-    font-weight: bold;
-}
-
-/** Style for subtittle of de page**/
-.subtittle{
-    color: var(--violet);
-    display: flex;
-    justify-content: center;
-    font-size: 2.3em;
-    margin-bottom: 1em;
-    font-weight: bold;
-}
-
 /** Style for section configuration**/
-.configuration{
+.configuration {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -32,10 +14,12 @@ body{
     margin: 0.5rem;
 }
 
+h3 {
+    font-size: 1vw;
+}
+
 /** Style for each configuration option**/
-.configurationOption{
-    color: var(--violet);
-    background-color: var(--isabelline);
+.configurationOption {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -43,20 +27,19 @@ body{
     list-style: none;
     column-count: 3;
     padding: 0;
-    margin: 0em;
+    margin: 0.2em;
 }
 
 /** Style for each configuration option tittle**/
-.configurationOptionTitle{
-    border-style: ridge;
-    border-color: var(--plum);
-    width: 14rem;
+.textAndInformation {
+    width: 15rem;
     height: 2rem;
 }
 
 /** Style for each configuration option tittle**/
-.confOptTittleDescription{
-    margin: 0 1.5rem;
+.confOptTittleDescription {
+    color: var(--isabelline);
+    margin: 0rem;
     height: 2rem;
     display: flex;
     flex-wrap: wrap;
@@ -66,44 +49,43 @@ body{
 }
 
 /** Style for each configuration option value**/
-.configurationOptionValue{
-    border-style: ridge;
+.configurationOptionValue {
+    border-style: solid;
     border-color: var(--plum);
     width: 17rem;
     height: 2rem;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-/** Style for each input typr range**/
-.inputRange::-webkit-slider-runnable-track{
-  background: var(--skyMagenta);
-  width: 14rem;
-  cursor: grab;
-  border-radius: 1rem;
+    border-radius: 6px;
+    margin-left: 0.1rem;
+    margin-right: 0.1rem;
 }
 
 /** Style for each configuration option information**/
-.configurationOptionInformation{
+.configurationOptionInformation {
     flex-grow: 1;
     text-align: center;
-    border-style: ridge;
+    border-style: solid;
     border-color: var(--plum);
+    border-radius: 6px;
     width: 35rem;
+    margin-left: 0.1rem;
+    margin-right: 0.1rem;
 }
 
 /** Style for each configuration option information description**/
-.confOptInfDescription{
+.confOptInfDescription {
     margin: 0;
     height: 2rem;
 }
 
 /** Style for each list of adaptation configuration**/
-.adaptationConfiguration{
+.adaptationConfiguration {
     color: var(--violet);
     background-color: var(--isabelline);
     list-style: none;
+    height: 15vw;
     column-count: 3;
     padding: 0;
     margin: 0;
@@ -114,30 +96,40 @@ body{
 }
 
 /** Style for each adaptation description**/
-.adaptationDescription{
-    border-style: ridge;
+.adaptationDescription {
+    border-style: solid;
     border-color: var(--plum);
-    width: 25rem;
-    height: 14rem;
+    border-radius: 6px;
+    width: 20vw;
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 0.1rem;
 }
 
+/** Style for each adaptation description**/
+.adaptationDescription{}
+
 /** Style for each adaptation option**/
-.adaptationOption{
+.adaptationOption {
     flex-grow: 1;
-    border-style: ridge;
+    border-style: solid;
     border-color: var(--plum);
-    width: 25rem;
-    height: 14rem;
+    border-radius: 6px;
+    width: 8vw;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: center;
     align-items: flex-end;
+    padding: 1.6rem;
+    margin: 0.1rem;
+}
+
+.adaptionIcon {
+    height: 10vw;
 }
 
 /** Style for margin of adaptation 1**/
@@ -171,7 +163,6 @@ body{
 
 /** Style for each information button**/
 .btnInformation{
-    background-color: var(--violet);
     display: flex;
     align-items: stretch;
     border: none;
@@ -179,3 +170,4 @@ body{
     padding: 0;
     cursor: help;
 }
+  

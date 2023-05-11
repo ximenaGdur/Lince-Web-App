@@ -1,4 +1,5 @@
-/** Global variables. **/
+/****************** GLOBAL VARIABLES ******************/
+
 :root {
     --whiteSmoke: #F6F3F4;
     --isabelline: #EEE7E8;
@@ -12,30 +13,7 @@
     --darkPurple: #100E1B;
 }
 
-/****************** PAGE TITLE ******************/
-
-/** Style for page's main title. **/
-.pageTitle {
-    color: var(--plum);
-    display: flex;
-    justify-content: center;
-    font-size: 2.3em;
-    margin-bottom: 1em;
-    font-weight: bold;
-}
-
-/** Global styles. **/
-body {
-    background-color:var(--isabelline);
-    margin: 0;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    cursor: default;
-}
-
-/** Removes dot from list item. **/
-ul {
-    list-style-type: none;
-}
+/******************** PAGE HEADER ********************/
 
 /** Website's header. **/
 .header {
@@ -45,30 +23,169 @@ ul {
     flex-direction: row-reverse;
     justify-content: center;
     align-items: center;
-    font-size: 1.2em;
     font-weight: bold;
-    margin: 0 auto;
-}
-
-/* Styles for header on screens smaller than 933px */
-@media screen and (max-width: 933px) {
-  /** Same header as before, but width changes with device size.**/
-  .header {
-    background-color:var(--finn);
-    color:var(--isabelline);
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.2em;
-    font-weight: bold;
-    margin: 0 auto;
     width: 100vw;
-  }
+    height: 8vw;
 }
 
 /** Logo's style used in header. **/
 .gameLogo {
     padding-right: 2%;
+    height: 5vw;
 }
+
+/** Style for header's title. **/
+.headerTitle {
+    font-size: 3vw;
+}
+
+/********************* PAGE TITLE *********************/
+
+/** Style for page's main title. **/
+.pageTitle {
+    color: var(--plum);
+    display: flex;
+    justify-content: center;
+    font-size: 3vw;
+    margin-bottom: 2vw;
+    font-weight: bold;
+    text-align: center;
+}
+
+/*********************** Table ***********************/
+
+/* border of the table */
+.rankingTable {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-collapse: collapse;
+}
+
+/* table row border */
+.rankingRow {
+    border: 0.25vw solid;
+    color: var(--finn);
+    font-weight: bold;
+    padding: 0.6vw;
+}
+
+/******************** TEXT + ICON ********************/
+
+/** Style for container for text and information icon. **/
+.textAndInformation {
+    background-color: var(--plum);
+    border-style: solid;
+    border-color: var(--finn);
+    margin-top: 0.2vw;
+    margin-right: 0.6vw;
+    margin-left: 0vw;
+    margin-right: 0vw;
+    padding: 0.6vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.9vw;
+    border-width: 0.2vw;
+    padding: 0.2vw;
+}
+
+/** Style for information icon. **/
+.informationIcon {
+    cursor: help;
+    padding: 0.2vw;
+    height: 2vw;
+}
+
+/*********************** LABELS ***********************/
+
+/** Global styles. **/
+body {
+    background-color:var(--isabelline);
+    margin: 0vw;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    cursor: default;
+}
+
+/** Removes dot from list item. **/
+ul {
+    list-style-type: none;
+}
+
+/** Style for main title of content box. **/
+h2 {
+    color: var(--violet);
+    font-weight: bold;
+    margin-top: 0.5vw;
+    display: flex;
+    justify-content: center;
+    font-size: 2.5vw;
+}
+
+/** Style for h3. **/
+h3 {
+    font-size: 1.5vw;
+    color: var(--finn);
+    margin: 1vw;
+}
+
+/** Style for normal text. **/
+p {
+    color: var(--plum);
+    font-size: 1.5vw;
+    font-weight: bold;
+    margin: 0 auto;
+}
+
+/** Style for style for all buttons in this page. **/
+button {
+    background-color: var(--plum);
+    color: var(--isabelline);
+    border-style: solid;
+    border-color: var(--finn);
+    text-align: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bold;
+    font-size: 3vw;
+    cursor: pointer;
+    border-radius: 0.3vw;
+    margin-left: 0.2vw;
+    margin-right: 0.2vw;
+}
+
+/** Animations for buttons **/
+button:hover {
+    background-color: var(--finn);
+}
+
+/******************* MEDIA QUERIES *******************/
+
+/* Styles for header on screens smaller than 933px */
+@media screen and (max-width: 933px) {
+    /** Same header as before, but font size changes with device size.**/
+    .headerTitle {
+        font-size: 5vw;
+    }
+    /** Style for page's main title. **/
+    .pageTitle {
+        font-size: 5vw;
+    }
+    /** Style for page's main title. **/
+    h2 {
+        font-size: 3.5vw;
+    }
+    /** Style for h3. **/
+    h3 {
+        font-size: 2.5vw;
+    }
+    /** Style for style for all buttons in this page. **/
+    button {
+        font-size: 4vw;
+    }
+    /** Style for normal text. **/
+    p {
+        font-size: 2.4vw;
+    }
+}
+
 

@@ -1,6 +1,6 @@
 /**
   * CSS used for the home page.
-  * Created by Jimena Gdur Vargas.
+  * Created by Derrick Allen Smith.
   */
 
 @import "common.css";
@@ -68,7 +68,7 @@ body {
 .btnJoin {
     color: var(--darkPurple);
     margin-left: 2.7em;
-    border-radius: 3px;
+    border-radius: 0.6em;
     border-style: solid;
     border-color: var(--plum);
     background-color: var(--plum);
@@ -85,7 +85,7 @@ body {
 .btnHome {
     color: var(--darkPurple);
     margin: -1em 1.4em 5em 0em;
-    border-radius: 3px;
+    border-radius: 0.6em;
     border-style: solid;
     border-color: var(--plum);
     background-color: var(--plum);
@@ -105,25 +105,9 @@ body {
     margin-top: 1em;
 }
 
-/* border of the table */
-table {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-collapse: collapse;
-}
-
 /* font with bold weight */
 .codeSection p {
     margin: 0;
     color: var(--finn);
     font-weight: bold;
-}
-
-/* table border */
-td {
-    border: 1px solid;
-    color: var(--finn);
-    font-weight: bold;
-    padding: 0 0.6em;
 }
