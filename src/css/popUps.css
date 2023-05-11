@@ -6,17 +6,28 @@
 @import "common.css";
 
 /* Align the pop-up to the center */
-body {
+/* body {
     margin: auto;
     width: 30%;
     height: 30vh;
-    border: 3px solid var(--violet);
-    padding: 0.5em;
-    background-color: var(--whiteSmoke);
+    /* border: 3px solid var(--violet); */
+border: 3px solid;
+padding: 0.5em;
+background-color: var(--whiteSmoke);
 }
 
-/* Place the close button to the left top corner */
-.btnPopUpClose {
+*/ .btnPopUpClose {
+    background-color: var(--mimiPink);
+    border-color: var(--finn);
+    display: flex;
+    width: 40vw;
+    flex-direction: column;
+    align-items: center;
+    margin: 1vw 0vw 1vw 0vw;
+}
+
+/* Place the close button to the right top corner */
+/* .btnPopUpClose {
     position: relative;
     left: 86%;
     margin: 0.6em 0 0.6em 0;
@@ -29,7 +40,7 @@ body {
     font-weight: bold;
     font-size: 0.8em;
     cursor: pointer;
-}
+} */
 
 /* Title centered for pop-ups */
 .popUpTitle {
@@ -126,4 +137,44 @@ td {
     color: var(--finn);
     font-weight: bold;
     padding: 0 0.6em;
+}
+
+/* Popup container */
+.popUpContent {
+    visibility: hidden;
+    border-style: solid;
+    border-color: var(--plum);
+    display: flex;
+    width: 40vw;
+    flex-direction: column;
+    align-items: center;
+    margin: 1vw 0vw 1vw 0vw;
+}
+
+/* Toggle this class - hide and show the popup */
+.popUpContent .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }

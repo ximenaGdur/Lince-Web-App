@@ -4,11 +4,12 @@
   */
 
 @import "common.css";
+@import "popUps.css";
 
 /****************** INPUT AND BUTTONS ******************/
 
 /** Style for container for input and buttons. **/
-.inputAndButtons { 
+.inputAndButtons {
   display: flex;
   justify-content: center;
   display: flex;
@@ -89,7 +90,8 @@ button {
 }
 
 /** Style for buttons below input. **/
-#createRoomButton, #joinRoomButton {
+#createRoomButton,
+#joinRoomButton {
   padding: 0.2em;
   width: 6em;
   border-style: hidden;
@@ -112,7 +114,9 @@ button {
 }
 
 /** Style for tabs. **/
-#instructionButton, #rankingButton, #creditsButton {
+#instructionButton,
+#rankingButton,
+#creditsButton {
   height: 2em;
   width: 15em;
 }
@@ -161,7 +165,7 @@ button {
   color: var(--plum);
   font-size: 1em;
   font-weight: bold;
-  margin : 0.6em;
+  margin: 0.6em;
   width: 25em;
 }
 
@@ -205,7 +209,8 @@ video {
 }
 
 /** Style for lists in credit's section. **/
-.developerList, .creditsList {
+.developerList,
+.creditsList {
   list-style-type: square;
   display: flex;
   flex-direction: column;
@@ -213,34 +218,44 @@ video {
 }
 
 /** Style for individual elements of lists in credit's section. **/
-.developer, .artist {
+.developer,
+.artist {
   color: var(--skyMagenta);
   font-weight: bold;
 }
 
 /* Styles for header on screens smaller than 933px */
 @media screen and (max-width: 933px) {
+
   /** Adding flex to whole document **/
   html {
     display: flex;
     flex-direction: column
   }
+
   /** Adding flex to whole body **/
   body {
     display: flex;
     flex-direction: column
   }
+
   /** Same as before, but width and font size changes with device size.**/
-  #instructionButton, #rankingButton, #creditsButton {
+  #instructionButton,
+  #rankingButton,
+  #creditsButton {
     height: 2em;
     width: 40vw;
     font-size: 3vw;
   }
+
   /** Same as before, but width changes with device size.**/
-  #instructionButton, #rankingButton, #creditsButton {
+  #instructionButton,
+  #rankingButton,
+  #creditsButton {
     height: 2em;
     width: 28.5vw;
   }
+
   /** Same as before, but width and font size changes with device size.**/
   .tabContent {
     border-style: solid;
@@ -251,16 +266,19 @@ video {
     font-size: 3vw;
     border-radius: 3px;
   }
+
   /** Same as before, but width and height changes with device size.**/
   video {
     height: 45vw;
     width: 85vw;
   }
+
   /** Same as before, but instead of two columns, there is one.**/
   #ranking {
     display: flex;
     justify-content: center;
   }
+
   /** Same as before, but instead of two columns, there is one.**/
   #credits {
     display: flex;
