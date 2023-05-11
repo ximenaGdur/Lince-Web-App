@@ -107,6 +107,12 @@ body {
     cursor: default;
 }
 
+.mainContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
 /** Removes dot from list item. **/
 ul {
     list-style-type: none;
