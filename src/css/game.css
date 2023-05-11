@@ -3,152 +3,152 @@
   * Created by Jimena Gdur Vargas.
   */
 
-@import "common.css";
+  @import "common.css";
 
-/****************** INPUT AND BUTTONS ******************/
-body{
-    background-color: var(--isabelline);
-}
-
-.images {
-    display:none;
-    max-width:4em;
-    max-height:4em;
-}
-
-.boardImages{
-    border: 0.20em solid var(--darkPurple);
-    margin: 0em;
-    max-width:4em;
-    max-height:4em;
-}
-
-.btnAbandonar{
-    border-style: solid;
-    border-color: var(--plum);
-    color: var(--isabelline);
-    text-align: center;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-weight: bold;
-    font-size: 1.2em;
-    cursor: pointer;
-    border-radius: 3px;
-    margin-right: 0.1em;
-    max-width: 10em;
-    max-height: 5em;
-    margin-left: 28em;
-    margin-top: 1em;
-    background-color: var(--skyMagenta);    
-}
-
-/****************** BOARD ******************/
-.table {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    background-color: var(--mimiPink);
-    border: 0.10em solid var(--darkPurple);
-    width:47.3em;
-    height:25em;
-    margin-left: 0em;
-    padding: 0em;
-}
-
-.imagenMejora{
-    display: flex;
-    max-width:4em;
-    max-height:4em;
-}
-
-.informaciónMejora{
-    background-color: var(--finn);
-    color: var(--isabelline);
-    display: flex;
-    flex-direction: column;
-    list-style-type: none;
-    align-items: center;
-    padding-right: 1em;
-    padding-left: 1em;
-    padding-bottom: 1em;
-    width: 21.5em;
-}
-
-.ranking{
-    background-color: var(--finn);
-    color: var(--isabelline);
-    display: flex;
-    flex-direction: column;
-    align-content:center;
-    list-style: none;
-    align-items: flex-start;
-    width:19.8em;
-    height:5em;
-}
-
-.profileImages{
-    width:1em;
-    height:1em;
-}
-
-ul.ranking li{
-    margin-top: 0.5em;
-}
-
-/****************** INVENTORY ******************/
-.misFichasTitle{
-    display: flex;
-}
-
-.misFichas{
-    background-color: var(--finn);
-    display: flex;
-    width:45em;
-}
-
-ul.misFichas li{
-    list-style-type: none;
-    display: flex;
-    flex-direction:row;
-    border-style: solid;
-    background-color: var(--mimiPink);
-    max-width:4em;
-    max-height:4em;
-    margin-top: 1em;
-    margin-bottom: 1em;
-    margin-inline:0.25em;
-}
-
-.myImages{
-    display: flex;
-    max-width:4rem;
-    max-height:4rem;
-}
-
-main {
-    display: flex;  
-    flex-flow: row wrap;
-    font-weight: bold;
-    text-align: center; 
-}
-
-.aside{
-    gap: 2em;
-    display: flex;
-    flex-direction: column;
-    align-items:center;
-    flex: 1 0 0; /* ordena la vista en la pantalla */
-    order: 2;
-}
-
-/* animations */
-.boardImages:hover{
-    background-color: var(--pinkLavender);
-}
-
-.myImages:hover {
-    background-color: var(--pinkLavender);
-}
-
-.btnAbandonar:hover {
-    background-color: var(--plum);
-}
+  /****************** INPUT AND BUTTONS ******************/
+  body{
+      background-color: var(--isabelline);
+  }
+  
+  .images {
+      display:none;
+      max-width:4em;
+      max-height:4em;
+  }
+  
+  .boardImages{
+      border: 0.20em solid var(--darkPurple);
+      margin: 0em;
+      max-width:4em;
+      max-height:4em;
+  }
+  
+  .btnAbandonar{
+      border-style: solid;
+      border-color: var(--plum);
+      color: var(--isabelline);
+      text-align: center;
+      font-family: Georgia, 'Times New Roman', Times, serif;
+      font-weight: bold;
+      font-size: 1.2em;
+      cursor: pointer;
+      border-radius: 3px;
+      margin-right: 0.1em;
+      max-width: 10em;
+      max-height: 5em;
+      margin-left: 28em;
+      margin-top: 1em;
+      background-color: var(--skyMagenta);    
+  }
+  
+  /****************** BOARD ******************/
+  .table {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      background-color: var(--mimiPink);
+      border: 0.10em solid var(--darkPurple);
+      width:47.3em;
+      height:25em;
+      margin-left: 0em;
+      padding: 0em;
+  }
+  
+  .imagenMejora{
+      display: flex;
+      max-width:4em;
+      max-height:4em;
+  }
+  
+  .informaciónMejora{
+      background-color: var(--finn);
+      color: var(--isabelline);
+      display: flex;
+      flex-direction: column;
+      list-style-type: none;
+      align-items: center;
+      padding-right: 1em;
+      padding-left: 1em;
+      padding-bottom: 1em;
+      width: 21.5em;
+  }
+  
+  .ranking{
+      background-color: var(--finn);
+      color: var(--isabelline);
+      display: flex;
+      flex-direction: column;
+      align-content:center;
+      list-style: none;
+      align-items: flex-start;
+      width:19.8em;
+      height:5em;
+  }
+  
+  .profileImages{
+      width:1em;
+      height:1em;
+  }
+  
+  ul.ranking li{
+      margin-top: 0.5em;
+  }
+  
+  /****************** INVENTORY ******************/
+  .misFichasTitle{
+      display: flex;
+  }
+  
+  .misFichas{
+      background-color: var(--finn);
+      display: flex;
+      width:45em;
+  }
+  
+  ul.misFichas li{
+      list-style-type: none;
+      display: flex;
+      flex-direction:row;
+      border-style: solid;
+      background-color: var(--mimiPink);
+      max-width:4em;
+      max-height:4em;
+      margin-top: 1em;
+      margin-bottom: 1em;
+      margin-inline:0.25em;
+  }
+  
+  .myImages{
+      display: flex;
+      max-width:4rem;
+      max-height:4rem;
+  }
+  
+  main {
+      display: flex;  
+      flex-flow: row wrap;
+      font-weight: bold;
+      text-align: center; 
+  }
+  
+  .aside{
+      gap: 2em;
+      display: flex;
+      flex-direction: column;
+      align-items:center;
+      flex: 1 0 0; /* ordena la vista en la pantalla */
+      order: 2;
+  }
+  
+  /* animations */
+  .boardImages:hover{
+      background-color: var(--pinkLavender);
+  }
+  
+  .myImages:hover {
+      background-color: var(--pinkLavender);
+  }
+  
+  .btnAbandonar:hover {
+      background-color: var(--plum);
+  }
