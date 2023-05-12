@@ -1,4 +1,4 @@
 function showCodePopUp () {
     let popUp = document.getElementById("codePopUp");
-    popUp.style.visibility = "visible";
+    popUp.style.display = "flex"
 }

@@ -17,8 +17,8 @@
 
 /** Website's header. **/
 .header {
-    background-color:var(--finn);
-    color:var(--isabelline);
+    background-color: var(--finn);
+    color: var(--isabelline);
     display: flex;
     flex-direction: row-reverse;
     justify-content: center;
@@ -101,7 +101,7 @@
 
 /** Global styles. **/
 body {
-    background-color:var(--isabelline);
+    background-color: var(--isabelline);
     margin: 0vw;
     font-family: Georgia, 'Times New Roman', Times, serif;
     cursor: default;
@@ -111,7 +111,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
+}
 
 /** Removes dot from list item. **/
 ul {
@@ -140,6 +140,7 @@ p {
     color: var(--plum);
     font-size: 1.5vw;
     font-weight: bold;
+    margin: 0 auto;
 }
 
 /** Style for style for all buttons in this page. **/
@@ -167,30 +168,34 @@ button:hover {
 
 /* Styles for header on screens smaller than 933px */
 @media screen and (max-width: 933px) {
+
     /** Same header as before, but font size changes with device size.**/
     .headerTitle {
         font-size: 5vw;
     }
+
     /** Style for page's main title. **/
     .pageTitle {
         font-size: 5vw;
     }
+
     /** Style for page's main title. **/
     h2 {
         font-size: 3.5vw;
     }
+
     /** Style for h3. **/
     h3 {
         font-size: 2.5vw;
     }
+
     /** Style for style for all buttons in this page. **/
     button {
         font-size: 4vw;
     }
+
     /** Style for normal text. **/
     p {
         font-size: 2.4vw;
     }
 }
-
-
