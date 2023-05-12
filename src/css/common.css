@@ -140,7 +140,7 @@ p {
     color: var(--plum);
     font-size: 1.5vw;
     font-weight: bold;
-    margin: 0 auto;
+    margin: 0vw;
 }
 
 /** Style for style for all buttons in this page. **/

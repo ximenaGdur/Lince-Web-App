@@ -11,73 +11,81 @@
     flex-direction: column;
     flex-wrap: nowrap;
     align-items: stretch;
-    margin: 0.5rem;
-}
-
-h3 {
-    font-size: 1vw;
+    margin: 0.5vw;
 }
 
 /** Style for each configuration option**/
 .configurationOption {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: stretch;
     list-style: none;
+    align-items: center;
     column-count: 3;
-    padding: 0;
-    margin: 0.2em;
+    padding: 0vw;
+    margin: 0.2vw;
 }
 
 /** Style for each configuration option tittle**/
 .textAndInformation {
-    width: 15rem;
-    height: 2rem;
+    width: 22vw;
+    height: 6vw;
+    justify-content: space-between;
+    flex-direction: row;
+    margin: 0vw;
+    padding-left: 0.9vw;
+    padding-right: 0.9vw;
 }
 
 /** Style for each configuration option tittle**/
 .confOptTittleDescription {
     color: var(--isabelline);
-    margin: 0rem;
-    height: 2rem;
-    display: flex;
-    flex-wrap: wrap;
-    align-content: center;
-    justify-content: space-around;
-    align-items: center;
+    margin: 0vw;
+    font-size: 2vw;
 }
 
 /** Style for each configuration option value**/
 .configurationOptionValue {
     border-style: solid;
-    border-color: var(--plum);
-    width: 17rem;
-    height: 2rem;
+    border-color: var(--finn);
+    border-radius: 0.9vw;
+    border-width: 0.2vw;
+    width: 15vw;
+    height: 6.5vw;
+    margin: 0vw;
+    margin-left: 0.2vw;
+    margin-right: 0.2vw;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 6px;
-    margin-left: 0.1rem;
-    margin-right: 0.1rem;
+}
+
+.inputRange {
+    width: 22vw;
 }
 
 /** Style for each configuration option information**/
 .configurationOptionInformation {
+    border-style: solid;
+    border-color: var(--finn);
+    border-radius: 0.9vw;
+    border-width: 0.2vw;
+    width: 30vw;
+    height: 6.5vw;
+    margin: 0vw;
+    margin-left: 0.2vw;
+    margin-right: 0.2vw;
+    padding-left: 2vw;
+    padding-right: 2vw;
     flex-grow: 1;
+    display: flex;
     text-align: center;
     border-style: solid;
-    border-color: var(--plum);
-    border-radius: 6px;
-    width: 35rem;
-    margin-left: 0.1rem;
-    margin-right: 0.1rem;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
 }
 
-/** Style for each configuration option information description**/
 .confOptInfDescription {
-    margin: 0;
-    height: 2rem;
+    font-size: 1.5vw;
 }
 
 /** Style for each list of adaptation configuration**/
@@ -110,7 +118,9 @@ h3 {
 }
 
 /** Style for each adaptation description**/
-.adaptationDescription{}
+.adaptationDescription {
+    font-size: 3vw;
+}
 
 /** Style for each adaptation option**/
 .adaptationOption {
@@ -170,4 +180,18 @@ h3 {
     padding: 0;
     cursor: help;
 }
-  
+
+/******************* MEDIA QUERIES *******************/
+
+/* Styles for header on screens smaller than 933px */
+@media screen and (max-width: 933px) {
+    /** Style for each configuration option tittle**/
+    .textAndInformation {
+        width: 29vw;
+        height: 8vw;
+    }
+    /** Style for each configuration option tittle**/
+    .confOptTittleDescription {
+        font-size: 2.5vw;
+    }
+}
