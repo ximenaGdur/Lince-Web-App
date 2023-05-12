@@ -1,47 +1,60 @@
 /**
   * CSS used for the home page.
-  * Created by Jimena Gdur Vargas.
+  * Created by Derrick Allen Smith.
   */
 
 @import "common.css";
 
-/* Align the pop-up to the center */
-body {
-    margin: auto;
-    width: 30%;
-    height: 30vh;
-    border: 3px solid var(--violet);
-    padding: 0.5em;
-    background-color: var(--whiteSmoke);
-}
-
-/* Place the close button to the left top corner */
-.btnPopUpClose {
-    position: relative;
-    left: 86%;
-    margin: 0.6em 0 0.6em 0;
+.popUp {
+    background-color: var(--mimiPink);
+    border-color: var(--finn);
     border-style: solid;
-    border-color: var(--plum);
-    background-color: var(--plum);
-    color: var(--isabelline);
-    text-align: center;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-weight: bold;
-    font-size: 0.8em;
-    cursor: pointer;
+    display: flex;
+    width: 40vw;
+    flex-direction: column;
+    align-items: center;
+    margin: 1vw 0vw 1vw 0vw;
 }
 
 /* Title centered for pop-ups */
 .popUpTitle {
+    color: var(--plum);
     position: relative;
     text-align: center;
-    margin: 0.5em;
-    color: var(--plum);
+    margin: 0.8vw;
+    font-size: 2.5vw;
+}
+
+.popUpSubtitle {
+    color: var(--skyMagenta);
+    font-size: 2vw;
+    margin: 0vw;
+    font-weight: bold;
+}
+
+.codeInput {
+    width: 15vw;
+}
+
+/* centered the code input for room */
+.codeSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0.6vw;
+    margin-bottom: 1vw;
+}
+
+/* font with bold weight */
+.codeSection p {
+    margin: 0;
+    color: var(--finn);
+    font-weight: bold;
 }
 
 .messageContent {
     text-align: center;
-    max-width: 100%;
+    margin: 0vw;
     color: var(--darkPurple);
 }
 
@@ -52,78 +65,7 @@ body {
 }
 
 /* Alignment of buttons */
-.buttons {
-    max-width: 100%;
-    margin: 2em 7.5em;
-}
-
-.cancelRoom {
-    position: fixed;
-    width: 80%;
-}
-
-/* Alignment of buttons */
-.btnCancel,
-.btnAccept,
-.btnJoin {
-    color: var(--darkPurple);
-    margin-left: 2.7em;
-    border-radius: 3px;
-    border-style: solid;
-    border-color: var(--plum);
-    background-color: var(--plum);
-    color: var(--isabelline);
-    text-align: center;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-weight: bold;
-    font-size: 0.8em;
-    cursor: pointer;
-}
-
-/* Alignment of buttons */
-.btnContinue,
-.btnHome {
-    color: var(--darkPurple);
-    margin: -1em 1.4em 5em 0em;
-    border-radius: 3px;
-    border-style: solid;
-    border-color: var(--plum);
-    background-color: var(--plum);
-    color: var(--isabelline);
-    text-align: center;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-weight: bold;
-    font-size: 0.7em;
-    cursor: pointer;
-}
-
-/* centered the code input for room */
-.codeSection {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 1em;
-}
-
-/* border of the table */
-table {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-collapse: collapse;
-}
-
-/* font with bold weight */
-.codeSection p {
-    margin: 0;
-    color: var(--finn);
-    font-weight: bold;
-}
-
-/* table border */
-td {
-    border: 1px solid;
-    color: var(--finn);
-    font-weight: bold;
-    padding: 0 0.6em;
+.btnCancel, .btnJoin, .btnContinue, .btnHome {
+    font-size: 2vw;
+    margin-bottom: 1.5vw;
 }

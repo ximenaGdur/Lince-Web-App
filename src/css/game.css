@@ -1,15 +1,25 @@
 /**
   * CSS used for the home page.
-  * Created by Jimena Gdur Vargas.
+  * Created by Gianfranco Soto Palma.
   */
 
 @import "common.css";
+@import "popUps.css";
 
-/****************** INPUT AND BUTTONS ******************/
-body{
-    background-color: var(--isabelline);
+#popUps {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
+.buttons {
+    padding-left: 0vw;
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+}
+
+/****************** INPUT AND BUTTONS ******************/
 .images {
     display:none;
     max-width:4em;
@@ -23,22 +33,12 @@ body{
     max-height:4em;
 }
 
-.btnAbandonar{
-    border-style: solid;
-    border-color: var(--plum);
-    color: var(--isabelline);
-    text-align: center;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-weight: bold;
-    font-size: 1.2em;
-    cursor: pointer;
-    border-radius: 3px;
+.btnAbandonar {
     margin-right: 0.1em;
     max-width: 10em;
     max-height: 5em;
     margin-left: 28em;
     margin-top: 1em;
-    background-color: var(--skyMagenta);    
 }
 
 /****************** BOARD ******************/
@@ -147,8 +147,4 @@ main {
 
 .myImages:hover {
     background-color: var(--pinkLavender);
-}
-
-.btnAbandonar:hover {
-    background-color: var(--plum);
 }
