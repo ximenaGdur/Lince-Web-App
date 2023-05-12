@@ -100,14 +100,13 @@
     color: var(--violet);
     background-color: var(--isabelline);
     list-style: none;
-    height: 15vw;
     column-count: 3;
     padding: 0;
-    margin: 0;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: stretch;
+    flex-wrap: wrap;
 }
 
 /** Style for each adaptation description**/
@@ -154,6 +153,10 @@
     margin: 1em 0 0 0;
 }
 
+#adaptation2{
+    margin: 0;
+}
+
 /** Style for margin of adaptation 3**/
 #adaptation3{
     margin: 0 0 1em 0;
@@ -164,7 +167,7 @@
     color: var(--skyMagenta);
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-content: stretch;
     align-items: stretch;
     margin: 0.5rem;
@@ -176,6 +179,12 @@
     list-style: none;
     padding: 0;
     margin: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: space-between;
+    align-items: center;
 }
 
 /** Style for each information button**/
