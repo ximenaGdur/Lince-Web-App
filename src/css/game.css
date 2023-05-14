@@ -63,18 +63,6 @@
 }
 */
 
-.ranking{
-    background-color: var(--finn);
-    color: var(--isabelline);
-    display: flex;
-    flex-direction: column;
-    align-content:center;
-    list-style: none;
-    align-items: flex-start;
-    width:19.8em;
-    height:5em;
-}
-
 .profileImages{
     width:1em;
     height:1em;
