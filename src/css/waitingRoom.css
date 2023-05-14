@@ -25,7 +25,7 @@
 }
 
 /** Style for each configuration option tittle**/
-.textAndInformation {
+.label-icon {
     width: 22vw;
     height: 6vw;
     justify-content: space-between;
@@ -60,7 +60,7 @@
 
 /** Style for each input typr range**/
 .inputRange {
-    background: linear-gradient(to right, var(--mimiPink) 0%, var(--pinkLavender) 50%, var(--thulianPink) 50%, var(--skyMagenta) 100%);
+    background: linear-gradient(to right, var(--mimi-pink) 0%, var(--pink-lavender) 50%, var(--thulian-pink) 50%, var(--sky-magenta) 100%);
     border-style: solid;
     border-color: var(--finn);
     width: 22vw;
@@ -161,7 +161,7 @@
 
 /** Style for section players**/
 .players{
-    color: var(--skyMagenta);
+    color: var(--sky-magenta);
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -193,7 +193,7 @@
 /* Styles for header on screens smaller than 933px */
 @media screen and (max-width: 933px) {
     /** Style for each configuration option tittle**/
-    .textAndInformation {
+    .label-icon {
         width: 29vw;
         height: 8vw;
     }

@@ -27,7 +27,7 @@
 }
 
 .boardImages{
-    border: 0.20em solid var(--darkPurple);
+    border: 0.20em solid var(--dark-purple);
     margin: 0em;
     max-width:4em;
     max-height:4em;
@@ -46,8 +46,8 @@
     list-style: none;
     display: flex;
     flex-wrap: wrap;
-    background-color: var(--mimiPink);
-    border: 0.10em solid var(--darkPurple);
+    background-color: var(--mimi-pink);
+    border: 0.10em solid var(--dark-purple);
     width:47.3em;
     height:25em;
     margin-left: 0em;
@@ -110,7 +110,7 @@ ul.misFichas li{
     display: flex;
     flex-direction:row;
     border-style: solid;
-    background-color: var(--mimiPink);
+    background-color: var(--mimi-pink);
     max-width:4em;
     max-height:4em;
     margin-top: 1em;
@@ -142,9 +142,9 @@ main {
 
 /* animations */
 .boardImages:hover{
-    background-color: var(--pinkLavender);
+    background-color: var(--pink-lavender);
 }
 
 .myImages:hover {
-    background-color: var(--pinkLavender);
+    background-color: var(--pink-lavender);
 }

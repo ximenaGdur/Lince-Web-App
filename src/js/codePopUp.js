@@ -1,5 +1,5 @@
 const codePopUp = document.getElementById('popUpCode');
-const cancelButton = document.getElementsByClassName('btnCancel');
+const cancelButton = document.getElementById('btnCancel');
 
 function closePopUp () {
   if(codePopUp && cancelButton) {
@@ -7,4 +7,4 @@ function closePopUp () {
   }
 }
 
-cancelButton[0].addEventListener('click', closePopUp);
+cancelButton.addEventListener('click', closePopUp);

@@ -11,51 +11,51 @@
 	</head>
 	<body>
 		<header class="header">
-			<h1 class="headerTitle">¡Muy Lentos!</h1>
-			<img class="gameLogo" src="../../design/images/icons/logo.png" alt="logo de la juego"/>
+			<h1 class="header-title">¡Muy Lentos!</h1>
+			<img class="game-logo" src="../../design/images/icons/logo.png" alt="logo de la juego"/>
 		</header>
 		<main>
-			<h1 class="pageTitle">Bienvenido al juego ¡Muy Lentos!</h1>
+			<h2 class="page-title">Bienvenido al juego ¡Muy Lentos!</h2>
 			<!-- Contains main content of page -->
-			<section class="mainContent">
-				<article class="inputAndButtons">
-					<h3 id="nicknameTitle">Apodo para el juego</h3>
+			<section class="main-content">
+				<article class="input-buttons">
+					<h3 class="sub-title" id="nicknameTitle">Apodo para el juego</h3>
 					<!-- Allows user to add a nickname for the game -->
-					<input class="textInput" id="nickname" type="text" placeholder="Ingrese su apodo"/>
+					<input class="text-input" id="nickname" type="text" placeholder="Ingrese su apodo"/>
 					<!-- Contains buttons -->
 					<ul class="buttons">
 						<!-- Jumps to waiting room for host -->
-						<li class="textAndInformation">
-							<button id="createRoomButton">
+						<li class="label-icon">
+							<button class="small-button" id="create-room-button">
 								Crear sala
 							</button>
-							<img class="informationIcon" src="../../design/Images/icons/informationIcon.png" alt="información"/>
+							<img class="information-icon" src="../../design/Images/icons/informationIcon.png" alt="información"/>
 						</li>
 						<!-- Jumps to waiting room for guest -->
-						<li class="textAndInformation">
-							<button id="joinRoomButton">
+						<li class="label-icon">
+							<button class="small-button" id="join-room-button">
 								Unir a sala
 							</button>
-							<img class="informationIcon" src="../../design/Images/icons/informationIcon.png" alt="información"/>
+							<img class="information-icon" src="../../design/Images/icons/informationIcon.png" alt="información"/>
 						</li>
 					</ul>
 				</article>
 
 				<article class="popUp" id="popUpCode">
-					<h2 class="popUpTitle">Ingrese el código de la sala</h2>
+					<h1 class="popUpTitle">Ingrese el código de la sala</h1>
 					<section class="codeSection">
-							<h3 class="popUpSubtitle">Codigo</h3>
+							<h2 class="popUpSubtitle">Codigo</h2>
 							<input class="codeInput" type="number" min="4" max="4" />
 							<p>Sala encontrada</p>
 					</section>
 					<ul class="buttons">
 						<li>
-								<button class="btnCancel" type="button">
+								<button class="small-button" id="btnCancel" type="button">
 										Cancelar
 								</button>
 						</li>
 						<li>
-								<button class="btnJoin" type="button">
+								<button class="small-button" id="btnJoin" type="button">
 										Unirse
 								</button>
 						</li>
@@ -63,19 +63,19 @@
 			</article>
 
 				<!-- Contains tab links -->
-				<ul class="tabLinks">
+				<ul class="tab-links">
 					<li>
-						<button type="button" id="instructionButton">
+						<button class="large-button" id="instructionButton" type="button">
 							¿Cómo Jugar?
 						</button>
 					</li>
 					<li>
-						<button type="button" id="rankingButton">
+						<button class="large-button" id="rankingButton" type="button">
 							Clasificación
 						</button>
 					</li>
 					<li>
-						<button type="button" id="creditsButton">
+						<button class="large-button" id="creditsButton" type="button">
 							Créditos
 						</button>
 					</li>
@@ -96,22 +96,22 @@
 						<h2 class="sectionTitle">
 							Clasificación
 						</h2>
-						<table class="rankingTable" id="mainPageRanking">
+						<table class="ranking-table" id="mainPageRanking">
 							<tbody>
 									<tr>
-											<td class="rankingRow"><p>1</p></td>
-											<td class="rankingRow"><p>Christian Ortega</p></td>
-											<td class="rankingRow"><p>197342 puntos</p></td>
+											<td class="ranking-row"><p>1</p></td>
+											<td class="ranking-row"><p>Cristian Ortega</p></td>
+											<td class="ranking-row"><p>197342 puntos</p></td>
 									</tr>
 									<tr>
-											<td class="rankingRow"><p>2</p></td>
-											<td class="rankingRow"><p>Gianfranco Soto</p></td>
-											<td class="rankingRow"><p>123124 puntos</p></td>
+											<td class="ranking-row"><p>2</p></td>
+											<td class="ranking-row"><p>Gianfranco Soto</p></td>
+											<td class="ranking-row"><p>123124 puntos</p></td>
 									</tr>
 									<tr>
-											<td class="rankingRow"><p>3</p></td>
-											<td class="rankingRow"><p>Luis Umaña</p></td>
-											<td class="rankingRow"><p>2134 puntos</p></td>
+											<td class="ranking-row"><p>3</p></td>
+											<td class="ranking-row"><p>Luis Umaña</p></td>
+											<td class="ranking-row"><p>2134 puntos</p></td>
 									</tr>
 							</tbody>
 					</table>
