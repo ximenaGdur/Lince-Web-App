@@ -1,10 +1,8 @@
-const btnClose = document.getElementsByClassName('btnPopUpClose');
+const btnAccept = document.getElementsByClassName('btnAccept');
 
-function closePopUp() {
-    window.location.href = "/src/xhtml/game.xhtml";   
-
+/** Function: Accept
+ * return to home page when clicked **/
+function Accept() {
+    window.location.href = "/src/xhtml/homePage.xhtml";
 }
-btnClose[0].addEventListener('click', closePopUp);
-
-
-  
+btnAccept[0].addEventListener('click', Accept);

@@ -6,52 +6,44 @@
 @import "common.css";
 @import "popUps.css";
 
+/* HIDE POP UP 
+* FALTA RESPONSIVE
+* DELETE LATER
+*/
 #popUps {
-    display: flex;
+    display: /*flex*/none; 
     flex-direction: column;
     align-items: center;
 }
 
-.buttons {
-    padding-left: 0vw;
-    display: flex;
-    align-items: center;
-    flex-direction: row-reverse;
-}
-
-/****************** INPUT AND BUTTONS ******************/
+/* temporary for all images DELETE LATER*/ 
 .images {
     display:none;
     max-width:4em;
     max-height:4em;
 }
 
+/****************** BOARD ******************/
 .boardImages{
-    border: 0.20em solid var(--darkPurple);
-    margin: 0em;
+    border: solid var(--darkPurple);
     max-width:4em;
     max-height:4em;
+    /*min-width: 2em; /* need to add space horizontally */
+    /*min-height: 2em; */
+   
 }
 
-.btnAbandonar {
-    margin-right: 0.1em;
-    max-width: 10em;
-    max-height: 5em;
-    margin-left: 28em;
-    margin-top: 1em;
-}
-
-/****************** BOARD ******************/
 .table {
     list-style: none;
     display: flex;
     flex-wrap: wrap;
     background-color: var(--mimiPink);
     border: 0.10em solid var(--darkPurple);
-    width:47.3em;
-    height:25em;
-    margin-left: 0em;
-    padding: 0em;
+    margin-left: 1%;
+    padding: 0.5%;
+    max-width: 47.73em; /* to fit 11 images max */
+    max-height:40em;
+    min-width: 21.3em; /* to fit 5 imagenes minimum */
 }
 
 .imagenMejora{
@@ -60,6 +52,7 @@
     max-height:4em;
 }
 
+/*
 .informaciónMejora{
     background-color: var(--finn);
     color: var(--isabelline);
@@ -67,11 +60,8 @@
     flex-direction: column;
     list-style-type: none;
     align-items: center;
-    padding-right: 1em;
-    padding-left: 1em;
-    padding-bottom: 1em;
-    width: 21.5em;
 }
+*/
 
 .ranking{
     background-color: var(--finn);
@@ -89,41 +79,46 @@
     width:1em;
     height:1em;
 }
-
-ul.ranking li{
+/* "rankingTable" = "ranking" antes*/
+ul.rankingTable li{
     margin-top: 0.5em;
 }
 
 /****************** INVENTORY ******************/
+
+/* Positions title accordingly */
 .misFichasTitle{
-    display: flex;
+    text-align: left; 
+    margin: 1%;     
 }
 
+/* Box misFichas */
 .misFichas{
     background-color: var(--finn);
     display: flex;
-    width:45em;
+    margin-left: 1%;
 }
 
+/* Individual elements in box */
 ul.misFichas li{
     list-style-type: none;
-    display: flex;
     flex-direction:row;
     border-style: solid;
     background-color: var(--mimiPink);
-    max-width:4em;
-    max-height:4em;
-    margin-top: 1em;
-    margin-bottom: 1em;
+    max-width: 4em;
+    max-height: 4em;
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
     margin-inline:0.25em;
 }
 
+/* images of "myFichas" */
 .myImages{
-    display: flex;
     max-width:4rem;
     max-height:4rem;
 }
 
+/* acting as a container */
 main {
     display: flex;  
     flex-flow: row wrap;
@@ -131,13 +126,18 @@ main {
     text-align: center; 
 }
 
-.aside{
-    gap: 2em;
-    display: flex;
-    flex-direction: column;
-    align-items:center;
-    flex: 1 0 0; /* ordena la vista en la pantalla */
+/* time, ranking, exit btn container*/
+.gameInfo{
+    flex: 1 0 0; /* orders view */
     order: 2;
+}
+
+.btnAbandonar {
+    margin-right: 0.1em;
+    max-width: 7em;
+    max-height: 5em;
+    margin-top: 1em;
+    font-size: large;
 }
 
 /* animations */
@@ -147,4 +147,19 @@ main {
 
 .myImages:hover {
     background-color: var(--pinkLavender);
+}
+
+/* PASAR AL COMMON PROBABLY*/
+/****************** styles to fit screen sizes ******************/
+
+@media screen and (max-width: 933px) {
+    /* Style for each configuration option tittle */
+    .textAndInformation {
+        width: 29vw;
+        height: 8vw;
+    }
+    /* Style for each configuration option tittle */
+    .confOptTittleDescription {
+        font-size: 2.5vw;
+    }
 }
