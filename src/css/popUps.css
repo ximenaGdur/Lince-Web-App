@@ -5,67 +5,67 @@
 
   @import "common.css";
 
-  .popUp {
-      background-color: var(--mimiPink);
-      border-color: var(--finn);
-      border-style: solid;
-      display: flex;
-      width: 40vw;
-      flex-direction: column;
-      align-items: center;
-      margin: 1vw 0vw 1vw 0vw;
-  }
-  
-  /* Title centered for pop-ups */
-  .popUpTitle {
-      color: var(--plum);
-      position: relative;
-      text-align: center;
-      margin: 0.8vw;
-      font-size: 2.5vw;
-  }
-  
-  .popUpSubtitle {
-      color: var(--skyMagenta);
-      font-size: 2vw;
-      margin: 0vw;
-      font-weight: bold;
-  }
-  
-  .codeInput {
-      width: 15vw;
-  }
-  
-  /* centered the code input for room */
-  .codeSection {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 0.6vw;
-      margin-bottom: 1vw;
-  }
-  
-  /* font with bold weight */
-  .codeSection p {
-      margin: 0;
-      color: var(--finn);
-      font-weight: bold;
-  }
-  
-  .messageContent {
-      text-align: center;
-      margin: 0vw;
-      color: var(--darkPurple);
-  }
-  
-  .messageContent p {
-      margin: 0.8em 4em;
-      color: var(--finn);
-      font-weight: bold;
-  }
-  
-  /* Alignment of buttons */
-  .btnCancel, .btnJoin, .btnContinue, .btnHome {
-      font-size: 2vw;
-      margin-bottom: 1.5vw;
-  }
+.popUp {
+    background-color: var(--mimiPink);
+    border-color: var(--finn);
+    border-style: solid;
+    display: flex;
+    width: 40vw;
+    flex-direction: column;
+    align-items: center;
+    margin: 1vw 0vw 1vw 0vw;
+}
+
+/* Title centered for pop-ups */
+.popUpTitle {
+    color: var(--plum);
+    position: relative;
+    text-align: center;
+    margin: 0.8vw;
+    font-size: 2.5vw;
+}
+
+.popUpSubtitle {
+    color: var(--skyMagenta);
+    font-size: 2vw;
+    margin: 0vw;
+    font-weight: bold;
+}
+
+.codeInput {
+    width: 15vw;
+}
+
+/* centered the code input for room */
+.codeSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0.6vw;
+    margin-bottom: 1vw;
+}
+
+/* font with bold weight */
+.codeSection p {
+    margin: 0;
+    color: var(--finn);
+    font-weight: bold;
+}
+
+.messageContent {
+    text-align: center;
+    margin: 0vw;
+    color: var(--darkPurple);
+}
+
+.messageContent p {
+    margin: 0.8em 4em;
+    color: var(--finn);
+    font-weight: bold;
+}
+
+/* Alignment of buttons */
+.btnCancel, .btnJoin, .btnContinue, .btnHome {
+    font-size: 2vw;
+    margin-bottom: 1.5vw;
+}
