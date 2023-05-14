@@ -13,27 +13,28 @@
     align-items: center;
     display: flex;
     flex-direction: column;
-    min-width: 40%;
+    margin-bottom: 2%;
+    min-width: 20%;
 }
 
 /** Style for container for both buttons. **/
 .buttons {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  margin: 0.5%;
-  padding: 0%;
-  max-width: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0.5%;
+    padding: 0%;
+    max-width: 50%;
 }
 
 /** Animations for buttons **/
 .label-icon:hover{
-  background-color: var(--finn);
+    background-color: var(--finn);
 }
 
 .label-icon:hover button {
-  background-color: var(--finn);
-  border-color: var(--finn);
+    background-color: var(--finn);
+    border-color: var(--finn);
 }
 
 /****************** TAB SECTION ******************/
@@ -43,36 +44,37 @@
     display: flex;
     justify-content: center;
     min-width: 100%;
-    margin-bottom: 0%;
+    margin: 0%;
     padding: 0%;
 }
 
-
 /** Style for container of content options. **/
-.contentOptions {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.content-options {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding: 0%;
+    margin: 0.1%;
+    min-width: 100%;
+    text-align: center;
 }
 
 /** Style for every content box in tab section. **/
-.tabContent {
-  border-style: solid;
-  border-color: var(--finn);
-  display: flex;
-  flex-direction: column;
-}
-
-/** Style for normal text in content box. **/
-.text {
+.tab-content {
+    border-color: var(--plum);
+    border-radius: 0.6rem;
+    border-style: solid;
+    display: flex;
+    flex-direction: column;
+    margin: 0.1%;
+    min-width: 90%;
 }
 
 /** Style for instructions section. **/
 #instructions {
-     display: flex;
-     flex-direction: column;
-     align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /** Style for video. **/
@@ -81,48 +83,55 @@ video {
 
 /** Style for ranking section. **/
 #ranking {
-     display: flex;
+    display: flex;
 }
 
 /** Style for credits section. **/
 #credits {
-     display: flex;
-     flex-direction: row;
-     justify-content: space-around;
-     align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
 }
 
 /** Style for about section of credits. **/
 #aboutSection {
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     margin-bottom: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2em;
 }
 
 /** Style for developers section of credits. **/
 #developers {
-     display: flex;
+    display: flex;
 }
 
 /** Style for lists in credit's section. **/
 .developerList, .creditsList {
-     list-style-type: square;
-     display: flex;
-     flex-direction: column;
-     align-items: flex-start;
+    list-style-type: square;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 /** Style for individual elements of lists in credit's section. **/
 .developer p, .artist p {
-     color: var(--sky-magenta);
-     font-weight: bold;
+    color: var(--sky-magenta);
+    font-weight: bold;
 }
 
 /* Styles for header on screens smaller than 933px */
 @media screen and (max-width: 933px) {
     /** Style for container for input and buttons. **/
+    .input-buttons { 
+        margin-bottom: 4%;
+    }
 
+    /** Removes container of buttons for tabs. **/
+    .tab-links {
+        display: none;
+    }
 
     /** Style for developers section of credits. **/
     #credits {

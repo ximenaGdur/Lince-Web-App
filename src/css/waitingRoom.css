@@ -12,6 +12,7 @@
     flex-wrap: nowrap;
     align-items: stretch;
     margin: 0.5vw;
+    min-width: 100%;
 }
 
 /** Style for each configuration option**/
@@ -20,8 +21,11 @@
     list-style: none;
     align-items: center;
     column-count: 3;
-    padding: 0vw;
+    padding: 0%;
     margin: 0.2vw;
+    min-width: 100%;
+    flex-direction: row;
+    min-height: auto;
 }
 
 /** Style for each configuration option tittle**/
@@ -33,13 +37,17 @@
     margin: 0vw;
     padding-left: 0.9vw;
     padding-right: 0.9vw;
+    min-width: 20%;
+    min-height: auto;
 }
 
 /** Style for each configuration option tittle**/
 .confOptTittleDescription {
     color: var(--isabelline);
     margin: 0vw;
-    font-size: 2vw;
+    font-size: 1rem;
+    min-width: 20%;
+    min-height: auto;
 }
 
 /** Style for each configuration option value**/
@@ -48,7 +56,6 @@
     border-color: var(--finn);
     border-radius: 0.9vw;
     border-width: 0.2vw;
-    width: 15vw;
     height: 6.5vw;
     margin: 0vw;
     margin-left: 0.2vw;
@@ -56,6 +63,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    min-width: 20%;
+    min-height: auto;
 }
 
 /** Style for each input typr range**/
@@ -63,10 +72,11 @@
     background: linear-gradient(to right, var(--mimi-pink) 0%, var(--pink-lavender) 50%, var(--thulian-pink) 50%, var(--sky-magenta) 100%);
     border-style: solid;
     border-color: var(--finn);
-    width: 22vw;
     cursor: grab;
     border-radius: 1rem;
     transition: background 450ms ease-in;
+    min-width: 20%;
+    min-height: auto;
 }
 
 /** Style for each configuration option information**/
@@ -75,7 +85,6 @@
     border-color: var(--finn);
     border-radius: 0.9vw;
     border-width: 0.2vw;
-    width: 30vw;
     height: 6.5vw;
     margin: 0vw;
     margin-left: 0.2vw;
@@ -89,10 +98,8 @@
     align-items: center;
     flex-direction: column;
     justify-content: center;
-}
-
-.confOptInfDescription {
-    font-size: 1.5vw;
+    min-width: 20%;
+    min-height: auto;
 }
 
 /** Style for each list of adaptation configuration**/
@@ -101,6 +108,7 @@
     background-color: var(--isabelline);
     list-style: none;
     height: 15vw;
+    min-width: 20%;
     column-count: 3;
     padding: 0;
     margin: 0;
@@ -108,6 +116,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: stretch;
+    min-height: auto;
 }
 
 /** Style for each adaptation description**/
@@ -115,18 +124,20 @@
     border-style: solid;
     border-color: var(--plum);
     border-radius: 6px;
-    width: 20vw;
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin: 0.1rem;
+    min-width: 20%;
+    min-height: auto;
 }
 
 /** Style for each adaptation description**/
 .adaptationDescription {
     font-size: 3vw;
+    min-height: auto;
 }
 
 /** Style for each adaptation option**/
@@ -135,7 +146,7 @@
     border-style: solid;
     border-color: var(--plum);
     border-radius: 6px;
-    width: 8vw;
+    min-width: 20%;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
@@ -143,6 +154,7 @@
     align-items: flex-end;
     padding: 1.6rem;
     margin: 0.1rem;
+    min-height: auto;
 }
 
 .adaptionIcon {
@@ -200,5 +212,12 @@
     /** Style for each configuration option tittle**/
     .confOptTittleDescription {
         font-size: 2.5vw;
+    }
+    /** Style for each configuration option**/
+    .configurationOption {
+        flex-direction: column;
+    }
+    .adaptationConfiguration {
+        flex-direction: column;
     }
 }

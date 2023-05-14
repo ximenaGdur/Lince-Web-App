@@ -124,13 +124,6 @@ ul.misFichas li{
     max-height:4rem;
 }
 
-main {
-    display: flex;  
-    flex-flow: row wrap;
-    font-weight: bold;
-    text-align: center; 
-}
-
 .aside{
     gap: 2em;
     display: flex;
