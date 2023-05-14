@@ -466,3 +466,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+.stylelintrc.json
+package-lock.json
+package.json
