@@ -1,6 +1,10 @@
+/******************** Creating constants for script ********************/
+
 const nicknameField = document.getElementById('nicknameTitle');
-const btnCreateRoom = document.getElementById('createRoomButton');
-const btnJoinRoom = document.getElementById('joinRoomButton');
+const btnCreateRoom = document.getElementById('create-room-button');
+const btnJoinRoom = document.getElementById('join-room-button');
+
+/********************** Functions used on script **********************/
 
 /**
  * Lock or enable create room and join room buttons after entering a nickname.
@@ -18,3 +22,5 @@ function enableButtons() {
         }
     }
 }
+
+/************************ Listeners for buttons ************************/

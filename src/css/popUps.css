@@ -6,10 +6,10 @@
 @import "common.css";
 
 .popUp {
-    background-color: var(--mimiPink);
+    background-color: var(--mimi-pink);
     border-color: var(--finn);
     border-style: solid;
-    display: flex;
+    display: none;
     width: 40vw;
     flex-direction: column;
     align-items: center;
@@ -26,7 +26,7 @@
 }
 
 .popUpSubtitle {
-    color: var(--skyMagenta);
+    color: var(--sky-magenta);
     font-size: 2vw;
     margin: 0vw;
     font-weight: bold;
@@ -55,7 +55,7 @@
 .messageContent {
     text-align: center;
     margin: 0vw;
-    color: var(--darkPurple);
+    color: var(--dark-purple);
 }
 
 .messageContent p {
