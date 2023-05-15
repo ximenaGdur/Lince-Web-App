@@ -6,14 +6,15 @@
   @import "common.css";
 
 .popUp {
-    background-color: var(--mimiPink);
+    background-color: var(--mimi-pink);
     border-color: var(--finn);
     border-style: solid;
-    display: flex;
+    display: none;
     width: 40vw;
     flex-direction: column;
     align-items: center;
     margin: 1vw 0vw 1vw 0vw;
+    display: none;
 }
 
 /* Title centered for pop-ups */
@@ -26,7 +27,7 @@
 }
 
 .popUpSubtitle {
-    color: var(--skyMagenta);
+    color: var(--sky-magenta);
     font-size: 2vw;
     margin: 0vw;
     font-weight: bold;
@@ -55,7 +56,7 @@
 .messageContent {
     text-align: center;
     margin: 0vw;
-    color: var(--darkPurple);
+    color: var(--dark-purple);
 }
 
 .messageContent p {
@@ -65,7 +66,10 @@
 }
 
 /* Alignment of buttons */
-.btnCancel, .btnJoin, .btnContinue, .btnHome {
+.btnCancel,
+.btnJoin,
+.btnContinue,
+.btnHome {
     font-size: 2vw;
     margin-bottom: 1.5vw;
 }

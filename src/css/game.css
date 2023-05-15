@@ -3,8 +3,8 @@
   * Created by Gianfranco Soto Palma.
   */
 
-@import "common.css";
-@import "popUps.css";
+@import url("common.css");
+@import url("popUps.css");
 
 /* HIDE POP UP 
 * FALTA RESPONSIVE
@@ -114,14 +114,6 @@ ul.misFichas li{
     max-height:4rem;
 }
 
-/* acting as a container */
-main {
-    display: flex;  
-    flex-flow: row wrap;
-    font-weight: bold;
-    text-align: center; 
-}
-
 /* time, ranking, exit btn container*/
 .gameInfo{
     margin-top: 2%;
@@ -139,11 +131,11 @@ main {
 
 /* animations */
 .boardImages:hover{
-    background-color: var(--pinkLavender);
+    background-color: var(--pink-lavender);
 }
 
 .myImages:hover {
-    background-color: var(--pinkLavender);
+    background-color: var(--pink-lavender);
 }
 
 /* PASAR AL COMMON PROBABLY*/
