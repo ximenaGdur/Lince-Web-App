@@ -24,6 +24,9 @@
                 </li>
                 <li class="configurationOptionValue">
                     <input type="range" class="inputRange">valorTiempoMáximo</input>
+                    <p id="maxTimeValue">
+                        
+                    </p>
                 </li>
                 <li class="configurationOptionInformation">
                     <p class="common-text">
@@ -38,6 +41,9 @@
                 </li>
                 <li class="configurationOptionValue">
                     <input type="range" class="inputRange">valorFichasPorJugador</input>
+                    <p id="cardsPerPlayerValue">
+                        
+                    </p>
                 </li>
                 <li class="configurationOptionInformation">
                     <p class="common-text">
@@ -53,6 +59,9 @@
                 </li>
                 <li class="configurationOptionValue">
                     <input type="range" class="inputRange">valorFichasPorRonda</input>
+                    <p id="cardsPerRoundValue">
+
+                    </p>
                 </li>
                 <li class="configurationOptionInformation">
                     <p class="common-text">
@@ -70,7 +79,7 @@
                 <li class="adaptationOption">
                     <img class="adaptionIcon" src="../../design/images/Icons/feature1A.png" alt=""></img>
                     <input type="radio" name="citizenship"/>
-                        <img class="information-icon" src="../../design/images/Icons/informationIcon.png" alt="información"></img>
+                    <img class="information-icon" src="../../design/images/Icons/informationIcon.png" alt="información"></img>
                 </li>
                 <li class="adaptationOption">
                     <img class="adaptionIcon" src="../../design/images/Icons/feature1B.png" alt=""></img>
@@ -86,12 +95,12 @@
                 </li>
                 <li class="adaptationOption">
                     <img class="adaptionIcon" src="../../design/images/Icons/feature2A.png" alt=""></img>
-                    <input type="radio" name="citizenship"/>
+                    <input type="radio" id="option2a" name="citizenship"/>
                     <img class="information-icon" src="../../design/images/Icons/informationIcon.png" alt="información"></img>
                 </li>
                 <li class="adaptationOption">
                     <img class="adaptionIcon" src="../../design/images/Icons/feature2B.png" alt=""></img>
-                    <input type="radio" name="citizenship"/><img class="information-icon" src="../../design/images/Icons/informationIcon.png" alt="información"></img>
+                    <input type="radio" id="option2b" name="citizenship"/><img class="information-icon" src="../../design/images/Icons/informationIcon.png" alt="información"></img>
                 </li>
             </ul>
             <ul class="adaptationConfiguration" id="adaptation3">
@@ -114,36 +123,17 @@
         </section>
         <section class="players">
             <h2 class="subtittle">Jugadores</h2>
-            <ul class="player">
-                <li class="playerNumber">1.</li>
-                <li class="avatar">avatarImg</li>
-                <li class="nickname">Xime</li>
-                <li class="score">0</li>
-            </ul>
-            <ul class="player">
-                <li class="playerNumber">2.</li>
-                <li class="avatar">avatarImg</li>
-                <li class="nickname">Derrick</li>
-                <li class="score">0</li>
-            </ul>
-            <ul class="player">
-                <li class="playerNumber">3.</li>
-                <li class="avatar">avatarImg</li>
-                <li class="nickname">Gian</li>
-                <li class="score">0</li>
-            </ul>
-            <ul class="player">
-                <li class="playerNumber">4.</li>
-                <li class="avatar">avatarImg</li>
-                <li class="nickname">Cris</li>
-                <li class="score">0</li>
-            </ul>
-            <ul class="player">
-                <li class="playerNumber">5.</li>
-                <li class="avatar">avatarImg</li>
-                <li class="nickname">Josesito</li>
-                <li class="score">0</li>
-            </ul>
+            <table class="ranking-table">
+                <tbody id="playerTableBody">
+
+                </tbody>
+            </table>
+        </section>
+        <section>
+            <button class="small-button" id="exitButton" type="button">
+                Salir
+            </button>
         </section>
     </body>
+    <script src="../js/waitingRoom.js"></script>
 </html>

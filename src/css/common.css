@@ -177,20 +177,22 @@ button:hover {
     padding: 0.5%;
 }
 
+
 /* border of the table */
 .ranking-table {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     border-collapse: collapse;
+    max-width: 50%;
+}
+
+.ranking-row {
+    border-color: var(--plum);
+    border-style: solid;
 }
 
 /* table row border */
-.ranking-row {
-    border: 2.5% solid;
-    color: var(--finn);
-    font-weight: bold;
-    padding: 6%;
+.ranking-col {
+    border-color: var(--plum);
+    border-style: solid;
 }
 
 .section-title {
