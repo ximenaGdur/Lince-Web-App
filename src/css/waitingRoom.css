@@ -11,73 +11,95 @@
     flex-direction: column;
     flex-wrap: nowrap;
     align-items: stretch;
-    margin: 0.5rem;
-}
-
-h3 {
-    font-size: 1vw;
+    margin: 0.5vw;
+    min-width: 100%;
 }
 
 /** Style for each configuration option**/
 .configurationOption {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: stretch;
     list-style: none;
+    align-items: center;
     column-count: 3;
-    padding: 0;
-    margin: 0.2em;
+    padding: 0%;
+    margin: 0.2vw;
+    min-width: 100%;
+    flex-direction: row;
+    min-height: auto;
 }
 
 /** Style for each configuration option tittle**/
-.textAndInformation {
-    width: 15rem;
-    height: 2rem;
+.label-icon {
+    width: 22vw;
+    height: 6vw;
+    justify-content: space-between;
+    flex-direction: row;
+    margin: 0vw;
+    padding-left: 0.9vw;
+    padding-right: 0.9vw;
+    min-width: 20%;
+    min-height: auto;
 }
 
 /** Style for each configuration option tittle**/
 .confOptTittleDescription {
     color: var(--isabelline);
-    margin: 0rem;
-    height: 2rem;
-    display: flex;
-    flex-wrap: wrap;
-    align-content: center;
-    justify-content: space-around;
-    align-items: center;
+    margin: 0vw;
+    font-size: 1rem;
+    min-width: 20%;
+    min-height: auto;
 }
 
 /** Style for each configuration option value**/
 .configurationOptionValue {
     border-style: solid;
-    border-color: var(--plum);
-    width: 17rem;
-    height: 2rem;
+    border-color: var(--finn);
+    border-radius: 0.9vw;
+    border-width: 0.2vw;
+    height: 6.5vw;
+    margin: 0vw;
+    margin-left: 0.2vw;
+    margin-right: 0.2vw;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 6px;
-    margin-left: 0.1rem;
-    margin-right: 0.1rem;
+    min-width: 20%;
+    min-height: auto;
+}
+
+/** Style for each input typr range**/
+.inputRange {
+    background: linear-gradient(to right, var(--mimi-pink) 0%, var(--pink-lavender) 50%, var(--thulian-pink) 50%, var(--sky-magenta) 100%);
+    border-style: solid;
+    border-color: var(--finn);
+    cursor: grab;
+    border-radius: 1rem;
+    transition: background 450ms ease-in;
+    min-width: 20%;
+    min-height: auto;
 }
 
 /** Style for each configuration option information**/
 .configurationOptionInformation {
+    border-style: solid;
+    border-color: var(--finn);
+    border-radius: 0.9vw;
+    border-width: 0.2vw;
+    height: 6.5vw;
+    margin: 0vw;
+    margin-left: 0.2vw;
+    margin-right: 0.2vw;
+    padding-left: 2vw;
+    padding-right: 2vw;
     flex-grow: 1;
+    display: flex;
     text-align: center;
     border-style: solid;
-    border-color: var(--plum);
-    border-radius: 6px;
-    width: 35rem;
-    margin-left: 0.1rem;
-    margin-right: 0.1rem;
-}
-
-/** Style for each configuration option information description**/
-.confOptInfDescription {
-    margin: 0;
-    height: 2rem;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 20%;
+    min-height: auto;
 }
 
 /** Style for each list of adaptation configuration**/
@@ -86,13 +108,15 @@ h3 {
     background-color: var(--isabelline);
     list-style: none;
     height: 15vw;
+    min-width: 20%;
     column-count: 3;
     padding: 0;
-    margin: 0;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: stretch;
+    flex-wrap: wrap;
+    min-height: auto;
 }
 
 /** Style for each adaptation description**/
@@ -100,17 +124,21 @@ h3 {
     border-style: solid;
     border-color: var(--plum);
     border-radius: 6px;
-    width: 20vw;
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin: 0.1rem;
+    min-width: 20%;
+    min-height: auto;
 }
 
 /** Style for each adaptation description**/
-.adaptationDescription {}
+.adaptationDescription {
+    font-size: 3vw;
+    min-height: auto;
+}
 
 /** Style for each adaptation option**/
 .adaptationOption {
@@ -118,7 +146,7 @@ h3 {
     border-style: solid;
     border-color: var(--plum);
     border-radius: 6px;
-    width: 8vw;
+    min-width: 20%;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
@@ -126,6 +154,7 @@ h3 {
     align-items: flex-end;
     padding: 1.6rem;
     margin: 0.1rem;
+    min-height: auto;
 }
 
 .adaptionIcon {
@@ -135,6 +164,10 @@ h3 {
 /** Style for margin of adaptation 1**/
 #adaptation1 {
     margin: 1em 0 0 0;
+}
+
+#adaptation2{
+    margin: 0;
 }
 
 /** Style for margin of adaptation 3**/
@@ -150,6 +183,15 @@ h3 {
     flex-wrap: wrap;
     align-content: center;
     width: 25vw;
+}
+
+.players {
+    color: var(--sky-magenta);
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: stretch;
+    align-items: stretch;
     margin: 0.5rem;
 } */
 
@@ -189,6 +231,12 @@ h3 {
     list-style: none;
     padding: 0;
     margin: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .waitingRoomBtns {
@@ -205,4 +253,26 @@ h3 {
     border-radius: 1rem;
     padding: 0;
     cursor: help;
+}
+
+/******************* MEDIA QUERIES *******************/
+
+/* Styles for header on screens smaller than 933px */
+@media screen and (max-width: 933px) {
+    /** Style for each configuration option tittle**/
+    .label-icon {
+        width: 29vw;
+        height: 8vw;
+    }
+    /** Style for each configuration option tittle**/
+    .confOptTittleDescription {
+        font-size: 2.5vw;
+    }
+    /** Style for each configuration option**/
+    .configurationOption {
+        flex-direction: column;
+    }
+    .adaptationConfiguration {
+        flex-direction: column;
+    }
 }
