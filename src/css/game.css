@@ -33,17 +33,24 @@
    
 }
 
+.board{
+    max-width: 100%; 
+    max-height:50%;
+    min-height: 20%;
+    min-width: 20%; 
+    overflow: scroll; /**/
+}
+
 .table {
-    list-style: none;
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     background-color: var(--mimiPink);
     border: 0.10em solid var(--darkPurple);
-    margin-left: 1%;
+    margin-left: 2%;
     padding: 0.5%;
     max-width: 47.73em; /* to fit 11 images max */
-    max-height:40em;
-    min-width: 21.3em; /* to fit 5 imagenes minimum */
+    min-width: 21.3em; /* to fit 5 imagenes minimum */    
 }
 
 .imagenMejora{
@@ -67,6 +74,7 @@
     width:1em;
     height:1em;
 }
+
 /* "rankingTable" = "ranking" antes*/
 ul.rankingTable li{
     margin-top: 0.5em;
@@ -84,7 +92,9 @@ ul.rankingTable li{
 .misFichas{
     background-color: var(--finn);
     display: flex;
-    margin-left: 1%;
+    margin-left: 2%;
+    max-width: 50em;
+    max-height: 12em;
 }
 
 /* Individual elements in box */
@@ -93,8 +103,6 @@ ul.misFichas li{
     flex-direction:row;
     border-style: solid;
     background-color: var(--mimiPink);
-    max-width: 4em;
-    max-height: 4em;
     margin-top: 0.25em;
     margin-bottom: 0.25em;
     margin-inline:0.25em;
@@ -116,6 +124,7 @@ main {
 
 /* time, ranking, exit btn container*/
 .gameInfo{
+    margin-top: 2%;
     flex: 1 0 0; /* orders view */
     order: 2;
 }

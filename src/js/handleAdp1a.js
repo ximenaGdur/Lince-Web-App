@@ -3,9 +3,14 @@ const btnAbandonar = document.getElementsByClassName('btnAbandonar');
 
 /** Function: handleAdp1a
  * change images in "myFichas" to words **/
-function Accept() {
+function handleAdp1a() {
+    /*  check function
+    if (option1a) {
+        option1a.checked = true;
+    }
+    */
     //document.getElementById('popUpFinished').style.visibility='hidden';
-      // Obtener todas las imágenes de la página
+    // Obtener todas las imágenes de la página
     let myImages = document.getElementsByClassName("myImages");
     
     // Iterar a través de cada imagen y reemplazar su contenido por el atributo "alt"
@@ -18,4 +23,4 @@ function Accept() {
     }
 }  
 
-btnAbandonar[0].addEventListener('click', Accept);
+btnAbandonar[0].addEventListener('click', handleAdp1a);

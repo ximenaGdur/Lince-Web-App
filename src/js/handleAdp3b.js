@@ -1,6 +1,11 @@
 /** Function: handleAdp3b
  * apply buff to last person on the ranking **/
-function handleCode(/*roomNumber*/) {
+function handleAdp3b(/*roomNumber*/) {
+    /*  check function
+    if (option3b) {
+        option3b.checked = true;
+    }
+    */
     var roomNumber = 0;//delete later
     const players = [];
     /** AGREGAR LISTA DE SALAS DE JUGADORES REALES **/
