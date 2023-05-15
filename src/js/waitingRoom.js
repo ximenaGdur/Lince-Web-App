@@ -12,10 +12,14 @@ const maxTimeValue = document.getElementById('maxTimeValue');
 const cardsPerPlayerValue = document.getElementById('cardsPerPlayerValue');
 // Value for cards per round bar.
 const cardsPerRoundValue = document.getElementById('cardsPerRoundValue');
+// Option 1a radio button.
+const option1a = document.getElementsByClassName('Adp1a');
 // Option 2a radio button.
 const option2a = document.getElementById('Adp2a');
 // Option 2b radio button.
 const option2b = document.getElementById('Adp2b');
+
+
 
 /********************** Functions used on script **********************/
 
@@ -101,6 +105,15 @@ function chooseAdp3a() {
     // "To": "server",
     // "When": "when a host client selects the adaptation 3a",
     // "SessionCode": "1234"
+}
+
+/**
+ * Selects adaptation 1a.
+ */
+function handleAdp1a() {
+    if (option1a) {
+        option1a.checked = true;
+    }
 }
 
 /**

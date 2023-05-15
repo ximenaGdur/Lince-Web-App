@@ -7,6 +7,11 @@ const createRoomBtn = document.getElementById('create-room-button');
 // Button to join a room after entering a nickname.
 const joinRoomBtn = document.getElementById('join-room-button');
 
+const btnComenzar = document.getElementsByClassName('btnComenzar');
+
+const popUpFinished = document.getElementsByClassName('popUpFinished');
+var time;
+
 function showCodePopUp () {
     let popUp = document.getElementById("codePopUp");
     popUp.style.display = "flex"
@@ -59,3 +64,6 @@ function closeTab() {
 
 nicknameField.addEventListener('input', enableButtons);
 createRoomBtn.addEventListener('click', createSession);
+
+
+const btnJoin = document.getElementsByClassName('btnJoin');

@@ -9,6 +9,7 @@ const acceptButton = document.getElementById('btnAccept');
 // .
 const exitButton = document.getElementById('exitButton');
 
+
 /********************** Functions used on script **********************/
 
 /**
@@ -29,7 +30,16 @@ function showExitPopup () {
   }
 }
 
+/** Function: Accept
+ * return to home page when clicked **/
+function accept() {
+  if( acceptButton ){
+      window.location.href = "/src/xhtml/homePage.xhtml";
+  }
+}
+
 /************************ Listeners for buttons ************************/
 
 cancelButton.addEventListener('click', closePopUp);
 exitButton.addEventListener('click', showExitPopup);
+acceptButton.addEventListener('click', accept);
