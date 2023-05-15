@@ -1,8 +1,11 @@
 /******************** Creating constants for script ********************/
 
-const nicknameField = document.getElementById('nicknameTitle');
-const btnCreateRoom = document.getElementById('create-room-button');
-const btnJoinRoom = document.getElementById('join-room-button');
+// Text field to enter player nickname.
+const nicknameField = document.getElementById('nickname');
+// Button to create a room after entering a nickname.
+const createRoomBtn = document.getElementById('create-room-button');
+// Button to join a room after entering a nickname.
+const joinRoomBtn = document.getElementById('join-room-button');
 
 /********************** Functions used on script **********************/
 
@@ -11,16 +14,42 @@ const btnJoinRoom = document.getElementById('join-room-button');
  */
 function enableButtons() {
     if(nicknameField.ariaValueMax.trim() !== "") {
-        if(btnCreateRoom.disable === true & btnJoinRoom.disable === true) {
-            btnCreateRoom.disable = false;
-            btnJoinRoom.disable = false;
+        if(createRoomBtn.disable === true & joinRoomBtn.disable === true) {
+            createRoomBtn.disable = false;
+            joinRoomBtn.disable = false;
         }
     } else {
-        if(btnCreateRoom.disable === false & btnJoinRoom.disable === false) {
-            btnCreateRoom.disable = true;
-            btnJoinRoom.disable = true;
+        if(createRoomBtn.disable === false & joinRoomBtn.disable === false) {
+            createRoomBtn.disable = true;
+            joinRoomBtn.disable = true;
         }
     }
 }
 
+/**
+* Send a message to the server to create a new room with the host as the client 
+* that pressed the create room button and with the nickname entered.
+*/
+function createSession(){
+    let nickname = document.getElementById('nickname').value;
+    // "Type": "createRoom",  
+    // "From": "client",  
+    // "To": "server",
+    // "When": "when a client presses the create room button with a valid nickname",  
+    // "Nickname": "nickname"
+}
+
+/**
+ * Sends a message to the server to close a client's connection.
+ */
+function closeTab() {
+    // "Type": "closeTab",  
+    // "From": "client",  
+    // "To": "server",  
+    // "When": "when a client logs off"
+}
+
 /************************ Listeners for buttons ************************/
+
+nicknameField.addEventListener('input', enableButtons);
+createRoomBtn.addEventListener('click', createSession);
