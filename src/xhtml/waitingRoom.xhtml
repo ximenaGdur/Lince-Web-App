@@ -12,9 +12,9 @@
     </head>
     <body>
         <header class="header">
-			<h1 class="header-title">¡Muy Lentos!</h1>
-			<img class="game-logo" src="../../design/images/icons/logo.png" alt="logo de la juego"/>
-		</header>
+            <h1 class="header-title">¡Muy Lentos!</h1>
+            <img class="game-logo" src="../../design/images/icons/logo.png" alt="logo de la juego" />
+        </header>
         <section class="configuration">
             <h2 class="page-title">Configuración - Sala de Espera #0000</h2>
             <ul class="configurationOption">
@@ -24,6 +24,9 @@
                 </li>
                 <li class="configurationOptionValue">
                     <input type="range" class="inputRange">valorTiempoMáximo</input>
+                    <p id="maxTimeValue">
+
+                    </p>
                 </li>
                 <li class="configurationOptionInformation">
                     <p class="common-text">
@@ -38,6 +41,9 @@
                 </li>
                 <li class="configurationOptionValue">
                     <input type="range" class="inputRange">valorFichasPorJugador</input>
+                    <p id="cardsPerPlayerValue">
+
+                    </p>
                 </li>
                 <li class="configurationOptionInformation">
                     <p class="common-text">
@@ -53,6 +59,9 @@
                 </li>
                 <li class="configurationOptionValue">
                     <input type="range" class="inputRange">valorFichasPorRonda</input>
+                    <p id="cardsPerRoundValue">
+
+                    </p>
                 </li>
                 <li class="configurationOptionInformation">
                     <p class="common-text">
@@ -69,12 +78,12 @@
                 </li>
                 <li class="adaptationOption">
                     <img class="adaptionIcon" src="../../design/images/Icons/feature1A.png" alt=""></img>
-                    <input type="radio" name="firtAdaptation" id="Apd1a" value="1a"/>
-                        <img class="information-icon" src="../../design/images/Icons/informationIcon.png" alt="información"></img>
+                    <input type="radio" name="firtAdaptation" id="Adp1a" value="1a" />
+                    <img class="information-icon" src="../../design/images/Icons/informationIcon.png" alt="información"></img>
                 </li>
                 <li class="adaptationOption">
                     <img class="adaptionIcon" src="../../design/images/Icons/feature1B.png" alt=""></img>
-                    <input type="radio" name="firtAdaptation" id="Apd1b" value="1b"/>
+                    <input type="radio" name="firtAdaptation" id="Adp1b" value="1b" />
                     <img class="information-icon" src="../../design/images/Icons/informationIcon.png" alt="información"></img>
                 </li>
             </ul>
@@ -86,12 +95,12 @@
                 </li>
                 <li class="adaptationOption">
                     <img class="adaptionIcon" src="../../design/images/Icons/feature2A.png" alt=""></img>
-                    <input type="radio" name="secondAdaptation" id="Apd2a" value="2a"/>
+                    <input type="radio" name="secondAdaptation" id="Adp2a" value="2a" />
                     <img class="information-icon" src="../../design/images/Icons/informationIcon.png" alt="información"></img>
                 </li>
                 <li class="adaptationOption">
                     <img class="adaptionIcon" src="../../design/images/Icons/feature2B.png" alt=""></img>
-                    <input type="radio" name="secondAdaptation" id="Apd2b" value="2b"/><img class="information-icon" src="../../design/images/Icons/informationIcon.png" alt="información"></img>
+                    <input type="radio" name="secondAdaptation" id="Adp2b" value="2b" /><img class="information-icon" src="../../design/images/Icons/informationIcon.png" alt="información"></img>
                 </li>
             </ul>
             <ul class="adaptationConfiguration" id="adaptation3">
@@ -102,54 +111,45 @@
                 </li>
                 <li class="adaptationOption">
                     <img class="adaptionIcon" src="../../design/images/Icons/feature3A.png" alt=""></img>
-                    <input type="radio" name="thirdAdaptation" id="Apd3a" value="3a"/>
+                    <input type="radio" name="thirdAdaptation" id="Adp3a" value="3a" />
                     <img class="information-icon" src="../../design/images/Icons/informationIcon.png" alt="información"></img>
                 </li>
                 <li class="adaptationOption">
                     <img class="adaptionIcon" src="../../design/images/Icons/feature3B.png" alt=""></img>
-                    <input type="radio" name="thirdAdaptation" id="Adp3b" value="3b"/>
+                    <input type="radio" name="thirdAdaptation" id="Adp3b" value="3b" />
                     <img class="information-icon" src="../../design/images/Icons/informationIcon.png" alt="información"></img>
                 </li>
             </ul>
         </section>
         <section class="players">
             <h2 class="subtittle">Jugadores</h2>
-            <ul class="player">
-                <li class="playerNumber">1.</li>
-                <li class="avatar">avatarImg</li>
-                <li class="nickname">Xime</li>
-                <li class="score">0</li>
-            </ul>
-            <ul class="player">
-                <li class="playerNumber">2.</li>
-                <li class="avatar">avatarImg</li>
-                <li class="nickname">Derrick</li>
-                <li class="score">0</li>
-            </ul>
-            <ul class="player">
-                <li class="playerNumber">3.</li>
-                <li class="avatar">avatarImg</li>
-                <li class="nickname">Gian</li>
-                <li class="score">0</li>
-            </ul>
-            <ul class="player">
-                <li class="playerNumber">4.</li>
-                <li class="avatar">avatarImg</li>
-                <li class="nickname">Cris</li>
-                <li class="score">0</li>
-            </ul>
-            <ul class="player">
-                <li class="playerNumber">5.</li>
-                <li class="avatar">avatarImg</li>
-                <li class="nickname">Josesito</li>
-                <li class="score">0</li>
-            </ul>
+            <table class="ranking-table">
+                <tbody id="playerTableBody">
+                </tbody>
+            </table>
         </section>
         <article class="waitingRoomBtns">
-            <button class="startBtn">Comenzar</button>
-            <button class="exitBtn">Salir</button>
+            <button class="large-button" id="startBtn" type="button">Comenzar</button>
+            <button class="large-button" id="exitButton" type="button">Salir</button>
         </article>
-    </section>
-</body>
-
+        <article class="popUp" id="popUpExit">
+            <h2 class="popUpTitle">
+                Seguro que quieres abandonar la partida y regresar a la página de inicio?
+            </h2>
+            <ul class="buttons">
+                <li id="cancelRoom">
+                    <button class="small-button" id="btnCancel" type="button">
+                        Cancelar
+                    </button>
+                </li>
+                <li>
+                    <button class="small-button" id="btnAccept" type="button">
+                        Aceptar
+                    </button>
+                </li>
+            </ul>
+        </article>
+        <script src="../js/waitingRoom.js"></script>
+        <script src="../js/exitPopUp.js"></script>
+    </body>
 </html>

@@ -1,9 +1,12 @@
 /******************** Creating constants for script ********************/
 
+
+
 /********************** Functions used on script **********************/
 
-function handleMatchResponse() {
-    
-}
+/**
+ * Applies blur to player.
+ */
+function handleBlur() {
 
-/************************ Listeners for buttons ************************/
+}

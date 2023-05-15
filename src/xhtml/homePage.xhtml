@@ -66,78 +66,60 @@
 				</ul>
 			</article>
 
-			<!-- Contains tab links -->
-			<ul class="tab-links">
-				<li class="large-button-container">
-					<button class="large-button" id="instructions-link" type="button">
-						¿Cómo Jugar?
-					</button>
-					<img class="informationIcon" src="../../design/Images/icons/informationIcon.png"
-						alt="información" />
-				</li>
-				<li class="large-button-container">
-					<button class="large-button" id="ranking-link" type="button">
-						Clasificación
-					</button>
-				</li>
-				<li class="large-button-container">
-					<button class="large-button" id="credits-link" type="button">
-						Créditos
-					</button>
-				</li>
-			</ul>
-			<!-- Contains tab content -->
-			<ul class="content-options">
-				<!-- Contains instruction's video -->
-				<li class="tab-content" id="instructions">
-					<h2 class="section-title">
-						¿Cómo jugar nuestro juego?
-					</h2>
-					<video class="video" title="Video con las instrucciones del juego" controls="controls">
-						<source src="instructions.mp4" type="video/mp4" />
-					</video>
-				</li>
-				<!-- Contains ranking -->
-				<li class="tab-content" id="ranking">
-					<h2 class="section-title">
-						Clasificación
-					</h2>
-					<table class="ranking-table" id="mainPageRanking">
-						<tbody>
-							<tr>
-								<td class="ranking-row">
-									<p>1</p>
-								</td>
-								<td class="ranking-row">
-									<p>Cristian Ortega</p>
-								</td>
-								<td class="ranking-row">
-									<p>197342 puntos</p>
-								</td>
-							</tr>
-							<tr>
-								<td class="ranking-row">
-									<p>2</p>
-								</td>
-								<td class="ranking-row">
-									<p>Gianfranco Soto</p>
-								</td>
-								<td class="ranking-row">
-									<p>123124 puntos</p>
-								</td>
-							</tr>
-							<tr>
-								<td class="ranking-row">
-									<p>3</p>
-								</td>
-								<td class="ranking-row">
-									<p>Luis Umaña</p>
-								</td>
-								<td class="ranking-row">
-									<p>2134 puntos</p>
-								</td>
-							</tr>
-						</tbody>
+				<!-- Contains tab links -->
+				<ul class="tab-links">
+					<li class="large-button-container">
+						<button class="large-button" id="instructions-link" type="button">
+							¿Cómo Jugar?
+						</button>
+						<img class="informationIcon" src="../../design/Images/icons/informationIcon.png"
+							alt="información" />
+					</li>
+					<li class="large-button-container">
+						<button class="large-button" id="ranking-link" type="button">
+							Clasificación
+						</button>
+					</li>
+					<li class="large-button-container" >
+						<button class="large-button" id="credits-link" type="button">
+							Créditos
+						</button>
+					</li>
+				</ul>
+				<!-- Contains tab content -->
+				<ul class="content-options">
+					<!-- Contains instruction's video -->
+					<li class="tab-content" id="instructions">
+						<h2 class="section-title">
+							¿Cómo jugar nuestro juego?
+						</h2>
+						<video class="video" title="Video con las instrucciones del juego" controls="controls">
+							<source src="instructions.mp4" type="video/mp4" />
+						</video>
+					</li>
+					<!-- Contains ranking -->
+					<li class="tab-content" id="ranking">
+						<h2 class="section-title">
+							Clasificación
+						</h2>
+						<table class="ranking-table" id="mainPageRanking">
+							<tbody id="playerTableBody">
+									<tr class="ranking-row">
+											<td class="ranking-col">1</td>
+											<td class="ranking-col">Cristian Ortega</td>
+											<td class="ranking-col">197342 puntos</td>
+									</tr>
+									<tr class="ranking-row">
+											<td class="ranking-col">2</td>
+											<td class="ranking-col">Gianfranco Soto</td>
+											<td class="ranking-col">123124 puntos</td>
+									</tr>
+									<tr class="ranking-row">
+											<td class="ranking-col">3</td>
+											<td class="ranking-col">Luis Umaña</td>
+											<td class="ranking-col">2134 puntos</td>
+									</tr>
+							</tbody>
 					</table>
 				</li>
 				<!-- Contains site's credits -->

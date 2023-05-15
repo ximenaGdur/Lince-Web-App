@@ -1,28 +1,53 @@
 /******************** Creating constants for script ********************/
 
-// Button that opens the popup to leave a room.
-const exitBtn = document.getElementById('exitButton');
-// Popup that appears when the exit button is pressed of a room.
+//
+const startBtn = document.getElementById('startBtn');
+// Pop Up used to exit waiting room.
 const popUpClose = document.getElementById('popUpClose');
+// Container for all player table's rows.
+const playerTable = document.getElementById('playerTableBody');
+// Value for max time bar.
+const maxTimeValue = document.getElementById('maxTimeValue');
+// Value for cards per player bar.
+const cardsPerPlayerValue = document.getElementById('cardsPerPlayerValue');
+// Value for cards per round bar.
+const cardsPerRoundValue = document.getElementById('cardsPerRoundValue');
+// Option 2a radio button.
+const option2a = document.getElementById('Adp2a');
+// Option 2b radio button.
+const option2b = document.getElementById('Adp2b');
 
 /********************** Functions used on script **********************/
-
-/**
- * Show the pop up close when the exit button is clicked in waiting room.
- */
-function exitRoom() {
-    popUpClose.disable = false;
-}
 
 /**
  * Adds new player to player list.
  */
 function handleNewPlayer() {
-    contactSection.innerHTML = `
-    <li>
-        <img class="profileImages"  src="../../design/images/icons/profile/bear.png" alt="Oso"/>
-        <p>Jugador1 - 200</p>
-    </li>`
+    if (playerTable) {
+        const position = 1;
+        const avatar = "avatar";
+        const nickname = "ximeGdur";
+        const points = 3;
+
+        playerTable.innerHTML += 
+            '<tr class="ranking-row">' +
+                '<td class="ranking-col">' + position + '</td>' +
+                '<td class="ranking-col">' + avatar + '</td>' +
+                '<td class="ranking-col">' + nickname + '</td>' +
+                '<td class="ranking-col">' + points + 'puntos' + '</td>' +
+            '</tr>';
+    }
+}
+
+/**
+ * Indicates amount of cards per player.
+ */
+function handleCardsPerRound() {
+    const time = 5;
+    if (cardsPerRoundValue) {
+        cardsPerRoundValue.innerHTML = time + ' s';
+    }
+    // TODO: adjust bar
 }
 
 /**
@@ -41,11 +66,15 @@ function handleCardsPerPlayer(message) {
     
 }
 
-function handleApt2d(message) {
-    if(message.type === "chooseAdp2b") {
+function handleAdp2b() {
+    console.log("aqii");
+    /*if(message.type === "chooseAdp2b") {
         // document.getElementById('Adp2b').check == true;
     } else {
 
+    }*/
+    if (option2b) {
+        option2b.checked = true;
     }
 }
 
@@ -53,7 +82,7 @@ function handleApt2d(message) {
  * Sends a message to the server to update the value of the first own 
  * adaptation as 1a when the host client selects that option.
  */
-function chooseApt1a() {
+function chooseAdp1a() {
     // "Type": "chooseAdp1a",
     // "From": "client",
     // "To": "server",
@@ -66,7 +95,7 @@ function chooseApt1a() {
  * Sends a message to the server to update the value of the third own 
  * adaptation as 3a when the host client selects that option.
  */
-function chooseApt3a() {
+function chooseAdp3a() {
     // "Type": "chooseAdp3a",
     // "From": "client",
     // "To": "server",
@@ -74,6 +103,16 @@ function chooseApt3a() {
     // "SessionCode": "1234"
 }
 
+/**
+ * Selects adaptation 2a.
+ */
+function handleAdp2a() {
+    if (option2a) {
+        option2a.checked = true;
+    }
+}
+
 /************************ Listeners for buttons ************************/
 
-exitBtn[0].addEventListener('click', exitRoom);
+//btnExit.addEventListener('click', handleAdp2a);
+startBtn.addEventListener('click', handleAdp2b);

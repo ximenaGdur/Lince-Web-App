@@ -3,8 +3,8 @@
   * Created by Gianfranco Soto Palma.
   */
 
-@import "common.css";
-@import "popUps.css";
+@import url("common.css");
+@import url("popUps.css");
 
 #popUps {
     display: flex;

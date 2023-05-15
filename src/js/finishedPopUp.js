@@ -3,9 +3,9 @@
 // Pop Up that is shown when game is finished.
 const popUpFinished = document.getElementById('popUpFinished');
 // Button that allows player to continue session.
-const btnContinue = document.getElementsById('btnContinue');
+const btnContinue = document.getElementById('btnContinue');
 // Button that allows player to exit session.
-const btnHome = document.getElementsById('btnHome');
+const btnHome = document.getElementById('btnHome');
 
 /********************** Functions used on script **********************/
 
