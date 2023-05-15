@@ -1,12 +1,16 @@
 /******************** Creating constants for script ********************/
 
-// Pop Up that is shown when player decides to join session.
-const codePopUp = document.getElementById('popUpCode');
+// Button to show the codePopUp
+const codePopUp = document.getElementById('join-room-button');
 // Button that allows player to close pop up.
 const cancelButton = document.getElementById('btnCancel');
+// Button in codePopUp to join into a room
+const joinButton = document.getElementById('btnJoin');
+// Pop Up that is shown when player decides to join session.
+const popUp = document.getElementById('popUpCode');
 
+/********************** Functions used on script **********************/
 const showCodePopUp = () => {
-  let popUp = document.getElementById('popUpCode');
   popUp.style.display = "flex";
   verifyCode();
 }
@@ -16,7 +20,7 @@ const verifyCode = () => {
   codeInput.addEventListener('keydown', (event) => {
     let key = event.key;
     let msg = document.getElementById("msgCode");
-    if (isNaN(key)){
+    if (isNaN(key) || key === undefined || key === null){
       msg.innerHTML  = "Sala no existe";
     } else {
       msg.innerHTML  = "Sala encontrada";
@@ -25,8 +29,7 @@ const verifyCode = () => {
 }
 
 const cancelPopUp = () => {
-  let popUp = document.getElementById('popUpCode');
-  popUp.style.display = "none";
+  popUp.style.display = 'none';
   document.getElementById('popUpInput').value = '';
   document.getElementById("msgCode").innerHTML = '';
 }
@@ -37,17 +40,9 @@ const joinRoom = () => {
 }
 
 
-/********************** Functions used on script **********************/
-
-/**
- * Close Pop Up.
- */
-function closePopUp () {
-  if(codePopUp && cancelButton) {
-    codePopUp.style.display = 'none';
-  }
-}
 
 /************************ Listeners for buttons ************************/
 
-cancelButton.addEventListener('click', closePopUp);
+cancelButton.addEventListener('click', cancelPopUp);
+codePopUp.addEventListener('click', showCodePopUp);
+joinButton.addEventListener('click', joinRoom);
