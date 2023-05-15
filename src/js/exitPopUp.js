@@ -6,6 +6,8 @@ const exitPopUp = document.getElementById('popUpExit');
 const cancelButton = document.getElementById('btnCancel');
 // Button that allows player to return to main page.
 const acceptButton = document.getElementById('btnAccept');
+// .
+const exitButton = document.getElementById('exitButton');
 
 /********************** Functions used on script **********************/
 
@@ -18,6 +20,16 @@ function closePopUp () {
   }
 }
 
+/**
+ * Close Pop Up.
+ */
+function showExitPopup () {
+  if(exitPopUp && exitButton) {
+    exitPopUp.style.display = 'flex';
+  }
+}
+
 /************************ Listeners for buttons ************************/
 
 cancelButton.addEventListener('click', closePopUp);
+exitButton.addEventListener('click', showExitPopup);

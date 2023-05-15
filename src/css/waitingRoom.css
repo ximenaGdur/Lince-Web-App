@@ -4,6 +4,7 @@
   */
 
 @import "common.css";
+@import "popUps.css";
 
 /** Style for section configuration**/
 .configuration {
