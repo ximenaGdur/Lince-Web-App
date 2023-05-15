@@ -111,11 +111,11 @@
     min-width: 20%;
     column-count: 3;
     padding: 0;
-    margin: 0;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: stretch;
+    flex-wrap: wrap;
     min-height: auto;
 }
 
@@ -162,36 +162,91 @@
 }
 
 /** Style for margin of adaptation 1**/
-#adaptation1{
+#adaptation1 {
     margin: 1em 0 0 0;
 }
 
+#adaptation2{
+    margin: 0;
+}
+
 /** Style for margin of adaptation 3**/
-#adaptation3{
+#adaptation3 {
     margin: 0 0 1em 0;
 }
 
 /** Style for section players**/
-.players{
-    color: var(--sky-magenta);
+/* .players {
+    color: var(--skyMagenta);
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
+    align-content: center;
+    width: 25vw;
+}
+
+.players {
+    color: var(--sky-magenta);
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
     align-content: stretch;
     align-items: stretch;
     margin: 0.5rem;
+} */
+
+.players {
+    color: var(--skyMagenta);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    margin: 0.5rem;
+    max-width: 90vw;
+    height: 80vh;
+    align-content: center;
+    /* flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    width: 25vw;
+    margin: 0.5rem; */
+}
+
+.subtittle {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row: 1;
+    border-style: solid;
+    border-color: var(--plum);
+    border-radius: 6px;
+}
+
+.playersTable {
+    grid-column: 1;
+    grid-row: 2;
 }
 
 /** Style for each player**/
-.player{
+.player {
     column-count: 4;
     list-style: none;
     padding: 0;
     margin: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.waitingRoomBtns {
+    grid-column: 2;
+    display: grid;
+
 }
 
 /** Style for each information button**/
-.btnInformation{
+.btnInformation {
     display: flex;
     align-items: stretch;
     border: none;

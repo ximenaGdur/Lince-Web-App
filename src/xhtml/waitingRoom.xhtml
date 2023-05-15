@@ -12,9 +12,9 @@
     </head>
     <body>
         <header class="header">
-			<h1 class="header-title">¡Muy Lentos!</h1>
-			<img class="game-logo" src="../../design/images/icons/logo.png" alt="logo de la juego"/>
-		</header>
+            <h1 class="header-title">¡Muy Lentos!</h1>
+            <img class="game-logo" src="../../design/images/icons/logo.png" alt="logo de la juego" />
+        </header>
         <section class="configuration">
             <h2 class="page-title">Configuración - Sala de Espera #0000</h2>
             <ul class="configurationOption">
@@ -25,7 +25,7 @@
                 <li class="configurationOptionValue">
                     <input type="range" class="inputRange">valorTiempoMáximo</input>
                     <p id="maxTimeValue">
-                        
+
                     </p>
                 </li>
                 <li class="configurationOptionInformation">
@@ -42,7 +42,7 @@
                 <li class="configurationOptionValue">
                     <input type="range" class="inputRange">valorFichasPorJugador</input>
                     <p id="cardsPerPlayerValue">
-                        
+
                     </p>
                 </li>
                 <li class="configurationOptionInformation">
@@ -78,12 +78,12 @@
                 </li>
                 <li class="adaptationOption">
                     <img class="adaptionIcon" src="../../design/images/Icons/feature1A.png" alt=""></img>
-                    <input type="radio" name="citizenship"/>
+                    <input type="radio" name="firtAdaptation" id="Adp1a" value="1a" />
                     <img class="information-icon" src="../../design/images/Icons/informationIcon.png" alt="información"></img>
                 </li>
                 <li class="adaptationOption">
                     <img class="adaptionIcon" src="../../design/images/Icons/feature1B.png" alt=""></img>
-                    <input type="radio" name="citizenship"/>
+                    <input type="radio" name="firtAdaptation" id="Adp1b" value="1b" />
                     <img class="information-icon" src="../../design/images/Icons/informationIcon.png" alt="información"></img>
                 </li>
             </ul>
@@ -95,12 +95,12 @@
                 </li>
                 <li class="adaptationOption">
                     <img class="adaptionIcon" src="../../design/images/Icons/feature2A.png" alt=""></img>
-                    <input type="radio" id="option2a" name="citizenship"/>
+                    <input type="radio" name="secondAdaptation" id="Adp2a" value="2a" />
                     <img class="information-icon" src="../../design/images/Icons/informationIcon.png" alt="información"></img>
                 </li>
                 <li class="adaptationOption">
                     <img class="adaptionIcon" src="../../design/images/Icons/feature2B.png" alt=""></img>
-                    <input type="radio" id="option2b" name="citizenship"/><img class="information-icon" src="../../design/images/Icons/informationIcon.png" alt="información"></img>
+                    <input type="radio" name="secondAdaptation" id="Adp2b" value="2b" /><img class="information-icon" src="../../design/images/Icons/informationIcon.png" alt="información"></img>
                 </li>
             </ul>
             <ul class="adaptationConfiguration" id="adaptation3">
@@ -111,12 +111,12 @@
                 </li>
                 <li class="adaptationOption">
                     <img class="adaptionIcon" src="../../design/images/Icons/feature3A.png" alt=""></img>
-                    <input type="radio" name="citizenship"/>
+                    <input type="radio" name="thirdAdaptation" id="Adp3a" value="3a" />
                     <img class="information-icon" src="../../design/images/Icons/informationIcon.png" alt="información"></img>
                 </li>
                 <li class="adaptationOption">
                     <img class="adaptionIcon" src="../../design/images/Icons/feature3B.png" alt=""></img>
-                    <input type="radio" name="citizenship"/>
+                    <input type="radio" name="thirdAdaptation" id="Adp3b" value="3b" />
                     <img class="information-icon" src="../../design/images/Icons/informationIcon.png" alt="información"></img>
                 </li>
             </ul>
@@ -125,16 +125,13 @@
             <h2 class="subtittle">Jugadores</h2>
             <table class="ranking-table">
                 <tbody id="playerTableBody">
-
                 </tbody>
             </table>
         </section>
-        <section>
-            <button class="small-button" id="exitButton" type="button">
-                Salir
-            </button>
-        </section>
+        <article class="waitingRoomBtns">
+            <button class="large-button" id="startBtn" type="button">Comenzar</button>
+            <button class="large-button" id="exitButton" type="button">Salir</button>
+        </article>
+        <script src="../js/waitingRoom.js"></script>
     </body>
-    <script src="../js/waitingRoom.js"></script>
-    <script src="../js/exitPopUp.js"></script>
 </html>

@@ -1,9 +1,9 @@
 /******************** Creating constants for script ********************/
 
+//
+const startBtn = document.getElementById('startBtn');
 // Pop Up used to exit waiting room.
 const popUpClose = document.getElementById('popUpClose');
-// Button that allows player to return to main page.
-const btnExit = document.getElementById('exitButton');
 // Container for all player table's rows.
 const playerTable = document.getElementById('playerTableBody');
 // Value for max time bar.
@@ -13,24 +13,17 @@ const cardsPerPlayerValue = document.getElementById('cardsPerPlayerValue');
 // Value for cards per round bar.
 const cardsPerRoundValue = document.getElementById('cardsPerRoundValue');
 // Option 2a radio button.
-const option2a = document.getElementById('option2a');
-
+const option2a = document.getElementById('Adp2a');
+// Option 2b radio button.
+const option2b = document.getElementById('Adp2b');
 
 /********************** Functions used on script **********************/
-
-/**
- * Show the pop up close when the exit button is clicked in waiting room.
- */
-function exitRoom() {
-    popUpClose.disable = false;
-}
 
 /**
  * Adds new player to player list.
  */
 function handleNewPlayer() {
     if (playerTable) {
-        console.log("aqui");
         const position = 1;
         const avatar = "avatar";
         const nickname = "ximeGdur";
@@ -58,6 +51,59 @@ function handleCardsPerRound() {
 }
 
 /**
+ * Sends a message to the server to remove a player from a specific room at the 
+ * time the host client selects a player to be removed.
+ */
+function removePlayer() {
+    //Falta JSON
+}
+
+/**
+ * Updates the value of the cards per player to the guest clients at the 
+ * moment in which a message from the server informing the new value is entered.
+ */
+function handleCardsPerPlayer(message) {
+    
+}
+
+function handleAdp2b() {
+    console.log("aqii");
+    /*if(message.type === "chooseAdp2b") {
+        // document.getElementById('Adp2b').check == true;
+    } else {
+
+    }*/
+    if (option2b) {
+        option2b.checked = true;
+    }
+}
+
+/**
+ * Sends a message to the server to update the value of the first own 
+ * adaptation as 1a when the host client selects that option.
+ */
+function chooseAdp1a() {
+    // "Type": "chooseAdp1a",
+    // "From": "client",
+    // "To": "server",
+    // "When": "when a host client selects the adaptation 1a",
+    // "Nickname": "player3",
+    // "SessionCode": "1234"
+}
+
+/**
+ * Sends a message to the server to update the value of the third own 
+ * adaptation as 3a when the host client selects that option.
+ */
+function chooseAdp3a() {
+    // "Type": "chooseAdp3a",
+    // "From": "client",
+    // "To": "server",
+    // "When": "when a host client selects the adaptation 3a",
+    // "SessionCode": "1234"
+}
+
+/**
  * Selects adaptation 2a.
  */
 function handleAdp2a() {
@@ -68,4 +114,5 @@ function handleAdp2a() {
 
 /************************ Listeners for buttons ************************/
 
-btnExit.addEventListener('click', handleAdp2a);
+//btnExit.addEventListener('click', handleAdp2a);
+startBtn.addEventListener('click', handleAdp2b);

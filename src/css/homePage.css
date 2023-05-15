@@ -72,9 +72,9 @@
 
 /** Style for instructions section. **/
 #instructions {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /** Style for video. **/
@@ -83,36 +83,37 @@ video {
 
 /** Style for ranking section. **/
 #ranking {
-    display: flex;
+  display: flex;
 }
 
 /** Style for credits section. **/
 #credits {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
 }
 
 /** Style for about section of credits. **/
 #aboutSection {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2em;
 }
 
 /** Style for developers section of credits. **/
 #developers {
-    display: flex;
+  display: flex;
 }
 
 /** Style for lists in credit's section. **/
-.developerList, .creditsList {
-    list-style-type: square;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+.developerList,
+.creditsList {
+  list-style-type: square;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 /** Style for individual elements of lists in credit's section. **/

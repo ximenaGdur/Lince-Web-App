@@ -14,6 +14,7 @@
     flex-direction: column;
     align-items: center;
     margin: 1vw 0vw 1vw 0vw;
+    display: none;
 }
 
 /* Title centered for pop-ups */
@@ -65,7 +66,10 @@
 }
 
 /* Alignment of buttons */
-.btnCancel, .btnJoin, .btnContinue, .btnHome {
+.btnCancel,
+.btnJoin,
+.btnContinue,
+.btnHome {
     font-size: 2vw;
     margin-bottom: 1.5vw;
 }
