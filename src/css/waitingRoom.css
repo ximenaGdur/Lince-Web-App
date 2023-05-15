@@ -28,29 +28,29 @@
     min-height: auto;
 }
 
-/** Style for each configuration option tittle**/
+/** Style for each configuration option title **/
 .label-icon {
     width: 22vw;
     height: 6vw;
     justify-content: space-between;
     flex-direction: row;
-    margin: 0vw;
+    margin: 0%;
     padding-left: 0.9vw;
     padding-right: 0.9vw;
     min-width: 0%;
     min-height: auto;
 }
 
-/** Style for each configuration option tittle**/
-.confOptTittleDescription {
+/** Style for each configuration option title **/
+.confOpttitleDescription {
     color: var(--isabelline);
-    margin: 0vw;
+    margin: 0%;
     font-size: 1rem;
     min-width: 20%;
     min-height: auto;
 }
 
-/** Style for each configuration option value**/
+/** Style for each configuration option value **/
 .configurationOptionValue {
     border-style: solid;
     border-color: var(--finn);
@@ -204,13 +204,13 @@
 
 /* Styles for header on screens smaller than 933px */
 @media screen and (max-width: 933px) {
-    /** Style for each configuration option tittle**/
+    /** Style for each configuration option title**/
     .label-icon {
         width: 29vw;
         height: 8vw;
     }
-    /** Style for each configuration option tittle**/
-    .confOptTittleDescription {
+    /** Style for each configuration option title**/
+    .confOpttitleDescription {
         font-size: 2.5vw;
     }
     /** Style for each configuration option**/

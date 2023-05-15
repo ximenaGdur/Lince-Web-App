@@ -39,15 +39,30 @@
                             </tr>
                         </tbody>
                     </table>
+                    <li id="cancelRoom">
+                        <button class="small-button" id="btnContinue" type="button">
+                            Ir a sala
+                        </button>
+                    </li>
+                    <li>
+                        <button class="small-button" id="btnHome" type="button">
+                            Ir a inicio
+                        </button>
+                    </li>
+                </article>
+                <article class="popUp" id="popUpExit">
+                    <h2 class="popUpTitle">
+                        Seguro que quieres abandonar la partida y regresar a la página de inicio?
+                    </h2>
                     <ul class="buttons">
                         <li id="cancelRoom">
-                            <button class="small-button" id="btnContinue" type="button">
-                                Ir a sala
+                            <button class="small-button" id="btnCancel" type="button">
+                                Cancelar
                             </button>
                         </li>
                         <li>
-                            <button class="small-button" id="btnHome" type="button">
-                                Ir a inicio
+                            <button class="small-button" id="btnAccept" type="button">
+                                Aceptar
                             </button>
                         </li>
                     </ul>
@@ -191,5 +206,6 @@
             </aside>
         </main>
         <script src="../js/finishedPopUp.js"></script>
+        <script src="../js/exitPopUp.js"></script>
     </body>
 </html>
