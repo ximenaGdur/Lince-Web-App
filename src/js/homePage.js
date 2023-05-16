@@ -27,7 +27,6 @@ function enableButtons() {
         createRoomBtn.disabled = true;
         joinRoomBtn.disabled = true;
     }
-    //createRoomBtn.disabled = !nicknameField.value.length;
 }
 
 /**
