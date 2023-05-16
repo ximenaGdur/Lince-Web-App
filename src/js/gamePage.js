@@ -1,8 +1,5 @@
 /******************** Creating constants for script ********************/
 
-//
-// const exitButton = document.getElementById('exitButton');
-
 /********************** Functions used on script **********************/
 
 /**
@@ -50,15 +47,4 @@ function TimesUp(time) {
         //block everything later
 }
 
-/**
- * Close Pop Up.
- */
-// function showExitPopup () {
-//     if(exitPopUp && exitButton) {
-//       exitPopUp.style.display = 'flex';
-//     }
-// }
-
 /************************ Listeners for buttons ************************/
-
-  // exitButton.addEventListener('click', showExitPopup);
