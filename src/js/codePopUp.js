@@ -8,36 +8,43 @@ const cancelButton = document.getElementById('btnCancel');
 const joinButton = document.getElementById('btnJoin');
 // Pop Up that is shown when player decides to join session.
 const popUp = document.getElementById('popUpCode');
+// Input of the code popUp 
+const codeInput = document.getElementById('popUpInput');
+// Code popUp input message result
+const inputMsg = document.getElementById("msgCode");
+
 
 /********************** Functions used on script **********************/
-const showCodePopUp = () => {
+let showCodePopUp = () => {
   popUp.style.display = "flex";
   verifyCode();
 }
 
-const verifyCode = () => {
-  let codeInput = document.getElementById('popUpInput');
+let verifyCode = () => {
+  let result = false;
   codeInput.addEventListener('keydown', (event) => {
-    let key = event.key;
-    let msg = document.getElementById("msgCode");
+    let key = event.key;    
     if (isNaN(key) || key === undefined || key === null){
-      msg.innerHTML  = "Sala no existe";
+      inputMsg.innerHTML  = "Sala no existe";
     } else {
-      msg.innerHTML  = "Sala encontrada";
+      inputMsg.innerHTML  = "Sala encontrada";
+      console.log('Sala encontrada')
+      this.result =  true;
     }
   });
+  return result;
 }
 
-const cancelPopUp = () => {
+let cancelPopUp = () => {
   popUp.style.display = 'none';
   document.getElementById('popUpInput').value = '';
   document.getElementById("msgCode").innerHTML = '';
 }
 
-const joinRoom = () => {
-  // code validation
-  location.href = './waitingRoom.xhtml';
+let joinRoom = () => {
+  location.href = './waitingRoom.xhtml';    
 }
+
 
 
 

@@ -10,13 +10,6 @@ const joinRoomBtn = document.getElementById('join-room-button');
 const btnComenzar = document.getElementsByClassName('btnComenzar');
 
 const popUpFinished = document.getElementsByClassName('popUpFinished');
-var time;
-
-function showCodePopUp () {
-    let popUp = document.getElementById("codePopUp");
-    popUp.style.display = "flex"
-}
-
 
 /********************** Functions used on script **********************/
 

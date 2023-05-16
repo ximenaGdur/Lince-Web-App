@@ -6,7 +6,7 @@ const exitPopUp = document.getElementById('popUpExit');
 const cancelButton = document.getElementById('btnCancel');
 // Button that allows player to return to main page.
 const acceptButton = document.getElementById('btnAccept');
-// .
+// Button to the waiting room page
 const exitButton = document.getElementById('exitButton');
 
 
@@ -22,7 +22,7 @@ function closePopUp () {
 }
 
 /**
- * Close Pop Up.
+ * Show Pop Up.
  */
 function showExitPopup () {
   if(exitPopUp && exitButton) {
@@ -37,6 +37,7 @@ function accept() {
       window.location.href = "/src/xhtml/homePage.xhtml";
   }
 }
+
 
 /************************ Listeners for buttons ************************/
 

@@ -20,7 +20,6 @@ const option2a = document.getElementById('Adp2a');
 const option2b = document.getElementById('Adp2b');
 
 
-
 /********************** Functions used on script **********************/
 
 /**
@@ -125,7 +124,28 @@ function handleAdp2a() {
     }
 }
 
+/**
+ * Selects adaptation 3a.
+ */
+function handleAdp3a() {
+    if (option3a) {
+        option3a.checked = true;
+    }
+}
+
+function startGame() {
+    // Check options selected
+    let verified = true;
+    if (verified){
+        location.href = './game.xhtml';
+    }else {
+        // feedback not all options selected
+    }
+}
+
+
 /************************ Listeners for buttons ************************/
 
 //btnExit.addEventListener('click', handleAdp2a);
-startBtn.addEventListener('click', handleAdp2b);
+option2b.addEventListener('click', handleAdp2b);
+startBtn.addEventListener('click', startGame)

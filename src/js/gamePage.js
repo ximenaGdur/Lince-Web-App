@@ -1,5 +1,5 @@
 /******************** Creating constants for script ********************/
-
+const startBtn = document.getElementById('startBtn');
 
 
 /********************** Functions used on script **********************/
@@ -28,6 +28,19 @@ function handleAdp1a() {
     }
 }
 
+
+/*
+*   Handles scores of the players
+*   players => array of players
+*   scores => map with (player, score)
+*/
+function handleScores() {
+    let players = [];
+    let scores = new Map();
+    players.forEach(player => {
+        player.updateScore(scores.get(player));
+    });
+}
 /************************ TIME FUNCTIONS ************************/
 
 /** Function: handleMaxTime 
