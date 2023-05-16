@@ -12,23 +12,27 @@ const btnComenzar = document.getElementsByClassName('btnComenzar');
 const popUpFinished = document.getElementsByClassName('popUpFinished');
 var time;
 
+const waitingRoomTitle = document.getElementById('waiting-room-title');
+
 /********************** Functions used on script **********************/
 
 /**
  * Lock or enable create room and join room buttons after entering a nickname.
  */
 function enableButtons() {
-    if(nicknameField.ariaValueMax.trim() !== "") {
-        if(createRoomBtn.disable === true & joinRoomBtn.disable === true) {
-            createRoomBtn.disable = false;
-            joinRoomBtn.disable = false;
-        }
-    } else {
-        if(createRoomBtn.disable === false & joinRoomBtn.disable === false) {
-            createRoomBtn.disable = true;
-            joinRoomBtn.disable = true;
-        }
-    }
+    // if(nicknameField.ariaValueMax.trim() !== "") {
+    //     if(createRoomBtn.disable === true & joinRoomBtn.disable === true) {
+    //         createRoomBtn.disable = false;
+    //         joinRoomBtn.disable = false;
+    //     }
+    // } else {
+    //     if(createRoomBtn.disable === false & joinRoomBtn.disable === false) {
+    //         createRoomBtn.disable = true;
+    //         joinRoomBtn.disable = true;
+    //     }
+    // }
+    document.getElementById("create-room-button").disabled = 
+        !document.getElementById("nickname").value.length;
 }
 
 /**
@@ -37,6 +41,7 @@ function enableButtons() {
 */
 function createSession(){
     let nickname = document.getElementById('nickname').value;
+    //waitingRoomTitle.innerHTML = 'Configuración - Sala de Espera #1234';
     location.href = './waitingRoom.xhtml';
     // "Type": "createRoom",  
     // "From": "client",  
