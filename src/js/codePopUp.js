@@ -15,36 +15,70 @@ const inputMsg = document.getElementById("msgCode");
 
 
 /********************** Functions used on script **********************/
-let showCodePopUp = () => {
+
+const popupInput = document.getElementById('popUpInput');
+
+/********************** Functions used on script **********************/
+
+/**
+ * 
+ */
+function showCodePopUp() {
   popUp.style.display = "flex";
-  verifyCode();
 }
 
-let verifyCode = () => {
-  let result = false;
-  codeInput.addEventListener('keydown', (event) => {
-    let key = event.key;    
-    if (isNaN(key) || key === undefined || key === null){
-      inputMsg.innerHTML  = "Sala no existe";
-    } else {
-      inputMsg.innerHTML  = "Sala encontrada";
-      console.log('Sala encontrada')
-      this.result =  true;
-    }
-  });
-  return result;
+/**
+ * 
+ */
+function verifyCode() {
+  let msg = document.getElementById("msgCode");
+  if(popupInput.value != '1234') {
+    msg.innerHTML  = "Sala no existe";
+    enableJoinRoomButton(true);
+  } else {
+    msg.innerHTML  = "Sala encontrada";
+    enableJoinRoomButton(false);
+  }
+  // popupInput.addEventListener('keydown', (event) => {
+  //   let key = event.key;
+  //   let msg = document.getElementById("msgCode");
+  //   if (isNaN(key) || key === undefined || key === null){
+  //     msg.innerHTML  = "Sala no existe";
+  //   } else {
+  //     msg.innerHTML  = "Sala encontrada";
+  //     enableJoinRoomButton();
+  //   }
+  // });
 }
 
-let cancelPopUp = () => {
+/**
+ * Clean the input value and the message showed in the popUp
+ */
+function cancelPopUp() {
   popUp.style.display = 'none';
   document.getElementById('popUpInput').value = '';
   document.getElementById("msgCode").innerHTML = '';
 }
 
-let joinRoom = () => {
-  location.href = './waitingRoom.xhtml';    
+/**
+ * Redirect to waiting room page
+ */
+function joinRoom() {
+  // code validation
+  location.href = './waitingRoom.xhtml';
 }
 
+/**
+ * Enables or disables the join button of the popUp
+ * Parameter: booolean 
+ */
+function enableJoinRoomButton(enable) {
+  if(enable) {
+    joinButton.disabled = true;
+  } else {
+    joinButton.disabled = false;
+  }
+}
 
 
 
@@ -53,3 +87,4 @@ let joinRoom = () => {
 cancelButton.addEventListener('click', cancelPopUp);
 codePopUp.addEventListener('click', showCodePopUp);
 joinButton.addEventListener('click', joinRoom);
+popupInput.addEventListener('input', verifyCode);

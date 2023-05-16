@@ -69,18 +69,6 @@ function handleCardsPerPlayer(message) {
     
 }
 
-function handleAdp2b() {
-    console.log("aqii");
-    /*if(message.type === "chooseAdp2b") {
-        // document.getElementById('Adp2b').check == true;
-    } else {
-
-    }*/
-    if (option2b) {
-        option2b.checked = true;
-    }
-}
-
 /**
  * Sends a message to the server to update the value of the first own 
  * adaptation as 1a when the host client selects that option.
@@ -92,6 +80,27 @@ function chooseAdp1a() {
     // "When": "when a host client selects the adaptation 1a",
     // "Nickname": "player3",
     // "SessionCode": "1234"
+}
+
+/**
+ * 
+ */
+function chooseAdp1b() {
+
+}
+
+/**
+ * 
+ */
+function chooseAdp2a() {
+    
+}
+
+/**
+ * 
+ */
+function chooseAdp2b() {
+    
 }
 
 /**
@@ -107,11 +116,27 @@ function chooseAdp3a() {
 }
 
 /**
+ * 
+ */
+function chooseAdp3b() {
+    
+}
+
+/**
  * Selects adaptation 1a.
  */
 function handleAdp1a() {
     if (option1a) {
         option1a.checked = true;
+    }
+}
+
+/**
+ * Selects adaptation 1b.
+ */
+function handleAdp1b() {
+    if (option1b) {
+        option1b.checked = true;
     }
 }
 
@@ -127,25 +152,49 @@ function handleAdp2a() {
 /**
  * Selects adaptation 3a.
  */
-function handleAdp3a() {
+function handleAdp3a() {}
+
+/*
+*
+*/
+function handleAdp2b() {
+    console.log("aqii");
+    /*if(message.type === "chooseAdp2b") {
+        // document.getElementById('Adp2b').check == true;
+    } else {
+
+    }*/
+    if (option2b) {
+        option2b.checked = true;
+    }
+}
+
+/**
+ * Selects adaptation 3a.
+ */
+function handleAdp1a() {
     if (option3a) {
         option3a.checked = true;
     }
 }
 
-function startGame() {
-    // Check options selected
-    let verified = true;
-    if (verified){
-        location.href = './game.xhtml';
-    }else {
-        // feedback not all options selected
+/**
+ * Selects adaptation 3b.
+ */
+function handleAdp1b() {
+    if (option3b) {
+        option3b.checked = true;
     }
 }
 
+/**
+ * 
+ */
+function startGame() {
+    location.href = './game.xhtml';
+}
 
 /************************ Listeners for buttons ************************/
 
 //btnExit.addEventListener('click', handleAdp2a);
-option2b.addEventListener('click', handleAdp2b);
-startBtn.addEventListener('click', startGame)
+startBtn.addEventListener('click', startGame);

@@ -61,3 +61,5 @@ function TimesUp(time) {
         }
         //block everything later
 }
+
+/************************ Listeners for buttons ************************/

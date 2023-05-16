@@ -174,8 +174,25 @@
                         </tr>
                     </tbody>
                 </table>
-                <button class="btnAbandonar" type="button">Abandonar partida </button>
+                <button class="btnAbandonar" type="button" id="exitButton">Abandonar partida </button>
             </section>
+            <article class="popUp" id="popUpExit">
+                <h2 class="popUpTitle">
+                    Seguro que quieres abandonar la partida y regresar a la página de inicio?
+                </h2>
+                <ul class="buttons">
+                    <li id="cancelRoom">
+                        <button class="small-button" id="btnCancel" type="button">
+                            Cancelar
+                        </button>
+                    </li>
+                    <li>
+                        <button class="small-button" id="btnAccept" type="button">
+                            Aceptar
+                        </button>
+                    </li>
+                </ul>
+            </article>
         </main>
         <script src="../js/finishedPopUp.js"></script>
         <script src="../js/exitPopUp.js"></script>
