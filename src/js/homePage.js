@@ -12,12 +12,6 @@ const btnComenzar = document.getElementsByClassName('btnComenzar');
 const popUpFinished = document.getElementsByClassName('popUpFinished');
 var time;
 
-function showCodePopUp () {
-    let popUp = document.getElementById("codePopUp");
-    popUp.style.display = "flex"
-}
-
-
 /********************** Functions used on script **********************/
 
 /**
@@ -43,6 +37,7 @@ function enableButtons() {
 */
 function createSession(){
     let nickname = document.getElementById('nickname').value;
+    location.href = './waitingRoom.xhtml';
     // "Type": "createRoom",  
     // "From": "client",  
     // "To": "server",
@@ -64,6 +59,3 @@ function closeTab() {
 
 nicknameField.addEventListener('input', enableButtons);
 createRoomBtn.addEventListener('click', createSession);
-
-
-const btnJoin = document.getElementsByClassName('btnJoin');

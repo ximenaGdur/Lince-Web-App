@@ -125,7 +125,14 @@ function handleAdp2a() {
     }
 }
 
+/**
+ * 
+ */
+function startGame() {
+    location.href = './game.xhtml';
+}
+
 /************************ Listeners for buttons ************************/
 
 //btnExit.addEventListener('click', handleAdp2a);
-startBtn.addEventListener('click', handleAdp2b);
+startBtn.addEventListener('click', startGame);

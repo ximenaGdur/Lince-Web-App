@@ -34,7 +34,7 @@ function showExitPopup () {
  * return to home page when clicked **/
 function accept() {
   if( acceptButton ){
-      window.location.href = "/src/xhtml/homePage.xhtml";
+      location.href = './homePage.xhtml';
   }
 }
 
