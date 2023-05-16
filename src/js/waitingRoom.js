@@ -19,8 +19,6 @@ const option2a = document.getElementById('Adp2a');
 // Option 2b radio button.
 const option2b = document.getElementById('Adp2b');
 
-
-
 /********************** Functions used on script **********************/
 
 /**

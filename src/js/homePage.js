@@ -20,19 +20,14 @@ const waitingRoomTitle = document.getElementById('waiting-room-title');
  * Lock or enable create room and join room buttons after entering a nickname.
  */
 function enableButtons() {
-    // if(nicknameField.ariaValueMax.trim() !== "") {
-    //     if(createRoomBtn.disable === true & joinRoomBtn.disable === true) {
-    //         createRoomBtn.disable = false;
-    //         joinRoomBtn.disable = false;
-    //     }
-    // } else {
-    //     if(createRoomBtn.disable === false & joinRoomBtn.disable === false) {
-    //         createRoomBtn.disable = true;
-    //         joinRoomBtn.disable = true;
-    //     }
-    // }
-    document.getElementById("create-room-button").disabled = 
-        !document.getElementById("nickname").value.length;
+    if(nicknameField.value.length > 0 && nicknameField.value.trim() !== "") {
+        createRoomBtn.disabled = false;
+        joinRoomBtn.disabled = false;
+    } else {
+        createRoomBtn.disabled = true;
+        joinRoomBtn.disabled = true;
+    }
+    //createRoomBtn.disabled = !nicknameField.value.length;
 }
 
 /**
