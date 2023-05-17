@@ -25,9 +25,19 @@
 
 /****************** BOARD ******************/
 .boardImages{
-    border: solid var(--darkPurple);
-    max-width:4em;
-    max-height:4em;
+    /*border: solid var(--darkPurple);*/
+    max-width:3em;
+    max-height:3em;
+    /*min-width: 2em; /* need to add space horizontally */
+    /*min-height: 2em; */
+    
+}
+.boardImage{
+    margin: 0.1%;
+    border-style: solid;
+    /*border: solid var(--darkPurple);*/
+    max-width:3em;
+    max-height:3em;
     /*min-width: 2em; /* need to add space horizontally */
     /*min-height: 2em; */
     
@@ -47,9 +57,9 @@
     flex-wrap: wrap;
     background-color: var(--mimiPink);
     border: 0.10em solid var(--darkPurple);
-    margin-left: 2%;
-    padding: 0.5%;
-    max-width: 47.73em; /* to fit 11 images max */
+    margin: 1%;
+    padding: 0;
+    max-width: 52em; /* to fit 11 images max */
     min-width: 21.3em; /* to fit 5 imagenes minimum */    
 }
 
@@ -105,18 +115,19 @@ ul.misFichas li{
 
 /* acting as a container */
 main {
-    display: flex;  
-    flex-flow: row wrap;
+    display: flex;
+    flex-direction: row;
+    /* flex-flow: row wrap;
     font-weight: bold;
-    text-align: center; 
+    text-align: center;  */
 }
 
 /* time, ranking, exit btn container*/
-.gameInfo{
+/* .gameInfo{
     margin-top: 2%;
-    flex: 1 0 0; /* orders view */
+    flex: 1 0 0; 
     order: 2;
-}
+} */
 
 /* boton */
 .btnAbandonar {
