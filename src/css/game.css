@@ -7,9 +7,9 @@
 @import url("popUps.css");
 
 .game-sections {
-    align-items: center;
     display: flex;
     flex-direction: row;
+    align-items: stretch;
     max-width: 100%;
 }
 
@@ -19,7 +19,7 @@
     max-width: 70%;
     max-height: 100%;
     margin: 1%;
-    overflow: scroll;
+    /* overflow: scroll; */
 }
 
 #game-board {
@@ -31,12 +31,16 @@
 
 /** Container for images **/
 .board-image-container {
-    max-width: 3%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 0.1%;
+    max-width: 5%;
+    border-style: solid;
 }
 
 /** Container for images **/
 .board-image {
-    border-style: solid;
     max-width: 100%;
 }
 
