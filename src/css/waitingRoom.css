@@ -3,8 +3,8 @@
   * Created by Cristian Ortega Hurtado.
   */
 
-@import "common.css";
-@import "popUps.css";
+@import url("common.css");
+@import url("popUps.css");
 
 /** Style for section configuration**/
 .configuration {

@@ -1,7 +1,7 @@
 /******************** Creating constants for script ********************/
 
 //
-const startBtn = document.getElementById('startBtn');
+const start-button = document.getElementById('start-button');
 // Pop Up used to exit waiting room.
 const popUpClose = document.getElementById('popUpClose');
 // Container for all player table's rows.
@@ -188,4 +188,4 @@ function startGame() {
 /************************ Listeners for buttons ************************/
 
 //btnExit.addEventListener('click', handleAdp2a);
-startBtn.addEventListener('click', startGame);
+start-button.addEventListener('click', startGame);
