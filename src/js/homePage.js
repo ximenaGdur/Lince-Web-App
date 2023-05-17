@@ -35,7 +35,6 @@ function enableButtons() {
 */
 function createSession(){
     let nickname = document.getElementById('nickname').value;
-    //waitingRoomTitle.innerHTML = 'Configuración - Sala de Espera #1234';
     location.href = './waitingRoom.xhtml';
     // "Type": "createRoom",  
     // "From": "client",  
