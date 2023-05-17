@@ -7,7 +7,6 @@ const gameBoard = document.getElementById('board');
 /********************** Functions used on script **********************/
 
 
-
 /**
  * Applies blur to player.
  */
