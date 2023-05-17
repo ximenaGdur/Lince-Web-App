@@ -1,7 +1,7 @@
 /******************** Creating constants for script ********************/
 
 //
-const start-button = document.getElementById('start-button');
+const startButton = document.getElementById('start-button');
 // Pop Up used to exit waiting room.
 const popUpClose = document.getElementById('popUpClose');
 // Container for all player table's rows.
@@ -42,9 +42,137 @@ function handleNewPlayer() {
 }
 
 /**
- * Indicates amount of cards per player.
+ * Sends a message to the server to remove a player from a specific room at the 
+ * time the host client selects a player to be removed.
  */
-function handleCardsPerRound() {
+function removePlayer() {
+    //Falta JSON
+}
+
+/**
+ * Sends a message to the server to update the amount of cards per round.
+ */
+function chooseCardsPerRound() {
+}
+
+/**
+ * Sends a message to the server to update the maximum time of the session.
+ */
+function chooseMaxTime() {
+}
+
+/**
+ * Sends a message to the server to update the amount of cards per player.
+ */
+function chooseCardsPerPlayer() {
+}
+
+/**
+ * Sends a message to the server to update the value of the first own 
+ * adaptation as 1a when the host client selects that option.
+ */
+function chooseAdp1a() {
+    /*
+    sendMessage({
+    "Type": "chooseAdp1a", 
+    "From": "client", 
+    "To": "server", 
+    "When": "when a host client selects the adaptation 1a", 
+    "Nickname": name, 
+    "SessionCode": code
+    })
+    */
+}
+
+/**
+ * Sends a message to the server to update the value of the first own 
+ * adaptation as 1b when the host client selects that option.
+ */
+function chooseAdp1b() {
+    /*
+    sendMessage({
+    "Type": "chooseAdp1b", 
+    "From": "client", 
+    "To": "server", 
+    "When": "when a host client selects the adaptation 1b", 
+    "Nickname": name, 
+    "SessionCode": code
+    })
+    */
+}
+
+/**
+ * Sends a message to the server to update the value of the first own 
+ * adaptation as 2a when the host client selects that option.
+ */
+function chooseAdp2a() {
+    /*
+    sendMessage({
+    "Type": "chooseAdp2a", 
+    "From": "client", 
+    "To": "server", 
+    "When": "when a host client selects the adaptation 2a", 
+    "Nickname": name, 
+    "SessionCode": code
+    })
+    */
+}
+
+/**
+ * Sends a message to the server to update the value of the first own 
+ * adaptation as 2b when the host client selects that option.
+ */
+function chooseAdp2b() {
+    /*
+    sendMessage({
+    "Type": "chooseAdp2b", 
+    "From": "client", 
+    "To": "server", 
+    "When": "when a host client selects the adaptation 2b", 
+    "Nickname": name, 
+    "SessionCode": code
+    })
+    */
+}
+
+/**
+ * Sends a message to the server to update the value of the first own 
+ * adaptation as 3a when the host client selects that option.
+ */
+function chooseAdp3a() {
+    /*
+    sendMessage({
+    "Type": "chooseAdp3a", 
+    "From": "client", 
+    "To": "server", 
+    "When": "when a host client selects the adaptation 3a", 
+    "Nickname": name, 
+    "SessionCode": code
+    })
+    */
+}
+
+/**
+ * Sends a message to the server to update the value of the first own 
+ * adaptation as 3b when the host client selects that option.
+ */
+function chooseAdp3b() {
+    /*
+    sendMessage({
+    "Type": "chooseAdp3b", 
+    "From": "client", 
+    "To": "server", 
+    "When": "when a host client selects the adaptation 3b", 
+    "Nickname": name, 
+    "SessionCode": code
+    })
+    */
+}
+
+/**
+ * When server sends a message indicating max time has to be updated
+ **/
+function handleMaxTime() {
     const time = 5;
     if (cardsPerRoundValue) {
         cardsPerRoundValue.innerHTML = time + ' s';
@@ -53,12 +181,13 @@ function handleCardsPerRound() {
 }
 
 /**
- * Sends a message to the server to remove a player from a specific room at the 
- * time the host client selects a player to be removed.
- */
-function removePlayer() {
-    //Falta JSON
+ * When server sends a message indicating cards per round has to be updated
+ **/
+function handleCardsPerRound() {
+    
 }
+
+
 
 /**
  * Updates the value of the cards per player to the guest clients at the 
@@ -68,58 +197,7 @@ function handleCardsPerPlayer(message) {
     
 }
 
-/**
- * Sends a message to the server to update the value of the first own 
- * adaptation as 1a when the host client selects that option.
- */
-function chooseAdp1a() {
-    // "Type": "chooseAdp1a",
-    // "From": "client",
-    // "To": "server",
-    // "When": "when a host client selects the adaptation 1a",
-    // "Nickname": "player3",
-    // "SessionCode": "1234"
-}
 
-/**
- * 
- */
-function chooseAdp1b() {
-
-}
-
-/**
- * 
- */
-function chooseAdp2a() {
-    
-}
-
-/**
- * 
- */
-function chooseAdp2b() {
-    
-}
-
-/**
- * Sends a message to the server to update the value of the third own 
- * adaptation as 3a when the host client selects that option.
- */
-function chooseAdp3a() {
-    // "Type": "chooseAdp3a",
-    // "From": "client",
-    // "To": "server",
-    // "When": "when a host client selects the adaptation 3a",
-    // "SessionCode": "1234"
-}
-
-/**
- * 
- */
-function chooseAdp3b() {
-    
-}
 
 /**
  * Selects adaptation 1a.
@@ -187,5 +265,4 @@ function startGame() {
 
 /************************ Listeners for buttons ************************/
 
-//btnExit.addEventListener('click', handleAdp2a);
-start-button.addEventListener('click', startGame);
+startButton.addEventListener('click', startGame);
