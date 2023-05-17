@@ -22,34 +22,36 @@
                     <table class="ranking-table">
                         <tbody id="playerTableBody">
                             <tr class="ranking-row">
-                                    <td class="ranking-col">1</td>
-                                    <td class="ranking-col">Cristian Ortega</td>
-                                    <td class="ranking-col">197342 puntos</td>
+                                <td class="ranking-col">1</td>
+                                <td class="ranking-col">Cristian Ortega</td>
+                                <td class="ranking-col">197342 puntos</td>
                             </tr>
                             <tr class="ranking-row">
-                                    <td class="ranking-col">2</td>
-                                    <td class="ranking-col">Gianfranco Soto</td>
-                                    <td class="ranking-col">123124 puntos</td>
+                                <td class="ranking-col">2</td>
+                                <td class="ranking-col">Gianfranco Soto</td>
+                                <td class="ranking-col">123124 puntos</td>
                             </tr>
                             <tr class="ranking-row">
-                                    <td class="ranking-col">3</td>
-                                    <td class="ranking-col">Luis Umaña</td>
-                                    <td class="ranking-col">2134 puntos</td>
+                                <td class="ranking-col">3</td>
+                                <td class="ranking-col">Luis Umaña</td>
+                                <td class="ranking-col">2134 puntos</td>
                             </tr>
                         </tbody>
                     </table>
-                    <li id="cancelRoom">
-                        <button class="small-button" id="btnContinue" type="button">
-                            Ir a sala
-                        </button>
-                    </li>
-                    <li>
-                        <button class="small-button" id="btnHome" type="button">
-                            Ir a inicio
-                        </button>
-                    </li>
-                </article>
-                <article class="popUp" id="popUpExit">
+                    <ul class="buttons">
+                        <li id="cancelRoom">
+                            <button class="small-button" id="btnContinue" type="button">
+                                Ir a sala
+                            </button>
+                        </li>
+                        <li>
+                            <button class="small-button" id="btnHome" type="button">
+                                Ir a inicio
+                            </button>
+                        </li>
+                    </ul>
+                </dialog>
+                <dialog class="popUp" id="popUpExit">
                     <h2 class="popUpTitle">
                         Seguro que quieres abandonar la partida y regresar a la página de inicio?
                     </h2>
@@ -159,13 +161,11 @@
             <section class="gameInfo">
                 <h3 class="misFichasTitle">Mis fíchas</h3>
                 <ul class="misFichas">
-                    <li><img class="myImages"  src="../../design/images/icons/board/carrot.png" alt="Zanahoria"/></li>
-                    <li><img class="myImages"  src="../../design/images/icons/board/airplane.png" alt="Avión"/></li>
-                </ul>   
+                    <li><img class="myImages" src="../../design/images/icons/board/carrot.png" alt="Zanahoria" /></li>
+                    <li><img class="myImages" src="../../design/images/icons/board/airplane.png" alt="Avión" /></li>
+                </ul>
                 <h3 class="time">Tiempo 0:00</h3>
                 <h3 class="puntaje">Puntaje: 100</h3>
-
-                </ul>
                 <table class="ranking-table">
                     <tbody>
                         <tr>
@@ -176,7 +176,7 @@
                         </tr>
                     </tbody>
                 </table>
-            </aside>
+            </section>
         </main>
         <script src="../js/finishedPopUp.js"></script>
         <script src="../js/exitPopUp.js"></script>

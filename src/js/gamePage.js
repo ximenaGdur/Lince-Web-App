@@ -2,15 +2,21 @@
 
 /******************** Creating constants for script ********************/
 const gameBoard = document.getElementById('board');
-
+const blurTime;
+const maxTime = 5000;
+const blurPorcentage = 95;
 
 /********************** Functions used on script **********************/
 
+function loadPage() {
+    blurTime = maxTime - (maxTime * 100 / blurPorcentage);
+}
 
 /**
  * Applies blur to player.
  */
 function handleBlur() {
+    console.log("aqui");
     gameBoard.style.filter = 'blur(4px)';
 }
 
@@ -47,8 +53,13 @@ function updateTime(time) {
 /** Function: handleTimesUp
  * if time runs out the game is over **/
 function TimesUp(time) {
-        if( time == 0) {
-            popUpFinished.style.display = 'flex';
-        }
-        //block everything later
+    if( time == 0) {
+        popUpFinished.style.display = 'flex';
+    }
+    //block everything later
 }
+
+/************************ Listeners for page ************************/
+
+window.addEventListener("load", loadPage);
+const applyBlurTimeout = setTimeout(handleBlur, 5000);

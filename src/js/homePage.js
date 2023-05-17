@@ -60,7 +60,7 @@ function closeTab() {
     // "When": "when a client logs off"
 }
 
-/************************ Listeners for buttons ************************/
+/************************ Listeners for page ************************/
 
 nicknameField.addEventListener('input', enableButtons);
 createRoomBtn.addEventListener('click', createSession);
