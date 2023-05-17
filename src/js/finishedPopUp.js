@@ -3,9 +3,9 @@
 // Pop Up that is shown when game is finished.
 const popUpFinished = document.getElementById('popUpFinished');
 // Button that allows player to continue session.
-const btnContinue = document.getElementById('btnContinue');
+const continue-button = document.getElementById('continue-button');
 // Button that allows player to exit session.
-const btnHome = document.getElementById('btnHome');
+const home-button = document.getElementById('home-button');
 
 /********************** Functions used on script **********************/
 
@@ -13,7 +13,7 @@ const btnHome = document.getElementById('btnHome');
  * Return to waiting room.
  */
 function continueSession () {
-  if(popUpFinished && btnContinue) {
+  if(popUpFinished && continue-button) {
     window.location.href = "./waitingRoom.xhtml";
   }
 }
@@ -22,12 +22,12 @@ function continueSession () {
  * Return to the main page.
  */
 function returnToMainPage() {
-    if (popUpFinished && btnHome) {
+    if (popUpFinished && home-button) {
         window.location.href = "./homePage.xhtml";
     }
 }
 
 /************************ Listeners for buttons ************************/
 
-btnContinue.addEventListener('click', continueSession);
-btnHome.addEventListener('click', returnToMainPage);
+continue-button.addEventListener('click', continueSession);
+home-button.addEventListener('click', returnToMainPage);

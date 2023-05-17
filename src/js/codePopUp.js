@@ -3,13 +3,13 @@
 // Button to show the codePopUp
 const codePopUp = document.getElementById('join-room-button');
 // Button that allows player to close pop up.
-const cancelButton = document.getElementById('btnCancel');
+const cancelButton = document.getElementById('cancel-button');
 // Button in codePopUp to join into a room
-const joinButton = document.getElementById('btnJoin');
+const joinButton = document.getElementById('join-button');
 // Pop Up that is shown when player decides to join session.
-const popUp = document.getElementById('popUpCode');
+const popUp = document.getElementById('popup-code');
 //
-const popupInput = document.getElementById('popUpInput');
+const popupInput = document.getElementById('popup-input');
 
 /********************** Functions used on script **********************/
 
@@ -24,7 +24,7 @@ function showCodePopUp() {
  * 
  */
 function verifyCode() {
-  let msg = document.getElementById("msgCode");
+  let msg = document.getElementById("room-validation-text");
   if(popupInput.value !== '1234') {
     msg.innerHTML  = "Sala no existe";
     enableJoinRoomButton(true);
@@ -34,7 +34,7 @@ function verifyCode() {
   }
   // popupInput.addEventListener('keydown', (event) => {
   //   let key = event.key;
-  //   let msg = document.getElementById("msgCode");
+  //   let msg = document.getElementById("room-validation-text");
   //   if (isNaN(key) || key === undefined || key === null){
   //     msg.innerHTML  = "Sala no existe";
   //   } else {
@@ -49,8 +49,8 @@ function verifyCode() {
  */
 function cancelPopUp() {
   popUp.style.display = 'none';
-  document.getElementById('popUpInput').value = '';
-  document.getElementById("msgCode").innerHTML = '';
+  document.getElementById('popup-input').value = '';
+  document.getElementById("room-validation-text").innerHTML = '';
 }
 
 /**

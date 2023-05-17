@@ -5,7 +5,7 @@ const startBtn = document.getElementById('startBtn');
 // Pop Up used to exit waiting room.
 const popUpClose = document.getElementById('popUpClose');
 // Container for all player table's rows.
-const playerTable = document.getElementById('playerTableBody');
+const playerTable = document.getElementById('player-table-body');
 // Value for max time bar.
 const maxTimeValue = document.getElementById('maxTimeValue');
 // Value for cards per player bar.

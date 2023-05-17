@@ -27,6 +27,10 @@
     max-width: 50%;
 }
 
+#join-button {
+    background-color: var(--sky-magenta);
+}
+
 /** Animations for buttons **/
 .label-icon:hover{
     background-color: var(--finn);

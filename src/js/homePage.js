@@ -23,6 +23,7 @@ function enableButtons() {
     if(nicknameField.value.length > 0 && nicknameField.value.trim() !== "") {
         createRoomBtn.disabled = false;
         joinRoomBtn.disabled = false;
+        //#join-button { background-color: var(--sky-magenta);}
     } else {
         createRoomBtn.disabled = true;
         joinRoomBtn.disabled = true;

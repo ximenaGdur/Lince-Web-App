@@ -202,6 +202,13 @@ button:hover {
     margin: 2% 0%;
 }
 
+.section-subtitle {
+    color: var(--violet);
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 2% 0%;
+}
+
 /** Style for normal text. **/
 .common-text {
     color: var(--plum);
