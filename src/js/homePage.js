@@ -12,11 +12,7 @@ const btnComenzar = document.getElementsByClassName('btnComenzar');
 const popUpFinished = document.getElementsByClassName('popUpFinished');
 var time;
 
-function showCodePopUp () {
-    let popUp = document.getElementById("codePopUp");
-    popUp.style.display = "flex"
-}
-
+const waitingRoomTitle = document.getElementById('waiting-room-title');
 
 /********************** Functions used on script **********************/
 
@@ -24,16 +20,12 @@ function showCodePopUp () {
  * Lock or enable create room and join room buttons after entering a nickname.
  */
 function enableButtons() {
-    if(nicknameField.ariaValueMax.trim() !== "") {
-        if(createRoomBtn.disable === true & joinRoomBtn.disable === true) {
-            createRoomBtn.disable = false;
-            joinRoomBtn.disable = false;
-        }
+    if(nicknameField.value.length > 0 && nicknameField.value.trim() !== "") {
+        createRoomBtn.disabled = false;
+        joinRoomBtn.disabled = false;
     } else {
-        if(createRoomBtn.disable === false & joinRoomBtn.disable === false) {
-            createRoomBtn.disable = true;
-            joinRoomBtn.disable = true;
-        }
+        createRoomBtn.disabled = true;
+        joinRoomBtn.disabled = true;
     }
 }
 
@@ -43,6 +35,8 @@ function enableButtons() {
 */
 function createSession(){
     let nickname = document.getElementById('nickname').value;
+    //waitingRoomTitle.innerHTML = 'Configuración - Sala de Espera #1234';
+    location.href = './waitingRoom.xhtml';
     // "Type": "createRoom",  
     // "From": "client",  
     // "To": "server",
@@ -64,6 +58,3 @@ function closeTab() {
 
 nicknameField.addEventListener('input', enableButtons);
 createRoomBtn.addEventListener('click', createSession);
-
-
-const btnJoin = document.getElementsByClassName('btnJoin');

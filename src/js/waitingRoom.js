@@ -19,8 +19,6 @@ const option2a = document.getElementById('Adp2a');
 // Option 2b radio button.
 const option2b = document.getElementById('Adp2b');
 
-
-
 /********************** Functions used on script **********************/
 
 /**
@@ -70,18 +68,6 @@ function handleCardsPerPlayer(message) {
     
 }
 
-function handleAdp2b() {
-    console.log("aqii");
-    /*if(message.type === "chooseAdp2b") {
-        // document.getElementById('Adp2b').check == true;
-    } else {
-
-    }*/
-    if (option2b) {
-        option2b.checked = true;
-    }
-}
-
 /**
  * Sends a message to the server to update the value of the first own 
  * adaptation as 1a when the host client selects that option.
@@ -93,6 +79,27 @@ function chooseAdp1a() {
     // "When": "when a host client selects the adaptation 1a",
     // "Nickname": "player3",
     // "SessionCode": "1234"
+}
+
+/**
+ * 
+ */
+function chooseAdp1b() {
+
+}
+
+/**
+ * 
+ */
+function chooseAdp2a() {
+    
+}
+
+/**
+ * 
+ */
+function chooseAdp2b() {
+    
 }
 
 /**
@@ -108,11 +115,27 @@ function chooseAdp3a() {
 }
 
 /**
+ * 
+ */
+function chooseAdp3b() {
+    
+}
+
+/**
  * Selects adaptation 1a.
  */
 function handleAdp1a() {
     if (option1a) {
         option1a.checked = true;
+    }
+}
+
+/**
+ * Selects adaptation 1b.
+ */
+function handleAdp1b() {
+    if (option1b) {
+        option1b.checked = true;
     }
 }
 
@@ -125,7 +148,44 @@ function handleAdp2a() {
     }
 }
 
+function handleAdp2b() {
+    console.log("aqii");
+    /*if(message.type === "chooseAdp2b") {
+        // document.getElementById('Adp2b').check == true;
+    } else {
+
+    }*/
+    if (option2b) {
+        option2b.checked = true;
+    }
+}
+
+/**
+ * Selects adaptation 3a.
+ */
+function handleAdp1a() {
+    if (option3a) {
+        option3a.checked = true;
+    }
+}
+
+/**
+ * Selects adaptation 3b.
+ */
+function handleAdp1b() {
+    if (option3b) {
+        option3b.checked = true;
+    }
+}
+
+/**
+ * 
+ */
+function startGame() {
+    location.href = './game.xhtml';
+}
+
 /************************ Listeners for buttons ************************/
 
 //btnExit.addEventListener('click', handleAdp2a);
-startBtn.addEventListener('click', handleAdp2b);
+startBtn.addEventListener('click', startGame);

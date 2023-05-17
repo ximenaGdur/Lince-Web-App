@@ -1,10 +1,10 @@
 /**
-  * CSS used for the home page.
-  * Created by Gianfranco Soto Palma.
-  */
+* CSS used for the game page.
+* Created by Gianfranco Soto Palma.
+*/
 
-@import url("common.css");
-@import url("popUps.css");
+@import "common.css";
+@import "popUps.css";
 
 /* HIDE POP UP 
 * FALTA RESPONSIVE
@@ -30,7 +30,7 @@
     max-height:4em;
     /*min-width: 2em; /* need to add space horizontally */
     /*min-height: 2em; */
-   
+    
 }
 
 .board{
@@ -58,17 +58,6 @@
     max-width:4em;
     max-height:4em;
 }
-
-/*
-.informaciónMejora{
-    background-color: var(--finn);
-    color: var(--isabelline);
-    display: flex;
-    flex-direction: column;
-    list-style-type: none;
-    align-items: center;
-}
-*/
 
 .profileImages{
     width:1em;
@@ -114,6 +103,14 @@ ul.misFichas li{
     max-height:4rem;
 }
 
+/* acting as a container */
+main {
+    display: flex;  
+    flex-flow: row wrap;
+    font-weight: bold;
+    text-align: center; 
+}
+
 /* time, ranking, exit btn container*/
 .gameInfo{
     margin-top: 2%;
@@ -121,6 +118,7 @@ ul.misFichas li{
     order: 2;
 }
 
+/* boton */
 .btnAbandonar {
     margin-right: 0.1em;
     max-width: 7em;
@@ -131,11 +129,11 @@ ul.misFichas li{
 
 /* animations */
 .boardImages:hover{
-    background-color: var(--pink-lavender);
+    background-color: var(--pinkLavender);
 }
 
 .myImages:hover {
-    background-color: var(--pink-lavender);
+    background-color: var(--pinkLavender);
 }
 
 /* PASAR AL COMMON PROBABLY*/

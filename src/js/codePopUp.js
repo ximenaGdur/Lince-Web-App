@@ -8,37 +8,69 @@ const cancelButton = document.getElementById('btnCancel');
 const joinButton = document.getElementById('btnJoin');
 // Pop Up that is shown when player decides to join session.
 const popUp = document.getElementById('popUpCode');
+//
+const popupInput = document.getElementById('popUpInput');
 
 /********************** Functions used on script **********************/
-const showCodePopUp = () => {
+
+/**
+ * 
+ */
+function showCodePopUp() {
   popUp.style.display = "flex";
-  verifyCode();
 }
 
-const verifyCode = () => {
-  let codeInput = document.getElementById('popUpInput');
-  codeInput.addEventListener('keydown', (event) => {
-    let key = event.key;
-    let msg = document.getElementById("msgCode");
-    if (isNaN(key) || key === undefined || key === null){
-      msg.innerHTML  = "Sala no existe";
-    } else {
-      msg.innerHTML  = "Sala encontrada";
-    }
-  });
+/**
+ * 
+ */
+function verifyCode() {
+  let msg = document.getElementById("msgCode");
+  if(popupInput.value !== '1234') {
+    msg.innerHTML  = "Sala no existe";
+    enableJoinRoomButton(true);
+  } else {
+    msg.innerHTML  = "Sala encontrada";
+    enableJoinRoomButton(false);
+  }
+  // popupInput.addEventListener('keydown', (event) => {
+  //   let key = event.key;
+  //   let msg = document.getElementById("msgCode");
+  //   if (isNaN(key) || key === undefined || key === null){
+  //     msg.innerHTML  = "Sala no existe";
+  //   } else {
+  //     msg.innerHTML  = "Sala encontrada";
+  //     enableJoinRoomButton();
+  //   }
+  // });
 }
 
-const cancelPopUp = () => {
+/**
+ * 
+ */
+function cancelPopUp() {
   popUp.style.display = 'none';
   document.getElementById('popUpInput').value = '';
   document.getElementById("msgCode").innerHTML = '';
 }
 
-const joinRoom = () => {
+/**
+ * 
+ */
+function joinRoom() {
   // code validation
   location.href = './waitingRoom.xhtml';
 }
 
+/**
+ * 
+ */
+function enableJoinRoomButton(enable) {
+  if(enable) {
+    joinButton.disabled = true;
+  } else {
+    joinButton.disabled = false;
+  }
+}
 
 
 /************************ Listeners for buttons ************************/
@@ -46,3 +78,4 @@ const joinRoom = () => {
 cancelButton.addEventListener('click', cancelPopUp);
 codePopUp.addEventListener('click', showCodePopUp);
 joinButton.addEventListener('click', joinRoom);
+popupInput.addEventListener('input', verifyCode);
