@@ -3,7 +3,7 @@
 // <script src="../js/exitPopUp.js"></script>
 
 /******************** Creating constants for script ********************/
-const gameBoardImages = document.getElementsByClassName('boardImages');
+const gameBoardImages = document.getElementsByClassName('board-image');
 let blurTime = null;
 const maxTime = 5000;
 const blurPorcentage = 95;
@@ -15,8 +15,8 @@ const blurPorcentage = 95;
  * Applies blur to player.
  */
 function handleBlur() {
-    if (gameBoard) {
-        console.log("aqui");
+    if (gameBoardImages) {
+        gameBoardImages.style.filter = 'grayscale(100%)';
         gameBoard.blur();
         // filter: blur(3px);
     }
@@ -24,7 +24,7 @@ function handleBlur() {
 
 function loadPage() {
     blurTime = maxTime - (maxTime * 100 / blurPorcentage);
-    const applyBlurTimeout = setTimeout(handleBlur, 5);
+    const applyBlurTimeout = setTimeout(handleBlur, 5000);
 }
 
 

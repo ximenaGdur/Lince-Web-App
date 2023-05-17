@@ -5,7 +5,7 @@ const popUpFinished = document.getElementById('popUpFinished');
 // Button that allows player to continue session.
 const continueButton = document.getElementById('continue-button');
 // Button that allows player to exit session.
-const home-button = document.getElementById('home-button');
+const homeButton = document.getElementById('home-button');
 
 /********************** Functions used on script **********************/
 
@@ -22,7 +22,7 @@ function continueSession () {
  * Return to the main page.
  */
 function returnToMainPage() {
-    if (popUpFinished && home-button) {
+    if (popUpFinished && homeButton) {
         window.location.href = "./homePage.xhtml";
     }
 }
@@ -30,4 +30,4 @@ function returnToMainPage() {
 /************************ Listeners for buttons ************************/
 
 continueButton.addEventListener('click', continueSession);
-home-button.addEventListener('click', returnToMainPage);
+homeButton.addEventListener('click', returnToMainPage);
