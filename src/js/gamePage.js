@@ -1,18 +1,23 @@
 /******************** Creating constants for script ********************/
 
+/******************** Creating constants for script ********************/
+const gameBoard = document.getElementById('board');
 
 
 /********************** Functions used on script **********************/
+
+
 
 /**
  * Applies blur to player.
  */
 function handleBlur() {
-
+    gameBoard.style.filter = 'blur(4px)';
 }
 
-/** Function: handleAdp1a
- * change images in "myFichas" to words **/
+/**
+ * Changes images in "myFichas" to words
+*/
 function handleAdp1a() {
     //document.getElementById('popUpFinished').style.visibility='hidden';
     // Obtener todas las imágenes de la página
