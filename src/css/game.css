@@ -24,13 +24,12 @@
 }
 
 /****************** BOARD ******************/
-.boardImages{
+.boardImages {
     /*border: solid var(--darkPurple);*/
-    max-width:3em;
-    max-height:3em;
+    max-width: 3em;
+    max-height: 3em;
     /*min-width: 2em; /* need to add space horizontally */
     /*min-height: 2em; */
-    
 }
 .boardImage{
     margin: 0.1%;
@@ -43,11 +42,11 @@
     
 }
 
-.board{
-    max-width: 100%; 
-    max-height:50%;
+.board {
+    max-width: 100%;
+    max-height: 50%;
     min-height: 20%;
-    min-width: 20%; 
+    min-width: 20%;
     overflow: scroll; /**/
 }
 

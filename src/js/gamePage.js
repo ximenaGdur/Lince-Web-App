@@ -1,24 +1,32 @@
-/******************** Creating constants for script ********************/
+/******************** Imports ********************/
+// <script src="../js/finishedPopUp.js"></script>
+// <script src="../js/exitPopUp.js"></script>
 
 /******************** Creating constants for script ********************/
-const gameBoard = document.getElementById('board');
-const blurTime;
+const gameBoardImages = document.getElementsByClassName('boardImages');
+let blurTime = null;
 const maxTime = 5000;
 const blurPorcentage = 95;
 
 /********************** Functions used on script **********************/
 
-function loadPage() {
-    blurTime = maxTime - (maxTime * 100 / blurPorcentage);
-}
 
 /**
  * Applies blur to player.
  */
 function handleBlur() {
-    console.log("aqui");
-    gameBoard.style.filter = 'blur(4px)';
+    if (gameBoard) {
+        console.log("aqui");
+        gameBoard.blur();
+        // filter: blur(3px);
+    }
 }
+
+function loadPage() {
+    blurTime = maxTime - (maxTime * 100 / blurPorcentage);
+    const applyBlurTimeout = setTimeout(handleBlur, 5);
+}
+
 
 /**
  * Changes images in "myFichas" to words
@@ -61,5 +69,4 @@ function TimesUp(time) {
 
 /************************ Listeners for page ************************/
 
-window.addEventListener("load", loadPage);
-const applyBlurTimeout = setTimeout(handleBlur, 5000);
+window.addEventListener('load', loadPage);
