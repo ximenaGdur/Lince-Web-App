@@ -26,8 +26,7 @@
     list-style: none;
     padding: 0%;
     margin: 1% 0%;
-    min-width: 100%;
-    min-height: auto;
+    max-width: 100%;
     justify-content: center;
 
 }
@@ -93,28 +92,38 @@
     background: var(--mimi-pink);
 }
 
+/**
+ * 
+ */
 .configuration-description {
     background: var(--plum);
     display: flex;
     flex-direction: column;
     align-items: center;
     max-width: 30%;
-
 }
 
+/**
+ * 
+ */
 .option-subtitle {
     font-size: 1.5rem;
     color: var(--violet);
     margin: 0%;
 }
 
+/**
+ * 
+ */
 .option-description {
     font-size: 1rem;
     display: flex;
-    max-width: 90%;
+    max-width: 80%;
 }
 
-/** Style for each adaptation option**/
+/**
+ * Style for each adaptation option
+ */
 .adaptation-option {
     flex-grow: 1;
     border-style: solid;
@@ -124,14 +133,25 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    min-height: auto;
+    max-height: 70%;
     justify-content: center;
 }
 
-.adaptionIcon {
+/** Style for container of buttons. **/
+.buttons {
+    min-width: 100%;
+}
+
+/**
+ * 
+ */
+.adaption-icon {
     width: 10rem;
 }
 
+/**
+ * 
+ */
 .players {
     color: var(--sky-magenta);
     display: flex;
@@ -141,40 +161,30 @@
     align-items: center;
 }
 
-
-.waitingRoomBtns {
-    grid-column: 2;
-    display: grid;
-
-}
-
-/** Style for each information button**/
-.btnInformation {
-    display: flex;
-    align-items: stretch;
-    border: none;
-    border-radius: 1rem;
-    padding: 0;
-    cursor: help;
-}
-
 /******************* MEDIA QUERIES *******************/
 
-/* Styles for header on screens smaller than 933px */
+/**
+ * Styles for header on screens smaller than 933px
+ */
 @media screen and (max-width: 933px) {
-    /** Style for each configuration option title**/
+    /**
+     * Style for each configuration option title
+     */
     .label-icon {
         width: 29vw;
         height: 8vw;
     }
-    /** Style for each configuration option title**/
-    .confOpttitleDescription {
-        font-size: 2.5vw;
-    }
-    /** Style for each configuration option**/
+
+    /**
+     * Changing direction.
+     */
     .configuration-option {
         flex-direction: column;
     }
+
+    /**
+     * Changing direction.
+     */
     .adaptation-configuration {
         flex-direction: column;
     }
