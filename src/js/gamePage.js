@@ -77,13 +77,15 @@ function handleBlur() {
     }
 }
 
+/**
+ * Change the pictures on the player's cards to the corresponding words.
+ */
 function changeImagesToWords() {
     // Iterate through each image and replace its content with the attribute "alt"
     for(let index = 0; index < myImage.length; index ++) {
         myImage[index].style.display='none';
         word[index].style.display='flex';
-        // changes box to fit words 
-        // myImages[index].style.display.alingSelf='stretch';
+        // Changes box to fit words.
         myImages[index].style.maxWidth = 'max-content';
     }
 }
@@ -100,6 +102,7 @@ function handleScores() {
         player.updateScore(scores.get(player));
     });
 }
+
 /************************ TIME FUNCTIONS ************************/
 
 /** handleMaxTime 
