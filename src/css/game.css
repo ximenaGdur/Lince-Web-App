@@ -108,6 +108,10 @@
         max-width: 100%;
     }
 
+    .game-info {
+        max-width: 100%;
+    }
+
     /** Container for images **/
     .board-image-container {
         max-width: 20%;
