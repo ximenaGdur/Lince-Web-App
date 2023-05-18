@@ -1,17 +1,36 @@
+//import { showCodePopUp, verifyCode, cancelPopUp, joinRoom } from './codePopUp.js';
+
 /******************** Creating constants for script ********************/
+
+/*// Button to show the codePopUp
+const showPopUpButton = document.getElementById('show-popup-button');
+// Button that allows player to close pop up.
+const cancelButton = document.getElementById('cancel-button');
+// Button in codePopUp to join into a room
+const joinButton = document.getElementById('join-button');
+// Input box inside popup
+const popupInput = document.getElementById('popup-input');*/
 
 // Text field to enter player nickname.
 const nicknameField = document.getElementById('nickname');
 // Button to create a room after entering a nickname.
 const createRoomBtn = document.getElementById('create-room-button');
 // Button to join a room after entering a nickname.
-const joinRoomBtn = document.getElementById('join-room-button');
+const joinRoomBtn = document.getElementById('show-popup-button');
 
-const btnComenzar = document.getElementsByClassName('btnComenzar');
 
-const popUpFinished = document.getElementsByClassName('popUpFinished');
-
-const waitingRoomTitle = document.getElementById('waiting-room-title');
+// Button that changes tab to credits.
+const creditsButton = document.getElementById('credits-link');
+// Credits tab content.
+const creditsContent = document.getElementById('credits');
+// Button that changes tab to ranking.
+const rankingButton = document.getElementById('ranking-link');
+// Ranking tab content.
+const rankingContent = document.getElementById('ranking');
+// Button that changes tab to instructions.
+const instructionsButton = document.getElementById('instructions-link');
+// Instructions tab content.
+const instructionsContent = document.getElementById('instructions');
 
 /********************** Functions used on script **********************/
 
@@ -21,10 +40,16 @@ const waitingRoomTitle = document.getElementById('waiting-room-title');
 function enableButtons() {
     if(nicknameField.value.length > 0 && nicknameField.value.trim() !== "") {
         createRoomBtn.disabled = false;
+        createRoomBtn.style.cursor = 'pointer';
+        //createRoomBtn.style.background = '';
+        joinRoomBtn.style.cursor = 'pointer';
         joinRoomBtn.disabled = false;
+        //joinRoomBtn.style.background = '';
     } else {
         createRoomBtn.disabled = true;
         joinRoomBtn.disabled = true;
+        createRoomBtn.style.cursor = 'default';
+        joinRoomBtn.style.cursor = 'default';
     }
 }
 
@@ -34,7 +59,6 @@ function enableButtons() {
 */
 function createSession(){
     let nickname = document.getElementById('nickname').value;
-    //waitingRoomTitle.innerHTML = 'Configuración - Sala de Espera #1234';
     location.href = './waitingRoom.xhtml';
     // "Type": "createRoom",  
     // "From": "client",  
@@ -53,7 +77,48 @@ function closeTab() {
     // "When": "when a client logs off"
 }
 
-/************************ Listeners for buttons ************************/
+/**
+ * Shows credits tab.
+ */
+function showCredits() {
+    if (creditsButton) {
+        creditsContent.style.display = "flex";
+        rankingContent.style.display = "none";
+        instructionsContent.style.display = "none";
+    }
+}
+
+/**
+ * Shows ranking tab.
+ */
+function showRanking() {
+    if (rankingButton) {
+        creditsContent.style.display = "none";
+        rankingContent.style.display = "flex";
+        instructionsContent.style.display = "none";
+    }
+}
+
+/**
+ * Shows instructions tab.
+ */
+function showInstructions() {
+    if (instructionsButton) {
+        creditsContent.style.display = "none";
+        rankingContent.style.display = "none";
+        instructionsContent.style.display = "flex";
+    }
+}
+/************************ Listeners for page ************************/
+
+/*showPopUpButton.addEventListener('click', showCodePopUp);
+cancelButton.addEventListener('click', cancelPopUp);
+joinButton.addEventListener('click', joinRoom);
+popupInput.addEventListener('input', verifyCode);*/
 
 nicknameField.addEventListener('input', enableButtons);
 createRoomBtn.addEventListener('click', createSession);
+
+creditsButton.addEventListener('click', showCredits);
+rankingButton.addEventListener('click', showRanking);
+instructionsButton.addEventListener('click', showInstructions);

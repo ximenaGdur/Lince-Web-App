@@ -121,6 +121,16 @@ main {
     font-weight: bold;
 }
 
+/** Style for container of buttons. **/
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0.5%;
+    padding: 0%;
+    min-width: 100%;
+}
+
 /** Style for container for text and information icon. **/
 .label-icon {
     align-items: center;
@@ -133,6 +143,7 @@ main {
     margin-left: 0.5%;
     margin-right: 0.5%;
     min-width: 100%;
+    min-height: 10%;
 }
 
 /** Style for information icon. **/
@@ -162,12 +173,19 @@ button:hover {
 /** Style for style for small buttons. **/
 .small-button {
     font-size: 1rem;
-    min-width: 40%;
+    min-width: 100%;
+}
+
+/** Style for style for small buttons. **/
+.small-button-container {
+    min-width: 31.5%;
+    margin-left: 0.1%;
+    margin-right: 0.1%;
 }
 
 /** Style for style for large buttons. **/
 .large-button-container {
-    min-width: 30%;
+    min-width: 31.5%;
     margin-left: 0.1%;
     margin-right: 0.1%;
 }
@@ -181,23 +199,34 @@ button:hover {
 /* border of the table */
 .ranking-table {
     border-collapse: collapse;
-    max-width: 50%;
+    max-width: 100%;
+    margin: 1%;
 }
 
 .ranking-row {
     border-color: var(--plum);
     border-style: solid;
+    text-align: center;
 }
 
 /* table row border */
 .ranking-col {
     border-color: var(--plum);
     border-style: solid;
+    color: var(--violet);
 }
 
 .section-title {
     color: var(--violet);
     font-size: 1.4rem;
+    font-weight: bold;
+    margin-top: 0%;
+    margin-bottom: 2%;
+}
+
+.section-subtitle {
+    color: var(--violet);
+    font-size: 1rem;
     font-weight: bold;
     margin: 2% 0%;
 }
@@ -207,6 +236,29 @@ button:hover {
     color: var(--plum);
     font-size: 1rem;
     font-weight: bold;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0%;
+    padding: 0%;
+    align-items: stretch;
+}
+
+.list-item {
+    color: var(--plum);
+}
+
+.item-text {
+    color: var(--violet);
+    margin: 0%;
+    padding: 0%;
+}
+
+.profile-image {
+    max-width: 50%;
 }
 
 /******************* MEDIA QUERIES *******************/

@@ -28,7 +28,7 @@
 				<ul class="buttons">
 					<!-- Jumps to waiting room for host -->
 					<li class="label-icon">
-						<button class="small-button" id="create-room-button" disabled="true">
+						<button class="small-button redirect-buttons" id="create-room-button" disabled="true">
 							Crear sala
 						</button>
 						<img class="information-icon" src="../../design/Images/icons/informationIcon.png"
@@ -36,7 +36,7 @@
 					</li>
 					<!-- Jumps to waiting room for guest -->
 					<li class="label-icon">
-						<button class="small-button" id="join-room-button" disabled="true">
+						<button class="small-button redirect-buttons" id="show-popup-button" disabled="true">
 							Unir a sala
 						</button>
 						<img class="information-icon" src="../../design/Images/icons/informationIcon.png"
@@ -44,34 +44,34 @@
 					</li>
 				</ul>
 			</article>
-			<article class="popUp" id="popUpCode">
-				<h1 class="popUpTitle">Ingrese el código de la sala</h1>
-				<section class="codeSection">
-					<h2 class="popUpSubtitle">Codigo</h2>
-					<input class="codeInput" id="popUpInput" type="number" min="0000" max="9999"/>
-					<p id="msgCode"></p>
+			<dialog class="popup" id="popup-code">
+				<h1 class="popup-title">Ingrese el código de la sala</h1>
+				<section class="code-section">
+					<h2 class="popup-subtitle">Codigo</h2>
+					<input class="code-input" id="popup-input" type="number" min="0000" max="9999"/>
+					<p class="common-text" id="room-validation-text">
+						
+					</p>
 				</section>
 				<ul class="buttons">
-					<li>
-						<button class="small-button" id="btnCancel" type="button">
+					<li class="small-button-container">
+						<button class="small-button" id="cancel-button" type="button">
 							Cancelar
 						</button>
 					</li>
-					<li>
-						<button class="small-button" id="btnJoin" type="button" disabled="true">
+					<li class="small-button-container">
+						<button class="small-button" id="join-button" type="button" disabled="true">
 							Unirse
 						</button>
 					</li>
 				</ul>
-			</article>
+			</dialog>
 			<!-- Contains tab links -->
 			<ul class="tab-links">
 				<li class="large-button-container">
 					<button class="large-button" id="instructions-link" type="button">
 						¿Cómo Jugar?
 					</button>
-					<img class="informationIcon" src="../../design/Images/icons/informationIcon.png"
-						alt="información" />
 				</li>
 				<li class="large-button-container">
 					<button class="large-button" id="ranking-link" type="button">
@@ -101,7 +101,7 @@
 						Clasificación
 					</h2>
 					<table class="ranking-table" id="mainPageRanking">
-						<tbody id="playerTableBody">
+						<tbody id="player-table-body">
 								<tr class="ranking-row">
 										<td class="ranking-col">1</td>
 										<td class="ranking-col">Cristian Ortega</td>
@@ -122,7 +122,7 @@
 				</li>
 				<!-- Contains site's credits -->
 				<li class="tab-content" id="credits">
-					<article id="aboutSection">
+					<article class="section-container">
 						<h2 class="section-title">
 							Sobre los desarrolladores
 						</h2>
@@ -130,47 +130,44 @@
 							Desarrollado para el curso de Desarrollo de Aplicaciones Web en el primer semestre del 2023.
 						</p>
 						<article id="developers">
-							<h3 class="sectionSubTitle">Desarrolladores</h3>
-							<ul class="developerList">
-								<li class="developer">
-									<p>Derrick Allen Smith</p>
+							<h3 class="section-subtitle">Desarrolladores</h3>
+							<ul class="list">
+								<li class="list-item">
+									<p class="item-text">Derrick Allen Smith</p>
 								</li>
-								<li class="developer">
-									<p>Jimena Gdur Vargas</p>
+								<li class="list-item">
+									<p class="item-text">Jimena Gdur Vargas</p>
 								</li>
-								<li class="developer">
-									<p>Cristian Ortega Hurtado</p>
+								<li class="list-item">
+									<p class="item-text">Cristian Ortega Hurtado</p>
 								</li>
-								<li class="developer">
-									<p>Gianfranco Soto Palma</p>
+								<li class="list-item">
+									<p class="item-text">Gianfranco Soto Palma</p>
 								</li>
 							</ul>
 						</article>
 					</article>
-					<article id="artists">
+					<article class="section-container">
 						<h2 class="section-title">Recursos de terceros</h2>
 						<p class="common-text">Imagenes obtenidas de los siguientes autores:</p>
-						<ul class="creditsList">
-							<li class="artist">
-								<p>Freepik</p>
+						<ul class="list">
+							<li class="list-item">
+								<a href="https://www.flaticon.com/authors/freepik" class="item-text">Freepik</a>
 							</li>
-							<li class="artist">
-								<p>Good Ware</p>
+							<li class="list-item">
+								<a href="https://www.flaticon.com/authors/good-ware" class="item-text">Good Ware</a>
 							</li>
-							<li class="artist">
-								<p>Iconic Panda</p>
+							<li class="list-item">
+								<a href="https://www.flaticon.com/authors/iconic-panda" class="item-text">Iconic Panda</a>
 							</li>
-							<li class="artist">
-								<p>justicon</p>
+							<li class="list-item">
+								<a href="https://www.flaticon.com/authors/justicon" class="item-text">justicon</a>
 							</li>
-							<li class="artist">
-								<p>Konkapp</p>
+							<li class="list-item">
+								<a href="https://www.flaticon.com/authors/konkapp" class="item-text">Konkapp</a>
 							</li>
-							<li class="artist">
-								<p>nawicon</p>
-							</li>
-							<li class="artist">
-								<p>Whitevector</p>
+							<li class="list-item">
+								<a href="https://www.flaticon.com/authors/nawicon" class="item-text">nawicon</a>
 							</li>
 						</ul>
 					</article>
@@ -178,8 +175,9 @@
 			</ul>
 		</section>
 	</main>
-	<script src="../js/codePopUp.js"></script>
 	<script src="../js/homePage.js"></script>
+	<!--<script type="module" src="../js/homePage.js"></script>-->
+	<script src="../js/codePopUp.js"></script>
 </body>
 
 </html>

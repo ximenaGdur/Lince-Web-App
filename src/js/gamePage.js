@@ -1,18 +1,38 @@
-/******************** Creating constants for script ********************/
-const startBtn = document.getElementById('startBtn');
+/******************** Imports ********************/
+// <script src="../js/finishedPopUp.js"></script>
+// <script src="../js/exitPopUp.js"></script>
 
+/******************** Creating constants for script ********************/
+const gameBoardImages = document.getElementsByClassName('board-image');
+//const exitButton = document.getElementById('exit-button');
+let boardImages = document.getElementsByClassName('board-image-container');
+let blurTime = null;
+const maxTime = 5000;
+const blurPorcentage = 95;
 
 /********************** Functions used on script **********************/
+
 
 /**
  * Applies blur to player.
  */
 function handleBlur() {
-
+    if (gameBoardImages) {
+        for(let imageIndex = 0; imageIndex < gameBoardImages.length; imageIndex++) {
+            gameBoardImages[imageIndex].style.filter = 'blur(2.5px)';
+        }
+    }
 }
 
-/** Function: handleAdp1a
- * change images in "myFichas" to words **/
+function loadPage() {
+    blurTime = maxTime * 100 / blurPorcentage;
+    const applyBlurTimeout = setTimeout(handleBlur, blurTime);
+}
+
+
+/**
+ * Changes images in "myFichas" to words
+*/
 function handleAdp1a() {
     //document.getElementById('popUpFinished').style.visibility='hidden';
     // Obtener todas las imágenes de la página
@@ -56,10 +76,34 @@ function updateTime(time) {
 /** Function: handleTimesUp
  * if time runs out the game is over **/
 function TimesUp(time) {
-        if( time == 0) {
-            popUpFinished.style.display = 'flex';
-        }
-        //block everything later
+    if( time == 0) {
+        popUpFinished.style.display = 'flex';
+    }
+    //block everything later
 }
 
-/************************ Listeners for buttons ************************/
+/**
+ * 
+ */
+function changeImageColors(){
+    for(let index = 0; index < boardImages.length; index ++) {
+        boardImages[index].style.borderColor = randomBorderColor();
+    }
+}
+
+/**
+ * 
+ * @returns 
+ */
+function randomBorderColor(){
+    // Código tomado de: https://www.delftstack.com/es/howto/javascript/javascript-pick-random-from-array/
+    var colorsArray = ['#E6C700', '#2EB600', '#006DE2', '#DA0012']
+    var randomIndex = Math.floor(Math.random()*colorsArray.length);
+    var randomColor = colorsArray[randomIndex];
+    return randomColor;
+}
+
+/************************ Listeners for page ************************/
+
+window.addEventListener('load', loadPage);
+window.addEventListener('load', changeImageColors);

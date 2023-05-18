@@ -1,11 +1,12 @@
 /******************** Creating constants for script ********************/
-
 // Button to show the codePopUp
-const codePopUp = document.getElementById('join-room-button');
+const showPopUpButton = document.getElementById('show-popup-button');
 // Button that allows player to close pop up.
-const cancelButton = document.getElementById('btnCancel');
+const cancelButton = document.getElementById('cancel-button');
+// Input box inside popup
+const popupInput = document.getElementById('popup-input');
 // Button in codePopUp to join into a room
-const joinButton = document.getElementById('btnJoin');
+const joinButton = document.getElementById('join-button');
 // Pop Up that is shown when player decides to join session.
 const popUp = document.getElementById('popUpCode');
 // Input of the code popUp 
@@ -16,75 +17,51 @@ const inputMsg = document.getElementById("msgCode");
 
 /********************** Functions used on script **********************/
 
-const popupInput = document.getElementById('popUpInput');
-
-/********************** Functions used on script **********************/
-
 /**
- * 
+ * Shows code popup when button is pressed.
  */
 function showCodePopUp() {
   popUp.style.display = "flex";
 }
 
 /**
- * 
+ * Verifies if given code is correct
  */
 function verifyCode() {
-  let msg = document.getElementById("msgCode");
-  if(popupInput.value != '1234') {
+  let msg = document.getElementById("room-validation-text");
+  if(popupInput.value !== '1234') {
     msg.innerHTML  = "Sala no existe";
-    enableJoinRoomButton(true);
-  } else {
-    msg.innerHTML  = "Sala encontrada";
-    enableJoinRoomButton(false);
-  }
-  // popupInput.addEventListener('keydown', (event) => {
-  //   let key = event.key;
-  //   let msg = document.getElementById("msgCode");
-  //   if (isNaN(key) || key === undefined || key === null){
-  //     msg.innerHTML  = "Sala no existe";
-  //   } else {
-  //     msg.innerHTML  = "Sala encontrada";
-  //     enableJoinRoomButton();
-  //   }
-  // });
-}
-
-/**
- * Clean the input value and the message showed in the popUp
- */
-function cancelPopUp() {
-  popUp.style.display = 'none';
-  document.getElementById('popUpInput').value = '';
-  document.getElementById("msgCode").innerHTML = '';
-}
-
-/**
- * Redirect to waiting room page
- */
-function joinRoom() {
-  // code validation
-  location.href = './waitingRoom.xhtml';
-}
-
-/**
- * Enables or disables the join button of the popUp
- * Parameter: booolean 
- */
-function enableJoinRoomButton(enable) {
-  if(enable) {
+    createRoomBtn.style.cursor = 'pointer';
     joinButton.disabled = true;
   } else {
+    msg.innerHTML  = "Sala encontrada";
+    createRoomBtn.style.cursor = 'default';
     joinButton.disabled = false;
   }
 }
 
+/**
+ * Closes popup when button is clicked.
+ */
+function cancelPopUp() {
+  popUp.style.display = 'none';
+  document.getElementById('popup-input').value = '';
+  document.getElementById("room-validation-text").innerHTML = '';
+}
 
+/**
+ * Joins given room when button is clicked.
+ */
+function joinRoom() {
+  if (joinButton) {
+    // code validation
+    location.href = './waitingRoom.xhtml';
+  }
+}
 
-/************************ Listeners for buttons ************************/
+//export { showCodePopUp, verifyCode, cancelPopUp, joinRoom };
 
+showPopUpButton.addEventListener('click', showCodePopUp);
 cancelButton.addEventListener('click', cancelPopUp);
-codePopUp.addEventListener('click', showCodePopUp);
 joinButton.addEventListener('click', joinRoom);
 popupInput.addEventListener('input', verifyCode);

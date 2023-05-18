@@ -1,13 +1,13 @@
 /******************** Creating constants for script ********************/
 
 // Pop Up that is shown when player decides to join session.
-const exitPopUp = document.getElementById('popUpExit');
+const exitPopUp = document.getElementById('exit-popup');
 // Button that allows player to close pop up.
-const cancelButton = document.getElementById('btnCancel');
+const cancelButton = document.getElementById('cancel-button');
 // Button that allows player to return to main page.
-const acceptButton = document.getElementById('btnAccept');
-// Button to the waiting room page
-const exitButton = document.getElementById('exitButton');
+const acceptButton = document.getElementById('accept-button');
+// .
+const exitButton = document.getElementById('exit-button');
 
 
 /********************** Functions used on script **********************/
