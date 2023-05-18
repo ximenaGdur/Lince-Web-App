@@ -4,7 +4,7 @@
 
 /******************** Creating constants for script ********************/
 const gameBoardImages = document.getElementsByClassName('board-image');
-//const exitButton = document.getElementById('exit-button');
+const exitButton = document.getElementById('exit-button');
 let boardImages = document.getElementsByClassName('board-image-container');
 let blurTime = null;
 const maxTime = 5000;
@@ -33,23 +33,33 @@ function loadPage() {
 /**
  * Changes images in "myFichas" to words
 */
+
 function changeImagesToWords() {
     // Obtener todas las imágenes de la página
-    let myImage = document.getElementsByClassName("my-image");
-
+    const myImage = document.getElementsByClassName('my-image');
+    let word = document.getElementsByClassName('word');
+    let myImages = document.getElementsByClassName('my-image-container');
+    
     // Iterar a través de cada imagen y reemplazar su contenido por el atributo "alt"
     for(let index = 0; index < myImage.length; index ++){
-            let altText = myImage[index].alt;
-            let p = document.createElement("p");
-            p.textContent = altText;
-            p.classList.add("altText"); // agrega una clase altText SE PUEDE ELIMINAR MAYBE USEFUL
-            myImage[index].replaceWith(myImage[index].alt);
+        myImage[index].style.display='none';
+        word[index].style.display='flex';
+        // changes box to fit words 
+        myImages[index].style.display.alingSelf='stretch'
+        myImages[index].style.maxWidth = 'max-content';
+        
     }
+    //if( myImage.style.display != "none")
+    //my-image-container{
+    //    align-self: stretch;
+    //    max-width: max-content;
+    //    .my-image{
+    //        display: none;
 }
 
 /************************ TIME FUNCTIONS ************************/
 
-/** Function: handleMaxTime 
+/** handleMaxTime 
  * when changing max time, update **/
 function updateTime(time) {
     var timeLeft = time;
@@ -59,7 +69,7 @@ function updateTime(time) {
     updateScreen();
 }
 
-/** Function: handleTimesUp
+/** handleTimesUp
  * if time runs out the game is over **/
 function TimesUp(time) {
     if( time == 0) {
