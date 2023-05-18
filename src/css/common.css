@@ -128,7 +128,7 @@ main {
     justify-content: center;
     margin: 0.5%;
     padding: 0%;
-    max-width: 50%;
+    min-width: 100%;
 }
 
 /** Style for container for text and information icon. **/
@@ -173,7 +173,14 @@ button:hover {
 /** Style for style for small buttons. **/
 .small-button {
     font-size: 1rem;
-    min-width: 40%;
+    min-width: 100%;
+}
+
+/** Style for style for small buttons. **/
+.small-button-container {
+    min-width: 31.5%;
+    margin-left: 0.1%;
+    margin-right: 0.1%;
 }
 
 /** Style for style for large buttons. **/
@@ -251,7 +258,7 @@ button:hover {
 }
 
 .profile-image {
-    max-width: 30%;
+    max-width: 50%;
 }
 
 /******************* MEDIA QUERIES *******************/
