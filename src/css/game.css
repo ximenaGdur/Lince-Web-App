@@ -82,16 +82,12 @@
     border-style: solid;
 }
 
-.my-image{
+.my-image {
     max-width: 100%;
 }
 
-.word{ /* hide words */ 
+.word { /* hide words */ 
     display: none;
-}
-
-.profile-image{
-    max-width:15%; 
 }
 
 /****************** styles to fit screen sizes ******************/
