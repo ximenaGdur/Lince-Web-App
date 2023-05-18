@@ -8,7 +8,12 @@ const popupInput = document.getElementById('popup-input');
 // Button in codePopUp to join into a room
 const joinButton = document.getElementById('join-button');
 // Pop Up that is shown when player decides to join session.
-const popUp = document.getElementById('popup-code');
+const popUp = document.getElementById('popUpCode');
+// Input of the code popUp 
+const codeInput = document.getElementById('popUpInput');
+// Code popUp input message result
+const inputMsg = document.getElementById("msgCode");
+
 
 /********************** Functions used on script **********************/
 

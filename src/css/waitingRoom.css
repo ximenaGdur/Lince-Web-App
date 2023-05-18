@@ -161,6 +161,48 @@
     align-items: center;
 }
 
+.waitingRoomBtns {
+    grid-column: 2;
+    display: grid;
+
+}
+
+/** Style for each information button**/
+.btnInformation {
+    display: flex;
+    align-items: stretch;
+    border: none;
+    border-radius: 1rem;
+    padding: 0;
+    cursor: help;
+}
+
+.infoPopUp {
+    display: none;
+    width: 18rem;
+    background-color: var(--mimi-pink);
+    border-style: solid;
+    border-color: var(--finn);
+    border-radius: 0.9vw;
+    position: absolute;
+}
+
+/* .information-icon:hover span {
+    display: flex;
+} */
+
+/* .info {
+    content: '?';
+} */
+
+/* .info:hover span {
+    display: flex;
+} */
+
+.common-text {
+    margin: 0.3rem 0.7rem;
+}
+
 /******************* MEDIA QUERIES *******************/
 
 /**

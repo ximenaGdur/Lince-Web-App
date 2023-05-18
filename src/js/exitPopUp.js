@@ -22,7 +22,7 @@ function closePopUp () {
 }
 
 /**
- * Close Pop Up.
+ * Show Pop Up.
  */
 function showExitPopup () {
   if(exitPopUp && exitButton) {
@@ -37,6 +37,7 @@ function accept() {
       location.href = './homePage.xhtml';
   }
 }
+
 
 /************************ Listeners for buttons ************************/
 

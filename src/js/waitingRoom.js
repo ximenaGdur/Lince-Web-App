@@ -1,4 +1,4 @@
-/******************** Creating constants for script ********************/
+    /******************** Creating constants for script ********************/
 
 //
 const startButton = document.getElementById('start-button');
@@ -11,6 +11,7 @@ const playerTable = document.getElementById('player-table-body');
 const maxTimeRange = document.getElementById('max-time-range');
 // Value for max time bar.
 const maxTimeValue = document.getElementById('max-time-value');
+
 // Cards per player bar.
 const cardsPerPlayerRange = document.getElementById('cards-per-player-range');
 // Value for cards per player bar.
@@ -19,6 +20,19 @@ const cardsPerPlayerValue = document.getElementById('cards-per-player-value');
 const cardsPerRoundRange = document.getElementById('cards-per-round-range');
 // Value for cards per round bar.
 const cardsPerRoundValue = document.getElementById('cards-per-round-value');
+
+// Information icon for timeMax, cardsPerPlayer, cardsPerRound
+const infoIcon = document.getElementById('infoIcon');
+// Max Time information popUp
+const infoMaxTime = document.getElementById('infoMaxTime');
+// Max Time information popUp
+const infoCardsPlayers = document.getElementById('infoCardsPlayers');
+// Cards per Round information popUp
+const infoCardsPerRound = document.getElementById('infoCardsPerRound');
+// Boolean for information Icon event listener
+let infoIconClicked = true;
+// Test
+const imgIcon = document.getElementsByClassName('information-icon');
 
 // Option 1a radio button.
 const option1a = document.getElementById('Adp1a');
@@ -63,7 +77,7 @@ function removePlayer() {
     if (playerTable) {
         let firstColumn = '<tr class="ranking-row">' +
                                 '<td class="ranking-row">#</td>' +
-                                '<td class="ranking-row">Imágen</td>' +
+                                '<td class="ranking-row">Im�gen</td>' +
                                 '<td class="ranking-row">Apodo</td>' +
                                 '<td class="ranking-row">Puntaje</td>' +
                             '</tr>';
@@ -318,6 +332,14 @@ function handleAdp2a() {
     }
 }
 
+/**
+ * Selects adaptation 3a.
+ */
+function handleAdp3a() {}
+
+/*
+*
+*/
 function handleAdp2b() {
     if (option2b) {
         option2b.checked = true;
@@ -366,6 +388,45 @@ function handleStartGame() {
     location.href = './game.xhtml';
 }
 
+/*
+* Show the maxTimePopUp with the max time explanation
+*/
+function maxTimePopUp() {
+    if (infoIconClicked){
+        infoMaxTime.style.display = "flex";
+        infoIconClicked = false;
+    } else {
+        infoMaxTime.style.display = "none";
+        infoIconClicked = true;
+    }
+}
+
+/*
+* Show the cardsPerPlayer explanation
+*/
+function cardsPerPlayer() {
+    if (infoIconClicked){
+        infoCardsPlayers.style.display = "flex";
+        infoIconClicked = false;
+    } else {
+        infoCardsPlayers.style.display = "none";
+        infoIconClicked = true;
+    }    
+}
+
+/*
+* Show the cardsPerRound explanation
+*/
+function cardsPerRound() {
+    if (infoIconClicked){
+        infoCardsPerRound.style.display = "flex";
+        infoIconClicked = false;
+    } else {
+        infoCardsPerRound.style.display = "none";
+        infoIconClicked = true;
+    }
+}
+
 /************************ Listeners for buttons ************************/
 
 startButton.addEventListener('click', startGame);
@@ -373,6 +434,11 @@ startButton.addEventListener('click', startGame);
 maxTimeRange.addEventListener('change', chooseMaxTime);
 cardsPerPlayerRange.addEventListener('change', chooseCardsPerPlayer);
 cardsPerRoundRange.addEventListener('change', chooseCardsPerRound);
+
+imgIcon[0].addEventListener("click", maxTimePopUp);
+imgIcon[1].addEventListener("click", cardsPerPlayer);
+imgIcon[2].addEventListener("click", cardsPerRound);
+startButton.addEventListener('click', startGame);
 
 option1a.addEventListener('click', chooseAdp1a);
 option1b.addEventListener('click', chooseAdp1b);
