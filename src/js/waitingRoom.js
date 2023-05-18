@@ -105,7 +105,6 @@ function removePlayer() {
 function chooseCardsPerRound() {
     const cardsRound = cardsPerRoundRange.value;
     if (cardsPerRoundValue) {
-        console.log("cardsRound: " + cardsRound);
         cardsPerRoundValue.innerHTML = cardsRound;
     }
     /*

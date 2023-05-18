@@ -8,6 +8,10 @@
 
 /****************** INPUT AND BUTTONS ******************/
 
+.small-button {
+    min-width: 20%;
+}
+
 /** Style for container for input and buttons. **/
 .input-buttons { 
     align-items: center;
