@@ -29,6 +29,15 @@ Dentro de los ejemplos de comodines se encuentra el intercambiar elementos, que 
 
 El siguiente enlace redirige al documento de diseño que corresponde al diseño de los wireframes de la aplicación web: [Wireframes](./design/readme.md).
 
+## Manual de uso
+
+Para correr nuestro programa primero es necesario descargar e instalar la herramienta de [Node JS](https://nodejs.org/en), una vez inatalada, se siguen los pasos para instalar un servidor local como [http-server](https://github.com/http-party/http-server), este es necesario para la correcta ejecución del juego. Luego de esto, se abre la terminal del sistema como cmd en windows posicionandose en el directorio del juego. Una vez abierta y correctamente posicionada la ventana de la terminal del sistema, ejecutamos el comando **npm install http-server**, con dicho comando podremos crear un servidor local desde el directorio actual, el del juego; luego de esto continuamos ejecutando el comando **http-server** con el cual vamos a levantar o activar el servidor local que acabamos de crear con el comando anterior. Al ejecutar dicho comando, apareceran 3 direcciones como el siguiente ejemplo *http:// 192.168.56.1:8080*, copiando cualquiera de estas 3 direcciones e ingresandola en un navegador como Google Chrome o Firefox se le abrira desde el navegador el directorio con todos los archivos necesarios para poder ejecutar nuestro juego correctamente.
+
+Ya para este punto, basta con abrir el directorio **src**, abrir el directorio **XHTML** y por último abrir el archivo homePage.xhtml el cuál lo llevará al página principal del juego.
+
+Los botónes de crear sala y unirse a sala están bloqueados hasta que se ingrese un apodo o nickname.  
+Actualmente la única sala disponible en caso de que se quiera ingresar a una es la sala número **1234**, al ingresar dicho número se le desbloqueará el botón de ingresar a la sala.
+
 ## Créditos
 
 Desarrollado para el curso Desarrollo de Aplicaciones Web (CI-0137) que pertenece a la carrera Bachillerato en Computación con énfasis en Ingeniería de Software.
@@ -42,12 +51,12 @@ Desarrollado para el curso Desarrollo de Aplicaciones Web (CI-0137) que pertenec
 
 ### Recursos de terceros
 
-#### Imagenes obtenidas de los siguientes autores:
- - Freepik
- - Good Ware
- - Iconic Panda
- - justicon
- - Konkapp
- - nawicon
- - Whitevector
- 
+#### Imagenes obtenidas de los siguientes autores
+
+* Freepik
+* Good Ware
+* Iconic Panda
+* justicon
+* Konkapp
+* nawicon
+* Whitevector
