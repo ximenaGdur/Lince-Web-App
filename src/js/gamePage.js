@@ -4,12 +4,11 @@
 
 /******************** Creating constants for script ********************/
 // Contains all game board cards
-const gameBoardImages = document.getElementsByClassName('board-image');
+let boardImages = document.getElementsByClassName('board-image-container');
+
 const myImage = document.getElementsByClassName('my-image');
 let word = document.getElementsByClassName('word');
 // Contains all player cards
-const playerCards = document.getElementsByClassName('.my-image-container');
-let boardImages = document.getElementsByClassName('board-image-container');
 let myImages = document.getElementsByClassName('my-image-container');
 
 //const exitButton = document.getElementById('exit-button');
@@ -34,8 +33,8 @@ function loadPage() {
  * If image adaption is chosen, it asigns a random border color.
  */
 function changeImageColors(){
-    for(let index = 0; index < gameBoardImages.length; index ++) {
-        gameBoardImages[index].style.borderColor = randomBorderColor();
+    for(let index = 0; index < boardImages.length; index ++) {
+        boardImages[index].style.borderColor = randomBorderColor();
     }
 }
 
@@ -72,9 +71,9 @@ function match(secondCard) {
  * Applies blur to player.
  */
 function handleBlur() {
-    if (gameBoardImages) {
-        for(let imageIndex = 0; imageIndex < gameBoardImages.length; imageIndex++) {
-            gameBoardImages[imageIndex].style.filter = 'blur(2.5px)';
+    if (boardImages) {
+        for(let imageIndex = 0; imageIndex < boardImages.length; imageIndex++) {
+            boardImages[imageIndex].style.filter = 'blur(2.5px)';
         }
     }
 }
@@ -131,7 +130,7 @@ window.addEventListener('load', loadPage);
 window.addEventListener('load', changeImageColors);
 window.addEventListener('load', changeImagesToWords);
 
-/*playerCards.forEach(card => {
+/*myImages.forEach(card => {
     card.addEventListener('click', () => {
       storeFirstMatch(card);
     });
