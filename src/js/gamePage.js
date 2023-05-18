@@ -3,15 +3,67 @@
 // <script src="../js/exitPopUp.js"></script>
 
 /******************** Creating constants for script ********************/
-const gameBoardImages = document.getElementsByClassName('board-image');
+// Contains all game board cards
+const gameBoardImages = document.querySelectorAll('.board-image');
+
 //const exitButton = document.getElementById('exit-button');
-let boardImages = document.getElementsByClassName('board-image-container');
+
+// Contains all palyer cards
+const playerCards = document.getElementsByClassName('.my-image-container');
+
 let blurTime = null;
 const maxTime = 5000;
 const blurPorcentage = 95;
 
+let firstCard = null;
+
 /********************** Functions used on script **********************/
 
+/**
+ * When page is loaded...
+ */
+function loadPage() {
+    blurTime = maxTime * 100 / blurPorcentage;
+    const applyBlurTimeout = setTimeout(handleBlur, blurTime);
+}
+
+/**
+ * If image adaption is chosen, it asigns a random border color.
+ */
+function changeImageColors(){
+    for(let index = 0; index < gameBoardImages.length; index ++) {
+        gameBoardImages[index].style.borderColor = randomBorderColor();
+    }
+}
+
+/**
+ * Generates a random color for image border.
+ */
+function randomBorderColor(){
+    // Código tomado de: https://www.delftstack.com/es/howto/javascript/javascript-pick-random-from-array/
+    let colorsArray = ['#E6C700', '#2EB600', '#006DE2', '#DA0012']
+    let randomIndex = Math.floor(Math.random()*colorsArray.length);
+    let randomColor = colorsArray[randomIndex];
+    return randomColor;
+}
+
+function storeFirstMatch(card) {
+    if (firstClick == false) {
+        firstClick = true;
+    }
+}
+
+/**
+ * When player chooses a card .
+ */
+function match(secondCard) {
+    if (firstCard) {
+        console.log(firstCard.altText);
+    } else {
+        secondClick = true;
+        
+    }
+}
 
 /**
  * Applies blur to player.
@@ -24,12 +76,6 @@ function handleBlur() {
     }
 }
 
-function loadPage() {
-    blurTime = maxTime * 100 / blurPorcentage;
-    const applyBlurTimeout = setTimeout(handleBlur, blurTime);
-}
-
-
 /**
  * Changes images in "myFichas" to words
 */
@@ -40,14 +86,13 @@ function handleAdp1a() {
     
     // Iterar a través de cada imagen y reemplazar su contenido por el atributo "alt"
     for (let i = 0; i < myImages.length; i++) {
-            let altText = myImages[i].alt;
-            let p = document.createElement("p");
-            p.textContent = altText;
-            p.classList.add("altText"); // agrega una clase altText SE PUEDE ELIMINAR MAYBE USEFUL
-            myImages[i].replaceWith(p);
+        let altText = myImages[i].alt;
+        let p = document.createElement("p");
+        p.textContent = altText;
+        p.classList.add("altText"); // agrega una clase altText SE PUEDE ELIMINAR MAYBE USEFUL
+        myImages[i].replaceWith(p);
     }
 }
-
 
 /*
 *   Handles scores of the players
@@ -82,28 +127,15 @@ function TimesUp(time) {
     //block everything later
 }
 
-/**
- * 
- */
-function changeImageColors(){
-    for(let index = 0; index < boardImages.length; index ++) {
-        boardImages[index].style.borderColor = randomBorderColor();
-    }
-}
 
-/**
- * 
- * @returns 
- */
-function randomBorderColor(){
-    // Código tomado de: https://www.delftstack.com/es/howto/javascript/javascript-pick-random-from-array/
-    let colorsArray = ['#E6C700', '#2EB600', '#006DE2', '#DA0012']
-    let randomIndex = Math.floor(Math.random()*colorsArray.length);
-    let randomColor = colorsArray[randomIndex];
-    return randomColor;
-}
 
 /************************ Listeners for page ************************/
 
 window.addEventListener('load', loadPage);
 window.addEventListener('load', changeImageColors);
+
+/*playerCards.forEach(card => {
+    card.addEventListener('click', () => {
+      storeFirstMatch(card);
+    });
+  })*/

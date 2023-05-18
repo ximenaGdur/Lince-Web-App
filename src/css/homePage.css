@@ -8,6 +8,11 @@
 
 /****************** INPUT AND BUTTONS ******************/
 
+.buttons {
+    max-width: 50%;
+    min-width: 0%;
+}
+
 .small-button {
     min-width: 20%;
 }
