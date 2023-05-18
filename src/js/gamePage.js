@@ -4,19 +4,15 @@
 
 /******************** Creating constants for script ********************/
 // Contains all game board cards
-const gameBoardImages = document.querySelectorAll('.board-image');
-const exitButton = document.getElementById('exit-button');
+const gameBoardImages = document.getElementsByClassName('board-image');
 const myImage = document.getElementsByClassName('my-image');
 let word = document.getElementsByClassName('word');
-// Contains all palyer cards
-const playerCards = document.getElementsByClassName('.my-image-container'); s = document.getElementsByClassName('my-image-container');
+// Contains all player cards
+const playerCards = document.getElementsByClassName('.my-image-container');
 let boardImages = document.getElementsByClassName('board-image-container');
-
+let myImages = document.getElementsByClassName('my-image-container');
 
 //const exitButton = document.getElementById('exit-button');
-
-// Contains all palyer cards
-const playerCards = document.getElementsByClassName('.my-image-container');
 
 let blurTime = null;
 const maxTime = 5000;
@@ -83,23 +79,7 @@ function handleBlur() {
     }
 }
 
-/**
- * Changes images in "myFichas" to words
-*/
-function handleAdp1a() {
-    //document.getElementById('popUpFinished').style.visibility='hidden';
-    // Obtener todas las imágenes de la página
-    let myImages = document.getElementsByClassName("myImages");
-    
-    // Iterar a través de cada imagen y reemplazar su contenido por el atributo "alt"
-    for (let i = 0; i < myImages.length; i++) {
-        let altText = myImages[i].alt;
-        let p = document.createElement("p");
-        p.textContent = altText;
-        p.classList.add("altText"); // agrega una clase altText SE PUEDE ELIMINAR MAYBE USEFUL
-        myImages[i].replaceWith(p);
-
-function changeImagesToWords() {    
+function changeImagesToWords() {
     // Iterate through each image and replace its content with the attribute "alt"
     for(let index = 0; index < myImage.length; index ++) {
         myImage[index].style.display='none';
@@ -144,8 +124,6 @@ function TimesUp(time) {
     }
     //block everything later
 }
-
-
 
 /************************ Listeners for page ************************/
 
