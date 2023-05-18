@@ -167,7 +167,7 @@
     margin: 1em 0 0 0;
 }
 
-#adaptation2{
+#adaptation2 {
     margin: 0;
 }
 
@@ -256,23 +256,53 @@
     cursor: help;
 }
 
+.infoPopUp {
+    display: none;
+    width: 18rem;
+    background-color: var(--mimi-pink);
+    border-style: solid;
+    border-color: var(--finn);
+    border-radius: 0.9vw;
+    position: absolute;
+}
+
+/* .information-icon:hover span {
+    display: flex;
+} */
+
+/* .info {
+    content: '?';
+} */
+
+/* .info:hover span {
+    display: flex;
+} */
+
+.common-text {
+    margin: 0.3rem 0.7rem;
+}
+
 /******************* MEDIA QUERIES *******************/
 
 /* Styles for header on screens smaller than 933px */
 @media screen and (max-width: 933px) {
+
     /** Style for each configuration option title**/
     .label-icon {
         width: 29vw;
         height: 8vw;
     }
+
     /** Style for each configuration option title**/
     .confOpttitleDescription {
         font-size: 2.5vw;
     }
+
     /** Style for each configuration option**/
     .configurationOption {
         flex-direction: column;
     }
+
     .adaptationConfiguration {
         flex-direction: column;
     }

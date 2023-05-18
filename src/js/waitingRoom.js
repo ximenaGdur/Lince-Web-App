@@ -1,6 +1,6 @@
-/******************** Creating constants for script ********************/
+    /******************** Creating constants for script ********************/
 
-//
+// Button to start the game
 const startBtn = document.getElementById('startBtn');
 // Pop Up used to exit waiting room.
 const popUpClose = document.getElementById('popUpClose');
@@ -8,6 +8,8 @@ const popUpClose = document.getElementById('popUpClose');
 const playerTable = document.getElementById('playerTableBody');
 // Value for max time bar.
 const maxTimeValue = document.getElementById('maxTimeValue');
+// Information icon for timeMax, cardsPerPlayer, cardsPerRound
+const infoIcon = document.getElementById('infoIcon');
 // Value for cards per player bar.
 const cardsPerPlayerValue = document.getElementById('cardsPerPlayerValue');
 // Value for cards per round bar.
@@ -18,6 +20,19 @@ const option1a = document.getElementsByClassName('Adp1a');
 const option2a = document.getElementById('Adp2a');
 // Option 2b radio button.
 const option2b = document.getElementById('Adp2b');
+// Max Time information popUp
+const infoMaxTime = document.getElementById('infoMaxTime');
+// Max Time information popUp
+const infoCardsPlayers = document.getElementById('infoCardsPlayers');
+// Cards per Round information popUp
+const infoCardsPerRound = document.getElementById('infoCardsPerRound');
+// Boolean for information Icon event listener
+let infoIconClicked = true;
+
+
+// Test
+const imgIcon = document.getElementsByClassName('information-icon');
+
 
 
 /********************** Functions used on script **********************/
@@ -65,9 +80,7 @@ function removePlayer() {
  * Updates the value of the cards per player to the guest clients at the 
  * moment in which a message from the server informing the new value is entered.
  */
-function handleCardsPerPlayer(message) {
-    
-}
+function handleCardsPerPlayer(message) {}
 
 /**
  * Sends a message to the server to update the value of the first own 
@@ -85,23 +98,17 @@ function chooseAdp1a() {
 /**
  * 
  */
-function chooseAdp1b() {
-
-}
+function chooseAdp1b() {}
 
 /**
  * 
  */
-function chooseAdp2a() {
-    
-}
+function chooseAdp2a() {}
 
 /**
  * 
  */
-function chooseAdp2b() {
-    
-}
+function chooseAdp2b() {}
 
 /**
  * Sends a message to the server to update the value of the third own 
@@ -118,9 +125,7 @@ function chooseAdp3a() {
 /**
  * 
  */
-function chooseAdp3b() {
-    
-}
+function chooseAdp3b() {}
 
 /**
  * Selects adaptation 1a.
@@ -194,7 +199,49 @@ function startGame() {
     location.href = './game.xhtml';
 }
 
+/*
+* Show the maxTimePopUp with the max time explanation
+*/
+function maxTimePopUp() {
+    if (infoIconClicked){
+        infoMaxTime.style.display = "flex";
+        infoIconClicked = false;
+    } else {
+        infoMaxTime.style.display = "none";
+        infoIconClicked = true;
+    }
+}
+
+/*
+* Show the cardsPerPlayer explanation
+*/
+function cardsPerPlayer() {
+    if (infoIconClicked){
+        infoCardsPlayers.style.display = "flex";
+        infoIconClicked = false;
+    } else {
+        infoCardsPlayers.style.display = "none";
+        infoIconClicked = true;
+    }    
+}
+
+/*
+* Show the cardsPerRound explanation
+*/
+function cardsPerRound() {
+    if (infoIconClicked){
+        infoCardsPerRound.style.display = "flex";
+        infoIconClicked = false;
+    } else {
+        infoCardsPerRound.style.display = "none";
+        infoIconClicked = true;
+    }
+}
+
 /************************ Listeners for buttons ************************/
 
 //btnExit.addEventListener('click', handleAdp2a);
 startBtn.addEventListener('click', startGame);
+imgIcon[0].addEventListener("click", maxTimePopUp);
+imgIcon[1].addEventListener("click", cardsPerPlayer);
+imgIcon[2].addEventListener("click", cardsPerRound);
