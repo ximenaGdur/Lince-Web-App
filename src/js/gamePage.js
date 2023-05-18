@@ -4,7 +4,7 @@
 
 /******************** Creating constants for script ********************/
 const gameBoardImages = document.getElementsByClassName('board-image');
-const exitButton = document.getElementById('exit-button');
+//const exitButton = document.getElementById('exit-button');
 let boardImages = document.getElementsByClassName('board-image-container');
 let blurTime = null;
 const maxTime = 5000;
