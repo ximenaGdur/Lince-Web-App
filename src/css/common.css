@@ -250,6 +250,10 @@ button:hover {
     padding: 0%;
 }
 
+.profile-image {
+    max-width: 30%;
+}
+
 /******************* MEDIA QUERIES *******************/
 
 /* Styles for header on screens smaller than 933px */

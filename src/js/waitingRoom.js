@@ -6,6 +6,8 @@ const startButton = document.getElementById('start-button');
 const popUpClose = document.getElementById('popUpClose');
 // Container for all player table's rows.
 const playerTable = document.getElementById('player-table-body');
+// Max time bar.
+const maxTimeRange = document.getElementById('max-time-range');
 // Value for max time bar.
 const maxTimeValue = document.getElementById('maxTimeValue');
 // Value for cards per player bar.
@@ -46,25 +48,80 @@ function handleNewPlayer() {
  * time the host client selects a player to be removed.
  */
 function removePlayer() {
-    //Falta JSON
+    if (playerTable) {
+        let firstColumn = '<tr class="ranking-row">' +
+                                '<td class="ranking-row">#</td>' +
+                                '<td class="ranking-row">Imágen</td>' +
+                                '<td class="ranking-row">Apodo</td>' +
+                                '<td class="ranking-row">Puntaje</td>' +
+                            '</tr>';
+        let player1 = '<tr class="ranking-row">' +
+                            '<td class="ranking-col"> 1 </td>' +
+                            '<td class="ranking-col"> avatar </td>' +
+                            '<td class="ranking-col"> mariaPerez </td>' +
+                            '<td class="ranking-col"> 250 puntos' + '</td>' +
+                        '</tr>'
+                        
+        let player2 = '<tr class="ranking-row">' +
+                            '<td class="ranking-col"> 2 </td>' +
+                            '<td class="ranking-col"> avatar </td>' +
+                            '<td class="ranking-col"> juanPerez </td>' +
+                            '<td class="ranking-col"> 100 puntos' + '</td>' +
+                        '</tr>'
+
+        playerTable.innerHTML =  firstColumn + player1 + player2;
+    }
 }
 
 /**
  * Sends a message to the server to update the amount of cards per round.
  */
 function chooseCardsPerRound() {
+    /*
+    sendMessage({
+        "Type": "chooseCardsPerRound", 
+        "From": "client", 
+        "To": "server", 
+        "When": "when a host client change the amount of card per round", 
+        "CardsPerRound": numCards, 
+        "Nickname": name, 
+        "SessionCode": code
+    })
+    */
 }
 
 /**
  * Sends a message to the server to update the maximum time of the session.
  */
 function chooseMaxTime() {
+    /*
+    sendMessage({
+        "Type": "chooseMaxTime", 
+        "From": "client", 
+        "To": "server", 
+        "When": "when a host client change the max time", 
+        "MaxTime": time, 
+        "Nickname": name, 
+        "SessionCode": code
+    })
+    */
 }
 
 /**
  * Sends a message to the server to update the amount of cards per player.
  */
 function chooseCardsPerPlayer() {
+    /*
+    sendMessage({
+        "Type": "chooseCardsPerPlayer",
+        "From": "client",
+        "To": "server",
+        "When": "when a host client change the cards per player",
+        "CardsPerPlayer": numCards,
+        "Nickname": name,
+        "SessionCode": code
+    })
+    */
 }
 
 /**
@@ -174,8 +231,9 @@ function chooseAdp3b() {
  **/
 function handleMaxTime() {
     const time = 5;
-    if (cardsPerRoundValue) {
-        cardsPerRoundValue.innerHTML = time + ' s';
+    if (maxTimeValue) {
+        maxTimeValue.innerHTML = time + ' s';
+        max
     }
     // TODO: adjust bar
 }
@@ -184,7 +242,10 @@ function handleMaxTime() {
  * When server sends a message indicating cards per round has to be updated
  **/
 function handleCardsPerRound() {
-    
+    const amount = 5;
+    if (cardsPerRoundValue) {
+        cardsPerRoundValue.innerHTML = time;
+    }
 }
 
 
@@ -193,8 +254,11 @@ function handleCardsPerRound() {
  * Updates the value of the cards per player to the guest clients at the 
  * moment in which a message from the server informing the new value is entered.
  */
-function handleCardsPerPlayer(message) {
-    
+function handleCardsPerPlayer() {
+    const amount = 5;
+    if (cardsPerPlayerValue) {
+        cardsPerPlayerValue.innerHTML = time;
+    }
 }
 
 
@@ -265,4 +329,4 @@ function startGame() {
 
 /************************ Listeners for buttons ************************/
 
-startButton.addEventListener('click', startGame);
+startButton.addEventListener('click', removePlayer);

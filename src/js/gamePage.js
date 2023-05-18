@@ -53,8 +53,8 @@ function handleAdp1a() {
 /** Function: handleMaxTime 
  * when changing max time, update **/
 function updateTime(time) {
-    var timeLeft = time;
-    var timer = "Tiempo";
+    let timeLeft = time;
+    let timer = "Tiempo";
     timer += "time"; // hay que acomodar el dato para mostrarlo en la vista ( 0:00 )
     document.getElementById('isValid').innerHTML = timer;
     updateScreen();
@@ -84,9 +84,9 @@ function changeImageColors(){
  */
 function randomBorderColor(){
     // Código tomado de: https://www.delftstack.com/es/howto/javascript/javascript-pick-random-from-array/
-    var colorsArray = ['#E6C700', '#2EB600', '#006DE2', '#DA0012']
-    var randomIndex = Math.floor(Math.random()*colorsArray.length);
-    var randomColor = colorsArray[randomIndex];
+    let colorsArray = ['#E6C700', '#2EB600', '#006DE2', '#DA0012']
+    let randomIndex = Math.floor(Math.random()*colorsArray.length);
+    let randomColor = colorsArray[randomIndex];
     return randomColor;
 }
 

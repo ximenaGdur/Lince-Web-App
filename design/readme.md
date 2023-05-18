@@ -970,7 +970,7 @@ sendMessage({
 
 ~~~ js
 sendMessage({
-    "Type": "chooseMaxTime", 
+    "Type": "chooseCardsPerRound", 
     "From": "client", 
     "To": "server", 
     "When": "when a host client change the amount of card per round", 
