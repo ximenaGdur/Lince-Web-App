@@ -48,6 +48,19 @@ function changeImagesToWords() {
     }
 }
 
+
+/*
+*   Handles scores of the players
+*   players => array of players
+*   scores => map with (player, score)
+*/
+function handleScores() {
+    let players = [];
+    let scores = new Map();
+    players.forEach(player => {
+        player.updateScore(scores.get(player));
+    });
+}
 /************************ TIME FUNCTIONS ************************/
 
 /** handleMaxTime 

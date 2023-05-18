@@ -1,4 +1,4 @@
-/******************** Creating constants for script ********************/
+    /******************** Creating constants for script ********************/
 
 //
 const startButton = document.getElementById('start-button');
@@ -8,6 +8,8 @@ const popUpClose = document.getElementById('popUpClose');
 const playerTable = document.getElementById('player-table-body');
 // Value for max time bar.
 const maxTimeValue = document.getElementById('maxTimeValue');
+// Information icon for timeMax, cardsPerPlayer, cardsPerRound
+const infoIcon = document.getElementById('infoIcon');
 // Value for cards per player bar.
 const cardsPerPlayerValue = document.getElementById('cardsPerPlayerValue');
 // Value for cards per round bar.
@@ -18,6 +20,20 @@ const option1a = document.getElementsByClassName('Adp1a');
 const option2a = document.getElementById('Adp2a');
 // Option 2b radio button.
 const option2b = document.getElementById('Adp2b');
+// Max Time information popUp
+const infoMaxTime = document.getElementById('infoMaxTime');
+// Max Time information popUp
+const infoCardsPlayers = document.getElementById('infoCardsPlayers');
+// Cards per Round information popUp
+const infoCardsPerRound = document.getElementById('infoCardsPerRound');
+// Boolean for information Icon event listener
+let infoIconClicked = true;
+
+
+// Test
+const imgIcon = document.getElementsByClassName('information-icon');
+
+
 
 /********************** Functions used on script **********************/
 
@@ -226,6 +242,14 @@ function handleAdp2a() {
     }
 }
 
+/**
+ * Selects adaptation 3a.
+ */
+function handleAdp3a() {}
+
+/*
+*
+*/
 function handleAdp2b() {
     console.log("aqii");
     /*if(message.type === "chooseAdp2b") {
@@ -263,6 +287,49 @@ function startGame() {
     location.href = './game.xhtml';
 }
 
+/*
+* Show the maxTimePopUp with the max time explanation
+*/
+function maxTimePopUp() {
+    if (infoIconClicked){
+        infoMaxTime.style.display = "flex";
+        infoIconClicked = false;
+    } else {
+        infoMaxTime.style.display = "none";
+        infoIconClicked = true;
+    }
+}
+
+/*
+* Show the cardsPerPlayer explanation
+*/
+function cardsPerPlayer() {
+    if (infoIconClicked){
+        infoCardsPlayers.style.display = "flex";
+        infoIconClicked = false;
+    } else {
+        infoCardsPlayers.style.display = "none";
+        infoIconClicked = true;
+    }    
+}
+
+/*
+* Show the cardsPerRound explanation
+*/
+function cardsPerRound() {
+    if (infoIconClicked){
+        infoCardsPerRound.style.display = "flex";
+        infoIconClicked = false;
+    } else {
+        infoCardsPerRound.style.display = "none";
+        infoIconClicked = true;
+    }
+}
+
 /************************ Listeners for buttons ************************/
 
+//btnExit.addEventListener('click', handleAdp2a);
+imgIcon[0].addEventListener("click", maxTimePopUp);
+imgIcon[1].addEventListener("click", cardsPerPlayer);
+imgIcon[2].addEventListener("click", cardsPerRound);
 startButton.addEventListener('click', startGame);
