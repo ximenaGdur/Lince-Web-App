@@ -1,4 +1,8 @@
-    /******************** Creating constants for script ********************/
+/******************** Imports ********************/
+
+import * as exitPopup from './exitPopUp.js'
+
+/******************** Creating constants for script ********************/
 
 //
 const startButton = document.getElementById('start-button');

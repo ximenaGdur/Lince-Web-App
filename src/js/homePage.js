@@ -1,4 +1,6 @@
-//import { showCodePopUp, verifyCode, cancelPopUp, joinRoom } from './codePopUp.js';
+/******************** Imports ********************/
+
+import * as codePopup from './codePopUp.js'
 
 /******************** Creating constants for script ********************/
 

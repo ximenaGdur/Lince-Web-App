@@ -1,6 +1,7 @@
 /******************** Imports ********************/
-// <script src="../js/finishedPopUp.js"></script>
-// <script src="../js/exitPopUp.js"></script>
+
+import * as finishedPopup from './finishedPopUp.js'
+import * as exitPopup from './exitPopUp.js'
 
 /******************** Creating constants for script ********************/
 const gameBoardImages = document.getElementsByClassName('board-image');

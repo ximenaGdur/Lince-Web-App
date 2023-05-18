@@ -1,13 +1,13 @@
 /******************** Creating constants for script ********************/
 
 // Pop Up that is shown when player decides to join session.
-const exitPopUp = document.getElementById('exit-popup');
+export const exitPopUp = document.getElementById('exit-popup');
 // Button that allows player to close pop up.
-const cancelButton = document.getElementById('cancel-button');
+export const cancelButton = document.getElementById('cancel-button');
 // Button that allows player to return to main page.
-const acceptButton = document.getElementById('accept-button');
+export const acceptButton = document.getElementById('accept-button');
 // .
-const exitButton = document.getElementById('exit-button');
+export const exitButton = document.getElementById('exit-button');
 
 
 /********************** Functions used on script **********************/
@@ -15,7 +15,7 @@ const exitButton = document.getElementById('exit-button');
 /**
  * Close Pop Up.
  */
-function closePopUp () {
+export function closePopUp () {
   if(exitPopUp && cancelButton) {
     exitPopUp.style.display = 'none';
   }
@@ -24,7 +24,7 @@ function closePopUp () {
 /**
  * Show Pop Up.
  */
-function showExitPopup () {
+export function showExitPopup () {
   if(exitPopUp && exitButton) {
     exitPopUp.style.display = 'flex';
   }
@@ -32,7 +32,7 @@ function showExitPopup () {
 
 /** Function: Accept
  * return to home page when clicked **/
-function accept() {
+export function accept() {
   if( acceptButton ){
       location.href = './homePage.xhtml';
   }
