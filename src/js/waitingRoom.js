@@ -35,6 +35,14 @@ const infoCardsPlayers = document.getElementById('infoCardsPlayers');
 const infoCardsPerRound = document.getElementById('infoCardsPerRound');
 // Boolean for information Icon event listener
 let infoIconClicked = true;
+// adaptation1-info Colores popUp
+const infoAdapt1 = document.getElementById('adaptation1-info');
+// adaptation2-info Palabras popUp
+const infoAdapt2 = document.getElementById('adaptation2-info');
+// adaptation3-info Comodines popUp
+const infoAdapt3 = document.getElementById('adaptation3-info');
+// Gets information-icon list
+
 // Test
 const imgIcon = document.getElementsByClassName('information-icon');
 
@@ -339,6 +347,12 @@ function handleAdp2a() {
 *
 */
 function handleAdp2b() {
+    console.log("aqii");
+    /*if(message.type === "chooseAdp2b") {
+        // document.getElementById('Adp2b').check == true;
+    } else {
+
+    }*/
     if (option2b) {
         option2b.checked = true;
     }
@@ -425,6 +439,19 @@ function cardsPerRound() {
     }
 }
 
+/*
+* Function that shows the explanation of the adaptions
+*/
+function infoAdapPopUp (adaptation) {
+    if(infoIconClicked){
+        document.getElementById(adaptation.srcElement.nextElementSibling.id).style.visibility = 'visible';
+        infoIconClicked = false;
+    }else {
+        document.getElementById(adaptation.srcElement.nextElementSibling.id).style.visibility = 'hidden';
+        infoIconClicked = true;
+    }
+}
+
 /************************ Listeners for buttons ************************/
 
 startButton.addEventListener('click', startGame);
@@ -437,6 +464,10 @@ imgIcon[0].addEventListener("click", maxTimePopUp);
 imgIcon[1].addEventListener("click", cardsPerPlayer);
 imgIcon[2].addEventListener("click", cardsPerRound);
 startButton.addEventListener('click', startGame);
+imgIcon[3].addEventListener('click', infoAdapPopUp, infoAdapt1);
+imgIcon[4].addEventListener('click', infoAdapPopUp, infoAdapt2);
+imgIcon[5].addEventListener('click', infoAdapPopUp, infoAdapt3);
+
 
 option1a.addEventListener('click', chooseAdp1a);
 option1b.addEventListener('click', chooseAdp1b);
