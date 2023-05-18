@@ -246,7 +246,6 @@ button:hover {
 .list {
     display: flex;
     flex-direction: column;
-    align-items: center;
     margin: 0%;
     padding: 0%;
     align-items: stretch;
@@ -270,7 +269,6 @@ button:hover {
 }
 
 /* Change the width of the cell with the image. */
-/** Change the width of . **/
 .ranking-row td:nth-child(2) {
     width: 20%;
 }
