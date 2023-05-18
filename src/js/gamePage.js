@@ -16,15 +16,15 @@ const blurPorcentage = 95;
  */
 function handleBlur() {
     if (gameBoardImages) {
-        gameBoardImages.style.filter = 'grayscale(100%)';
-        gameBoard.blur();
-        // filter: blur(3px);
+        for(let imageIndex = 0; imageIndex < gameBoardImages.length; imageIndex++) {
+            gameBoardImages[imageIndex].style.filter = 'blur(2.5px)';
+        }
     }
 }
 
 function loadPage() {
-    blurTime = maxTime - (maxTime * 100 / blurPorcentage);
-    const applyBlurTimeout = setTimeout(handleBlur, 5000);
+    blurTime = maxTime * 100 / blurPorcentage;
+    const applyBlurTimeout = setTimeout(handleBlur, blurTime);
 }
 
 

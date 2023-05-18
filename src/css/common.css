@@ -121,6 +121,16 @@ main {
     font-weight: bold;
 }
 
+/** Style for container of buttons. **/
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0.5%;
+    padding: 0%;
+    max-width: 50%;
+}
+
 /** Style for container for text and information icon. **/
 .label-icon {
     align-items: center;
@@ -133,6 +143,7 @@ main {
     margin-left: 0.5%;
     margin-right: 0.5%;
     min-width: 100%;
+    min-height: 10%;
 }
 
 /** Style for information icon. **/
@@ -193,13 +204,15 @@ button:hover {
 .ranking-col {
     border-color: var(--plum);
     border-style: solid;
+    color: var(--violet)
 }
 
 .section-title {
     color: var(--violet);
     font-size: 1.4rem;
     font-weight: bold;
-    margin: 2% 0%;
+    margin-top: 0%;
+    margin-bottom: 2%;
 }
 
 .section-subtitle {
@@ -214,6 +227,23 @@ button:hover {
     color: var(--plum);
     font-size: 1rem;
     font-weight: bold;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.list-item {
+    color: var(--plum);
+    list-style-type: square;
+}
+
+.item-text {
+    color: var(--violet);
+    margin: 0%;
+    padding: 0%;
 }
 
 /******************* MEDIA QUERIES *******************/

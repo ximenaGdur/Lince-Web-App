@@ -1,18 +1,22 @@
+//import { showCodePopUp, verifyCode, cancelPopUp, joinRoom } from './codePopUp.js';
+
 /******************** Creating constants for script ********************/
+
+/*// Button to show the codePopUp
+const showPopUpButton = document.getElementById('show-popup-button');
+// Button that allows player to close pop up.
+const cancelButton = document.getElementById('cancel-button');
+// Button in codePopUp to join into a room
+const joinButton = document.getElementById('join-button');
+// Input box inside popup
+const popupInput = document.getElementById('popup-input');*/
 
 // Text field to enter player nickname.
 const nicknameField = document.getElementById('nickname');
 // Button to create a room after entering a nickname.
 const createRoomBtn = document.getElementById('create-room-button');
 // Button to join a room after entering a nickname.
-const joinRoomBtn = document.getElementById('join-room-button');
-
-const btnComenzar = document.getElementsByClassName('btnComenzar');
-
-const popUpFinished = document.getElementsByClassName('popUpFinished');
-var time;
-
-const waitingRoomTitle = document.getElementById('waiting-room-title');
+const joinRoomBtn = document.getElementById('show-popup-button');
 
 /********************** Functions used on script **********************/
 
@@ -22,11 +26,16 @@ const waitingRoomTitle = document.getElementById('waiting-room-title');
 function enableButtons() {
     if(nicknameField.value.length > 0 && nicknameField.value.trim() !== "") {
         createRoomBtn.disabled = false;
+        createRoomBtn.style.cursor = 'pointer';
+        //createRoomBtn.style.background = '';
+        joinRoomBtn.style.cursor = 'pointer';
         joinRoomBtn.disabled = false;
-        //#join-button { background-color: var(--sky-magenta);}
+        //joinRoomBtn.style.background = '';
     } else {
         createRoomBtn.disabled = true;
         joinRoomBtn.disabled = true;
+        createRoomBtn.style.cursor = 'default';
+        joinRoomBtn.style.cursor = 'default';
     }
 }
 
@@ -55,6 +64,11 @@ function closeTab() {
 }
 
 /************************ Listeners for page ************************/
+
+/*showPopUpButton.addEventListener('click', showCodePopUp);
+cancelButton.addEventListener('click', cancelPopUp);
+joinButton.addEventListener('click', joinRoom);
+popupInput.addEventListener('input', verifyCode);*/
 
 nicknameField.addEventListener('input', enableButtons);
 createRoomBtn.addEventListener('click', createSession);

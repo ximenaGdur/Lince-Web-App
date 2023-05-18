@@ -17,20 +17,6 @@
     min-width: 20%;
 }
 
-/** Style for container for both buttons. **/
-.buttons {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin: 0.5%;
-    padding: 0%;
-    max-width: 50%;
-}
-
-#join-button {
-    background-color: var(--sky-magenta);
-}
-
 /** Animations for buttons **/
 .label-icon:hover{
     background-color: var(--finn);
@@ -39,6 +25,10 @@
 .label-icon:hover button {
     background-color: var(--finn);
     border-color: var(--finn);
+}
+
+.redirect-buttons {
+    cursor: default;
 }
 
 /****************** TAB SECTION ******************/
@@ -70,60 +60,23 @@
     border-style: solid;
     display: flex;
     flex-direction: column;
+    align-items: center;
     margin: 0.1%;
+    padding: 2%;
     min-width: 90%;
-}
-
-/** Style for instructions section. **/
-#instructions {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 /** Style for video. **/
 video {
+    min-width: 100%;
 }
 
-/** Style for ranking section. **/
-#ranking {
-  display: flex;
+#ranking, #credits {
+    display: none;
 }
 
-/** Style for credits section. **/
-#credits {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-}
-
-/** Style for about section of credits. **/
-#aboutSection {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 2em;
-}
-
-/** Style for developers section of credits. **/
-#developers {
-  display: flex;
-}
-
-/** Style for lists in credit's section. **/
-.developerList,
-.creditsList {
-  list-style-type: square;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-/** Style for individual elements of lists in credit's section. **/
-.developer p, .artist p {
-    color: var(--sky-magenta);
-    font-weight: bold;
+.section-container {
+    margin: 2%;
 }
 
 /* Styles for header on screens smaller than 933px */
