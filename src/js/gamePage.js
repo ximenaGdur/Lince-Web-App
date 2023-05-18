@@ -52,8 +52,6 @@ function randomBorderColor(){
 }
 
 function storeFirstMatch(card) {
-    console.log(card.getElementsByClassName('my-image-container'));
-    console.log("Carta seleccionada: " + card.getElementsByClassName('my-image-container');
     firstCard = card;
 }
 
@@ -129,7 +127,7 @@ function TimesUp(time) {
 
 window.addEventListener('load', loadPage);
 window.addEventListener('load', changeImageColors);
-//window.addEventListener('load', changeImagesToWords);
+window.addEventListener('load', changeImagesToWords);
 
 for (let index = 0; index < myImages.length; index++) {
     let card = myImages[index];
