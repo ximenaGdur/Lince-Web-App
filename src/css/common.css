@@ -258,7 +258,12 @@ button:hover {
 }
 
 .profile-image {
-    max-width: 50%;
+    max-width: 25%;
+}
+
+/* Cambia el ancho de la celda con la imagen */
+.ranking-row td:nth-child(2) {
+    width: 20%;
 }
 
 /******************* MEDIA QUERIES *******************/
