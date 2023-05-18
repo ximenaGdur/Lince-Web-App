@@ -1,116 +1,190 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<meta charset="utf-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1"/>
-		<meta name="keywords" content="Lince, Yo lo vi primero, Muy Lentos"/>
-		<meta name="author" content="Jimena Gdur Vargas"/>
-		<title>¡Muy Lentos!</title>
-		<link rel="icon" type="image/x-icon" href="../../design/images/icons/favicon.png"/>
-		<link rel="stylesheet" href="../css/homePage.css"/>
-	</head>
-	<body>
-		<header class="header">
-			<h1 class="headerTitle">¡Muy Lentos!</h1>
-			<img class="gameLogo" src="../../design/images/icons/logo.png" alt="logo de la juego"/>
-		</header>
-		<main>
-			<h1 class="pageTitle">Bienvenido al juego ¡Muy Lentos!</h1>
-			<!-- Contains main content of page -->
-			<section class="mainContent">
-				<article class="inputAndButtons">
-					<h6 id="nicknameTitle">Apodo para el juego</h6>
-					<!-- Allows user to add a nickname for the game -->
-					<input class="textInput" id="nickname" type="text" placeholder="Ingrese su apodo"/>
-					<!-- Contains buttons -->
-					<ul class="buttons">
-						<!-- Jumps to waiting room for host -->
-						<li class="buttonContainer">
-							<button id="createRoomButton">
-								Crear sala
-							</button>
-							<img class="informationIcon" src="../../design/Images/icons/informationIcon.png" alt="información"/>
-						</li>
-						<!-- Jumps to waiting room for guest -->
-						<li class="buttonContainer">
-							<button id="joinRoomButton">
-								Unir a sala
-							</button>
-							<img class="informationIcon" src="../../design/Images/icons/informationIcon.png" alt="información"/>
-						</li>
-					</ul>
-				</article>
 
-				<!-- Contains tab links -->
-				<ul class="tabLinks">
-					<li>
-						<button type="button" id="instructionButton">
-							¿Cómo Jugar?
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="keywords" content="Lince, Yo lo vi primero, Muy Lentos" />
+	<meta name="author" content="Jimena Gdur Vargas" />
+	<title>¡Muy Lentos!</title>
+	<link rel="icon" type="image/x-icon" href="../../design/images/icons/favicon.png" />
+	<link rel="stylesheet" href="../css/homePage.css" />
+</head>
+
+<body>
+	<header class="header">
+		<h1 class="header-title">¡Muy Lentos!</h1>
+		<img class="game-logo" src="../../design/images/icons/logo.png" alt="logo de la juego" />
+	</header>
+	<main>
+		<h2 class="page-title">Bienvenido al juego ¡Muy Lentos!</h2>
+		<!-- Contains main content of page -->
+		<section class="main-content">
+			<article class="input-buttons">
+				<h3 class="sub-title" id="nicknameTitle">Apodo para el juego</h3>
+				<!-- Allows user to add a nickname for the game -->
+				<input class="text-input" id="nickname" type="text" placeholder="Ingrese su apodo" />
+				<!-- Contains buttons -->
+				<ul class="buttons">
+					<!-- Jumps to waiting room for host -->
+					<li class="label-icon">
+						<button class="small-button redirect-buttons" id="create-room-button" disabled="true">
+							Crear sala
+						</button>
+						<img class="information-icon" src="../../design/Images/icons/informationIcon.png"
+							alt="información" />
+					</li>
+					<!-- Jumps to waiting room for guest -->
+					<li class="label-icon">
+						<button class="small-button redirect-buttons" id="show-popup-button" disabled="true">
+							Unir a sala
+						</button>
+						<img class="information-icon" src="../../design/Images/icons/informationIcon.png"
+							alt="información" />
+					</li>
+				</ul>
+			</article>
+			<dialog class="popup" id="popup-code">
+				<h1 class="popup-title">Ingrese el código de la sala</h1>
+				<section class="code-section">
+					<h2 class="popup-subtitle">Codigo</h2>
+					<input class="code-input" id="popup-input" type="number" min="0000" max="9999"/>
+					<p class="common-text" id="room-validation-text">
+						
+					</p>
+				</section>
+				<ul class="buttons">
+					<li class="small-button-container">
+						<button class="small-button" id="cancel-button" type="button">
+							Cancelar
 						</button>
 					</li>
-					<li>
-						<button type="button" id="rankingButton">
-							Clasificación
-						</button>
-					</li>
-					<li>
-						<button type="button" id="creditsButton">
-							Créditos
+					<li class="small-button-container">
+						<button class="small-button" id="join-button" type="button" disabled="true">
+							Unirse
 						</button>
 					</li>
 				</ul>
-				<!-- Contains tab content -->
-				<ul class="contentOptions">
-					<!-- Contains instruction's video -->
-					<li class="tabContent" id="instructions">
-						<h2 class="sectionTitle">
-							¿Cómo jugar nuestro juego?
+			</dialog>
+			<!-- Contains tab links -->
+			<ul class="tab-links">
+				<li class="large-button-container">
+					<button class="large-button" id="instructions-link" type="button">
+						¿Cómo Jugar?
+					</button>
+				</li>
+				<li class="large-button-container">
+					<button class="large-button" id="ranking-link" type="button">
+						Clasificación
+					</button>
+				</li>
+				<li class="large-button-container" >
+					<button class="large-button" id="credits-link" type="button">
+						Créditos
+					</button>
+				</li>
+			</ul>
+			<!-- Contains tab content -->
+			<ul class="content-options">
+				<!-- Contains instruction's video -->
+				<li class="tab-content" id="instructions">
+					<h2 class="section-title">
+						¿Cómo jugar nuestro juego?
+					</h2>
+					<video class="video" title="Video con las instrucciones del juego" controls="controls">
+						<source src="instructions.mp4" type="video/mp4" />
+					</video>
+				</li>
+				<!-- Contains ranking -->
+				<li class="tab-content" id="ranking">
+					<h2 class="section-title">
+						Clasificación
+					</h2>
+					<table class="ranking-table" id="mainPageRanking">
+						<tbody id="player-table-body">
+								<tr class="ranking-row">
+										<td class="ranking-col">1</td>
+										<td class="ranking-row">
+											<img class="profile-image" src="../../design/images/Icons/profile/penguin.png" alt="Icono de Zanahoria" />
+										</td>
+										<td class="ranking-col">Cristian Ortega</td>
+										<td class="ranking-col">197342 puntos</td>
+								</tr>
+								<tr class="ranking-row">
+										<td class="ranking-col">2</td>
+										<td class="ranking-row">
+											<img class="profile-image" src="../../design/images/Icons/profile/elephant.png" alt="Icono de Zanahoria" />
+										</td>
+										<td class="ranking-col">Gianfranco Soto</td>
+										<td class="ranking-col">123124 puntos</td>
+								</tr>
+								<tr class="ranking-row">
+										<td class="ranking-col">3</td>
+										<td class="ranking-row">
+											<img class="profile-image" src="../../design/images/Icons/profile/snake.png" alt="Icono de Zanahoria" />
+										</td>
+										<td class="ranking-col">Luis Umaña</td>
+										<td class="ranking-col">2134 puntos</td>
+								</tr>
+						</tbody>
+					</table>
+				</li>
+				<!-- Contains site's credits -->
+				<li class="tab-content" id="credits">
+					<article class="section-container">
+						<h2 class="section-title">
+							Sobre los desarrolladores
 						</h2>
-						<video class="video" title="Video con las instrucciones del juego" controls="controls">
-							<source src="instructions.mp4" type="video/mp4" />
-						</video>
-					</li>
-					<!-- Contains ranking -->
-					<li class="tabContent" id="ranking">
-						<h2 class="sectionTitle">
-							Clasificación
-						</h2>
-					</li>
-					<!-- Contains site's credits -->
-					<li class="tabContent" id="credits">
-						<article id="aboutSection">
-							<h2 class="sectionTitle">
-								Sobre los desarrolladores
-							</h2>
-							<p class="text">
-								Desarrollado para el curso de Desarrollo de Aplicaciones Web en el primer semestre del 2023.
-							</p>
-							<article id="developers">
-								<h3 class="sectionSubTitle">Desarrolladores</h3>
-								<ul class="developerList">
-									<li class="developer">Derrick Allen Smith</li>
-									<li class="developer">Jimena Gdur Vargas</li>
-									<li class="developer">Cristian Ortega Hurtado</li>
-									<li class="developer">Gianfranco Soto Palma</li>
-								</ul>
-							</article>
-						</article>
-						<article id="artists">
-							<h2 class="sectionTitle">Recursos de terceros</h2>
-							<p class="text">Imagenes obtenidas de los siguientes autores:</p>
-							<ul class="creditsList">
-								<li class="artist">Freepik</li>
-								<li class="artist">Good Ware</li>
-								<li class="artist">Iconic Panda</li>
-								<li class="artist">justicon</li>
-								<li class="artist">Konkapp</li>
-								<li class="artist">nawicon</li>
-								<li class="artist">Whitevector</li>
+						<p class="common-text">
+							Desarrollado para el curso de Desarrollo de Aplicaciones Web en el primer semestre del 2023.
+						</p>
+						<article id="developers">
+							<h3 class="section-subtitle">Desarrolladores</h3>
+							<ul class="list">
+								<li class="list-item">
+									<p class="item-text">Derrick Allen Smith</p>
+								</li>
+								<li class="list-item">
+									<p class="item-text">Jimena Gdur Vargas</p>
+								</li>
+								<li class="list-item">
+									<p class="item-text">Cristian Ortega Hurtado</p>
+								</li>
+								<li class="list-item">
+									<p class="item-text">Gianfranco Soto Palma</p>
+								</li>
 							</ul>
 						</article>
-					</li>
-				</ul>
-			</section>
-		</main>
-	</body>
+					</article>
+					<article class="section-container">
+						<h2 class="section-title">Recursos de terceros</h2>
+						<p class="common-text">Imagenes obtenidas de los siguientes autores:</p>
+						<ul class="list">
+							<li class="list-item">
+								<a href="https://www.flaticon.com/authors/freepik" class="item-text">Freepik</a>
+							</li>
+							<li class="list-item">
+								<a href="https://www.flaticon.com/authors/good-ware" class="item-text">Good Ware</a>
+							</li>
+							<li class="list-item">
+								<a href="https://www.flaticon.com/authors/iconic-panda" class="item-text">Iconic Panda</a>
+							</li>
+							<li class="list-item">
+								<a href="https://www.flaticon.com/authors/justicon" class="item-text">justicon</a>
+							</li>
+							<li class="list-item">
+								<a href="https://www.flaticon.com/authors/konkapp" class="item-text">Konkapp</a>
+							</li>
+							<li class="list-item">
+								<a href="https://www.flaticon.com/authors/nawicon" class="item-text">nawicon</a>
+							</li>
+						</ul>
+					</article>
+				</li>
+			</ul>
+		</section>
+	</main>
+	<script type="module" async="async" src="../js/homePage.js"></script>
+</body>
+
 </html>

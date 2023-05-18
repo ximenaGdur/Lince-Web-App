@@ -1,129 +1,86 @@
 /**
   * CSS used for the home page.
-  * Created by Jimena Gdur Vargas.
+  * Created by Derrick Allen Smith.
   */
 
-@import "common.css";
+  @import url("common.css");
 
-/* Align the pop-up to the center */
-body {
-    margin: auto;
-    width: 30%;
-    height: 30vh;
-    border: 3px solid var(--violet);
-    padding: 0.5em;
-    background-color: var(--whiteSmoke);
-}
-
-/* Place the close button to the left top corner */
-.btnPopUpClose {
-    position: relative;
-    left: 86%;
-    margin: 0.6em 0 0.6em 0;
+.popup {
+    background-color: var(--mimi-pink);
+    border-color: var(--finn);
     border-style: solid;
-    border-color: var(--plum);
-    background-color: var(--plum);
-    color: var(--isabelline);
-    text-align: center;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-weight: bold;
-    font-size: 0.8em;
-    cursor: pointer;
+    display: none;
+    min-width: 30%;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* Title centered for pop-ups */
-.popUpTitle {
+.popup-title {
+    color: var(--plum);
     position: relative;
     text-align: center;
-    margin: 0.5em;
-    color: var(--plum);
+    margin: 0.8vw;
+    font-size: 2.5vw;
 }
 
-.messageContent {
-    text-align: center;
-    max-width: 100%;
-    color: var(--darkPurple);
-}
-
-.messageContent p {
-    margin: 0.8em 4em;
-    color: var(--finn);
+.popup-subtitle {
+    color: var(--sky-magenta);
+    font-size: 2vw;
+    margin: 0%;
     font-weight: bold;
 }
 
-/* Alignment of buttons */
-.buttons {
-    max-width: 100%;
-    margin: 2em 7.5em;
-}
-
-.cancelRoom {
-    position: fixed;
-    width: 80%;
-}
-
-/* Alignment of buttons */
-.btnCancel,
-.btnAccept,
-.btnJoin {
-    color: var(--darkPurple);
-    margin-left: 2.7em;
-    border-radius: 3px;
-    border-style: solid;
-    border-color: var(--plum);
-    background-color: var(--plum);
-    color: var(--isabelline);
-    text-align: center;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-weight: bold;
-    font-size: 0.8em;
-    cursor: pointer;
-}
-
-/* Alignment of buttons */
-.btnContinue,
-.btnHome {
-    color: var(--darkPurple);
-    margin: -1em 1.4em 5em 0em;
-    border-radius: 3px;
-    border-style: solid;
-    border-color: var(--plum);
-    background-color: var(--plum);
-    color: var(--isabelline);
-    text-align: center;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-weight: bold;
-    font-size: 0.7em;
-    cursor: pointer;
+.code-input {
+    width: 15vw;
 }
 
 /* centered the code input for room */
-.codeSection {
+.code-section {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 1em;
-}
-
-/* border of the table */
-table {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-collapse: collapse;
+    margin-top: 0.6vw;
+    margin-bottom: 1vw;
 }
 
 /* font with bold weight */
-.codeSection p {
+.code-section p {
     margin: 0;
     color: var(--finn);
     font-weight: bold;
 }
 
-/* table border */
-td {
-    border: 1px solid;
+.message-content {
+    text-align: center;
+    margin: 0%;
+    color: var(--dark-purple);
+}
+
+.message-content p {
+    margin: 0.8em 4em;
     color: var(--finn);
     font-weight: bold;
-    padding: 0 0.6em;
+}
+
+#popup-finished {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: 50%;
+}
+
+#exit-popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: 50%;
+}
+
+/* Styles for header on screens smaller than 933px */
+@media screen and (max-width: 933px) {
+    /** Transforms . **/
+    #ranking, #credits {
+        display: flex;
+    }
 }
