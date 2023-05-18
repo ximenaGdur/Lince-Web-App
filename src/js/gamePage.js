@@ -5,6 +5,13 @@
 /******************** Creating constants for script ********************/
 // Contains all game board cards
 const gameBoardImages = document.querySelectorAll('.board-image');
+const exitButton = document.getElementById('exit-button');
+const myImage = document.getElementsByClassName('my-image');
+let word = document.getElementsByClassName('word');
+// Contains all palyer cards
+const playerCards = document.getElementsByClassName('.my-image-container'); s = document.getElementsByClassName('my-image-container');
+let boardImages = document.getElementsByClassName('board-image-container');
+
 
 //const exitButton = document.getElementById('exit-button');
 
@@ -91,6 +98,15 @@ function handleAdp1a() {
         p.textContent = altText;
         p.classList.add("altText"); // agrega una clase altText SE PUEDE ELIMINAR MAYBE USEFUL
         myImages[i].replaceWith(p);
+
+function changeImagesToWords() {    
+    // Iterate through each image and replace its content with the attribute "alt"
+    for(let index = 0; index < myImage.length; index ++) {
+        myImage[index].style.display='none';
+        word[index].style.display='flex';
+        // changes box to fit words 
+        myImages[index].style.display.alingSelf='stretch'
+        myImages[index].style.maxWidth = 'max-content';
     }
 }
 
@@ -108,8 +124,9 @@ function handleScores() {
 }
 /************************ TIME FUNCTIONS ************************/
 
-/** Function: handleMaxTime 
- * when changing max time, update **/
+/** handleMaxTime 
+ * when changing max time, update 
+ */
 function updateTime(time) {
     let timeLeft = time;
     let timer = "Tiempo";
@@ -118,8 +135,9 @@ function updateTime(time) {
     updateScreen();
 }
 
-/** Function: handleTimesUp
- * if time runs out the game is over **/
+/** handleTimesUp
+ * if time runs out the game is over 
+ */
 function TimesUp(time) {
     if( time == 0) {
         popUpFinished.style.display = 'flex';
@@ -133,6 +151,7 @@ function TimesUp(time) {
 
 window.addEventListener('load', loadPage);
 window.addEventListener('load', changeImageColors);
+window.addEventListener('load', changeImagesToWords);
 
 /*playerCards.forEach(card => {
     card.addEventListener('click', () => {
