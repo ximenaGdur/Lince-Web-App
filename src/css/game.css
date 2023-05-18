@@ -45,9 +45,10 @@
 }
 
 .game-info {
-    align-items: center;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
     max-width: 100%;
 }
 
@@ -71,6 +72,19 @@
     padding: 0%;
     width: 100%;
     align-items: center;
+}
+
+.my-image-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 0.1%;
+    max-width: 10%;
+    border-style: solid;
+}
+
+.my-image{
+    max-width: 100%;
 }
 
 /****************** styles to fit screen sizes ******************/

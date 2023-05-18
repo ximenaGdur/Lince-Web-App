@@ -5,8 +5,7 @@
 /******************** Creating constants for script ********************/
 const gameBoardImages = document.getElementsByClassName('board-image');
 const exitButton = document.getElementById('exit-button');
-let li = document.getElementsByClassName('board-image-container');
-
+let boardImages = document.getElementsByClassName('board-image-container');
 let blurTime = null;
 const maxTime = 5000;
 const blurPorcentage = 95;
@@ -74,8 +73,8 @@ function TimesUp(time) {
  * 
  */
 function changeImageColors(){
-    for(let index = 0; index < li.length; index ++) {
-        li[index].style.borderColor = randomBorderColor();
+    for(let index = 0; index < boardImages.length; index ++) {
+        boardImages[index].style.borderColor = randomBorderColor();
     }
 }
 
@@ -84,7 +83,7 @@ function changeImageColors(){
  * @returns 
  */
 function randomBorderColor(){
-    // Código tomado de : https://www.delftstack.com/es/howto/javascript/javascript-pick-random-from-array/
+    // Código tomado de: https://www.delftstack.com/es/howto/javascript/javascript-pick-random-from-array/
     var colorsArray = ['#E6C700', '#2EB600', '#006DE2', '#DA0012']
     var randomIndex = Math.floor(Math.random()*colorsArray.length);
     var randomColor = colorsArray[randomIndex];
@@ -94,4 +93,4 @@ function randomBorderColor(){
 /************************ Listeners for page ************************/
 
 window.addEventListener('load', loadPage);
-exitButton.addEventListener('click', changeImageColors);
+window.addEventListener('load', changeImageColors);

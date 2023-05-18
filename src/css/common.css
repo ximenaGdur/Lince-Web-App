@@ -181,12 +181,14 @@ button:hover {
 /* border of the table */
 .ranking-table {
     border-collapse: collapse;
-    max-width: 50%;
+    max-width: 100%;
+    margin: 1%;
 }
 
 .ranking-row {
     border-color: var(--plum);
     border-style: solid;
+    text-align: center;
 }
 
 /* table row border */
@@ -215,6 +217,10 @@ button:hover {
     color: var(--plum);
     font-size: 1rem;
     font-weight: bold;
+}
+
+.profile-image{
+    max-width: 50%;
 }
 
 /******************* MEDIA QUERIES *******************/

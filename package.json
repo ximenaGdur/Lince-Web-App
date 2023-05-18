@@ -7,5 +7,8 @@
     "eslint-plugin-import": "^2.27.5",
     "stylelint": "^15.6.2",
     "stylelint-config-standard": "^33.0.0"
+  },
+  "dependencies": {
+    "http-server": "^14.1.1"
   }
 }
