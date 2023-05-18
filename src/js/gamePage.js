@@ -85,7 +85,7 @@ function changeImagesToWords() {
         myImage[index].style.display='none';
         word[index].style.display='flex';
         // changes box to fit words 
-        myImages[index].style.display.alingSelf='stretch'
+        myImages[index].style.display.alingSelf='stretch';
         myImages[index].style.maxWidth = 'max-content';
     }
 }
