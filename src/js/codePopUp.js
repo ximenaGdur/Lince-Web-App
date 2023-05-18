@@ -1,4 +1,5 @@
 /******************** Creating constants for script ********************/
+
 // Button to show the codePopUp
 export const showPopUpButton = document.getElementById('show-popup-button');
 // Button that allows player to close pop up.
@@ -59,7 +60,7 @@ export function joinRoom() {
   }
 }
 
-//export { showCodePopUp, verifyCode, cancelPopUp, joinRoom };
+/************************ Listeners for buttons ************************/
 
 showPopUpButton.addEventListener('click', showCodePopUp);
 cancelButton.addEventListener('click', cancelPopUp);

@@ -170,7 +170,7 @@ button:hover {
     background-color: var(--finn);
 }
 
-/** Style for style for small buttons. **/
+/** Style for small buttons. **/
 .small-button {
     font-size: 1rem;
     min-width: 100%;
@@ -190,6 +190,7 @@ button:hover {
     margin-right: 0.1%;
 }
 
+/** Style for every large button. **/
 .large-button {
     font-size: 1rem;
     padding: 0.5%;
@@ -203,19 +204,21 @@ button:hover {
     margin: 1%;
 }
 
+/** Style for ranking row. **/
 .ranking-row {
     border-color: var(--plum);
     border-style: solid;
     text-align: center;
 }
 
-/* table row border */
+/** Style for ranking col. **/
 .ranking-col {
     border-color: var(--plum);
     border-style: solid;
     color: var(--violet);
 }
 
+/** Style for every title. **/
 .section-title {
     color: var(--violet);
     font-size: 1.4rem;
@@ -224,6 +227,7 @@ button:hover {
     margin-bottom: 2%;
 }
 
+/** Style for every subtitle. **/
 .section-subtitle {
     color: var(--violet);
     font-size: 1rem;
@@ -238,30 +242,33 @@ button:hover {
     font-weight: bold;
 }
 
+/** Style for lists. **/
 .list {
     display: flex;
     flex-direction: column;
-    align-items: center;
     margin: 0%;
     padding: 0%;
     align-items: stretch;
 }
 
+/** Style for list item. **/
 .list-item {
     color: var(--plum);
 }
 
+/** Style for list item text. **/
 .item-text {
     color: var(--violet);
     margin: 0%;
     padding: 0%;
 }
 
+/** Style for every avatar image. **/
 .profile-image {
     max-width: 25%;
 }
 
-/* Cambia el ancho de la celda con la imagen */
+/* Change the width of the cell with the image. */
 .ranking-row td:nth-child(2) {
     width: 20%;
 }

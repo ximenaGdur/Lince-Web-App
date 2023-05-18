@@ -6,7 +6,7 @@ export const exitPopUp = document.getElementById('exit-popup');
 export const cancelButton = document.getElementById('cancel-button');
 // Button that allows player to return to main page.
 export const acceptButton = document.getElementById('accept-button');
-// .
+// Button that allows the user to see the exit popup.
 export const exitButton = document.getElementById('exit-button');
 
 
@@ -37,7 +37,6 @@ export function accept() {
       location.href = './homePage.xhtml';
   }
 }
-
 
 /************************ Listeners for buttons ************************/
 

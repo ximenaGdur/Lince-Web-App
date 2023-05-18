@@ -4,18 +4,16 @@ import * as exitPopup from './exitPopUp.js'
 
 /******************** Creating constants for script ********************/
 
-//
+// Start game button
 const startButton = document.getElementById('start-button');
 // Pop Up used to exit waiting room.
 const popUpClose = document.getElementById('popUpClose');
 // Container for all player table's rows.
 const playerTable = document.getElementById('player-table-body');
-
 // Max time bar.
 const maxTimeRange = document.getElementById('max-time-range');
 // Value for max time bar.
 const maxTimeValue = document.getElementById('max-time-value');
-
 // Cards per player bar.
 const cardsPerPlayerRange = document.getElementById('cards-per-player-range');
 // Value for cards per player bar.
@@ -24,7 +22,6 @@ const cardsPerPlayerValue = document.getElementById('cards-per-player-value');
 const cardsPerRoundRange = document.getElementById('cards-per-round-range');
 // Value for cards per round bar.
 const cardsPerRoundValue = document.getElementById('cards-per-round-value');
-
 // Information icon for timeMax, cardsPerPlayer, cardsPerRound
 const infoIcon = document.getElementById('infoIcon');
 // Max Time information popUp
@@ -41,11 +38,8 @@ const infoAdapt1 = document.getElementById('adaptation1-info');
 const infoAdapt2 = document.getElementById('adaptation2-info');
 // adaptation3-info Comodines popUp
 const infoAdapt3 = document.getElementById('adaptation3-info');
-// Gets information-icon list
-
 // Test
 const imgIcon = document.getElementsByClassName('information-icon');
-
 // Option 1a radio button.
 const option1a = document.getElementById('Adp1a');
 // Option 1b radio button.
@@ -463,11 +457,9 @@ cardsPerRoundRange.addEventListener('change', chooseCardsPerRound);
 imgIcon[0].addEventListener("click", maxTimePopUp);
 imgIcon[1].addEventListener("click", cardsPerPlayer);
 imgIcon[2].addEventListener("click", cardsPerRound);
-startButton.addEventListener('click', startGame);
 imgIcon[3].addEventListener('click', infoAdapPopUp, infoAdapt1);
 imgIcon[4].addEventListener('click', infoAdapPopUp, infoAdapt2);
 imgIcon[5].addEventListener('click', infoAdapPopUp, infoAdapt3);
-
 
 option1a.addEventListener('click', chooseAdp1a);
 option1b.addEventListener('click', chooseAdp1b);

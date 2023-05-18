@@ -166,23 +166,7 @@
     align-items: center;
 }
 
-.waitingRoomBtns {
-    grid-column: 2;
-    display: grid;
-
-}
-
-/** Style for each information button**/
-.btnInformation {
-    display: flex;
-    align-items: stretch;
-    border: none;
-    border-radius: 1rem;
-    padding: 0;
-    cursor: help;
-}
-
-.infoPopUp,
+.info-pop-up,
 .adaptation1-info {
     display: none;
     width: 18rem;
@@ -219,7 +203,6 @@
  * Styles for header on screens smaller than 933px
  */
 @media screen and (max-width: 933px) {
-
     /**
      * Style for each configuration option title
      */

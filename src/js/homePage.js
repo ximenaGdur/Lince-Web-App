@@ -4,23 +4,12 @@ import * as codePopup from './codePopUp.js'
 
 /******************** Creating constants for script ********************/
 
-/*// Button to show the codePopUp
-const showPopUpButton = document.getElementById('show-popup-button');
-// Button that allows player to close pop up.
-const cancelButton = document.getElementById('cancel-button');
-// Button in codePopUp to join into a room
-const joinButton = document.getElementById('join-button');
-// Input box inside popup
-const popupInput = document.getElementById('popup-input');*/
-
 // Text field to enter player nickname.
 const nicknameField = document.getElementById('nickname');
 // Button to create a room after entering a nickname.
 const createRoomBtn = document.getElementById('create-room-button');
 // Button to join a room after entering a nickname.
 const joinRoomBtn = document.getElementById('show-popup-button');
-
-
 // Button that changes tab to credits.
 const creditsButton = document.getElementById('credits-link');
 // Credits tab content.
@@ -43,10 +32,8 @@ function enableButtons() {
     if(nicknameField.value.length > 0 && nicknameField.value.trim() !== "") {
         createRoomBtn.disabled = false;
         createRoomBtn.style.cursor = 'pointer';
-        //createRoomBtn.style.background = '';
         joinRoomBtn.style.cursor = 'pointer';
         joinRoomBtn.disabled = false;
-        //joinRoomBtn.style.background = '';
     } else {
         createRoomBtn.disabled = true;
         joinRoomBtn.disabled = true;
@@ -113,14 +100,8 @@ function showInstructions() {
 }
 /************************ Listeners for page ************************/
 
-/*showPopUpButton.addEventListener('click', showCodePopUp);
-cancelButton.addEventListener('click', cancelPopUp);
-joinButton.addEventListener('click', joinRoom);
-popupInput.addEventListener('input', verifyCode);*/
-
 nicknameField.addEventListener('input', enableButtons);
 createRoomBtn.addEventListener('click', createSession);
-
 creditsButton.addEventListener('click', showCredits);
 rankingButton.addEventListener('click', showRanking);
 instructionsButton.addEventListener('click', showInstructions);
