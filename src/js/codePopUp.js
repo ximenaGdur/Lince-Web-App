@@ -8,7 +8,7 @@ export const popupInput = document.getElementById('popup-input');
 // Button in codePopUp to join into a room
 export const joinButton = document.getElementById('join-button');
 // Pop Up that is shown when player decides to join session.
-export const popUp = document.getElementById('popUpCode');
+export const popUp = document.getElementById('popup-code');
 // Input of the code popUp 
 export const codeInput = document.getElementById('popUpInput');
 // Code popUp input message result
@@ -31,11 +31,11 @@ export function verifyCode() {
   let msg = document.getElementById("room-validation-text");
   if(popupInput.value !== '1234') {
     msg.innerHTML  = "Sala no existe";
-    createRoomBtn.style.cursor = 'pointer';
+    joinButton.style.cursor = 'pointer';
     joinButton.disabled = true;
   } else {
     msg.innerHTML  = "Sala encontrada";
-    createRoomBtn.style.cursor = 'default';
+    joinButton.style.cursor = 'default';
     joinButton.disabled = false;
   }
 }
@@ -44,7 +44,7 @@ export function verifyCode() {
  * Closes popup when button is clicked.
  */
 export function cancelPopUp() {
-  codePopUp.popUp.style.display = 'none';
+  popUp.style.display = 'none';
   document.getElementById('popup-input').value = '';
   document.getElementById("room-validation-text").innerHTML = '';
 }

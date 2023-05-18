@@ -246,11 +246,6 @@ function handleAdp2a() {
     }
 }
 
-/**
- * Selects adaptation 3a.
- */
-function handleAdp3a() {}
-
 /*
 *
 */
@@ -269,7 +264,7 @@ function handleAdp2b() {
 /**
  * Selects adaptation 3a.
  */
-function handleAdp1a() {
+function handleAdp3a() {
     if (option3a) {
         option3a.checked = true;
     }
@@ -278,7 +273,7 @@ function handleAdp1a() {
 /**
  * Selects adaptation 3b.
  */
-function handleAdp1b() {
+function handleAdp3b() {
     if (option3b) {
         option3b.checked = true;
     }
