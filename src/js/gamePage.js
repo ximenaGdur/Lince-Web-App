@@ -5,7 +5,10 @@ import * as exitPopup from './exitPopUp.js'
 
 /******************** Creating constants for script ********************/
 const gameBoardImages = document.getElementsByClassName('board-image');
-//const exitButton = document.getElementById('exit-button');
+const exitButton = document.getElementById('exit-button');
+const myImage = document.getElementsByClassName('my-image');
+let word = document.getElementsByClassName('word');
+let myImages = document.getElementsByClassName('my-image-container');
 let boardImages = document.getElementsByClassName('board-image-container');
 let blurTime = null;
 const maxTime = 5000;
@@ -34,18 +37,15 @@ function loadPage() {
 /**
  * Changes images in "myFichas" to words
 */
-function handleAdp1a() {
-    //document.getElementById('popUpFinished').style.visibility='hidden';
-    // Obtener todas las imágenes de la página
-    let myImages = document.getElementsByClassName("myImages");
-    
-    // Iterar a través de cada imagen y reemplazar su contenido por el atributo "alt"
-    for (let i = 0; i < myImages.length; i++) {
-            let altText = myImages[i].alt;
-            let p = document.createElement("p");
-            p.textContent = altText;
-            p.classList.add("altText"); // agrega una clase altText SE PUEDE ELIMINAR MAYBE USEFUL
-            myImages[i].replaceWith(p);
+
+function changeImagesToWords() {    
+    // Iterate through each image and replace its content with the attribute "alt"
+    for(let index = 0; index < myImage.length; index ++) {
+        myImage[index].style.display='none';
+        word[index].style.display='flex';
+        // changes box to fit words 
+        myImages[index].style.display.alingSelf='stretch'
+        myImages[index].style.maxWidth = 'max-content';
     }
 }
 
@@ -64,8 +64,9 @@ function handleScores() {
 }
 /************************ TIME FUNCTIONS ************************/
 
-/** Function: handleMaxTime 
- * when changing max time, update **/
+/** handleMaxTime 
+ * when changing max time, update 
+ */
 function updateTime(time) {
     var timeLeft = time;
     var timer = "Tiempo";
@@ -74,8 +75,9 @@ function updateTime(time) {
     updateScreen();
 }
 
-/** Function: handleTimesUp
- * if time runs out the game is over **/
+/** handleTimesUp
+ * if time runs out the game is over 
+ */
 function TimesUp(time) {
     if( time == 0) {
         popUpFinished.style.display = 'flex';
@@ -86,7 +88,7 @@ function TimesUp(time) {
 /**
  * 
  */
-function changeImageColors(){
+function changeImageColors() {
     for(let index = 0; index < boardImages.length; index ++) {
         boardImages[index].style.borderColor = randomBorderColor();
     }
@@ -96,7 +98,7 @@ function changeImageColors(){
  * 
  * @returns 
  */
-function randomBorderColor(){
+function randomBorderColor() {
     // Código tomado de: https://www.delftstack.com/es/howto/javascript/javascript-pick-random-from-array/
     var colorsArray = ['#E6C700', '#2EB600', '#006DE2', '#DA0012']
     var randomIndex = Math.floor(Math.random()*colorsArray.length);
@@ -108,3 +110,4 @@ function randomBorderColor(){
 
 window.addEventListener('load', loadPage);
 window.addEventListener('load', changeImageColors);
+window.addEventListener('load', changeImagesToWords);
