@@ -6,18 +6,19 @@ import * as exitPopup from './exitPopUp.js'
 /******************** Creating constants for script ********************/
 // Contains all game board cards
 let boardImages = document.getElementsByClassName('board-image-container');
-
-const myImage = document.getElementsByClassName('my-image');
-let word = document.getElementsByClassName('word');
 // Contains all player cards
 let myImages = document.getElementsByClassName('my-image-container');
-
-//const exitButton = document.getElementById('exit-button');
-
-let blurTime = null;
+// Contains all cards
+const myImage = document.getElementsByClassName('my-image');
+// Contains all word cards
+let word = document.getElementsByClassName('word');
+// Maximum time chosen
 const maxTime = 5000;
+// Time when blur happens
+let blurTime = null;
+// Percentage of time when blur happens
 const blurPorcentage = 95;
-
+// Contains information of player card to match
 let firstCard = null;
 
 /********************** Functions used on script **********************/
@@ -51,9 +52,9 @@ function randomBorderColor(){
 }
 
 function storeFirstMatch(card) {
-    if (firstClick == false) {
-        firstClick = true;
-    }
+    console.log(card.getElementsByClassName('my-image-container'));
+    console.log("Carta seleccionada: " + card.getElementsByClassName('my-image-container');
+    firstCard = card;
 }
 
 /**
@@ -63,8 +64,7 @@ function match(secondCard) {
     if (firstCard) {
         console.log(firstCard.altText);
     } else {
-        secondClick = true;
-        
+        console.log("Escoga ficha de su mano primero.");
     }
 }
 
@@ -129,10 +129,18 @@ function TimesUp(time) {
 
 window.addEventListener('load', loadPage);
 window.addEventListener('load', changeImageColors);
-window.addEventListener('load', changeImagesToWords);
+//window.addEventListener('load', changeImagesToWords);
 
-/*myImages.forEach(card => {
+for (let index = 0; index < myImages.length; index++) {
+    let card = myImages[index];
     card.addEventListener('click', () => {
-      storeFirstMatch(card);
+        storeFirstMatch(card);
     });
-  })*/
+}
+
+for (let index = 0; index < boardImages.length; index++) {
+    let boardCard = boardImages[index];
+    boardCard.addEventListener('click', () => {
+        match(boardCard);
+    });
+}
