@@ -178,7 +178,7 @@ button:hover {
 
 /** Style for style for large buttons. **/
 .large-button-container {
-    min-width: 30%;
+    min-width: 31.5%;
     margin-left: 0.1%;
     margin-right: 0.1%;
 }
@@ -192,19 +192,21 @@ button:hover {
 /* border of the table */
 .ranking-table {
     border-collapse: collapse;
-    max-width: 50%;
+    max-width: 100%;
+    margin: 1%;
 }
 
 .ranking-row {
     border-color: var(--plum);
     border-style: solid;
+    text-align: center;
 }
 
 /* table row border */
 .ranking-col {
     border-color: var(--plum);
     border-style: solid;
-    color: var(--violet)
+    color: var(--violet);
 }
 
 .section-title {
@@ -233,11 +235,13 @@ button:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 0%;
+    padding: 0%;
+    align-items: stretch;
 }
 
 .list-item {
     color: var(--plum);
-    list-style-type: square;
 }
 
 .item-text {

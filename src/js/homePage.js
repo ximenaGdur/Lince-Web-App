@@ -18,6 +18,20 @@ const createRoomBtn = document.getElementById('create-room-button');
 // Button to join a room after entering a nickname.
 const joinRoomBtn = document.getElementById('show-popup-button');
 
+
+// Button that changes tab to credits.
+const creditsButton = document.getElementById('credits-link');
+// Credits tab content.
+const creditsContent = document.getElementById('credits');
+// Button that changes tab to ranking.
+const rankingButton = document.getElementById('ranking-link');
+// Ranking tab content.
+const rankingContent = document.getElementById('ranking');
+// Button that changes tab to instructions.
+const instructionsButton = document.getElementById('instructions-link');
+// Instructions tab content.
+const instructionsContent = document.getElementById('instructions');
+
 /********************** Functions used on script **********************/
 
 /**
@@ -63,6 +77,38 @@ function closeTab() {
     // "When": "when a client logs off"
 }
 
+/**
+ * Shows credits tab.
+ */
+function showCredits() {
+    if (creditsButton) {
+        creditsContent.style.display = "flex";
+        rankingContent.style.display = "none";
+        instructionsContent.style.display = "none";
+    }
+}
+
+/**
+ * Shows ranking tab.
+ */
+function showRanking() {
+    if (rankingButton) {
+        creditsContent.style.display = "none";
+        rankingContent.style.display = "flex";
+        instructionsContent.style.display = "none";
+    }
+}
+
+/**
+ * Shows instructions tab.
+ */
+function showInstructions() {
+    if (instructionsButton) {
+        creditsContent.style.display = "none";
+        rankingContent.style.display = "none";
+        instructionsContent.style.display = "flex";
+    }
+}
 /************************ Listeners for page ************************/
 
 /*showPopUpButton.addEventListener('click', showCodePopUp);
@@ -72,3 +118,7 @@ popupInput.addEventListener('input', verifyCode);*/
 
 nicknameField.addEventListener('input', enableButtons);
 createRoomBtn.addEventListener('click', createSession);
+
+creditsButton.addEventListener('click', showCredits);
+rankingButton.addEventListener('click', showRanking);
+instructionsButton.addEventListener('click', showInstructions);

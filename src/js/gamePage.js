@@ -4,6 +4,8 @@
 
 /******************** Creating constants for script ********************/
 const gameBoardImages = document.getElementsByClassName('board-image');
+const exitButton = document.getElementById('exit-button');
+let boardImages = document.getElementsByClassName('board-image-container');
 let blurTime = null;
 const maxTime = 5000;
 const blurPorcentage = 95;
@@ -67,6 +69,28 @@ function TimesUp(time) {
     //block everything later
 }
 
+/**
+ * 
+ */
+function changeImageColors(){
+    for(let index = 0; index < boardImages.length; index ++) {
+        boardImages[index].style.borderColor = randomBorderColor();
+    }
+}
+
+/**
+ * 
+ * @returns 
+ */
+function randomBorderColor(){
+    // Código tomado de: https://www.delftstack.com/es/howto/javascript/javascript-pick-random-from-array/
+    var colorsArray = ['#E6C700', '#2EB600', '#006DE2', '#DA0012']
+    var randomIndex = Math.floor(Math.random()*colorsArray.length);
+    var randomColor = colorsArray[randomIndex];
+    return randomColor;
+}
+
 /************************ Listeners for page ************************/
 
 window.addEventListener('load', loadPage);
+window.addEventListener('load', changeImageColors);
