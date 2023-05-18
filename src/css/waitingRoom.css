@@ -114,7 +114,7 @@
 }
 
 /**
- * 
+ * Adaption explanation text
  */
 .option-description {
     font-size: 1rem;
@@ -122,6 +122,8 @@
     text-align: center;
     visibility: hidden;
     max-width: 80%;
+    font-weight: bold;
+    color: var(--mimi-pink);
 }
 
 /**
