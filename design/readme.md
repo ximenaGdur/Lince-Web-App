@@ -37,7 +37,7 @@ En la imágen anterior se muestra una ventana emergente que se despliega al hace
 
 Una imágen más detallada de esta ventana se muestra a continuación.
 
-![PopUp ingresar código](images/wireframes/popup-codeEmpty.svg)
+![PopUp ingresar código](images/wireframes/popUpcodeEmpty.svg)
 
 ### Tabla de mejores puntajes
 
