@@ -52,7 +52,7 @@ Esta imágen muestra un ejemplo en el que el usuario ingresa un código de sala 
 
 Una imágen más detallada de esta ventana se muestra a continuación.
 
-![PopUp código correcto](images/wireframes/popup-codeCorrect.svg)
+![PopUp código correcto](images/wireframes/popUpCodeCorrect.svg)
 
 ### Créditos
 
@@ -66,7 +66,7 @@ En este caso, se le indica al usuario que esa sala no existe, por lo que no se l
 
 Una imágen más detallada de esta ventana se muestra a continuación.
 
-![PopUp código incorrecto](images/wireframes/popup-codeIncorrect.svg)
+![PopUp código incorrecto](images/wireframes/popUpCodeIncorrect.svg)
 
 ## Sala de Espera
 
