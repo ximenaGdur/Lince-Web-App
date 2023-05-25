@@ -23,7 +23,7 @@ export function continueSession () {
  */
 export function returnToMainPage() {
     if (popUpFinished && homeButton) {
-        window.location.href = "./homePage.xhtml";
+        window.location.href = "./index.xhtml";
     }
 }
 

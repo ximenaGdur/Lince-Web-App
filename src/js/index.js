@@ -1,8 +1,21 @@
-/******************** Imports ********************/
+/** ****************** Imports ******************* */
+import * as codePopup from './codePopUp.js';
 
-import * as codePopup from './codePopUp.js'
+const WebSocket = require('ws');
 
-/******************** Creating constants for script ********************/
+const socket = new WebSocket('ws://localhost:9009');
+
+socket.addEventListener('open', () => {
+  console.log('Conectado al servidor.');
+
+  socket.send('Hola, servidor');
+});
+
+socket.addEventListener('message', (event) => {
+  console.log(`Recibi: ${event.data}`);
+});
+
+/** ****************** Creating constants for script ******************* */
 
 // Text field to enter player nickname.
 const nicknameField = document.getElementById('nickname');
