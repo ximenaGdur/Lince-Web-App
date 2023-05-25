@@ -17,7 +17,7 @@
     "ws": "^8.13.0"
   },
   "name": "appweb23a-cristian-ximena",
-  "description": "![Pantalla de juego](./design/images/wireframes/homeBasic.svg)",
+  "description": "Juego Muy Lentos",
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
