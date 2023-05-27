@@ -84,7 +84,7 @@
  * Style only available with vendor prefix.
  * Width and height not allowed to be relative.
  */
- .input-range::-webkit-slider-thumb {
+.input-range::-webkit-slider-thumb {
     appearance: none;
     height: 1rem;
     width: 1rem;
@@ -101,6 +101,7 @@
     flex-direction: column;
     align-items: center;
     max-width: 30%;
+    border-radius: 6px;
 }
 
 /**
@@ -113,12 +114,16 @@
 }
 
 /**
- * 
+ * Adaption explanation text
  */
 .option-description {
     font-size: 1rem;
     display: flex;
+    text-align: center;
+    visibility: hidden;
     max-width: 80%;
+    font-weight: bold;
+    color: var(--mimi-pink);
 }
 
 /**
@@ -161,23 +166,8 @@
     align-items: center;
 }
 
-.waitingRoomBtns {
-    grid-column: 2;
-    display: grid;
-
-}
-
-/** Style for each information button**/
-.btnInformation {
-    display: flex;
-    align-items: stretch;
-    border: none;
-    border-radius: 1rem;
-    padding: 0;
-    cursor: help;
-}
-
-.infoPopUp {
+.info-pop-up,
+.adaptation1-info {
     display: none;
     width: 18rem;
     background-color: var(--mimi-pink);
@@ -186,6 +176,10 @@
     border-radius: 0.9vw;
     position: absolute;
 }
+
+/* .adaptation1-info {
+
+} */
 
 /* .information-icon:hover span {
     display: flex;

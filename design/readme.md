@@ -37,7 +37,7 @@ En la imágen anterior se muestra una ventana emergente que se despliega al hace
 
 Una imágen más detallada de esta ventana se muestra a continuación.
 
-![PopUp ingresar código](images/wireframes/popup-codeEmpty.svg)
+![PopUp ingresar código](images/wireframes/popUpcodeEmpty.svg)
 
 ### Tabla de mejores puntajes
 
@@ -52,7 +52,7 @@ Esta imágen muestra un ejemplo en el que el usuario ingresa un código de sala 
 
 Una imágen más detallada de esta ventana se muestra a continuación.
 
-![PopUp código correcto](images/wireframes/popup-codeCorrect.svg)
+![PopUp código correcto](images/wireframes/popUpCodeCorrect.svg)
 
 ### Créditos
 
@@ -66,7 +66,7 @@ En este caso, se le indica al usuario que esa sala no existe, por lo que no se l
 
 Una imágen más detallada de esta ventana se muestra a continuación.
 
-![PopUp código incorrecto](images/wireframes/popup-codeIncorrect.svg)
+![PopUp código incorrecto](images/wireframes/popUpCodeIncorrect.svg)
 
 ## Sala de Espera
 
@@ -236,12 +236,12 @@ Los eventos principales para un cliente en cada pantalla de juego son:
 1. setCardsPerRound
 2. setMaxTime
 3. setCardsPerPlayer
-4. setAdp1a
-5. setAdp1b
-6. setAdp2a
-7. setAdp2b
-8. setAdp3a
-9. setAdp3b
+4. toggleAdp1a
+5. toggleAdp1b
+6. toggleAdp2a
+7. toggleAdp2b
+8. toggleAdp3a
+9. toggleAdp3b
 10. addPlayer
 11. updatePlayers
 12. startGame
@@ -1283,7 +1283,7 @@ rooms[roomCode].addPlayer(nickname)
 
 ### Sala de Espera
 
-#### setAdp1a(nickname, roomCode)
+#### toggleAdp1a(nickname, roomCode)
 
 ~~~ js
 for player in rooms[roomCode].getPlayers()
@@ -1296,7 +1296,7 @@ for player in rooms[roomCode].getPlayers()
         })
 ~~~
 
-#### setAdp1b(nickname, roomCode)
+#### toggleAdp1b(nickname, roomCode)
 
 ~~~ js
 for player in rooms[roomCode].getPlayers()
@@ -1309,7 +1309,7 @@ for player in rooms[roomCode].getPlayers()
         })
 ~~~
 
-#### setAdp2a(nickname, roomCode)
+#### toggleAdp2a(nickname, roomCode)
 
 ~~~ js
 for player in rooms[roomCode].getPlayers()
@@ -1322,7 +1322,7 @@ for player in rooms[roomCode].getPlayers()
         })
 ~~~
 
-#### setAdp2b(nickname, roomCode)
+#### toggleAdp2b(nickname, roomCode)
 
 ~~~ js
 for player in rooms[roomCode].getPlayers()
@@ -1335,7 +1335,7 @@ for player in rooms[roomCode].getPlayers()
         })
 ~~~
 
-#### setAdp3a(nickname, roomCode)
+#### toggleAdp3a(nickname, roomCode)
 
 ~~~ js
 for player in rooms[roomCode].getPlayers()
@@ -1348,7 +1348,7 @@ for player in rooms[roomCode].getPlayers()
         })
 ~~~
 
-#### setAdp3b(nickname, roomCode)
+#### toggleAdp3b(nickname, roomCode)
 
 ~~~ js
 for player in rooms[roomCode].getPlayers()
