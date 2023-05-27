@@ -1,6 +1,6 @@
 const WebSocket = require('ws');
 
-const socket = new WebSocket('ws://localhost:9009');
+const socket = new WebSocket('ws://localhost:8009');
 
 socket.addEventListener('open', () => {
   console.log('Conectado al servidor.');

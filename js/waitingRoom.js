@@ -1,6 +1,6 @@
 /** ****************** Imports ******************* */
 
-import * as exitPopup from './exitPopUp.js';
+import * as exitPopUp from './exitPopUp.js';
 
 /** ****************** Creating constants for script ******************* */
 

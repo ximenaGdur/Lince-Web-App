@@ -1,9 +1,7 @@
 /** ****************** Imports ******************* */
 import * as codePopup from './codePopUp.js';
 
-const WebSocket = require('ws');
-
-const socket = new WebSocket('ws://localhost:9009');
+const socket = new WebSocket('ws://localhost:009');
 
 socket.addEventListener('open', () => {
   console.log('Conectado al servidor.');
