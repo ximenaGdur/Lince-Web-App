@@ -1,17 +1,17 @@
 /** ****************** Imports ******************* */
 
-import * as exitPopUp from './exitPopUp.js';
+import {
+  closePopUp,
+  showExitPopup,
+  createRemovePlayerMessage,
+} from './exitPopUp.js';
 
 /** ****************** Creating constants for script ******************* */
 
-// Start game button
-const startButton = document.getElementById('start-button');
-// Container for all player table's rows.
-const playerTable = document.getElementById('player-table-body');
-// Max time bar.
-const maxTimeRange = document.getElementById('max-time-range');
-// Value for max time bar.
-const maxTimeValue = document.getElementById('max-time-value');
+// Button that allows player to return to main page.
+const acceptButton = document.getElementById('accept-button');
+// Button that allows player to close pop up.
+const cancelButton = document.getElementById('cancel-button');
 // Cards per player bar.
 const cardsPerPlayerRange = document.getElementById('cards-per-player-range');
 // Value for cards per player bar.
@@ -20,22 +20,28 @@ const cardsPerPlayerValue = document.getElementById('cards-per-player-value');
 const cardsPerRoundRange = document.getElementById('cards-per-round-range');
 // Value for cards per round bar.
 const cardsPerRoundValue = document.getElementById('cards-per-round-value');
-// Max Time information popUp
-const infoMaxTime = document.getElementById('infoMaxTime');
-// Max Time information popUp
-const infoCardsPlayers = document.getElementById('infoCardsPlayers');
+// Button that allows the user to see the exit popup.
+const exitButton = document.getElementById('exit-button');
+// Information icons that display information
+const informationIcons = document.getElementsByClassName('information-icon');
+// Popup with information about adaption 1
+const infoAdapt1 = document.getElementById('adaptation1-info');
+// Popup with information about adaption 2
+const infoAdapt2 = document.getElementById('adaptation2-info');
+// Popup with information about adaption 3
+const infoAdapt3 = document.getElementById('adaptation3-info');
 // Cards per Round information popUp
 const infoCardsPerRound = document.getElementById('infoCardsPerRound');
+// Max Time information popUp
+const infoCardsPlayers = document.getElementById('infoCardsPlayers');
 // Boolean for information Icon event listener
 let infoIconClicked = true;
-// adaptation1-info Colores popUp
-const infoAdapt1 = document.getElementById('adaptation1-info');
-// adaptation2-info Palabras popUp
-const infoAdapt2 = document.getElementById('adaptation2-info');
-// adaptation3-info Comodines popUp
-const infoAdapt3 = document.getElementById('adaptation3-info');
-// Test
-const imgIcon = document.getElementsByClassName('information-icon');
+// Max Time information popUp
+const infoMaxTime = document.getElementById('infoMaxTime');
+// Max time bar.
+const maxTimeRange = document.getElementById('max-time-range');
+// Value for max time bar.
+const maxTimeValue = document.getElementById('max-time-value');
 // Option 1a radio button.
 const option1a = document.getElementById('Adp1a');
 // Option 1b radio button.
@@ -48,57 +54,14 @@ const option2b = document.getElementById('Adp2b');
 const option3a = document.getElementById('Adp3a');
 // Option 3b radio button.
 const option3b = document.getElementById('Adp3b');
+// Container for all player table's rows.
+const playerTable = document.getElementById('waiting-room-ranking');
+// Socket that allows communication with server.
+const socket = new WebSocket('ws://localhost:8009');
+// Start game button
+const startButton = document.getElementById('start-button');
 
 /** ******************** Functions used on script ********************* */
-
-/**
- * Adds new player to player list.
- */
-function handleNewPlayer() {
-  if (playerTable) {
-    const position = 1;
-    const avatar = 'avatar';
-    const nickname = 'ximeGdur';
-    const points = 3;
-
-    playerTable.innerHTML += '<tr class="ranking-row">'
-                              + `<td class="ranking-col">${position}</td>`
-                              + `<td class="ranking-col">${avatar}</td>`
-                              + `<td class="ranking-col">${nickname}</td>`
-                              + `<td class="ranking-col">${points}puntos</td>`
-                            + '</tr>';
-  }
-}
-
-/**
- * Sends a message to the server to remove a player from a specific room at the
- * time the host client selects a player to be removed.
- */
-function removePlayer() {
-  if (playerTable) {
-    const firstColumn = '<tr class="ranking-row">'
-                        + '<td class="ranking-row">#</td>'
-                        + '<td class="ranking-row">Im�gen</td>'
-                        + '<td class="ranking-row">Apodo</td>'
-                        + '<td class="ranking-row">Puntaje</td>'
-                    + '</tr>';
-    const player1 = '<tr class="ranking-row">'
-                        + '<td class="ranking-col"> 1 </td>'
-                        + '<td class="ranking-col"> avatar </td>'
-                        + '<td class="ranking-col"> mariaPerez </td>'
-                        + '<td class="ranking-col"> 250 puntos </td>'
-                    + '</tr>';
-
-    const player2 = '<tr class="ranking-row">'
-                        + '<td class="ranking-col"> 2 </td>'
-                        + '<td class="ranking-col"> avatar </td>'
-                        + '<td class="ranking-col"> juanPerez </td>'
-                        + '<td class="ranking-col"> 100 puntos </td>'
-                    + '</tr>';
-
-    playerTable.innerHTML = firstColumn + player1 + player2;
-  }
-}
 
 /**
  * Sends a message to the server to update the amount of cards per round.
@@ -272,37 +235,20 @@ function chooseAdp3b() {
 }
 
 /**
- * When server sends a message indicating max time has to be updated
- * */
-function handleMaxTime() {
-  const time = 10;
-  if (maxTimeValue) {
-    maxTimeValue.innerHTML = `${time} s`;
-    maxTimeRange.value = time;
-  }
-}
-
-/**
- * When server sends a message indicating cards per round has to be updated
- * */
-function handleCardsPerRound() {
-  const amount = 80;
-  if (cardsPerRoundValue) {
-    cardsPerRoundValue.innerHTML = amount;
-    cardsPerRoundRange.value = amount;
-  }
-}
-
-/**
- * Updates the value of the cards per player to the guest clients at the
- * moment in which a message from the server informing the new value is entered.
+ * Starts game for all players.
  */
-function handleCardsPerPlayer() {
-  const amount = 30;
-  if (cardsPerPlayerValue) {
-    cardsPerPlayerValue.innerHTML = amount;
-    cardsPerPlayerRange.value = amount;
-  }
+function startGame() {
+  /*
+    sendMessage({
+        "Type": "startGame",
+        "From": "client",
+        "To": "server",
+        "When": "when a host client selects the start game botton",
+        "Nickname": name,
+        "SessionCode": code
+    })
+    */
+  window.location.href = './game.xhtml';
 }
 
 /**
@@ -366,20 +312,37 @@ function handleAdp3b() {
 }
 
 /**
- * Starts game for all players.
+ * When server sends a message indicating max time has to be updated
+ * */
+function handleMaxTime() {
+  const time = 10;
+  if (maxTimeValue) {
+    maxTimeValue.innerHTML = `${time} s`;
+    maxTimeRange.value = time;
+  }
+}
+
+/**
+ * When server sends a message indicating cards per round has to be updated
+ * */
+function handleCardsPerRound() {
+  const amount = 80;
+  if (cardsPerRoundValue) {
+    cardsPerRoundValue.innerHTML = amount;
+    cardsPerRoundRange.value = amount;
+  }
+}
+
+/**
+ * Updates the value of the cards per player to the guest clients at the
+ * moment in which a message from the server informing the new value is entered.
  */
-function startGame() {
-  /*
-    sendMessage({
-        "Type": "startGame",
-        "From": "client",
-        "To": "server",
-        "When": "when a host client selects the start game botton",
-        "Nickname": name,
-        "SessionCode": code
-    })
-    */
-  window.location.href = './game.xhtml';
+function handleCardsPerPlayer() {
+  const amount = 30;
+  if (cardsPerPlayerValue) {
+    cardsPerPlayerValue.innerHTML = amount;
+    cardsPerPlayerRange.value = amount;
+  }
 }
 
 /**
@@ -387,6 +350,55 @@ function startGame() {
  */
 function handleStartGame() {
   window.location.href = './game.xhtml';
+}
+
+/**
+ * Adds new player to player list.
+ */
+function handleNewPlayer() {
+  if (playerTable) {
+    const position = 1;
+    const avatar = 'avatar';
+    const nickname = 'ximeGdur';
+    const points = 3;
+
+    playerTable.innerHTML += '<tr class="ranking-row">'
+                              + `<td class="ranking-col">${position}</td>`
+                              + `<td class="ranking-col">${avatar}</td>`
+                              + `<td class="ranking-col">${nickname}</td>`
+                              + `<td class="ranking-col">${points}puntos</td>`
+                            + '</tr>';
+  }
+}
+
+/**
+ * Sends a message to the server to remove a player from a specific room at the
+ * time the host client selects a player to be removed.
+ */
+function handleRemovePlayer() {
+  if (playerTable) {
+    const firstColumn = '<tr class="ranking-row">'
+                        + '<td class="ranking-row">#</td>'
+                        + '<td class="ranking-row">Imgen</td>'
+                        + '<td class="ranking-row">Apodo</td>'
+                        + '<td class="ranking-row">Puntaje</td>'
+                    + '</tr>';
+    const player1 = '<tr class="ranking-row">'
+                        + '<td class="ranking-col">1</td>'
+                        + '<td class="ranking-col">avatar</td>'
+                        + '<td class="ranking-col">mariaPerez</td>'
+                        + '<td class="ranking-col">250puntos </td>'
+                    + '</tr>';
+
+    const player2 = '<tr class="ranking-row">'
+                        + '<td class="ranking-col">2</td>'
+                        + '<td class="ranking-col">avatar</td>'
+                        + '<td class="ranking-col">juanPerez</td>'
+                        + '<td class="ranking-col">100 puntos </td>'
+                    + '</tr>';
+
+    playerTable.innerHTML = firstColumn + player1 + player2;
+  }
 }
 
 /*
@@ -441,24 +453,131 @@ function infoAdapPopUp(adaptation) {
   }
 }
 
+/**
+ * Returns user to home page when button is clicked.
+ * Sends server a message to indicate player is leaving.
+ */
+function returnToMain() {
+  if (acceptButton) {
+    window.location.href = './index.xhtml';
+  }
+  // send message to server letting them know player is leaving.
+  socket.send(createRemovePlayerMessage());
+}
+
+/**
+ * Sends a message to the server to close a client's connection.
+ */
+function closeTab() {
+  socket.send(createRemovePlayerMessage());
+}
+
+/**
+ * Identifying message type in order to call appropiate function.
+ */
+function identifyMessage(receivedMessage) {
+  switch (receivedMessage.type) {
+    case 'handleAdp1a':
+      handleAdp1a(receivedMessage);
+      break;
+    case 'handleAdp1b':
+      handleAdp1b(receivedMessage);
+      break;
+    case 'handleAdp2a':
+      handleAdp2a(receivedMessage);
+      break;
+    case 'handleAdp2b':
+      handleAdp2b(receivedMessage);
+      break;
+    case 'handleAdp3a':
+      handleAdp3a(receivedMessage);
+      break;
+    case 'handleAdp3b':
+      handleAdp3b(receivedMessage);
+      break;
+    case 'handleMaxTime':
+      handleMaxTime(receivedMessage);
+      break;
+    case 'handleCardsPerPlayer':
+      handleCardsPerPlayer(receivedMessage);
+      break;
+    case 'handleCardsPerRound':
+      handleCardsPerRound(receivedMessage);
+      break;
+    case 'handleRemovePlayer':
+      handleRemovePlayer(receivedMessage);
+      break;
+    case 'handleNewPlayer':
+      handleNewPlayer(receivedMessage);
+      break;
+    case 'handleStartGame':
+      handleStartGame(receivedMessage);
+      break;
+    default:
+      console.error('No se reconoce ese mensaje.');
+  }
+}
+
+/**
+ * When a connection is made with server.
+ */
+socket.addEventListener('open', () => {
+  console.log('Conectado al servidor desde Waiting Room.');
+});
+
+/**
+ * When a connection is made with server.
+ */
+socket.addEventListener('close', closeTab());
+
+/**
+ * Event that occurs every time a message is received.
+ */
+socket.addEventListener('message', (event) => {
+  const receivedMessage = JSON.parse(event.data);
+  console.log(`Recibi del servidor: ${receivedMessage}`);
+  identifyMessage(receivedMessage);
+});
+
 /** ********************** Listeners for buttons *********************** */
 
-startButton.addEventListener('click', startGame);
-
-maxTimeRange.addEventListener('change', chooseMaxTime);
+// Adding event listener to acceptButton
+acceptButton.addEventListener('click', returnToMain);
+// Adding event listener to cardsPerPlayerRange
 cardsPerPlayerRange.addEventListener('change', chooseCardsPerPlayer);
+// Adding event listener to cardsPerRoundRange
 cardsPerRoundRange.addEventListener('change', chooseCardsPerRound);
-
-imgIcon[0].addEventListener('click', maxTimePopUp);
-imgIcon[1].addEventListener('click', cardsPerPlayer);
-imgIcon[2].addEventListener('click', cardsPerRound);
-imgIcon[3].addEventListener('click', infoAdapPopUp, infoAdapt1);
-imgIcon[4].addEventListener('click', infoAdapPopUp, infoAdapt2);
-imgIcon[5].addEventListener('click', infoAdapPopUp, infoAdapt3);
-
+// Adding event listener to cancelButton
+cancelButton.addEventListener('click', closePopUp);
+// Adding event listener to exitButton
+exitButton.addEventListener('click', showExitPopup);
+// Adding event listener to informationIcons[0]
+informationIcons[0].addEventListener('click', maxTimePopUp);
+// Adding event listener to informationIcons[1]
+informationIcons[1].addEventListener('click', cardsPerPlayer);
+// Adding event listener to informationIcons[2]
+informationIcons[2].addEventListener('click', cardsPerRound);
+// Adding event listener to informationIcons[3]
+informationIcons[3].addEventListener('click', infoAdapPopUp, infoAdapt1);
+// Adding event listener to informationIcons[4]
+informationIcons[4].addEventListener('click', infoAdapPopUp, infoAdapt2);
+// Adding event listener to informationIcons[5]
+informationIcons[5].addEventListener('click', infoAdapPopUp, infoAdapt3);
+// Adding event listener to maxTimeRange
+maxTimeRange.addEventListener('change', chooseMaxTime);
+// Adding event listener to option1a
 option1a.addEventListener('click', chooseAdp1a);
+// Adding event listener to option1b
 option1b.addEventListener('click', chooseAdp1b);
+// Adding event listener to option2a
 option2a.addEventListener('click', chooseAdp2a);
+// Adding event listener to option2b
 option2b.addEventListener('click', chooseAdp2b);
+// Adding event listener to option3a
 option3a.addEventListener('click', chooseAdp3a);
+// Adding event listener to option3b
 option3b.addEventListener('click', chooseAdp3b);
+// Adding event listener to startButton
+startButton.addEventListener('click', startGame);
+// Adding event listener when window is closed
+window.addEventListener('close', closeTab);

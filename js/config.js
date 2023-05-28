@@ -1,4 +1,2 @@
-const ip = 'localhost';
-const port = 8009;
-
-export { ip, port };
+export const ip = 'localhost';
+export const port = 8009;

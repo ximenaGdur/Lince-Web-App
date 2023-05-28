@@ -1,45 +1,48 @@
 /** ****************** Imports ******************* */
-import * as codePopup from './codePopUp.js';
-
-const socket = new WebSocket('ws://localhost:009');
-
-socket.addEventListener('open', () => {
-  console.log('Conectado al servidor.');
-
-  socket.send('Hola, servidor');
-});
-
-socket.addEventListener('message', (event) => {
-  console.log(`Recibi: ${event.data}`);
-});
+import {
+  showCodePopUp,
+  cancelPopUp,
+  joinRoom,
+  handleCodeValidation,
+} from './codePopUp.js';
 
 /** ****************** Creating constants for script ******************* */
 
-// Text field to enter player nickname.
-const nicknameField = document.getElementById('nickname');
-// Button to create a room after entering a nickname.
-const createRoomBtn = document.getElementById('create-room-button');
-// Button to join a room after entering a nickname.
-const joinRoomBtn = document.getElementById('show-popup-button');
+// Button that allows player to close pop up.
+const cancelButton = document.getElementById('cancel-button');
 // Button that changes tab to credits.
 const creditsButton = document.getElementById('credits-link');
 // Credits tab content.
 const creditsContent = document.getElementById('credits');
-// Button that changes tab to ranking.
-const rankingButton = document.getElementById('ranking-link');
-// Ranking tab content.
-const rankingContent = document.getElementById('ranking');
+// Button to create a room after entering a nickname.
+const createRoomBtn = document.getElementById('create-room-button');
+// Text field to enter player nickname.
+const nicknameField = document.getElementById('nickname');
 // Button that changes tab to instructions.
 const instructionsButton = document.getElementById('instructions-link');
 // Instructions tab content.
 const instructionsContent = document.getElementById('instructions');
+// Button in codePopUp to join into a room
+const joinButton = document.getElementById('join-button');
+// Button to join a room after entering a nickname.
+const joinRoomBtn = document.getElementById('show-popup-button');
+// Input box inside popup
+const popupInput = document.getElementById('popup-input');
+// Button that changes tab to ranking.
+const rankingButton = document.getElementById('ranking-link');
+// Ranking tab content.
+const rankingContent = document.getElementById('ranking');
+// Button to show the codePopUp
+const showPopUpButton = document.getElementById('show-popup-button');
+// Socket that connects to server
+const socket = new WebSocket('ws://localhost:8009');
 
 /** ******************** Functions used on script ********************* */
 
 /**
  * Lock or enable create room and join room buttons after entering a nickname.
  */
-function enableButtons() {
+function enterNickname() {
   if (nicknameField.value.length > 0 && nicknameField.value.trim() !== '') {
     createRoomBtn.disabled = false;
     createRoomBtn.style.cursor = 'pointer';
@@ -54,27 +57,49 @@ function enableButtons() {
 }
 
 /**
+ * Sends a message to the server to close a client's connection.
+ * Should be included in common.js
+ */
+function closeTab() {
+  console.log('Cerrando conexión con server.');
+}
+
+/**
 * Send a message to the server to create a new room with the host as the client
 * that pressed the create room button and with the nickname entered.
 */
 function createSession() {
-  const nickname = document.getElementById('nickname').value;
+  const playerNickname = document.getElementById('nickname').value;
+  const message = {
+    type: 'createRoom',
+    /*
+    from: 'client',
+    to: 'server',
+    when: 'when a client presses the create room button with a valid nickname',
+    */
+    nickname: playerNickname,
+  };
+  socket.send(JSON.stringify(message));
+
   window.location.href = './waitingRoom.xhtml';
-  // "Type": "createRoom",
-  // "From": "client",
-  // "To": "server",
-  // "When": "when a client presses the create room button with a valid nickname",
-  // "Nickname": "nickname"
 }
 
 /**
- * Sends a message to the server to close a client's connection.
+ * Asks the server if room code is valid.
  */
-function closeTab() {
-  // "Type": "closeTab",
-  // "From": "client",
-  // "To": "server",
-  // "When": "when a client logs off"
+function verifyCode() {
+  if (popupInput.value.length === 4 && popupInput.value.trim() !== '') {
+    const message = {
+      type: 'validateCode',
+      /*
+      from: 'client',
+      to: 'server',
+      when: 'when a client types a room code',
+      */
+      sessionCode: popupInput.value,
+    };
+    socket.send(JSON.stringify(message));
+  }
 }
 
 /**
@@ -109,10 +134,60 @@ function showInstructions() {
     instructionsContent.style.display = 'flex';
   }
 }
+
+/**
+ * Identifying message type in order to call appropiate function.
+ */
+function identifyMessage(receivedMessage) {
+  switch (receivedMessage.type) {
+    case 'handleCodeValidation':
+      handleCodeValidation(receivedMessage);
+      break;
+    default:
+      console.error('No se reconoce ese mensaje.');
+  }
+}
+
+/**
+ * When a connection is made with server.
+ */
+socket.addEventListener('open', () => {
+  console.log('Conectado al servidor desde Home Page.');
+});
+
+/**
+ * When a connection is closed.
+ */
+// socket.addEventListener('close', closeTab());
+
+/**
+ * Event that occurs every time a message is received.
+ */
+socket.addEventListener('message', (event) => {
+  const receivedMessage = JSON.parse(event.data);
+  console.log(`Recibi del servidor: ${receivedMessage}`);
+  identifyMessage(receivedMessage);
+});
+
 /** ********************** Listeners for page *********************** */
 
-nicknameField.addEventListener('input', enableButtons);
+// Adding event listener when cancelButton is clicked
+cancelButton.addEventListener('click', cancelPopUp);
+// Adding event listener when createRoomBtn is clicked
 createRoomBtn.addEventListener('click', createSession);
+// Adding event listener when creditsButton is clicked
 creditsButton.addEventListener('click', showCredits);
-rankingButton.addEventListener('click', showRanking);
+// Adding event listener when instructionsButton is clicked
 instructionsButton.addEventListener('click', showInstructions);
+// Adding event listener when joinButton is clicked
+joinButton.addEventListener('click', joinRoom);
+// Adding event listener when nicknameField is changed
+nicknameField.addEventListener('input', enterNickname);
+// Adding event listener when popupInput is changed
+popupInput.addEventListener('input', verifyCode);
+// Adding event listener when rankingButton is clicked
+rankingButton.addEventListener('click', showRanking);
+// Adding event listener when showPopUpButton is clicked
+showPopUpButton.addEventListener('click', showCodePopUp);
+// Adding event listener when window is closed
+// window.addEventListener('close', closeTab);

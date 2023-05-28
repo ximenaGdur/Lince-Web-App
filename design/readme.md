@@ -113,7 +113,7 @@ La siguiente pantalla es la sala de juego en su estado inicial.
 
 ![Pantalla de juego inicial](images/wireframes/initialGameScreen.svg)
 
-En las siguientes pantalla se muestra el estado de la sala de juego luego de que 15 segundos pasaron. 
+En las siguientes pantalla se muestra el estado de la sala de juego luego de que 15 segundos pasaron.
 
 En esta partida se habilitó la funcionalidad de los comodines y la de los colores.
 
@@ -160,14 +160,14 @@ Los eventos principales para un cliente en cada pantalla de juego son:
 
 1. checkRoomCode
 2. handleCodeValidation
-3. Cancelar
-4. Unirse
+3. cancelCodePopup
+4. joinSession
 
 #### Sala de espera
 
 1. handleNewPlayer
-2. removePlayer
-3. Salir
+2. handleRemovePlayer
+3. showExitPopUp
 
 ##### Host
 
@@ -180,19 +180,19 @@ Los eventos principales para un cliente en cada pantalla de juego son:
 7. chooseAdp2b
 8. chooseAdp3a
 9. chooseAdp3b
-10. Comenzar
+10. startGame
 
 ##### Guest
 
-1. handleMaxTime
-2. handleCardsPerRound
-3. handleCardsPerPlayer
-4. handleAdp1a
-5. handleAdp1b
-6. handleAdp2a
-7. handleAdp2b
-8. handleAdp3a
-9. handleAdp3b
+1. handleAdp1a
+2. handleAdp1b
+3. handleAdp2a
+4. handleAdp2b
+5. handleAdp3a
+6. handleAdp3b
+7. handleMaxTime
+8. handleCardsPerRound
+9. handleCardsPerPlayer
 10. handleStartGame
 
 #### Game Page
@@ -205,23 +205,22 @@ Los eventos principales para un cliente en cada pantalla de juego son:
 6. handleBlur
 7. applyExtraCards
 8. handleExtraCards
-9. handleCardsFinished
-10. Salir
+9. showExitPopup
 
 #### Exit to Main PopUp
 
-1. Cancelar
-2. Aceptar
+1. closePopUp
+2. returnToMain
 
 #### Winner PopUp
 
-1. Continuar partida
-2. Ir a Inicio
+1. continueSession
+2. returnToMainPage
 
 #### Loser PopUp
 
-1. Continuar partida
-1. Ir a Inicio
+1. continueSession
+1. returnToMainPage
 
 ### Para el servidor
 
@@ -229,7 +228,8 @@ Los eventos principales para un cliente en cada pantalla de juego son:
 
 1. closeConnection
 2. validateCode
-3. joinRoom
+3. addToRoom
+4. createRoom
 
 #### Sala de espera
 
@@ -242,17 +242,16 @@ Los eventos principales para un cliente en cada pantalla de juego son:
 7. toggleAdp2b
 8. toggleAdp3a
 9. toggleAdp3b
-10. addPlayer
-11. updatePlayers
-12. startGame
+10. removePlayer
+11. startGame
 
 #### Game Page
 
-1. handleMatchResponse
-2. receiveFinished
-3. timesUp
-4. applyExtraCards
-5. applyBlur
+1. checkMatch
+2. finishGame
+3. applyExtraCards
+4. applyBlur
+5. removePlayer
 
 ## Catálogo de mensajes JSON
 
@@ -265,30 +264,30 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 #### Página Principal
 
 ~~~ JSON
-1. Cierre de conexión  
-{  
-    "Type": "closeTab",  
-    "From": "client",  
-    "To": "server",  
+1. Cierre de conexión
+{
+    "Type": "closeConnection",
+    "From": "client",
+    "To": "server",
     "When": "when a client logs off"
 }
 ~~~
 
 ~~~ JSON
-2. Creación de sesión  
-{  
-    "Type": "createRoom",  
-    "From": "client",  
+2. Creación de sesión
+{
+    "Type": "createRoom",
+    "From": "client",
     "To": "server",
-    "When": "when a client presses the create room button with a valid nickname",  
-    "Nickname": "player1"  
+    "When": "when a client presses the create room button with a valid nickname",
+    "Nickname": "player1"
 }
 ~~~
 
 ~~~ JSON
 3. Revisión del código
 {
-    "Type": "checkRoomCode",
+    "Type": "validateCode",
     "From": "client",
     "To": "server",
     "When": "when a client types a room code",
@@ -297,13 +296,13 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 ~~~
 
 ~~~ JSON
-4. Unión a una sala  
-{  
-    "Type": "joinSession",  
-    "From": "client",  
-    "To": "server",  
-    "When": "when a client presses the join room button",  
-    "Nickname": "player3",  
+4. Unión a una sala
+{
+    "Type": "addToRoom",
+    "From": "client",
+    "To": "server",
+    "When": "when a client presses the join room button",
+    "Nickname": "player3",
     "SessionCode": "1234"
 }
 ~~~
@@ -313,7 +312,7 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 ~~~ JSON
 1. Escogencia de adaptación 1a
 {
-    "Type": "chooseAdp1a",
+    "Type": "toggleAdp1a",
     "From": "client",
     "To": "server",
     "When": "when a host client selects the adaptation 1a",
@@ -325,7 +324,7 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 ~~~ JSON
 2. Escogencia de adaptación 1b
 {
-    "Type": "chooseAdp1b",
+    "Type": "toggleAdp1b",
     "From": "client",
     "To": "server",
     "When": "when a host client selects the adaptation 1b",
@@ -337,7 +336,7 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 ~~~ JSON
 3. Escogencia de adaptación 2a
 {
-    "Type": "chooseAdp2a",
+    "Type": "toggleAdp2a",
     "From": "client",
     "To": "server",
     "When": "when a host client selects the adaptation 2a",
@@ -349,7 +348,7 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 ~~~ JSON
 4. Escogencia de adaptación 2b
 {
-    "Type": "chooseAdp2b",
+    "Type": "toggleAdp2b",
     "From": "client",
     "To": "server",
     "When": "when a host client selects the adaptation 2b",
@@ -361,7 +360,7 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 ~~~ JSON
 5. Escogencia de adaptación 3a
 {
-    "Type": "chooseAdp3a",
+    "Type": "toggleAdp3a",
     "From": "client",
     "To": "server",
     "When": "when a host client selects the adaptation 3a",
@@ -372,7 +371,7 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 ~~~ JSON
 6. Escogencia de adaptación 3b
 {
-    "Type": "chooseAdp3b",
+    "Type": "toggleAdp3b",
     "From": "client",
     "To": "server",
     "When": "when a host client selects the adaptation 3b",
@@ -383,7 +382,7 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 ~~~ JSON
 7. Escogencia de tiempo máximo de ronda
 {
-    "Type": "chooseMaxTime",
+    "Type": "setMaxTime",
     "From": "client",
     "To": "server",
     "When": "when a host client change the max time",
@@ -396,7 +395,7 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 ~~~ JSON
 8. Escogencia de cartas en la manta
 {
-    "Type": "chooseCardsPerRound",
+    "Type": "setCardsPerRound",
     "From": "client",
     "To": "server",
     "When": "when a host client change the amount of card per round",
@@ -409,7 +408,7 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 ~~~ JSON
 9. Escogencia de cartas por jugador
 {
-    "Type": "chooseCardsPerPlayer",
+    "Type": "setCardsPerPlayer",
     "From": "client",
     "To": "server",
     "When": "when a host client change the cards per player",
@@ -420,12 +419,12 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 ~~~
 
 ~~~ JSON
-10. Retorno a página principal
+10. Elimina un jugador de la lista
 {
-    "Type": "returnToMain",
+    "Type": "removePlayer",
     "From": "client",
     "To": "server",
-    "When": "when a host client selects the leave botton",
+    "When": "when a client leaves the room",
     "Nickname": "player3",
     "SessionCode": "1234"
 }
@@ -443,13 +442,12 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 }
 ~~~
 
-
 #### Pantalla de juego
 
 ~~~ JSON
 1. Emparejamiento de cartas
 {
-    "Type": "match",
+    "Type": "checkMatch",
     "From": "client",
     "To": "server",
     "When": "when a player makes a match",
@@ -488,54 +486,18 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 }
 ~~~
 
-~~~ JSON
-5. Finalización de cartas en la mano del jugador
-{
-    "Type": "handleCardsFinished",
-    "From": "client",
-    "To": "server",
-    "When": "when player's cards run out",
-    "Nickname": "player3",
-    "SessionCode": "1234"
-}
-~~~
-
-~~~ JSON
-6. Continuación de la sesión
-{
-    "Type": "acceptReturnToMain",
-    "From": "client",
-    "To": "server",
-    "When": "player wants to continue",
-    "Nickname": "player3",
-    "SessionCode": "1234"
-}
-~~~
-
 ### Mensajes Servidor
 
 #### Página Principal
 
 ~~~ JSON
-1. Validacion de código de sala  
-{  
-    "Type": "handleCodeValidation", 
-    "From": "server", 
-    "To": "player1", 
+1. Validacion de código de sala
+{
+    "Type": "handleCodeValidation",
+    "From": "server",
+    "To": "player1",
     "When": "When the server validates room",
     "isValid": "true"
-}
-~~~
-
-~~~ JSON
-2. Aviso de nuevo jugador  
-{  
-    "Type": "handleNewPlayer", 
-    "From": "server", 
-    "To": "player1", 
-    "When": "When the server lets clients know a new player has been added", 
-    "Nickname": "player1", 
-    "SessionCode": "1234"
 }
 ~~~
 
@@ -544,9 +506,9 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 ~~~ JSON
 1. Aviso de selección de adaptación 1a
 {
-    "Type": "chooseAdp1a", 
-    "From": "server", 
-    "To": "player1", 
+    "Type": "handleAdp1a",
+    "From": "server",
+    "To": "player1",
     "When": "When the server lets players know adaptation 1a has been activated"
 })
 ~~~
@@ -554,9 +516,9 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 ~~~ JSON
 2. Aviso de selección de adaptación 1b
 {
-    "Type": "chooseAdp1b", 
-    "From": "server", 
-    "To": "player1", 
+    "Type": "handleAdp1b",
+    "From": "server",
+    "To": "player1",
     "When": "When the server lets players know adaptation 1b has been activated"
 })
 ~~~
@@ -564,9 +526,9 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 ~~~ JSON
 3. Aviso de selección de adaptación 2a
 {
-    "Type": "chooseAdp2a", 
-    "From": "server", 
-    "To": "player1", 
+    "Type": "handleAdp2a",
+    "From": "server",
+    "To": "player1",
     "When": "When the server lets players know adaptation 2a has been activated"
 })
 ~~~
@@ -574,9 +536,9 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 ~~~ JSON
 4. Aviso de selección de adaptación 2b
 {
-    "Type": "chooseAdp2b", 
-    "From": "server", 
-    "To": "player1", 
+    "Type": "handleAdp2b",
+    "From": "server",
+    "To": "player1",
     "When": "When the server lets players know adaptation 2b has been activated"
 })
 ~~~
@@ -584,9 +546,9 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 ~~~ JSON
 5. Aviso de selección de adaptación 3a
 {
-    "Type": "chooseAdp3a", 
-    "From": "server", 
-    "To": "player1", 
+    "Type": "handleAdp3a",
+    "From": "server",
+    "To": "player1",
     "When": "When the server lets players know adaptation 3a has been activated"
 })
 ~~~
@@ -594,9 +556,9 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 ~~~ JSON
 6. Aviso de selección de adaptación 3b
 {
-    "Type": "chooseAdp3b", 
-    "From": "server", 
-    "To": "player1", 
+    "Type": "handleAdp3b",
+    "From": "server",
+    "To": "player1",
     "When": "When the server lets players know adaptation 3b has been activated"
 })
 ~~~
@@ -604,10 +566,10 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 ~~~ JSON
 7. Aviso de selección de tiempo máximo de la sesión
 {
-    "Type": "chooseMaxTime", 
-    "From": "server", 
-    "To": "player1", 
-    "When": "When the server lets players know to change the max time", 
+    "Type": "handleMaxTime",
+    "From": "server",
+    "To": "player1",
+    "When": "When the server lets players know to change the max time",
     "MaxTime": "30"
 })
 ~~~
@@ -615,10 +577,10 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 ~~~ JSON
 8. Aviso de selección de cartas por jugador
 {
-    "Type": "chooseCardsPerPlayer", 
-    "From": "server", 
-    "To": "player1", 
-    "When": "When the server lets players know to change the cards per player", 
+    "Type": "handleCardsPerPlayer",
+    "From": "server",
+    "To": "player1",
+    "When": "When the server lets players know to change the cards per player",
     "CardsPerPlayer": "7"
 })
 ~~~
@@ -626,10 +588,10 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 ~~~ JSON
 9. Aviso de selección de cartas por ronda
 {
-    "Type": "chooseCardsPerPlayer", 
-    "From": "server", 
-    "To": "player1", 
-    "When": "When the server lets players know to change the cards per round", 
+    "Type": "handleCardsPerRound",
+    "From": "server",
+    "To": "player1",
+    "When": "When the server lets players know to change the cards per round",
     "CardsPerRound": "100"
 })
 ~~~
@@ -637,34 +599,43 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 ~~~ JSON
 10. Aviso de pérdida de un jugador
 {
-    "Type": "removePlayer", 
-    "From": "server", 
-    "To": "player2", 
+    "Type": "handleRemovePlayer",
+    "From": "server",
+    "To": "player2",
     "When": "When the server lets players know a player left the room",
     "Nickname": "player1"
+})
+~~~
+
+~~~ JSON
+11. Aviso de nuevo jugador
+{
+    "Type": "handleNewPlayer",
+    "From": "server",
+    "To": "player1",
+    "When": "When the server lets clients know a new player has been added"
+}
+
+~~~ JSON
+12. Aviso de comienzo de juego
+{
+    "Type": "handleStartGame",
+    "From": "server",
+    "To": "player2",
+    "When": "When the server lets players know game has started"
 })
 ~~~
 
 #### Pantalla de juego
 
 ~~~ JSON
-1. Aviso de comienzo de juego
+1. Aviso de finalización del tiempo
 {
-    "Type": "handleStartGame", 
-    "From": "server", 
-    "To": "player2", 
-    "When": "When the server lets players know game has started"
-})
-~~~
-
-~~~ JSON
-2. Aviso de finalización del tiempo
-{
-    "Type": "handleTimesUp", 
-    "From": "server", 
-    "To": "player1", 
+    "Type": "handleTimesUp",
+    "From": "server",
+    "To": "player1",
     "When": "When the server lets players know times up",
-    "Ranking": 
+    "Ranking":
         { "player1": "300",
           "player2": "200",
           "player3": "100"
@@ -673,66 +644,54 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 ~~~
 
 ~~~ JSON
-3. Aviso de finalización de cartas de un jugador
+2. Respuesta a emparejamiento
 {
-    "Type": "handleCardsFinished", 
-    "From": "server", 
-    "To": "player3", 
-    "When": "When the server lets players know round is finished",
-    "Ranking": 
-        { "player1": "400",
-          "player2": "350",
-          "player3": "150"
-        }
-})
-~~~
-
-~~~ JSON
-4. Respuesta a emparejamiento
-{
-    "Type": "handleMatchResponse", 
-    "From": "server", 
-    "To": "player2", 
-    "When": "When the server tells player if their match was correct or not", 
+    "Type": "handleMatchResponse",
+    "From": "server",
+    "To": "player2",
+    "When": "When the server tells player if their match was correct or not",
     "Score": "350"
-})
+}
 ~~~
 
 ~~~ JSON
-5. Aviso de actualización de puntaje
+3. Aviso de actualización de puntaje
 {
-    "Type": "handleScores", 
-    "From": "server", 
-    "To": "player1", 
-    "When": "When the server lets players know to update scores", 
-    "Ranking": 
+    "Type": "handleScores",
+    "From": "server",
+    "To": "player1",
+    "When": "When the server lets players know to update scores",
+    "Ranking":
         { "player2": "350",
           "player1": "300",
           "player3": "100"
         }
+}
 ~~~
 
 ~~~ JSON
-6. Aviso de aplicación de blur
+4. Aviso de aplicación de blur
 {
-    "Type": "handleBlur", 
-    "From": "server", 
-    "To": "player2", 
+    "Type": "handleBlur",
+    "From": "server",
+    "To": "player2",
     "When": "When the server lets players know to activate blur"
+}
 ~~~
 
 ~~~ JSON
-7. Aviso de aplicación de extra cards
+5. Aviso de aplicación de extra cards
 {
-    "Type": "handleExtraCards", 
-    "From": "server", 
-    "To": "player2", 
-    "When": "When the server lets players know to apply extra cards", 
+    "Type": "handleExtraCards",
+    "From": "server",
+    "To": "player2",
+    "When": "When the server lets players know to apply extra cards",
     "ExtraCards":
         { "player1": {"card1": "blue apple", "card2": "red dog"},
           "player2": {"card1": "blue car", "card2": "red tShirt"},
           "player3": {"card1": "red shoes", "card2": "red cat"}
         }
+}
 ~~~
 
 ## Simulación de sesión de juego - texto
@@ -801,9 +760,9 @@ btnJoinSession.enable
 
 ~~~ js
 sendMessage({
-    "Type": "closeTab", 
-    "From": "client", 
-    "To": "server", 
+    "Type": "closeConnection",
+    "From": "client",
+    "To": "server",
     "When": "when a client logs off"
 })
 ~~~
@@ -812,10 +771,10 @@ sendMessage({
 
 ~~~ js
 sendMessage({
-    "Type": "createSession", 
-    "From": "client", 
-    "To": "server", 
-    "When": "when a client presses the create room button with a valid nickname", 
+    "Type": "createRoom",
+    "From": "client",
+    "To": "server",
+    "When": "when a client presses the create room button with a valid nickname",
     "Nickname": playerNickname
 })
 // As a host
@@ -838,10 +797,10 @@ codePopUP.hide()
 
 ~~~ js
 sendMessage({
-    "Type": "checkRoomCode", 
-    "From": "client", 
-    "To": "server", 
-    "When": "when a client types a room code", 
+    "Type": "validateCode",
+    "From": "client",
+    "To": "server",
+    "When": "when a client types a room code",
     "SessionCode": code
 })
 ~~~
@@ -859,13 +818,12 @@ else
 #### joinSession(name, code)
 
 ~~~ js
-codePopUP.hide()
 sendMessage({
-    "Type": "joinSession", 
-    "From": "client", 
-    "To": "server", 
-    "When": "when a client presses the join session button", 
-    "Nickname": name, 
+    "Type": "addToRoom",
+    "From": "client",
+    "To": "server",
+    "When": "when a client presses the join session button",
+    "Nickname": name,
     "SessionCode": code
 })
 // As a guest
@@ -878,11 +836,11 @@ redirectTo(waitingRoomURL)
 
 ~~~ js
 sendMessage({
-    "Type": "chooseAdp1a", 
-    "From": "client", 
-    "To": "server", 
-    "When": "when a host client selects the adaptation 1a", 
-    "Nickname": name, 
+    "Type": "toggleAdp1a",
+    "From": "client",
+    "To": "server",
+    "When": "when a host client selects the adaptation 1a",
+    "Nickname": name,
     "SessionCode": code
 })
 ~~~
@@ -891,11 +849,11 @@ sendMessage({
 
 ~~~ js
 sendMessage({
-    "Type": "chooseAdp1b", 
-    "From": "client", 
-    "To": "server", 
-    "When": "when a host client selects the adaptation 1b", 
-    "Nickname": name, 
+    "Type": "toggleAdp1b",
+    "From": "client",
+    "To": "server",
+    "When": "when a host client selects the adaptation 1b",
+    "Nickname": name,
     "SessionCode": code
 })
 ~~~
@@ -904,11 +862,11 @@ sendMessage({
 
 ~~~ js
 sendMessage({
-    "Type": "chooseAdp2a", 
-    "From": "client", 
-    "To": "server", 
-    "When": "when a host client selects the adaptation 2a", 
-    "Nickname": name, 
+    "Type": "toggleAdp2a",
+    "From": "client",
+    "To": "server",
+    "When": "when a host client selects the adaptation 2a",
+    "Nickname": name,
     "SessionCode": code
 })
 ~~~
@@ -917,11 +875,11 @@ sendMessage({
 
 ~~~ js
 sendMessage({
-    "Type": "chooseAdp2b", 
-    "From": "client", 
-    "To": "server", 
-    "When": "when a host client selects the adaptation 2b", 
-    "Nickname": name, 
+    "Type": "toggleAdp2b",
+    "From": "client",
+    "To": "server",
+    "When": "when a host client selects the adaptation 2b",
+    "Nickname": name,
     "SessionCode": code
 })
 ~~~
@@ -930,11 +888,11 @@ sendMessage({
 
 ~~~ js
 sendMessage({
-    "Type": "chooseAdp3a", 
-    "From": "client", 
-    "To": "server", 
-    "When": "when a host client selects the adaptation 3a", 
-    "Nickname": name, 
+    "Type": "toggleAdp3a",
+    "From": "client",
+    "To": "server",
+    "When": "when a host client selects the adaptation 3a",
+    "Nickname": name,
     "SessionCode": code
 })
 ~~~
@@ -943,11 +901,11 @@ sendMessage({
 
 ~~~ js
 sendMessage({
-    "Type": "chooseAdp3b", 
-    "From": "client", 
-    "To": "server", 
-    "When": "when a host client selects the adaptation 3b", 
-    "Nickname": name, 
+    "Type": "toggleAdp3b",
+    "From": "client",
+    "To": "server",
+    "When": "when a host client selects the adaptation 3b",
+    "Nickname": name,
     "SessionCode": code
 })
 ~~~
@@ -956,12 +914,12 @@ sendMessage({
 
 ~~~ js
 sendMessage({
-    "Type": "chooseMaxTime", 
-    "From": "client", 
-    "To": "server", 
-    "When": "when a host client change the max time", 
-    "MaxTime": time, 
-    "Nickname": name, 
+    "Type": "setMaxTime",
+    "From": "client",
+    "To": "server",
+    "When": "when a host client change the max time",
+    "MaxTime": time,
+    "Nickname": name,
     "SessionCode": code
 })
 ~~~
@@ -970,12 +928,12 @@ sendMessage({
 
 ~~~ js
 sendMessage({
-    "Type": "chooseCardsPerRound", 
-    "From": "client", 
-    "To": "server", 
-    "When": "when a host client change the amount of card per round", 
-    "CardsPerRound": numCards, 
-    "Nickname": name, 
+    "Type": "setCardsPerRound",
+    "From": "client",
+    "To": "server",
+    "When": "when a host client change the amount of card per round",
+    "CardsPerRound": numCards,
+    "Nickname": name,
     "SessionCode": code
 })
 ~~~
@@ -984,7 +942,7 @@ sendMessage({
 
 ~~~ js
 sendMessage({
-    "Type": "chooseCardsPerPlayer",
+    "Type": "setCardsPerPlayer",
     "From": "client",
     "To": "server",
     "When": "when a host client change the cards per player",
@@ -998,77 +956,66 @@ sendMessage({
 
 ~~~ js
 players.push(playerNickName)
-updatePlayerList()
 ~~~
 
 #### removePlayer(playerNickName)
 
 ~~~ js
 players.pop(playerNickName)
-updatePlayerList()
 ~~~
 
 #### handleCardsPerRound(numCards)
 
 ~~~ js
 cardsPerRound = numCards
-updateScreen()
 ~~~
 
 #### handleCardsPerPlayer(numCards)
 
 ~~~ js
 cardsPerPlayer = numCards
-updateScreen()
 ~~~
 
 #### handleMaxTime(time)
 
 ~~~ js
 maxTime = time
-updateScreen()
 ~~~
 
 #### handleAdp1a()
 
 ~~~ js
 adp1a = true
-updateScreen()
 ~~~
 
 #### handleAdp1b()
 
 ~~~ js
 adp1b = true
-updateScreen()
 ~~~
 
 #### handleAdp2a()
 
 ~~~ js
 adp2a = true
-updateScreen()
 ~~~
 
 #### handleAdp2b()
 
 ~~~ js
 adp2b = true
-updateScreen()
 ~~~
 
 #### handleAdp3a()
 
 ~~~ js
 adp3a = true
-updateScreen()
 ~~~
 
 #### handleAdp3b()
 
 ~~~ js
 adp3b = true
-updateScreen()
 ~~~
 
 #### showExitPopUp()
@@ -1080,9 +1027,8 @@ exitPopUp.show()
 #### returnToMain(name, code)
 
 ~~~ js
-exitPopUp.hide()
 sendMessage({
-    "Type": "returnToMain",
+    "Type": "removePlayer",
     "From": "client",
     "To": "server",
     "When": "when a host client selects the leave botton",
@@ -1122,9 +1068,9 @@ redirectTo(gamePageURL)
 
 #### match(playerCard, boardCard, name, code)
 
-~~~ js    
+~~~ js
 sendMessage({
-    "Type": "match",
+    "Type": "checkMatch",
     "From": "client",
     "To": "server",
     "When": "when a player makes a match",
@@ -1136,20 +1082,19 @@ sendMessage({
 })
 ~~~
 
-#### handleMatchResponse(isCorrect, newScore, playerCard, oldBoardCard, newBoardCard)
+#### handleMatchResponse(isCorrect, newScore, playerCard, boardCard)
 
 ~~~ js
 playerScore = newScore
-updateScore()
 if isCorrect == true:
     hand.remove(playerCard)
-    board.update(oldBoardCard, newBoardCard)
+    board.update(boardCard)
 else
     showMistake()
 ~~~
 
 #### applyBlur(name, code)
-~~~ js    
+~~~ js
 sendMessage({
     "Type": "applyBlur",
     "From": "client",
@@ -1170,11 +1115,11 @@ gameTiles.makeBlurred()
 
 ~~~ js
 sendMessage({
-    "Type": "applyExtraCards", 
-    "From": "client", 
-    "To": "server", 
-    "When": "when a client adds cards to other players", 
-    "Nickname": name, 
+    "Type": "applyExtraCards",
+    "From": "client",
+    "To": "server",
+    "When": "when a client adds cards to other players",
+    "Nickname": name,
     "SessionCode": code
 })
 ~~~
@@ -1184,7 +1129,6 @@ sendMessage({
 ~~~ js
 for card in extraCards
     playerCards.push(card)
-    updatePlayerHand()
 ~~~
 
 #### handleScores(scores[])
@@ -1203,34 +1147,6 @@ else
     loserPopUp.show(ranking)
 ~~~
 
-#### handleCardsFinished(name, code)
-
-~~~ js
-sendMessage({
-    "Type": "handleCardsFinished", 
-    "From": "client", 
-    "To": "server", 
-    "When": "when player's cards run out", 
-    "Nickname": name, 
-    "SessionCode": code
-})
-~~~
-
-#### continueGame(name, code)
-
-~~~ js
-sendMessage({
-    "Type": "continueGame", 
-    "From": "client", 
-    "To": "server", 
-    "When": "player wants to continue", 
-    "Nickname": name, 
-    "SessionCode": code
-})
-
-redirectTo(waitingRoomURL)
-~~~
-
 ## Del Servidor
 
 ### Página Principal
@@ -1240,17 +1156,17 @@ redirectTo(waitingRoomURL)
 ~~~ js
 if code in availableRooms
     sendMessage({
-        "Type": "handleCodeValidation", 
-        "From": "server", 
-        "To": client, 
+        "Type": "handleCodeValidation",
+        "From": "server",
+        "To": client,
         "When": "When the server validates room",
         "isValid": "true"
     })
 else
     sendMessage({
-        "Type": "handleCodeValidation", 
-        "From": "server", 
-        "To": client, 
+        "Type": "handleCodeValidation",
+        "From": "server",
+        "To": client,
         "When": "When the server validates room",
         "isValid": "false"
     })
@@ -1261,7 +1177,6 @@ else
 ~~~ js
 newRoom = createRoom()
 newRoom.addHost(nickname)
-// send waiting room
 ~~~
 
 #### joinToSession(nickname, roomCode)
@@ -1269,12 +1184,10 @@ newRoom.addHost(nickname)
 ~~~ js
 for player in rooms[roomCode].getPlayers()
     sendMessage({
-        "Type": "handleNewPlayer", 
-        "From": "server", 
-        "To": player, 
-        "When": "When the server lets clients know a new player has been added", 
-        "Nickname": nickname, 
-        "SessionCode": roomCode
+        "Type": "handleNewPlayer",
+        "From": "server",
+        "To": player,
+        "When": "When the server lets clients know a new player has been added"
     })
 
 rooms[roomCode].addPlayer(nickname)
@@ -1289,9 +1202,9 @@ rooms[roomCode].addPlayer(nickname)
 for player in rooms[roomCode].getPlayers()
     if player != nickname
         sendMessage({
-            "Type": "chooseAdp1a", 
-            "From": "server", 
-            "To": player, 
+            "Type": "handleAdp1a",
+            "From": "server",
+            "To": "player1",
             "When": "When the server lets players know adaptation 1a has been activated"
         })
 ~~~
@@ -1302,9 +1215,9 @@ for player in rooms[roomCode].getPlayers()
 for player in rooms[roomCode].getPlayers()
     if player != nickname
         sendMessage({
-            "Type": "chooseAdp1b", 
-            "From": "server", 
-            "To": player, 
+            "Type": "handleAdp1b",
+            "From": "server",
+            "To": player,
             "When": "When the server lets players know adaptation 1b has been activated"
         })
 ~~~
@@ -1315,9 +1228,9 @@ for player in rooms[roomCode].getPlayers()
 for player in rooms[roomCode].getPlayers()
     if player != nickname
         sendMessage({
-            "Type": "chooseAdp2a", 
-            "From": "server", 
-            "To": player, 
+            "Type": "handleAdp2a",
+            "From": "server",
+            "To": player,
             "When": "When the server lets players know adaptation 2a has been activated"
         })
 ~~~
@@ -1328,9 +1241,9 @@ for player in rooms[roomCode].getPlayers()
 for player in rooms[roomCode].getPlayers()
     if player != nickname
         sendMessage({
-            "Type": "chooseAdp2b", 
-            "From": "server", 
-            "To": player, 
+            "Type": "handleAdp2b",
+            "From": "server",
+            "To": player,
             "When": "When the server lets players know adaptation 2b has been activated"
         })
 ~~~
@@ -1341,9 +1254,9 @@ for player in rooms[roomCode].getPlayers()
 for player in rooms[roomCode].getPlayers()
     if player != nickname
         sendMessage({
-            "Type": "chooseAdp3a", 
-            "From": "server", 
-            "To": player, 
+            "Type": "handleAdp3a",
+            "From": "server",
+            "To": player,
             "When": "When the server lets players know adaptation 3a has been activated"
         })
 ~~~
@@ -1354,9 +1267,9 @@ for player in rooms[roomCode].getPlayers()
 for player in rooms[roomCode].getPlayers()
     if player != nickname
         sendMessage({
-            "Type": "chooseAdp3b", 
-            "From": "server", 
-            "To": player, 
+            "Type": "handleAdp3b",
+            "From": "server",
+            "To": player,
             "When": "When the server lets players know adaptation 3b has been activated"
         })
 ~~~
@@ -1367,10 +1280,10 @@ for player in rooms[roomCode].getPlayers()
 for player in rooms[roomCode].getPlayers()
     if player != nickname
         sendMessage({
-            "Type": "chooseMaxTime", 
-            "From": "server", 
-            "To": player, 
-            "When": "When the server lets players know to change the max time", 
+            "Type": "handleMaxTime",
+            "From": "server",
+            "To": player,
+            "When": "When the server lets players know to change the max time",
             "MaxTime": maxTime
         })
 ~~~
@@ -1381,10 +1294,10 @@ for player in rooms[roomCode].getPlayers()
 for player in rooms[roomCode].getPlayers()
     if player != nickname
         sendMessage({
-            "Type": "chooseCardsPerPlayer", 
-            "From": "server", 
-            "To": player, 
-            "When": "When the server lets players know to change the cards per player", 
+            "Type": "handleCardsPerPlayer",
+            "From": "server",
+            "To": player,
+            "When": "When the server lets players know to change the cards per player",
             "CardsPerPlayer": cards
         })
 ~~~
@@ -1395,10 +1308,10 @@ for player in rooms[roomCode].getPlayers()
 for player in rooms[roomCode].getPlayers()
     if player != nickname
         sendMessage({
-            "Type": "chooseCardsPerPlayer", 
-            "From": "server", 
-            "To": player, 
-            "When": "When the server lets players know to change the cards per round", 
+            "Type": "handleCardsPerPlayer",
+            "From": "server",
+            "To": player,
+            "When": "When the server lets players know to change the cards per round",
             "CardsPerRound": cards
         })
 ~~~
@@ -1406,12 +1319,12 @@ for player in rooms[roomCode].getPlayers()
 #### updatePlayers(nickname, roomCode)
 
 ~~~ js
-rooms[roomCode].removePlayer(nickname)
+rooms[roomCode].pop(nickname)
 for player in rooms[roomCode].getPlayers()
     sendMessage({
-        "Type": "removePlayer", 
-        "From": "server", 
-        "To": player, 
+        "Type": "handleRemovePlayer",
+        "From": "server",
+        "To": player,
         "When": "When the server lets players know a player left the room",
         "Nickname": nickname
     })
@@ -1424,39 +1337,23 @@ for player in rooms[roomCode].getPlayers()
 ~~~ js
 for player in rooms[roomCode].getPlayers()
     sendMessage({
-        "Type": "handleStartGame", 
-        "From": "server", 
-        "To": player, 
+        "Type": "handleStartGame",
+        "From": "server",
+        "To": player,
         "When": "When the server lets players know game has started"
 ~~~
 
 #### timesUp()
 
 ~~~ js
-when rooms[roomCode].getTime() == 0
-    ranking = makeJSON(rooms[roomCode].getRanking())
-
-    for player in rooms[roomCode].getPlayers()
-        sendMessage({
-            "Type": "handleTimesUp", 
-            "From": "server", 
-            "To": player, 
-            "When": "When the server lets players know times up",
-            "Ranking": ranking
-        }))
-~~~
-
-#### receiveFinished(nickname, roomCode)  
-
-~~~ js
 ranking = makeJSON(rooms[roomCode].getRanking())
 
 for player in rooms[roomCode].getPlayers()
     sendMessage({
-        "Type": "handleCardsFinished", 
-        "From": "server", 
-        "To": player, 
-        "When": "When the server lets players know round is finished",
+        "Type": "handleTimesUp",
+        "From": "server",
+        "To": player,
+        "When": "When the server lets players know times up",
         "Ranking": ranking
     }))
 ~~~
@@ -1470,10 +1367,10 @@ else
     rooms[roomCode].getPlayerScore(player) -= 50
 
 sendMessage({
-    "Type": "handleMatchResponse", 
-    "From": "server", 
-    "To": player, 
-    "When": "When the server tells player if their match was correct or not", 
+    "Type": "handleMatchResponse",
+    "From": "server",
+    "To": player,
+    "When": "When the server tells player if their match was correct or not",
     "Score": rooms[roomCode].getPlayerScore(player)
 })
 
@@ -1481,28 +1378,28 @@ ranking = makeJSON(rooms[roomCode].getRanking())
 for player in rooms[roomCode].getPlayers()
     if player != nickname
         sendMessage({
-            "Type": "handleScores", 
-            "From": "server", 
-            "To": player, 
-            "When": "When the server lets players know to update scores", 
+            "Type": "handleScores",
+            "From": "server",
+            "To": player,
+            "When": "When the server lets players know to update scores",
             "Ranking": ranking
         })
 ~~~
 
-#### applyBlur(nickname, roomCode)  
+#### applyBlur(nickname, roomCode)
 
 ~~~ js
 for player in rooms[roomCode].getPlayers()
     if player != nickname
         sendMessage({
-            "Type": "handleBlur", 
-            "From": "server", 
-            "To": nickname, 
-            "When": "When the server lets players know to activate blur", 
+            "Type": "handleBlur",
+            "From": "server",
+            "To": nickname,
+            "When": "When the server lets players know to activate blur",
         })
 ~~~
 
-#### applyExtraCards(nickname, roomCode)  
+#### applyExtraCards(nickname, roomCode)
 
 ~~~ js
 for player in rooms[roomCode].getPlayers()
@@ -1512,10 +1409,10 @@ for player in rooms[roomCode].getPlayers()
 for player in rooms[roomCode].getPlayers()
     if player != nickname
         sendMessage({
-            "Type": "handleExtraCards", 
-            "From": "server", 
-            "To": player, 
-            "When": "When the server lets players know to apply extra cards", 
+            "Type": "handleExtraCards",
+            "From": "server",
+            "To": player,
+            "When": "When the server lets players know to apply extra cards",
             "ExtraCards": extraCards
         }))
 ~~~

@@ -1,218 +1,241 @@
-import { ip , port } from 'config.js';
+// import { ip , port } from 'config.js';
 
+// Maximum number of clients allowed in webpage.
+const maximumClientAmount = 20;
 // Including ws module.
 const WebSocket = require('ws');
 // Creating new server instance listening in given port.
 const server = new WebSocket.Server({ port: 8009 });
-// Maximum number of clients allowed in webpage.
-const maximumClientAmount = 20;
 // Array that stores all sockets.
 const sockets = [];
 
 /**
- * 
+ * Closes connection with client.
  */
-function closeConnection() {
-
+function closeConnection(socket, message) {
+  console.log('closeConnection');
 }
 
 /**
- * 
+ * Checks if room with given code exists.
  */
-function validateCode() {
-
+function validateCode(socket, messageReceived) {
+  let newMessage = {};
+  if (messageReceived.sessionCode === '1234') {
+    newMessage = {
+      type: 'handleCodeValidation',
+      /*
+      from: 'server',
+      to: 'client',
+      when: 'When the server validates room',
+      */
+      isValid: 'true',
+    };
+  } else {
+    newMessage = {
+      type: 'handleCodeValidation',
+      /*
+      from: 'server',
+      to: 'client',
+      when: 'When the server validates room',
+      */
+      isValid: 'false',
+    };
+  }
+  socket.send(JSON.stringify(newMessage));
+  console.log('validateCode');
 }
 
 /**
- * 
+ * Adds guest to room.
  */
-function joinRoom() {
-
+function addToRoom(socket, message) {
+  console.log('addToRoom');
 }
 
 /**
- * 
+ * Creates new room for host.
  */
-function setCardsPerRound() {
-
+function createRoom(socket, message) {
+  console.log('createRoom');
 }
 
 /**
- * 
+ * Sets amount of card per round to other players in room.
  */
-function setMaxTime() {
-
+function setCardsPerRound(socket, message) {
+  console.log('setCardsPerRound');
 }
 
 /**
- * 
+ * Sets maximum time per round to other players in room.
  */
-function setCardsPerPlayer() {
-
+function setMaxTime(socket, message) {
+  console.log('setMaxTime');
 }
 
 /**
- * 
+ * Sets amount of card per player to other players in room.
  */
-function toggleAdp1a() {
-
+function setCardsPerPlayer(socket, message) {
+  console.log('setCardsPerPlayer');
 }
 
 /**
- * 
+ * Sets adaption 1a to other players in room.
  */
-function toggleAdp1b() {
-
+function toggleAdp1a(socket, message) {
+  console.log('toggleAdp1a');
 }
 
 /**
- * 
+ * Sets adaption 1b to other players in room.
  */
-function toggleAdp2a() {
-
+function toggleAdp1b(socket, message) {
+  console.log('toggleAdp1b');
 }
 
 /**
- * 
+ * Sets adaption 2a to other players in room.
  */
-function toggleAdp2b() {
-
+function toggleAdp2a(socket, message) {
+  console.log('toggleAdp2a');
 }
 
 /**
- * 
+ * Sets adaption 2b to other players in room.
  */
-function toggleAdp3a() {
-
+function toggleAdp2b(socket, message) {
+  console.log('toggleAdp2b');
 }
 
 /**
- * 
+ * Sets adaption 3a to other players in room.
  */
-function toggleAdp3b() {
-
+function toggleAdp3a(socket, message) {
+  console.log('toggleAdp3a');
 }
 
 /**
- * 
+ * Sets adaption 3b to other players in room.
  */
-function addPlayer() {
-
+function toggleAdp3b(socket, message) {
+  console.log('toggleAdp3b');
 }
 
 /**
- * 
+ * Adds player to list for other players in room.
  */
-function updatePlayers() {
-
+function addPlayer(socket, message) {
+  console.log('addPlayer');
 }
 
 /**
- * 
+ * Removes player in list for other players in room.
  */
-function startGame() {
-
+function removePlayer(socket, message) {
+  console.log('removePlayer');
 }
 
 /**
- * 
+ * Starts game for all players in room.
  */
-function handleMatchResponse() {
-
+function startGame(socket, message) {
+  console.log('startGame');
 }
 
 /**
- * 
+ * Checks if match is correct.
  */
-function receiveFinished() {
-
+function checkMatch(socket, message) {
+  console.log('checkMatch');
 }
 
 /**
- * 
+ * Finishes game for all players in room.
  */
-function timesUp() {
-
+function finishGame(socket, message) {
+  console.log('finishGame');
 }
 
 /**
- * 
+ * Applies extra cards to other players in room.
  */
-function applyExtraCards() {
-
+function applyExtraCards(socket, message) {
+  console.log('applyExtraCards');
 }
 
 /**
- * 
+ * Applies blur to other players in room.
  */
-function applyBlur() {
-
+function applyBlur(socket, message) {
+  console.log('applyBlur');
 }
 
 /**
  * Identifying message type in order to call appropiate function.
  */
-function identifyMessage(receivedMessage) {
-  switch (receivedMessage.Type) {
+function identifyMessage(socket, receivedMessage) {
+  switch (receivedMessage.type) {
     case 'closeConnection':
-      closeConnection(receivedMessage);
+      closeConnection(socket, receivedMessage);
       break;
     case 'validateCode':
-      validateCode(receivedMessage);
+      validateCode(socket, receivedMessage);
       break;
-    case 'joinRoom':
-      joinRoom(receivedMessage);
+    case 'addToRoom':
+      addToRoom(socket, receivedMessage);
+      break;
+    case 'createRoom':
+      createRoom(socket, receivedMessage);
       break;
     case 'setCardsPerRound':
-      setCardsPerRound(receivedMessage);
+      setCardsPerRound(socket, receivedMessage);
       break;
     case 'setMaxTime':
-      setMaxTime(receivedMessage);
+      setMaxTime(socket, receivedMessage);
       break;
     case 'setCardsPerPlayer':
-      setCardsPerPlayer(receivedMessage);
+      setCardsPerPlayer(socket, receivedMessage);
       break;
     case 'toggleAdp1a':
-      toggleAdp1a(receivedMessage);
+      toggleAdp1a(socket, receivedMessage);
       break;
     case 'toggleAdp1b':
-      toggleAdp1b(receivedMessage);
+      toggleAdp1b(socket, receivedMessage);
       break;
     case 'toggleAdp2a':
-      toggleAdp2a(receivedMessage);
+      toggleAdp2a(socket, receivedMessage);
       break;
     case 'toggleAdp2b':
-      toggleAdp2b(receivedMessage);
+      toggleAdp2b(socket, receivedMessage);
       break;
     case 'toggleAdp3a':
-      toggleAdp3a(receivedMessage);
+      toggleAdp3a(socket, receivedMessage);
       break;
     case 'toggleAdp3b':
-      toggleAdp3b(receivedMessage);
+      toggleAdp3b(socket, receivedMessage);
       break;
     case 'addPlayer':
-      addPlayer(receivedMessage);
+      addPlayer(socket, receivedMessage);
       break;
-    case 'updatePlayers':
-      updatePlayers(receivedMessage);
+    case 'removePlayer':
+      removePlayer(socket, receivedMessage);
       break;
     case 'startGame':
-      startGame(receivedMessage);
+      startGame(socket, receivedMessage);
       break;
-    case 'handleMatchResponse':
-      handleMatchResponse(receivedMessage);
+    case 'checkMatch':
+      checkMatch(socket, receivedMessage);
       break;
-    case 'receiveFinished':
-      receiveFinished(receivedMessage);
-      break;
-    case 'timesUp':
-      timesUp(receivedMessage);
+    case 'finishGame':
+      finishGame(socket, receivedMessage);
       break;
     case 'applyExtraCards':
-      applyExtraCards(receivedMessage);
+      applyExtraCards(socket, receivedMessage);
       break;
     case 'applyBlur':
-      applyBlur(receivedMessage);
+      applyBlur(socket, receivedMessage);
       break;
     default:
       console.error('No se reconoce ese mensaje.');
@@ -226,17 +249,18 @@ server.on('connection', (socket) => {
   console.log('Estableciendo de conexión con cliente...');
 
   if (sockets.length <= maximumClientAmount) {
-    sockets.push(socket);
+    sockets.push(socket); // DEBERIA SER UN DICCIONARIO, NO LO ESTOY USANDO PORQUE ESTOY PROBANDO
   }
 
+  // se usa?
   socket.on('open', () => {
     console.log('Server conectado al cliente');
   });
 
   socket.on('message', (message) => {
+    console.log(`Recibi mensaje del cliente: ${message}`);
     const receivedMessage = JSON.parse(message);
-    console.log(`Recibi mensaje del cliente: ${receivedMessage}`);
-    identifyMessage(receivedMessage);
+    identifyMessage(socket, receivedMessage);
   });
 
   socket.on('close', () => {

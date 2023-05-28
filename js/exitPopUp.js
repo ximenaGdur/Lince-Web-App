@@ -1,18 +1,18 @@
 /** ****************** Creating constants for script ******************* */
 
 // Pop Up that is shown when player decides to join session.
-export const exitPopUp = document.getElementById('exit-popup');
+const exitPopUp = document.getElementById('exit-popup');
 // Button that allows player to close pop up.
-export const cancelButton = document.getElementById('cancel-button');
+const cancelButton = document.getElementById('cancel-button');
 // Button that allows player to return to main page.
-export const acceptButton = document.getElementById('accept-button');
+const acceptButton = document.getElementById('accept-button');
 // Button that allows the user to see the exit popup.
-export const exitButton = document.getElementById('exit-button');
+const exitButton = document.getElementById('exit-button');
 
 /** ******************** Functions used on script ********************* */
 
 /**
- * Close Pop Up.
+ * Closes Pop Up.
  */
 export function closePopUp() {
   if (exitPopUp && cancelButton) {
@@ -21,7 +21,7 @@ export function closePopUp() {
 }
 
 /**
- * Show Pop Up.
+ * Shows Pop Up.
  */
 export function showExitPopup() {
   if (exitPopUp && exitButton) {
@@ -29,16 +29,20 @@ export function showExitPopup() {
   }
 }
 
-/** Function: Accept
- * return to home page when clicked * */
-export function accept() {
-  if (acceptButton) {
-    window.location.href = './index.xhtml';
-  }
+/**
+ * Creates message for server indicating player has left.
+ */
+export function createRemovePlayerMessage() {
+  console.log('Cerrando conexión con server.');
+  const message = {
+    type: 'removePlayer',
+    /*
+    from: 'client',
+    to: 'server',
+    when: 'when a client leaves the room',
+    nickname: 'player3',
+    sessionCode: '1234',
+    */
+  };
+  return message;
 }
-
-/** ********************** Listeners for buttons *********************** */
-
-cancelButton.addEventListener('click', closePopUp);
-exitButton.addEventListener('click', showExitPopup);
-acceptButton.addEventListener('click', accept);
