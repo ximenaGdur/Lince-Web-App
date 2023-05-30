@@ -1,7 +1,17 @@
 /** ****************** Imports ******************* */
 
-import * as finishedPopup from './finishedPopUp.js';
-import * as exitPopup from './exitPopUp.js';
+import {
+  continueSession,
+  returnToMainPage,
+// eslint-disable-next-line import/extensions
+} from './finishedPopUp.js';
+
+import {
+  closePopUp,
+  showExitPopup,
+  createRemovePlayerMessage,
+// eslint-disable-next-line import/extensions
+} from './exitPopUp.js';
 
 /** ****************** Creating constants for script ******************* */
 // Contains all game board cards
@@ -20,6 +30,16 @@ let blurTime = null;
 const blurPorcentage = 95;
 // Contains information of player card to match
 let firstCard = null;
+// Button that allows player to continue session.
+const continueButton = document.getElementById('continue-button');
+// Button that allows player to exit session.
+const homeButton = document.getElementById('home-button');
+// Pop Up that is shown when game is finished.
+const popUpFinished = document.getElementById('popUpFinished');
+// Button that allows player to close pop up.
+const cancelButton = document.getElementById('cancel-button');
+// Button that allows the user to see the exit popup.
+const exitButton = document.getElementById('exit-button');
 
 /** ******************** Functions used on script ********************* */
 
@@ -77,8 +97,6 @@ function match(secondCard) {
   }
 }
 
-
-
 /**
  * Change the pictures on the player's cards to the corresponding words.
  */
@@ -122,17 +140,25 @@ function updateTime(time) {
  * if time runs out the game is over
  */
 function TimesUp(time) {
-  if (time == 0) {
+  if (time === 0) {
     popUpFinished.style.display = 'flex';
   }
   // block everything later
 }
 
 /** ********************** Listeners for page *********************** */
-
+// Adding event listeners when the window is load
 window.addEventListener('load', loadPage);
 window.addEventListener('load', changeImageColors);
 window.addEventListener('load', changeImagesToWords);
+// Adding event listener to continueButton
+continueButton.addEventListener('click', continueSession);
+// Adding event listener to homeButton
+homeButton.addEventListener('click', returnToMainPage);
+// Adding event listener to cancelButton
+cancelButton.addEventListener('click', closePopUp);
+// Adding event listener to exitButton
+exitButton.addEventListener('click', showExitPopup);
 
 for (let index = 0; index < myImages.length; index += 1) {
   const card = myImages[index];

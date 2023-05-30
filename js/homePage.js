@@ -4,6 +4,7 @@ import {
   cancelPopUp,
   joinRoom,
   handleCodeValidation,
+// eslint-disable-next-line import/extensions
 } from './codePopUp.js';
 
 /** ****************** Creating constants for script ******************* */

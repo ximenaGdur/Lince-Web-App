@@ -4,6 +4,7 @@ import {
   closePopUp,
   showExitPopup,
   createRemovePlayerMessage,
+// eslint-disable-next-line import/extensions
 } from './exitPopUp.js';
 
 /** ****************** Creating constants for script ******************* */
