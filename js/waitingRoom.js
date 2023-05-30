@@ -71,16 +71,20 @@ function chooseCardsPerRound() {
   const cardsRound = cardsPerRoundRange.value;
   if (cardsPerRoundValue) {
     cardsPerRoundValue.innerHTML = cardsRound;
+    const message = {
+      type: 'chooseCardsPerRound',
+      /*
+      From: 'client',
+      To: 'server',
+      When: 'when a host client change the amount of card per round',
+      */
+      cardsPerRound: cardsRound,
+    };
+    socket.send(JSON.stringify(message));
   }
   /*
-    sendMessage({
-        "Type": "chooseCardsPerRound",
-        "From": "client",
-        "To": "server",
-        "When": "when a host client change the amount of card per round",
-        "CardsPerRound": numCards,
-        "Nickname": name,
-        "SessionCode": code
+    "Nickname": name,
+    "SessionCode": code
     })
     */
 }
@@ -92,16 +96,20 @@ function chooseMaxTime() {
   const time = maxTimeRange.value;
   if (maxTimeValue) {
     maxTimeValue.innerHTML = `${time} s`;
+    const message = {
+      type: 'chooseMaxTime',
+      /*
+      From: 'client',
+      To: 'server',
+      When: 'when a host client change the max time',
+      */
+      maxTime: time,
+    };
+    socket.send(JSON.stringify(message));
   }
   /*
-    sendMessage({
-        "Type": "chooseMaxTime",
-        "From": "client",
-        "To": "server",
-        "When": "when a host client change the max time",
-        "MaxTime": time,
-        "Nickname": name,
-        "SessionCode": code
+    "Nickname": name,
+    "SessionCode": code
     })
     */
 }
@@ -113,16 +121,20 @@ function chooseCardsPerPlayer() {
   const cardsPlayer = cardsPerPlayerRange.value;
   if (cardsPerPlayerValue) {
     cardsPerPlayerValue.innerHTML = cardsPlayer;
+    const message = {
+      type: 'chooseCardsPerPlayer',
+      /*
+      From: 'client',
+      To: 'server',
+      When: 'when a host client change the cards per player',
+      */
+      cardsPerPlayer: cardsPlayer,
+    };
+    socket.send(JSON.stringify(message));
   }
   /*
-    sendMessage({
-        "Type": "chooseCardsPerPlayer",
-        "From": "client",
-        "To": "server",
-        "When": "when a host client change the cards per player",
-        "CardsPerPlayer": numCards,
-        "Nickname": name,
-        "SessionCode": code
+    "Nickname": name,
+    "SessionCode": code
     })
     */
 }
@@ -133,12 +145,16 @@ function chooseCardsPerPlayer() {
  */
 function chooseAdp1a() {
   console.log('Adaptacion 1a escogida');
+  const message = {
+    type: 'chooseAdp1a',
+    /*
+      From: 'client',
+      To: 'server',
+      When: 'when a host client selects the adaptation 1a',
+      */
+  };
+  socket.send(JSON.stringify(message));
   /*
-    sendMessage({
-    "Type": "chooseAdp1a",
-    "From": "client",
-    "To": "server",
-    "When": "when a host client selects the adaptation 1a",
     "Nickname": name,
     "SessionCode": code
     })
@@ -151,12 +167,16 @@ function chooseAdp1a() {
  */
 function chooseAdp1b() {
   console.log('Adaptacion 1b escogida');
+  const message = {
+    type: 'chooseAdp1b',
+    /*
+      From: 'client',
+      To: 'server',
+      When: 'when a host client selects the adaptation 1b',
+      */
+  };
+  socket.send(JSON.stringify(message));
   /*
-    sendMessage({
-    "Type": "chooseAdp1b",
-    "From": "client",
-    "To": "server",
-    "When": "when a host client selects the adaptation 1b",
     "Nickname": name,
     "SessionCode": code
     })
@@ -169,12 +189,16 @@ function chooseAdp1b() {
  */
 function chooseAdp2a() {
   console.log('Adaptacion 2a escogida');
+  const message = {
+    type: 'chooseAdp2a',
+    /*
+      From: 'client',
+      To: 'server',
+      When: 'when a host client selects the adaptation 2a',
+      */
+  };
+  socket.send(JSON.stringify(message));
   /*
-    sendMessage({
-    "Type": "chooseAdp2a",
-    "From": "client",
-    "To": "server",
-    "When": "when a host client selects the adaptation 2a",
     "Nickname": name,
     "SessionCode": code
     })
@@ -187,12 +211,16 @@ function chooseAdp2a() {
  */
 function chooseAdp2b() {
   console.log('Adaptacion 2b escogida');
+  const message = {
+    type: 'chooseAdp2b',
+    /*
+      From: 'client',
+      To: 'server',
+      When: 'when a host client selects the adaptation 2b',
+      */
+  };
+  socket.send(JSON.stringify(message));
   /*
-    sendMessage({
-    "Type": "chooseAdp2b",
-    "From": "client",
-    "To": "server",
-    "When": "when a host client selects the adaptation 2b",
     "Nickname": name,
     "SessionCode": code
     })
@@ -205,12 +233,16 @@ function chooseAdp2b() {
  */
 function chooseAdp3a() {
   console.log('Adaptacion 3a escogida');
+  const message = {
+    type: 'chooseAdp3a',
+    /*
+      From: 'client',
+      To: 'server',
+      When: 'when a host client selects the adaptation 3a',
+      */
+  };
+  socket.send(JSON.stringify(message));
   /*
-    sendMessage({
-    "Type": "chooseAdp3a",
-    "From": "client",
-    "To": "server",
-    "When": "when a host client selects the adaptation 3a",
     "Nickname": name,
     "SessionCode": code
     })
@@ -223,12 +255,16 @@ function chooseAdp3a() {
  */
 function chooseAdp3b() {
   console.log('Adaptacion 3b escogida');
+  const message = {
+    type: 'chooseAdp3b',
+    /*
+      From: 'client',
+      To: 'server',
+      When: 'when a host client selects the adaptation 3b',
+      */
+  };
+  socket.send(JSON.stringify(message));
   /*
-    sendMessage({
-    "Type": "chooseAdp3b",
-    "From": "client",
-    "To": "server",
-    "When": "when a host client selects the adaptation 3b",
     "Nickname": name,
     "SessionCode": code
     })
@@ -239,14 +275,18 @@ function chooseAdp3b() {
  * Starts game for all players.
  */
 function startGame() {
+  const message = {
+    type: 'startGame',
+    /*
+      From: 'client',
+      To: 'server',
+      When: 'when a host client selects the start game botton',
+      */
+  };
+  socket.send(JSON.stringify(message));
   /*
-    sendMessage({
-        "Type": "startGame",
-        "From": "client",
-        "To": "server",
-        "When": "when a host client selects the start game botton",
-        "Nickname": name,
-        "SessionCode": code
+    "Host": nickname,
+    "SessionCode": code
     })
     */
   window.location.href = './game.xhtml';
