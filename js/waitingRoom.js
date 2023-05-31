@@ -20,6 +20,14 @@ const cardsPerPlayerValue = document.getElementById('cards-per-player-value');
 const cardsPerRoundRange = document.getElementById('cards-per-round-range');
 // Value for cards per round bar.
 const cardsPerRoundValue = document.getElementById('cards-per-round-value');
+// Minimum amount of cards per player permitted
+const cardsPlayerMin = 5;
+// Maximum amount of cards per player permitted
+const cardsPlayerMax = 20;
+// Minimum amount of cards per round permitted
+const cardsRoundMin = 5;
+// Maximum amount of cards per round permitted
+const cardsRoundMax = 20;
 // Button that allows the user to see the exit popup.
 const exitButton = document.getElementById('exit-button');
 // Information icons that display information
@@ -60,6 +68,10 @@ const playerTable = document.getElementById('waiting-room-ranking');
 const socket = new WebSocket('ws://localhost:8009');
 // Start game button
 const startButton = document.getElementById('start-button');
+// Minimum amount of time permitted
+const timeMin = 20;
+// Maximum amount of time permitted
+const timeMax = 120;
 
 /** ******************** Functions used on script ********************* */
 
@@ -70,18 +82,16 @@ function chooseCardsPerRound() {
   const cardsRound = cardsPerRoundRange.value;
   if (cardsPerRoundValue) {
     cardsPerRoundValue.innerHTML = cardsRound;
+    const message = {
+      type: 'setCardsPerRound',
+      from: 'client',
+      to: 'server',
+      when: 'when a host client change the amount of card per round',
+      cardsPerRound: cardsRound,
+    };
+    socket.send(JSON.stringify(message));
+    console.log('Message sent to server');
   }
-  /*
-    sendMessage({
-        "Type": "chooseCardsPerRound",
-        "From": "client",
-        "To": "server",
-        "When": "when a host client change the amount of card per round",
-        "CardsPerRound": numCards,
-        "Nickname": name,
-        "SessionCode": code
-    })
-    */
 }
 
 /**
@@ -91,18 +101,15 @@ function chooseMaxTime() {
   const time = maxTimeRange.value;
   if (maxTimeValue) {
     maxTimeValue.innerHTML = `${time} s`;
+    const message = {
+      type: 'setMaxTime',
+      from: 'client',
+      to: 'server',
+      when: 'when a host client change the max time',
+      MaxTime: time,
+    };
+    socket.send(JSON.stringify(message));
   }
-  /*
-    sendMessage({
-        "Type": "chooseMaxTime",
-        "From": "client",
-        "To": "server",
-        "When": "when a host client change the max time",
-        "MaxTime": time,
-        "Nickname": name,
-        "SessionCode": code
-    })
-    */
 }
 
 /**
@@ -112,18 +119,15 @@ function chooseCardsPerPlayer() {
   const cardsPlayer = cardsPerPlayerRange.value;
   if (cardsPerPlayerValue) {
     cardsPerPlayerValue.innerHTML = cardsPlayer;
+    const message = {
+      type: 'setCardsPerPlayer',
+      from: 'client',
+      to: 'server',
+      when: 'when a host client change the cards per player',
+      cardsPerPlayer: cardsPlayer,
+    };
+    socket.send(JSON.stringify(message));
   }
-  /*
-    sendMessage({
-        "Type": "chooseCardsPerPlayer",
-        "From": "client",
-        "To": "server",
-        "When": "when a host client change the cards per player",
-        "CardsPerPlayer": numCards,
-        "Nickname": name,
-        "SessionCode": code
-    })
-    */
 }
 
 /**
@@ -132,16 +136,13 @@ function chooseCardsPerPlayer() {
  */
 function chooseAdp1a() {
   console.log('Adaptacion 1a escogida');
-  /*
-    sendMessage({
-    "Type": "chooseAdp1a",
-    "From": "client",
-    "To": "server",
-    "When": "when a host client selects the adaptation 1a",
-    "Nickname": name,
-    "SessionCode": code
-    })
-    */
+  const message = {
+    type: 'toggleAdp1a',
+    from: 'client',
+    to: 'server',
+    when: 'when a host client selects the adaptation 1a',
+  };
+  socket.send(JSON.stringify(message));
 }
 
 /**
@@ -150,16 +151,13 @@ function chooseAdp1a() {
  */
 function chooseAdp1b() {
   console.log('Adaptacion 1b escogida');
-  /*
-    sendMessage({
-    "Type": "chooseAdp1b",
-    "From": "client",
-    "To": "server",
-    "When": "when a host client selects the adaptation 1b",
-    "Nickname": name,
-    "SessionCode": code
-    })
-    */
+  const message = {
+    type: 'toggleAdp1b',
+    from: 'client',
+    to: 'server',
+    when: 'when a host client selects the adaptation 1b',
+  };
+  socket.send(JSON.stringify(message));
 }
 
 /**
@@ -168,16 +166,13 @@ function chooseAdp1b() {
  */
 function chooseAdp2a() {
   console.log('Adaptacion 2a escogida');
-  /*
-    sendMessage({
-    "Type": "chooseAdp2a",
-    "From": "client",
-    "To": "server",
-    "When": "when a host client selects the adaptation 2a",
-    "Nickname": name,
-    "SessionCode": code
-    })
-    */
+  const message = {
+    type: 'toggleAdp2a',
+    from: 'client',
+    to: 'server',
+    when: 'when a host client selects the adaptation 2a',
+  };
+  socket.send(JSON.stringify(message));
 }
 
 /**
@@ -186,16 +181,13 @@ function chooseAdp2a() {
  */
 function chooseAdp2b() {
   console.log('Adaptacion 2b escogida');
-  /*
-    sendMessage({
-    "Type": "chooseAdp2b",
-    "From": "client",
-    "To": "server",
-    "When": "when a host client selects the adaptation 2b",
-    "Nickname": name,
-    "SessionCode": code
-    })
-    */
+  const message = {
+    type: 'toggleAdp2b',
+    from: 'client',
+    to: 'server',
+    when: 'when a host client selects the adaptation 2b',
+  };
+  socket.send(JSON.stringify(message));
 }
 
 /**
@@ -204,16 +196,13 @@ function chooseAdp2b() {
  */
 function chooseAdp3a() {
   console.log('Adaptacion 3a escogida');
-  /*
-    sendMessage({
-    "Type": "chooseAdp3a",
-    "From": "client",
-    "To": "server",
-    "When": "when a host client selects the adaptation 3a",
-    "Nickname": name,
-    "SessionCode": code
-    })
-    */
+  const message = {
+    type: 'toggleAdp3a',
+    from: 'client',
+    to: 'server',
+    when: 'when a host client selects the adaptation 3a',
+  };
+  socket.send(JSON.stringify(message));
 }
 
 /**
@@ -222,37 +211,31 @@ function chooseAdp3a() {
  */
 function chooseAdp3b() {
   console.log('Adaptacion 3b escogida');
-  /*
-    sendMessage({
-    "Type": "chooseAdp3b",
-    "From": "client",
-    "To": "server",
-    "When": "when a host client selects the adaptation 3b",
-    "Nickname": name,
-    "SessionCode": code
-    })
-    */
+  const message = {
+    type: 'toggleAdp3b',
+    from: 'client',
+    to: 'server',
+    when: 'when a host client selects the adaptation 3b',
+  };
+  socket.send(JSON.stringify(message));
 }
 
 /**
  * Starts game for all players.
  */
 function startGame() {
-  /*
-    sendMessage({
-        "Type": "startGame",
-        "From": "client",
-        "To": "server",
-        "When": "when a host client selects the start game botton",
-        "Nickname": name,
-        "SessionCode": code
-    })
-    */
+  const message = {
+    type: 'startGame',
+    from: 'client',
+    to: 'server',
+    when: 'when a host client selects the start game botton',
+  };
+  socket.send(JSON.stringify(message));
   window.location.href = './game.xhtml';
 }
 
 /**
- * Selects adaptation 1a.
+ * Host has selected adaptation 1a.
  */
 function handleAdp1a() {
   if (option1a) {
@@ -261,7 +244,7 @@ function handleAdp1a() {
 }
 
 /**
- * Selects adaptation 1b.
+ * Host has selected adaptation 1b.
  */
 function handleAdp1b() {
   if (option1b) {
@@ -270,7 +253,7 @@ function handleAdp1b() {
 }
 
 /**
- * Selects adaptation 2a.
+ * Host has selected adaptation 2a.
  */
 function handleAdp2a() {
   if (option2a) {
@@ -278,23 +261,17 @@ function handleAdp2a() {
   }
 }
 
-/*
-*
-*/
+/**
+ * Host has selected adaptation 2b.
+ */
 function handleAdp2b() {
-  console.log('aqii');
-  /* if(message.type === "chooseAdp2b") {
-        // document.getElementById('Adp2b').check == true;
-    } else {
-
-    } */
   if (option2b) {
     option2b.checked = true;
   }
 }
 
 /**
- * Selects adaptation 3a.
+ * Host has selected adaptation 3a.
  */
 function handleAdp3a() {
   if (option3a) {
@@ -303,7 +280,7 @@ function handleAdp3a() {
 }
 
 /**
- * Selects adaptation 3b.
+ * Host has selected adaptation 3b.
  */
 function handleAdp3b() {
   if (option3b) {
@@ -314,9 +291,9 @@ function handleAdp3b() {
 /**
  * When server sends a message indicating max time has to be updated
  * */
-function handleMaxTime() {
-  const time = 10;
-  if (maxTimeValue) {
+function handleMaxTime(message) {
+  const time = message.maxTime;
+  if (maxTimeValue && (time >= timeMin && time < timeMax)) {
     maxTimeValue.innerHTML = `${time} s`;
     maxTimeRange.value = time;
   }
@@ -325,9 +302,9 @@ function handleMaxTime() {
 /**
  * When server sends a message indicating cards per round has to be updated
  * */
-function handleCardsPerRound() {
-  const amount = 80;
-  if (cardsPerRoundValue) {
+function handleCardsPerRound(message) {
+  const amount = message.cardsPerRound;
+  if (cardsPerRoundValue && (amount >= cardsRoundMin && amount < cardsRoundMax)) {
     cardsPerRoundValue.innerHTML = amount;
     cardsPerRoundRange.value = amount;
   }
@@ -337,9 +314,9 @@ function handleCardsPerRound() {
  * Updates the value of the cards per player to the guest clients at the
  * moment in which a message from the server informing the new value is entered.
  */
-function handleCardsPerPlayer() {
-  const amount = 30;
-  if (cardsPerPlayerValue) {
+function handleCardsPerPlayer(message) {
+  const amount = message.cardsPerPlayer;
+  if (cardsPerPlayerValue && (amount >= cardsPlayerMin && amount < cardsPlayerMax)) {
     cardsPerPlayerValue.innerHTML = amount;
     cardsPerPlayerRange.value = amount;
   }
@@ -355,18 +332,28 @@ function handleStartGame() {
 /**
  * Adds new player to player list.
  */
-function handleNewPlayer() {
+function handleNewPlayer(message) {
+  // Order by points
   if (playerTable) {
-    const position = 1;
-    const avatar = 'avatar';
-    const nickname = 'ximeGdur';
-    const points = 3;
+    const name = message.nickname;
+    const avatarRoute = message.avatar;
+    const score = message.points;
+    console.log("message: " + message);
+
+    const playerScores = document.getElementsByClassName('score');
+    const scoreArray = [];
+    for (let playerIndex = 0; playerIndex < playerScores.length; playerIndex++) {
+      scoreArray.append(playerScores.innerHTML);
+    }
+    console.log("scores: " + scoreArray);
+    
+    // const position = ;
 
     playerTable.innerHTML += '<tr class="ranking-row">'
                               + `<td class="ranking-col">${position}</td>`
                               + `<td class="ranking-col">${avatar}</td>`
                               + `<td class="ranking-col">${nickname}</td>`
-                              + `<td class="ranking-col">${points}puntos</td>`
+                              + `<td class="ranking-col">${points} puntos</td>`
                             + '</tr>';
   }
 }
@@ -466,13 +453,6 @@ function returnToMain() {
 }
 
 /**
- * Sends a message to the server to close a client's connection.
- */
-function closeTab() {
-  socket.send(createRemovePlayerMessage());
-}
-
-/**
  * Identifying message type in order to call appropiate function.
  */
 function identifyMessage(receivedMessage) {
@@ -526,11 +506,6 @@ socket.addEventListener('open', () => {
 });
 
 /**
- * When a connection is made with server.
- */
-socket.addEventListener('close', closeTab());
-
-/**
  * Event that occurs every time a message is received.
  */
 socket.addEventListener('message', (event) => {
@@ -579,5 +554,3 @@ option3a.addEventListener('click', chooseAdp3a);
 option3b.addEventListener('click', chooseAdp3b);
 // Adding event listener to startButton
 startButton.addEventListener('click', startGame);
-// Adding event listener when window is closed
-window.addEventListener('close', closeTab);
