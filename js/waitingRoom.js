@@ -4,6 +4,7 @@ import {
   closePopUp,
   showExitPopup,
   createRemovePlayerMessage,
+// eslint-disable-next-line import/extensions
 } from './exitPopUp.js';
 
 /** ****************** Creating constants for script ******************* */
@@ -446,6 +447,7 @@ function infoAdapPopUp(adaptation) {
  */
 function returnToMain() {
   if (acceptButton) {
+    // Aqui se manda el msj de eliminar el jugador de la lista.
     window.location.href = './index.xhtml';
   }
   // send message to server letting them know player is leaving.
@@ -506,6 +508,11 @@ socket.addEventListener('open', () => {
 });
 
 /**
+ * When a connection is made with server.
+ */
+// socket.addEventListener('close', closeTab());
+
+/**
  * Event that occurs every time a message is received.
  */
 socket.addEventListener('message', (event) => {
@@ -554,3 +561,5 @@ option3a.addEventListener('click', chooseAdp3a);
 option3b.addEventListener('click', chooseAdp3b);
 // Adding event listener to startButton
 startButton.addEventListener('click', startGame);
+// Adding event listener when window is closed
+//window.addEventListener('close', closeTab);
