@@ -4,8 +4,6 @@
 const exitPopUp = document.getElementById('exit-popup');
 // Button that allows player to close pop up.
 const cancelButton = document.getElementById('cancel-button');
-// Button that allows player to return to main page.
-const acceptButton = document.getElementById('accept-button');
 // Button that allows the user to see the exit popup.
 const exitButton = document.getElementById('exit-button');
 
@@ -36,13 +34,9 @@ export function createRemovePlayerMessage() {
   console.log('Cerrando conexión con server.');
   const message = {
     type: 'removePlayer',
-    /*
     from: 'client',
     to: 'server',
     when: 'when a client leaves the room',
-    nickname: 'player3',
-    sessionCode: '1234',
-    */
   };
   return message;
 }

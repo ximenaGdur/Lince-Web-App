@@ -252,11 +252,6 @@ server.on('connection', (socket) => {
     sockets.push(socket); // DEBERIA SER UN DICCIONARIO, NO LO ESTOY USANDO PORQUE ESTOY PROBANDO
   }
 
-  // se usa?
-  socket.on('open', () => {
-    console.log('Server conectado al cliente');
-  });
-
   socket.on('message', (message) => {
     console.log(`Recibi mensaje del cliente: ${message}`);
     const receivedMessage = JSON.parse(message);

@@ -44,6 +44,14 @@ const exitButton = document.getElementById('exit-button');
 /** ******************** Functions used on script ********************* */
 
 /**
+ * When page is loaded...
+ */
+function loadPage() {
+  blurTime = (maxTime * 100) / blurPorcentage;
+  // applyBlurTimeout = setTimeout(handleBlur, blurTime);
+}
+
+/**
  * Applies blur to player.
  */
 function handleBlur() {
@@ -52,14 +60,6 @@ function handleBlur() {
       boardImages[imageIndex].style.filter = 'blur(2.5px)';
     }
   }
-}
-
-/**
- * When page is loaded...
- */
-function loadPage() {
-  blurTime = (maxTime * 100) / blurPorcentage;
-  const applyBlurTimeout = setTimeout(handleBlur, blurTime);
 }
 
 /**

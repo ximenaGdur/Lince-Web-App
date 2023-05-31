@@ -1,11 +1,8 @@
 /** ****************** Imports ******************* */
 
-import {
-  closePopUp,
-  showExitPopup,
-  createRemovePlayerMessage,
-// eslint-disable-next-line import/extensions
-} from './exitPopUp.js';
+let closePopUp = null;
+let showExitPopup = null;
+let createRemovePlayerMessage = null;
 
 /** ****************** Creating constants for script ******************* */
 
@@ -65,7 +62,7 @@ const option3a = document.getElementById('Adp3a');
 const option3b = document.getElementById('Adp3b');
 // Container for all player table's rows.
 const playerTable = document.getElementById('waiting-room-ranking');
-// Socket that allows communication with server.
+// Socket that connects to server
 const socket = new WebSocket('ws://localhost:8009');
 // Start game button
 const startButton = document.getElementById('start-button');
@@ -75,6 +72,19 @@ const timeMin = 20;
 const timeMax = 120;
 
 /** ******************** Functions used on script ********************* */
+
+/**
+ * When page is loaded...
+ */
+async function loadPage() {
+  console.log('Page loaded...');
+
+  // eslint-disable-next-line import/extensions
+  const exitPopUp = await import('./exitPopUp.js');
+  closePopUp = exitPopUp.closePopUp();
+  showExitPopup = exitPopUp.showExitPopup();
+  createRemovePlayerMessage = exitPopUp.createRemovePlayerMessage();
+}
 
 /**
  * Sends a message to the server to update the amount of cards per round.
@@ -335,19 +345,19 @@ function handleStartGame() {
  */
 function handleNewPlayer(message) {
   // Order by points
-  if (playerTable) {
+  /* if (playerTable) {
     const name = message.nickname;
     const avatarRoute = message.avatar;
     const score = message.points;
-    console.log("message: " + message);
+    console.log(`message: ${message}`);
 
     const playerScores = document.getElementsByClassName('score');
     const scoreArray = [];
     for (let playerIndex = 0; playerIndex < playerScores.length; playerIndex++) {
       scoreArray.append(playerScores.innerHTML);
     }
-    console.log("scores: " + scoreArray);
-    
+    console.log(`scores: ${scoreArray}`);
+
     // const position = ;
 
     playerTable.innerHTML += '<tr class="ranking-row">'
@@ -356,7 +366,7 @@ function handleNewPlayer(message) {
                               + `<td class="ranking-col">${nickname}</td>`
                               + `<td class="ranking-col">${points} puntos</td>`
                             + '</tr>';
-  }
+  } */
 }
 
 /**
@@ -500,6 +510,11 @@ function identifyMessage(receivedMessage) {
   }
 }
 
+/** ********************** Listeners for waiting room *********************** */
+
+// Adding event listeners when the window is load
+window.addEventListener('load', loadPage);
+
 /**
  * When a connection is made with server.
  */
@@ -521,45 +536,62 @@ socket.addEventListener('message', (event) => {
   identifyMessage(receivedMessage);
 });
 
-/** ********************** Listeners for buttons *********************** */
-
 // Adding event listener to acceptButton
 acceptButton.addEventListener('click', returnToMain);
+
 // Adding event listener to cardsPerPlayerRange
 cardsPerPlayerRange.addEventListener('change', chooseCardsPerPlayer);
+
 // Adding event listener to cardsPerRoundRange
 cardsPerRoundRange.addEventListener('change', chooseCardsPerRound);
+
 // Adding event listener to cancelButton
 cancelButton.addEventListener('click', closePopUp);
+
 // Adding event listener to exitButton
 exitButton.addEventListener('click', showExitPopup);
+
 // Adding event listener to informationIcons[0]
 informationIcons[0].addEventListener('click', maxTimePopUp);
+
 // Adding event listener to informationIcons[1]
 informationIcons[1].addEventListener('click', cardsPerPlayer);
+
 // Adding event listener to informationIcons[2]
 informationIcons[2].addEventListener('click', cardsPerRound);
+
 // Adding event listener to informationIcons[3]
 informationIcons[3].addEventListener('click', infoAdapPopUp, infoAdapt1);
+
 // Adding event listener to informationIcons[4]
 informationIcons[4].addEventListener('click', infoAdapPopUp, infoAdapt2);
+
 // Adding event listener to informationIcons[5]
 informationIcons[5].addEventListener('click', infoAdapPopUp, infoAdapt3);
+
 // Adding event listener to maxTimeRange
 maxTimeRange.addEventListener('change', chooseMaxTime);
+
 // Adding event listener to option1a
 option1a.addEventListener('click', chooseAdp1a);
+
 // Adding event listener to option1b
 option1b.addEventListener('click', chooseAdp1b);
+
 // Adding event listener to option2a
 option2a.addEventListener('click', chooseAdp2a);
+
 // Adding event listener to option2b
 option2b.addEventListener('click', chooseAdp2b);
+
 // Adding event listener to option3a
 option3a.addEventListener('click', chooseAdp3a);
+
 // Adding event listener to option3b
 option3b.addEventListener('click', chooseAdp3b);
+
 // Adding event listener to startButton
 startButton.addEventListener('click', startGame);
+
 // Adding event listener when window is closed
-//window.addEventListener('close', closeTab);
+// window.addEventListener('close', closeTab);
