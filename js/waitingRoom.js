@@ -1,90 +1,111 @@
 /** ****************** Imports ******************* */
 
-let closePopUp = null;
-let showExitPopup = null;
-let createRemovePlayerMessage = null;
+/* import {
+  closePopUp,
+  showExitPopup,
+  createRemovePlayerMessage,
+// eslint-disable-next-line import/extensions
+} from './exitPopUp.js'; */
 
 /** ****************** Creating constants for script ******************* */
 
 // Button that allows player to return to main page.
 const acceptButton = document.getElementById('accept-button');
+
 // Button that allows player to close pop up.
 const cancelButton = document.getElementById('cancel-button');
+
 // Cards per player bar.
 const cardsPerPlayerRange = document.getElementById('cards-per-player-range');
+
 // Value for cards per player bar.
 const cardsPerPlayerValue = document.getElementById('cards-per-player-value');
+
 // Cards per round bar.
 const cardsPerRoundRange = document.getElementById('cards-per-round-range');
+
 // Value for cards per round bar.
 const cardsPerRoundValue = document.getElementById('cards-per-round-value');
+
 // Minimum amount of cards per player permitted
 const cardsPlayerMin = 5;
+
 // Maximum amount of cards per player permitted
 const cardsPlayerMax = 20;
+
 // Minimum amount of cards per round permitted
 const cardsRoundMin = 5;
+
 // Maximum amount of cards per round permitted
 const cardsRoundMax = 20;
+
 // Button that allows the user to see the exit popup.
 const exitButton = document.getElementById('exit-button');
+
 // Information icons that display information
 const informationIcons = document.getElementsByClassName('information-icon');
+
 // Popup with information about adaption 1
 const infoAdapt1 = document.getElementById('adaptation1-info');
+
 // Popup with information about adaption 2
 const infoAdapt2 = document.getElementById('adaptation2-info');
+
 // Popup with information about adaption 3
 const infoAdapt3 = document.getElementById('adaptation3-info');
+
 // Cards per Round information popUp
 const infoCardsPerRound = document.getElementById('infoCardsPerRound');
+
 // Max Time information popUp
 const infoCardsPlayers = document.getElementById('infoCardsPlayers');
+
 // Boolean for information Icon event listener
 let infoIconClicked = true;
+
 // Max Time information popUp
 const infoMaxTime = document.getElementById('infoMaxTime');
+
 // Max time bar.
 const maxTimeRange = document.getElementById('max-time-range');
+
 // Value for max time bar.
 const maxTimeValue = document.getElementById('max-time-value');
+
 // Option 1a radio button.
 const option1a = document.getElementById('Adp1a');
+
 // Option 1b radio button.
 const option1b = document.getElementById('Adp1b');
+
 // Option 2a radio button.
 const option2a = document.getElementById('Adp2a');
+
 // Option 2b radio button.
 const option2b = document.getElementById('Adp2b');
+
 // Option 3a radio button.
 const option3a = document.getElementById('Adp3a');
+
 // Option 3b radio button.
 const option3b = document.getElementById('Adp3b');
+
 // Container for all player table's rows.
 const playerTable = document.getElementById('waiting-room-ranking');
+
 // Socket that connects to server
 const socket = new WebSocket('ws://localhost:8009');
+
 // Start game button
 const startButton = document.getElementById('start-button');
+
 // Minimum amount of time permitted
 const timeMin = 20;
+
 // Maximum amount of time permitted
 const timeMax = 120;
 
 /** ******************** Functions used on script ********************* */
-
-/**
- * When page is loaded...
- */
-async function loadPage() {
-  console.log('Page loaded...');
-
-  // eslint-disable-next-line import/extensions
-  const exitPopUp = await import('./exitPopUp.js');
-  closePopUp = exitPopUp.closePopUp();
-  showExitPopup = exitPopUp.showExitPopup();
-  createRemovePlayerMessage = exitPopUp.createRemovePlayerMessage();
-}
 
 /**
  * Sends a message to the server to update the amount of cards per round.
@@ -120,6 +141,7 @@ function chooseMaxTime() {
       MaxTime: time,
     };
     socket.send(JSON.stringify(message));
+    console.log('Message sent to server');
   }
 }
 
@@ -341,32 +363,38 @@ function handleStartGame() {
 }
 
 /**
+ * Creates an array with player scores
+ */
+/* function determinePlayerScores() {
+  const playerScores = document.getElementsByClassName('score');
+  const scoreArray = [];
+  for (let playerIndex = 0; playerIndex < playerScores.length; playerIndex += 1) {
+    scoreArray.push(playerScores[playerIndex].innerHTML);
+  }
+  console.table(`scores: ${scoreArray}`);
+  return scoreArray;
+} */
+
+/**
  * Adds new player to player list.
  */
 function handleNewPlayer(message) {
   // Order by points
-  /* if (playerTable) {
-    const name = message.nickname;
-    const avatarRoute = message.avatar;
-    const score = message.points;
-    console.log(`message: ${message}`);
+  if (playerTable) {
+    const playerArray = message.players;
 
-    const playerScores = document.getElementsByClassName('score');
-    const scoreArray = [];
-    for (let playerIndex = 0; playerIndex < playerScores.length; playerIndex++) {
-      scoreArray.append(playerScores.innerHTML);
+    for (let playerIndex = 0; playerIndex < playerArray.length; playerIndex += 1) {
+      const avatarRoute = '/design/images/Icons/profile/' + playerArray[playerIndex].avatar.route;
+      playerTable.innerHTML
+        += '<tr class="ranking-row">'
+          + `<td class="ranking-col">${playerIndex}</td>`
+          //
+          + `<td class="ranking-col"><img class="profile-image" src=${avatarRoute} alt="Icono de Zanahoria" /></td>`
+          + `<td class="ranking-col">${playerArray[playerIndex].nickname}</td>`
+          + `<td class="ranking-col">${playerArray[playerIndex].points} puntos</td>`
+        + '</tr>';
     }
-    console.log(`scores: ${scoreArray}`);
-
-    // const position = ;
-
-    playerTable.innerHTML += '<tr class="ranking-row">'
-                              + `<td class="ranking-col">${position}</td>`
-                              + `<td class="ranking-col">${avatar}</td>`
-                              + `<td class="ranking-col">${nickname}</td>`
-                              + `<td class="ranking-col">${points} puntos</td>`
-                            + '</tr>';
-  } */
+  }
 }
 
 /**
@@ -461,7 +489,7 @@ function returnToMain() {
     window.location.href = './index.xhtml';
   }
   // send message to server letting them know player is leaving.
-  socket.send(createRemovePlayerMessage());
+  // socket.send(createRemovePlayerMessage());
 }
 
 /**
@@ -512,9 +540,6 @@ function identifyMessage(receivedMessage) {
 
 /** ********************** Listeners for waiting room *********************** */
 
-// Adding event listeners when the window is load
-window.addEventListener('load', loadPage);
-
 /**
  * When a connection is made with server.
  */
@@ -546,10 +571,10 @@ cardsPerPlayerRange.addEventListener('change', chooseCardsPerPlayer);
 cardsPerRoundRange.addEventListener('change', chooseCardsPerRound);
 
 // Adding event listener to cancelButton
-cancelButton.addEventListener('click', closePopUp);
+//      cancelButton.addEventListener('click', closePopUp);
 
 // Adding event listener to exitButton
-exitButton.addEventListener('click', showExitPopup);
+//       exitButton.addEventListener('click', showExitPopup);
 
 // Adding event listener to informationIcons[0]
 informationIcons[0].addEventListener('click', maxTimePopUp);

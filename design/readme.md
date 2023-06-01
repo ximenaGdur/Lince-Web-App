@@ -280,7 +280,7 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
     "from": "client",
     "to": "server",
     "when": "when a client presses the create room button with a valid nickname",
-    "Nickname": "player1"
+    "nickname": "player1"
 }
 ~~~
 
@@ -291,7 +291,7 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
     "from": "client",
     "to": "server",
     "when": "when a client types a room code",
-    "SessionCode": "1234"
+    "sessionCode": "1234"
 }
 ~~~
 
@@ -302,8 +302,8 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
     "from": "client",
     "to": "server",
     "when": "when a client presses the join room button",
-    "Nickname": "player1",
-    "SessionCode": "1234"
+    "nickname": "player1",
+    "sessionCode": "1234"
 }
 ~~~
 
@@ -356,7 +356,7 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
     "from": "client",
     "to": "server",
     "when": "when a host client selects the adaptation 3a",
-    "SessionCode": "1234"
+    "sessionCode": "1234"
 }
 ~~~
 
@@ -750,7 +750,7 @@ sendMessage({
     "from": "client",
     "to": "server",
     "when": "when a client presses the create room button with a valid nickname",
-    "Nickname": playerNickname
+    "nickname": playerNickname
 })
 // As a host
 redirectTo(waitingRoomURL)
@@ -776,7 +776,7 @@ sendMessage({
     "from": "client",
     "to": "server",
     "when": "when a client types a room code",
-    "SessionCode": code
+    "sessionCode": code
 })
 ~~~
 
@@ -798,8 +798,8 @@ sendMessage({
     "from": "client",
     "to": "server",
     "when": "when a client presses the join session button",
-    "Nickname": name,
-    "SessionCode": code
+    "nickname": name,
+    "sessionCode": code
 })
 // As a guest
 redirectTo(waitingRoomURL)
@@ -815,8 +815,8 @@ sendMessage({
     "from": "client",
     "to": "server",
     "when": "when a host client selects the adaptation 1a",
-    "Nickname": name,
-    "SessionCode": code
+    "nickname": name,
+    "sessionCode": code
 })
 ~~~
 
@@ -828,8 +828,8 @@ sendMessage({
     "from": "client",
     "to": "server",
     "when": "when a host client selects the adaptation 1b",
-    "Nickname": name,
-    "SessionCode": code
+    "nickname": name,
+    "sessionCode": code
 })
 ~~~
 
@@ -841,8 +841,8 @@ sendMessage({
     "from": "client",
     "to": "server",
     "when": "when a host client selects the adaptation 2a",
-    "Nickname": name,
-    "SessionCode": code
+    "nickname": name,
+    "sessionCode": code
 })
 ~~~
 
@@ -854,8 +854,8 @@ sendMessage({
     "from": "client",
     "to": "server",
     "when": "when a host client selects the adaptation 2b",
-    "Nickname": name,
-    "SessionCode": code
+    "nickname": name,
+    "sessionCode": code
 })
 ~~~
 
@@ -867,8 +867,8 @@ sendMessage({
     "from": "client",
     "to": "server",
     "when": "when a host client selects the adaptation 3a",
-    "Nickname": name,
-    "SessionCode": code
+    "nickname": name,
+    "sessionCode": code
 })
 ~~~
 
@@ -880,8 +880,8 @@ sendMessage({
     "from": "client",
     "to": "server",
     "when": "when a host client selects the adaptation 3b",
-    "Nickname": name,
-    "SessionCode": code
+    "nickname": name,
+    "sessionCode": code
 })
 ~~~
 
@@ -894,8 +894,8 @@ sendMessage({
     "to": "server",
     "when": "when a host client change the max time",
     "MaxTime": time,
-    "Nickname": name,
-    "SessionCode": code
+    "nickname": name,
+    "sessionCode": code
 })
 ~~~
 
@@ -908,8 +908,8 @@ sendMessage({
     "to": "server",
     "when": "when a host client change the amount of card per round",
     "CardsPerRound": numCards,
-    "Nickname": name,
-    "SessionCode": code
+    "nickname": name,
+    "sessionCode": code
 })
 ~~~
 
@@ -922,8 +922,8 @@ sendMessage({
     "to": "server",
     "when": "when a host client change the cards per player",
     "CardsPerPlayer": numCards,
-    "Nickname": name,
-    "SessionCode": code
+    "nickname": name,
+    "sessionCode": code
 })
 ~~~
 
@@ -1007,8 +1007,8 @@ sendMessage({
     "from": "client",
     "to": "server",
     "when": "when a host client selects the leave botton",
-    "Nickname": name,
-    "SessionCode": code
+    "nickname": name,
+    "sessionCode": code
 })
 redirectTo(mainRoomURL)
 ~~~
@@ -1027,8 +1027,8 @@ sendMessage({
     "from": "client",
     "to": "server",
     "when": "when a host client selects the start game botton",
-    "Nickname": name,
-    "SessionCode": code
+    "nickname": name,
+    "sessionCode": code
 })
 redirectTo(gamePageURL)
 ~~~
@@ -1049,8 +1049,8 @@ sendMessage({
     "from": "client",
     "to": "server",
     "when": "when a player makes a match",
-    "Nickname": name,
-    "SessionCode": code,
+    "nickname": name,
+    "sessionCode": code,
     "Column": boardCard.getColumn(),
     "Row": boardCard.getRow(),
     "Card": playerCard.getDescription()
@@ -1075,8 +1075,8 @@ sendMessage({
     "from": "client",
     "to": "server",
     "when": "when a client applies blur to other players",
-    "Nickname": name,
-    "SessionCode": code
+    "nickname": name,
+    "sessionCode": code
 })
 ~~~
 
@@ -1094,8 +1094,8 @@ sendMessage({
     "from": "client",
     "to": "server",
     "when": "when a client adds cards to other players",
-    "Nickname": name,
-    "SessionCode": code
+    "nickname": name,
+    "sessionCode": code
 })
 ~~~
 
@@ -1301,7 +1301,7 @@ for player in rooms[roomCode].getPlayers()
         "from": "server",
         "to": player,
         "when": "When the server lets players know a player left the room",
-        "Nickname": nickname
+        "nickname": nickname
     })
 ~~~
 

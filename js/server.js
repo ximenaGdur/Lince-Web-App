@@ -9,6 +9,144 @@ const server = new WebSocket.Server({ port: 8009 });
 // Array that stores all sockets.
 const sockets = [];
 
+const availableRooms = {
+  1234: {
+    players: {
+      1: {
+        nickname: 'playerx',
+        avatar: { route: 'bear.png', description: 'Oso' },
+        points: '2',
+      },
+    },
+  },
+};
+
+const cardRoutes = {
+  Sueter: 'hoodie.png',
+  Pantaloncillo: 'shorts.png',
+  Camarón: 'shrimp.png',
+  Zanahoria: 'carrot.png',
+  Avión: 'airplane.png',
+  Globo: 'balloon.png',
+  Bicicleta: 'bike.png',
+  Bote: 'boat.png',
+  Excavadora: 'bulldozer.png',
+  Bus: 'bus.png',
+  Teléferico: 'cableCar.png',
+  Carro: 'car.png',
+  Grúa: 'crane.png',
+  Helicoptero: 'chopper.png',
+  Hoverboard: 'hoverboard.png',
+  Moto: 'motorcycle.png',
+  Pogo: 'pogo.png',
+  Cohete: 'rocket.png',
+  Scooter: 'scooter.png',
+  Barco: 'ship.png',
+  Skateboard: 'skateboard.png',
+  Patines: 'skates.png',
+  Nave: 'spaceship.png',
+  Tractor: 'tractor.png',
+  Tren: 'train.png',
+  Triciclo: 'tricycle.png',
+  Camión: 'truck.png',
+  Uniciclo: 'unicycle.png',
+  Carreta: 'wagon.png',
+  Pájaro: 'bird.png',
+  Gato: 'cat.png',
+  Camaleón: 'chameleon.png',
+  Cangrejo: 'crab.png',
+  Delfín: 'dolphin.png',
+  Elefante: 'elephant.png',
+  Zorro: 'fox.png',
+  Jirafa: 'giraffe.png',
+  Erizo: 'hedgehog.png',
+  Gallina: 'hen.png',
+  Caballo: 'horse.png',
+  Medusa: 'jellyfish.png',
+  Canguro: 'kangaroo.png',
+  Koala: 'koala.png',
+  Mono: 'monkey.png',
+  Ratón: 'mouse.png',
+  Cerdo: 'pig.png',
+  Conejo: 'rabbit.png',
+  Escorpión: 'scorpion.png',
+  Hipocampo: 'seahorse.png',
+  Tiburón: 'shark.png',
+  Perezoso: 'sloth.png',
+  Ardilla: 'squirrel.png',
+  Tortuga: 'turtle.png',
+  Ballena: 'whale.png',
+  Frijoles: 'beans.png',
+  Brocoli: 'broccoli.png',
+  Carne: 'meat.png',
+  Hongo: 'mushroom.png',
+  Helado: 'iceCream.png',
+  Espaguetti: 'spaguetti.png',
+  Hamburguesa: 'burger.png',
+  Huevo: 'friedEgg.png',
+  Manzana: 'apple.png',
+  Patatas: 'frenchFries.png',
+  Pepino: 'cucumber.png',
+  Pera: 'pear.png',
+  Pescado: 'friedFish.png',
+  Pollo: 'chickenLeg.png',
+  Pizza: 'pizza.png',
+  Platanos: 'banana.png',
+  Queso: 'cheese.png',
+  Ramen: 'ramen.png',
+  Sushi: 'sushi.png',
+  Sandía: 'watermelon.png',
+  Atún: 'tuna.png',
+  Tomate: 'tomato.png',
+  Uvas: 'grapes.png',
+  Blusón: 'dressShirt.png',
+  Tacones: 'heels.png',
+  Overoles: 'overall.png',
+  Sandalias: 'sandals.png',
+  Pantalones: 'pants.png',
+  Blusa: 'shirt.png',
+  Camiseta: 'jersey.png',
+  Anteojos: 'glasses.png',
+  Traje: 'suit.png',
+  Medias: 'socks.png',
+  Gorro: 'beanie.png',
+  Sombrero: 'hat.png',
+  Tenis: 'sneakers.png',
+  Vestido: 'dress.png',
+  Enterizo: 'onesie.png',
+  Enagua: 'skirt.png',
+  Camisa: 'tshirt.png',
+  Bufanda: 'scarf.png',
+  Guantes: 'gloves.png',
+  Lazo: 'hairBow.png',
+  Prensa: 'hairClip.png',
+  Leggings: 'legging.png',
+  Reloj: 'watch.png',
+};
+
+const avatarRoutes = {
+  1: { route: 'bear.png', description: 'Oso' },
+  2: { route: 'chicken.png', description: 'Pollo' },
+  3: { route: 'elephant.png', description: 'Elefante' },
+  4: { route: 'hedgehog.png', description: 'Erizo' },
+  5: { route: 'hippo.png', description: 'Hipopótamo' },
+  6: { route: 'koala.png', description: 'Koala' },
+  7: { route: 'lion.png', description: 'León' },
+  8: { route: 'llama.png', description: 'Llama' },
+  9: { route: 'meerkat.png', description: 'Suricata' },
+  10: { route: 'monkey.png', description: 'Mono' },
+  11: { route: 'panda.png', description: 'Panda' },
+  12: { route: 'parrot.png', description: 'Lora' },
+  13: { route: 'penguin.png', description: 'Pinguino' },
+  14: { route: 'Polar', description: 'polarBear.png' },
+  15: { route: 'rabbit.png', description: 'Conejo' },
+  16: { route: 'seaLion.png', description: 'Foca' },
+  17: { route: 'snake.png', description: 'Serpiente' },
+  18: { route: 'tiger.png', description: 'Tigre' },
+  19: { route: 'turtle.png', description: 'Tortuga' },
+  20: { route: 'weasel.png', description: 'Comadreja' },
+};
+
 /**
  * Closes connection with client.
  */
@@ -24,21 +162,17 @@ function validateCode(socket, messageReceived) {
   if (messageReceived.sessionCode === '1234') {
     newMessage = {
       type: 'handleCodeValidation',
-      /*
       from: 'server',
       to: 'client',
       when: 'When the server validates room',
-      */
       isValid: 'true',
     };
   } else {
     newMessage = {
       type: 'handleCodeValidation',
-      /*
       from: 'server',
       to: 'client',
       when: 'When the server validates room',
-      */
       isValid: 'false',
     };
   }
@@ -47,9 +181,68 @@ function validateCode(socket, messageReceived) {
 }
 
 /**
+ * Calculates a random number in a range.
+ * TODO: Move to common js.
+ */
+function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+/**
+ * Assigns random avatar to player.
+ */
+function selectAvatar() {
+  const randomNumber = getRandomNumber(1, avatarRoutes.length);
+  const playerAvatar = avatarRoutes[randomNumber];
+  return playerAvatar;
+}
+
+/**
+ * Creates new player and adds it to the room.
+ */
+function createPlayer(roomId, name) {
+  const newPlayerKey = availableRooms[roomId].players + 1;
+  const playerAvatar = selectAvatar();
+  const newPlayer = {
+    nickname: name,
+    avatar: playerAvatar,
+    points: '0',
+  };
+  availableRooms[roomId].players[newPlayerKey] = newPlayer;
+  return newPlayerKey;
+}
+
+/**
+ * Adds player to list for other players in room.
+ */
+function addPlayer(socket, name, url, score) {
+  // TODO: send to everyone in room
+  console.log('addPlayer');
+  const newMessage = {
+    type: 'handleNewPlayer',
+    from: 'server',
+    to: 'player',
+    when: 'When the server lets clients know a new player has been added',
+    players: {
+      1: {
+        nickname: name,
+        avatar: url,
+        points: score,
+      },
+    },
+  };
+  socket.send(JSON.stringify(newMessage));
+  console.log(`MENSAJE${newMessage}`);
+}
+
+/**
  * Adds guest to room.
  */
 function addToRoom(socket, message) {
+  const newPlayerKey = createPlayer(message.sessionCode, message.nickname);
+  // if player existed must be handled differently, must order!!
+  // for all players in room with message.sessionCode
+  addPlayer(socket, message.nickname);
   console.log('addToRoom');
 }
 
@@ -57,6 +250,8 @@ function addToRoom(socket, message) {
  * Creates new room for host.
  */
 function createRoom(socket, message) {
+  availableRooms.push();
+  // asign avatar and store in room
   console.log('createRoom');
 }
 
@@ -78,6 +273,8 @@ function setMaxTime(socket, message) {
  * Sets amount of card per player to other players in room.
  */
 function setCardsPerPlayer(socket, message) {
+  // function addPlayer(socket, name, url, score)
+  addPlayer(socket, 'xime', 'bear.png', '30');
   console.log('setCardsPerPlayer');
 }
 
@@ -121,13 +318,6 @@ function toggleAdp3a(socket, message) {
  */
 function toggleAdp3b(socket, message) {
   console.log('toggleAdp3b');
-}
-
-/**
- * Adds player to list for other players in room.
- */
-function addPlayer(socket, message) {
-  console.log('addPlayer');
 }
 
 /**
@@ -216,12 +406,12 @@ function identifyMessage(socket, receivedMessage) {
     case 'toggleAdp3b':
       toggleAdp3b(socket, receivedMessage);
       break;
-    case 'addPlayer':
+    /* case 'addPlayer':
       addPlayer(socket, receivedMessage);
       break;
     case 'removePlayer':
       removePlayer(socket, receivedMessage);
-      break;
+      break; */
     case 'startGame':
       startGame(socket, receivedMessage);
       break;
