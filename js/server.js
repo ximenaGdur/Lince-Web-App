@@ -1,11 +1,15 @@
-// import { ip , port } from 'config.js';
+import {
+  serverIp,
+  serverPort,
+// eslint-disable-next-line import/extensions
+} from './config.js';
 
 // Maximum number of clients allowed in webpage.
 const maximumClientAmount = 20;
 // Including ws module.
 const WebSocket = require('ws');
 // Creating new server instance listening in given port.
-const server = new WebSocket.Server({ port: 8009 });
+const server = new WebSocket.Server({ ip: serverIp, port: serverPort });
 // Array that stores all sockets.
 const sockets = [];
 
@@ -219,7 +223,7 @@ function addPlayer(socket, playerArray) {
     players: JSON.stringify(playerArray),
   };
 
-  console.log('playerArray.players: ' + JSON.stringify(playerArray));
+  console.log(`playerArray.players: ${JSON.stringify(playerArray)}`);
   socket.send(JSON.stringify(newMessage));
   console.log(`MENSAJE${JSON.stringify(newMessage)}`);
 }
@@ -275,6 +279,17 @@ function createRoom(socket, message) {
  * Sets amount of card per round to other players in room.
  */
 function setCardsPerRound(socket, message) {
+  // TODO: Store configuration
+
+  // TODO: send to all players
+  const newMessage = {
+    type: 'handleCardsPerPlayer',
+    from: 'server',
+    to: 'player',
+    when: 'When the server lets players know to change the cards per round',
+    cardsPerRound: message.cardsPerRound,
+  };
+  socket.send(JSON.stringify(newMessage));
   console.log('setCardsPerRound');
 }
 
@@ -282,6 +297,17 @@ function setCardsPerRound(socket, message) {
  * Sets maximum time per round to other players in room.
  */
 function setMaxTime(socket, message) {
+  // TODO: Store configuration
+
+  // TODO: send to all players
+  const newMessage = {
+    type: 'handleMaxTime',
+    from: 'server',
+    to: 'player',
+    when: 'When the server lets players know to change the max time',
+    maxTime: message.maxTime,
+  };
+  socket.send(JSON.stringify(newMessage));
   console.log('setMaxTime');
 }
 
@@ -290,8 +316,21 @@ function setMaxTime(socket, message) {
  */
 function setCardsPerPlayer(socket, message) {
   const roomCodes = Object.keys(availableRooms);
-  console.log('availableRooms[roomCodes[0]].players: ' + JSON.stringify(availableRooms[roomCodes[0]].players));
+  console.log(`availableRooms[roomCodes[0]].players: ${JSON.stringify(availableRooms[roomCodes[0]].players)}`);
   addPlayer(socket, availableRooms[roomCodes[0]].players);
+
+  // TODO: Store configuration
+
+  // TODO: send to all players
+  /* const newMessage = {
+    type: 'handleCardsPerPlayer',
+    from: 'server',
+    to: 'player',
+    when: 'When the server lets players know to change the cards per player',
+    cardsPerPlayer: message.cardsPerPlayer,
+  };
+  socket.send(JSON.stringify(newMessage)); */
+
   console.log('setCardsPerPlayer');
 }
 
@@ -299,6 +338,17 @@ function setCardsPerPlayer(socket, message) {
  * Sets adaption 1a to other players in room.
  */
 function toggleAdp1a(socket, message) {
+  // TODO: Store configuration
+
+  // TODO: send to all players
+  const newMessage = {
+    type: 'handleAdp1a',
+    from: 'server',
+    to: 'player1',
+    when: 'When the server lets players know adaptation 1a has been activated',
+  };
+  socket.send(JSON.stringify(newMessage));
+
   console.log('toggleAdp1a');
 }
 
@@ -306,6 +356,17 @@ function toggleAdp1a(socket, message) {
  * Sets adaption 1b to other players in room.
  */
 function toggleAdp1b(socket, message) {
+  // TODO: Store configuration
+
+  // TODO: send to all players
+  const newMessage = {
+    type: 'handleAdp1b',
+    from: 'server',
+    to: 'player1',
+    when: 'When the server lets players know adaptation 1b has been activated',
+  };
+  socket.send(JSON.stringify(newMessage));
+
   console.log('toggleAdp1b');
 }
 
@@ -313,6 +374,17 @@ function toggleAdp1b(socket, message) {
  * Sets adaption 2a to other players in room.
  */
 function toggleAdp2a(socket, message) {
+  // TODO: Store configuration
+
+  // TODO: send to all players
+  const newMessage = {
+    type: 'handleAdp2a',
+    from: 'server',
+    to: 'player1',
+    when: 'When the server lets players know adaptation 2a has been activated',
+  };
+  socket.send(JSON.stringify(newMessage));
+
   console.log('toggleAdp2a');
 }
 
@@ -320,6 +392,17 @@ function toggleAdp2a(socket, message) {
  * Sets adaption 2b to other players in room.
  */
 function toggleAdp2b(socket, message) {
+  // TODO: Store configuration
+
+  // TODO: send to all players
+  const newMessage = {
+    type: 'handleAdp2b',
+    from: 'server',
+    to: 'player1',
+    when: 'When the server lets players know adaptation 2b has been activated',
+  };
+  socket.send(JSON.stringify(newMessage));
+
   console.log('toggleAdp2b');
 }
 
@@ -327,6 +410,17 @@ function toggleAdp2b(socket, message) {
  * Sets adaption 3a to other players in room.
  */
 function toggleAdp3a(socket, message) {
+  // TODO: Store configuration
+
+  // TODO: send to all players
+  const newMessage = {
+    type: 'handleAdp3a',
+    from: 'server',
+    to: 'player1',
+    when: 'When the server lets players know adaptation 3a has been activated',
+  };
+  socket.send(JSON.stringify(newMessage));
+
   console.log('toggleAdp3a');
 }
 
@@ -334,13 +428,36 @@ function toggleAdp3a(socket, message) {
  * Sets adaption 3b to other players in room.
  */
 function toggleAdp3b(socket, message) {
+  // TODO: Store configuration
+
+  // TODO: send to all players
+  const newMessage = {
+    type: 'handleAdp3b',
+    from: 'server',
+    to: 'player1',
+    when: 'When the server lets players know adaptation 3b has been activated',
+  };
+  socket.send(JSON.stringify(newMessage));
+
   console.log('toggleAdp3b');
 }
 
 /**
  * Removes player in list for other players in room.
  */
-function removePlayer(socket, message) {
+function removePlayer(socket, playerArray) {
+  // TODO: Update dictionary
+  // check if host and assign other host
+
+  // TODO: send to all players
+  const newMessage = {
+    type: 'handleRemovePlayer',
+    from: 'server',
+    to: 'player',
+    when: 'When the server lets players know a player left the room',
+    players: JSON.stringify(playerArray),
+  };
+  socket.send(JSON.stringify(newMessage));
   console.log('removePlayer');
 }
 
@@ -348,6 +465,15 @@ function removePlayer(socket, message) {
  * Starts game for all players in room.
  */
 function startGame(socket, message) {
+  // TODO: send to all players
+  // Prepare cards?
+  const newMessage = {
+    type: 'handleStartGame',
+    from: 'server',
+    to: 'player',
+    when: 'When the server lets players know game has started',
+  };
+  socket.send(JSON.stringify(newMessage));
   console.log('startGame');
 }
 

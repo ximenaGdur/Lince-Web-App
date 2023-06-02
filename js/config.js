@@ -1,2 +1,2 @@
-export const ip = 'localhost';
-export const port = 8009;
+export const serverIp = 'localhost';
+export const serverPort = 8009;

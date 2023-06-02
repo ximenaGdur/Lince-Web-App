@@ -893,7 +893,7 @@ sendMessage({
     "from": "client",
     "to": "server",
     "when": "when a host client change the max time",
-    "MaxTime": time,
+    "maxTime": time,
     "nickname": name,
     "sessionCode": code
 })
@@ -921,7 +921,7 @@ sendMessage({
     "from": "client",
     "to": "server",
     "when": "when a host client change the cards per player",
-    "CardsPerPlayer": numCards,
+    "c": numCards,
     "nickname": name,
     "sessionCode": code
 })
@@ -1162,7 +1162,15 @@ for player in rooms[roomCode].getPlayers()
         "type": "handleNewPlayer",
         "from": "server",
         "to": player,
-        "when": "When the server lets clients know a new player has been added"
+        "when": "When the server lets clients know a new player has been added",
+        "players": {
+            "1": {
+                "nickname": "xime",
+                "avatar": {"route": "hippo.png", "description": "Hipopótamo"},
+                "points": "0",
+                "host":" true"
+            }
+        }
     })
 
 rooms[roomCode].addPlayer(nickname)
@@ -1259,7 +1267,7 @@ for player in rooms[roomCode].getPlayers()
             "from": "server",
             "to": player,
             "when": "When the server lets players know to change the max time",
-            "MaxTime": maxTime
+            "maxTime": maxTime
         })
 ~~~
 
@@ -1273,7 +1281,7 @@ for player in rooms[roomCode].getPlayers()
             "from": "server",
             "to": player,
             "when": "When the server lets players know to change the cards per player",
-            "CardsPerPlayer": cards
+            "cardsPerPlayer": cards
         })
 ~~~
 
@@ -1287,11 +1295,11 @@ for player in rooms[roomCode].getPlayers()
             "from": "server",
             "to": player,
             "when": "When the server lets players know to change the cards per round",
-            "CardsPerRound": cards
+            "cardsPerRound": cards
         })
 ~~~
 
-#### updatePlayers(nickname, roomCode)
+#### removePlayer(nickname, roomCode)
 
 ~~~ js
 rooms[roomCode].pop(nickname)
@@ -1301,7 +1309,14 @@ for player in rooms[roomCode].getPlayers()
         "from": "server",
         "to": player,
         "when": "When the server lets players know a player left the room",
-        "nickname": nickname
+        "players": {
+            "1": {
+                "nickname": "xime",
+                "avatar": {"route": "hippo.png", "description": "Hipopótamo"},
+                "points": "0",
+                "host":" true"
+            }
+        }
     })
 ~~~
 
