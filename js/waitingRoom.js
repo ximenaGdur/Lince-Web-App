@@ -363,37 +363,31 @@ function handleStartGame() {
 }
 
 /**
- * Creates an array with player scores
- */
-/* function determinePlayerScores() {
-  const playerScores = document.getElementsByClassName('score');
-  const scoreArray = [];
-  for (let playerIndex = 0; playerIndex < playerScores.length; playerIndex += 1) {
-    scoreArray.push(playerScores[playerIndex].innerHTML);
-  }
-  console.table(`scores: ${scoreArray}`);
-  return scoreArray;
-} */
-
-/**
  * Adds new player to player list.
  */
 function handleNewPlayer(message) {
   // Order by points
   if (playerTable) {
-    const playerArray = message.players;
-
-    for (let playerIndex = 0; playerIndex < playerArray.length; playerIndex += 1) {
-      const avatarInfo = `/design/images/icons/profile/${playerArray[playerIndex].avatar}`;
-      playerTable.innerHTML
-        += '<tr class="ranking-row">'
-          + `<td class="ranking-col">${playerIndex}</td>`
-          + `<td class="ranking-col">
-              <img class="profile-image" src=${avatarInfo.route} alt="Icono de ${avatarInfo.description}"/>
-            </td>`
-          + `<td class="ranking-col">${playerArray[playerIndex].nickname}</td>`
-          + `<td class="ranking-col">${playerArray[playerIndex].points} puntos</td>`
-        + '</tr>';
+    const playerArray = JSON.parse(message.players);
+    console.log(playerArray);
+    if (playerArray) {
+      for (let playerIndex = 1; playerIndex <= Object.keys(playerArray).length; playerIndex += 1) {
+        const playerInfo = playerArray[playerIndex];
+        if (playerInfo) {
+          console.log(`playerInfo: ${JSON.stringify(playerInfo)}`);
+          const avatarRoute = `/design/images/icons/profile/${playerInfo.avatar.route}`;
+          console.log(`avatarRoute: ${avatarRoute}`);
+          playerTable.innerHTML
+            += '<tr class="ranking-row">'
+              + `<td class="ranking-col">${playerIndex}</td>`
+              + `<td class="ranking-col">
+                  <img class="profile-image" src="${avatarRoute}" alt="Icono de ${playerInfo.avatar.description}"/>
+                </td>`
+              + `<td class="ranking-col">${playerInfo.nickname}</td>`
+              + `<td class="ranking-col">${playerInfo.points} puntos</td>`
+            + '</tr>';
+        }
+      }
     }
   }
 }
@@ -558,7 +552,7 @@ socket.addEventListener('open', () => {
  */
 socket.addEventListener('message', (event) => {
   const receivedMessage = JSON.parse(event.data);
-  console.log(`Recibi del servidor: ${receivedMessage}`);
+  console.log(`Recibi del servidor: ${JSON.stringify(receivedMessage)}`);
   identifyMessage(receivedMessage);
 });
 

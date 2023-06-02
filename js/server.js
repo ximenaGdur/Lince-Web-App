@@ -216,10 +216,12 @@ function addPlayer(socket, playerArray) {
     from: 'server',
     to: 'player',
     when: 'When the server lets clients know a new player has been added',
-    players: { playerArray },
+    players: JSON.stringify(playerArray),
   };
+
+  console.log('playerArray.players: ' + JSON.stringify(playerArray));
   socket.send(JSON.stringify(newMessage));
-  console.log(`MENSAJE${newMessage}`);
+  console.log(`MENSAJE${JSON.stringify(newMessage)}`);
 }
 
 /**
@@ -287,8 +289,9 @@ function setMaxTime(socket, message) {
  * Sets amount of card per player to other players in room.
  */
 function setCardsPerPlayer(socket, message) {
-  // function addPlayer(socket, name, url, score)
-  addPlayer(socket, 'xime', 'bear.png', '30');
+  const roomCodes = Object.keys(availableRooms);
+  console.log('availableRooms[roomCodes[0]].players: ' + JSON.stringify(availableRooms[roomCodes[0]].players));
+  addPlayer(socket, availableRooms[roomCodes[0]].players);
   console.log('setCardsPerPlayer');
 }
 
