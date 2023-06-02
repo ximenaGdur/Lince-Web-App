@@ -484,7 +484,7 @@ function returnToMain() {
     window.location.href = './index.html';
   }
   // send message to server letting them know player is leaving.
-  // socket.send(createRemovePlayerMessage());
+  socket.send(createRemovePlayerMessage());
 }
 
 /**
