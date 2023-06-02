@@ -16,6 +16,8 @@ const creditsButton = document.getElementById('credits-link');
 const creditsContent = document.getElementById('credits');
 // Button to create a room after entering a nickname.
 const createRoomBtn = document.getElementById('create-room-button');
+// Feedback given by server about given room code.
+const feedbackMessage = document.getElementById('room-validation-text');
 // Text field to enter player nickname.
 const nicknameField = document.getElementById('nickname');
 // Button that changes tab to instructions.
@@ -115,6 +117,8 @@ function verifyCode() {
       sessionCode: popupInput.value,
     };
     socket.send(JSON.stringify(message));
+  } else {
+    feedbackMessage.innerHTML = '';
   }
 }
 

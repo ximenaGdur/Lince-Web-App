@@ -150,8 +150,8 @@ function closeConnection(socket, message) {
 function validateCode(socket, messageReceived) {
   const code = messageReceived.sessionCode;
   let newMessage = {};
-  if (availableRooms?.code !== undefined) {
-    console.log("Code exists");
+  if (availableRooms[code]) {
+    console.log('Code exists');
     newMessage = {
       type: 'handleCodeValidation',
       from: 'server',
@@ -160,7 +160,7 @@ function validateCode(socket, messageReceived) {
       isValid: 'true',
     };
   } else {
-    console.log("Code doesnt exist");
+    console.log('Code doesnt exist');
     newMessage = {
       type: 'handleCodeValidation',
       from: 'server',
@@ -186,9 +186,6 @@ function getRandomNumber(min, max) {
  */
 function selectAvatar() {
   const randomNumber = getRandomNumber(1, Object.keys(avatarRoutes).length);
-  console.log('randomNumber: ' + randomNumber);
-  console.log('length: ' + Object.keys(avatarRoutes).length);
-  console.log(JSON.stringify(avatarRoutes));
   const playerAvatar = avatarRoutes[randomNumber];
   return playerAvatar;
 }

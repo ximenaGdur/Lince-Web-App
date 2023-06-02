@@ -572,10 +572,10 @@ cardsPerPlayerRange.addEventListener('change', chooseCardsPerPlayer);
 cardsPerRoundRange.addEventListener('change', chooseCardsPerRound);
 
 // Adding event listener to cancelButton
-//      cancelButton.addEventListener('click', closePopUp);
+cancelButton.addEventListener('click', closePopUp);
 
 // Adding event listener to exitButton
-//       exitButton.addEventListener('click', showExitPopup);
+exitButton.addEventListener('click', showExitPopup);
 
 // Adding event listener to informationIcons[0]
 informationIcons[0].addEventListener('click', maxTimePopUp);
