@@ -9,17 +9,7 @@ const server = new WebSocket.Server({ port: 8009 });
 // Array that stores all sockets.
 const sockets = [];
 
-const availableRooms = {
-  1234: {
-    players: {
-      1: {
-        nickname: 'playerx',
-        avatar: { route: 'bear.png', description: 'Oso' },
-        points: '2',
-      },
-    },
-  },
-};
+const availableRooms = {};
 
 const cardRoutes = {
   Sueter: 'hoodie.png',
@@ -158,8 +148,10 @@ function closeConnection(socket, message) {
  * Checks if room with given code exists.
  */
 function validateCode(socket, messageReceived) {
+  const code = messageReceived.sessionCode;
   let newMessage = {};
-  if (messageReceived.sessionCode === '1234') {
+  if (availableRooms?.code !== undefined) {
+    console.log("Code exists");
     newMessage = {
       type: 'handleCodeValidation',
       from: 'server',
@@ -168,6 +160,7 @@ function validateCode(socket, messageReceived) {
       isValid: 'true',
     };
   } else {
+    console.log("Code doesnt exist");
     newMessage = {
       type: 'handleCodeValidation',
       from: 'server',
@@ -192,7 +185,10 @@ function getRandomNumber(min, max) {
  * Assigns random avatar to player.
  */
 function selectAvatar() {
-  const randomNumber = getRandomNumber(1, avatarRoutes.length);
+  const randomNumber = getRandomNumber(1, Object.keys(avatarRoutes).length);
+  console.log('randomNumber: ' + randomNumber);
+  console.log('length: ' + Object.keys(avatarRoutes).length);
+  console.log(JSON.stringify(avatarRoutes));
   const playerAvatar = avatarRoutes[randomNumber];
   return playerAvatar;
 }
@@ -200,22 +196,22 @@ function selectAvatar() {
 /**
  * Creates new player and adds it to the room.
  */
-function createPlayer(roomId, name) {
-  const newPlayerKey = availableRooms[roomId].players + 1;
+function createPlayer(name, isHost) {
   const playerAvatar = selectAvatar();
+  console.log(JSON.stringify(playerAvatar));
   const newPlayer = {
     nickname: name,
     avatar: playerAvatar,
     points: '0',
+    host: isHost,
   };
-  availableRooms[roomId].players[newPlayerKey] = newPlayer;
-  return newPlayerKey;
+  return newPlayer;
 }
 
 /**
  * Adds player to list for other players in room.
  */
-function addPlayer(socket, name, url, score) {
+function addPlayer(socket, playerArray) {
   // TODO: send to everyone in room
   console.log('addPlayer');
   const newMessage = {
@@ -223,13 +219,7 @@ function addPlayer(socket, name, url, score) {
     from: 'server',
     to: 'player',
     when: 'When the server lets clients know a new player has been added',
-    players: {
-      1: {
-        nickname: name,
-        avatar: url,
-        points: score,
-      },
-    },
+    players: { playerArray },
   };
   socket.send(JSON.stringify(newMessage));
   console.log(`MENSAJE${newMessage}`);
@@ -239,20 +229,47 @@ function addPlayer(socket, name, url, score) {
  * Adds guest to room.
  */
 function addToRoom(socket, message) {
-  const newPlayerKey = createPlayer(message.sessionCode, message.nickname);
-  // if player existed must be handled differently, must order!!
-  // for all players in room with message.sessionCode
-  addPlayer(socket, message.nickname);
-  console.log('addToRoom');
+  const newPlayer = createPlayer(message.nickname, 'false');
+  if (availableRooms[message.sessionCode]) {
+    const playerArray = availableRooms[message.sessionCode].players;
+    const playerIndex = Object.keys(playerArray).length + 1;
+    playerArray[playerIndex] = newPlayer;
+
+    // if player existed must be handled differently, must order!!
+    // for all players in room with message.sessionCode
+    addPlayer(socket, availableRooms[message.sessionCode].players);
+    console.log('addToRoom');
+  }
+}
+
+/**
+ * Generates random code for room.
+ */
+function generateCode() {
+  let randomRoomCode = '';
+  for (let numberIndex = 0; numberIndex < 5; numberIndex += 1) {
+    randomRoomCode += getRandomNumber(0, 9);
+  }
+  return randomRoomCode;
 }
 
 /**
  * Creates new room for host.
  */
 function createRoom(socket, message) {
-  availableRooms.push();
+  const roomCode = generateCode();
+  const newPlayer = createPlayer(message.nickname, 'true');
+  if (!availableRooms[roomCode]) {
+    availableRooms[roomCode] = {
+      players: {
+        1: newPlayer,
+      },
+    };
+  }
   // asign avatar and store in room
   console.log('createRoom');
+  console.log('');
+  console.log(`availableRooms ${JSON.stringify(availableRooms)}`);
 }
 
 /**
@@ -438,7 +455,7 @@ function identifyMessage(socket, receivedMessage) {
 server.on('connection', (socket) => {
   console.log('Estableciendo de conexión con cliente...');
 
-  if (sockets.length <= maximumClientAmount) {
+  if (Object.keys(sockets).length <= maximumClientAmount) {
     sockets.push(socket); // DEBERIA SER UN DICCIONARIO, NO LO ESTOY USANDO PORQUE ESTOY PROBANDO
   }
 

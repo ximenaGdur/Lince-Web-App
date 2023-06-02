@@ -2,7 +2,6 @@
 import {
   showCodePopUp,
   cancelPopUp,
-  joinRoom,
   handleCodeValidation,
 // eslint-disable-next-line import/extensions
 } from './codePopUp.js';
@@ -73,11 +72,9 @@ function createSession() {
   const playerNickname = document.getElementById('nickname').value;
   const message = {
     type: 'createRoom',
-    /*
     from: 'client',
     to: 'server',
     when: 'when a client presses the create room button with a valid nickname',
-    */
     nickname: playerNickname,
   };
   socket.send(JSON.stringify(message));
@@ -86,17 +83,35 @@ function createSession() {
 }
 
 /**
+ * Joins given room when button is clicked.
+ */
+function joinSession() {
+  const playerNickname = document.getElementById('nickname').value;
+  if (joinButton) {
+    const message = {
+      type: 'addToRoom',
+      from: 'client',
+      to: 'server',
+      when: 'when a client presses the join session button',
+      nickname: playerNickname,
+      sessionCode: popupInput.value,
+    };
+    socket.send(JSON.stringify(message));
+
+    window.location.href = './waitingRoom.xhtml';
+  }
+}
+
+/**
  * Asks the server if room code is valid.
  */
 function verifyCode() {
-  if (popupInput.value.length === 4 && popupInput.value.trim() !== '') {
+  if (popupInput.value.length === 5 && popupInput.value.trim() !== '') {
     const message = {
       type: 'validateCode',
-      /*
       from: 'client',
       to: 'server',
       when: 'when a client types a room code',
-      */
       sessionCode: popupInput.value,
     };
     socket.send(JSON.stringify(message));
@@ -195,7 +210,7 @@ instructionsButton.addEventListener('click', showInstructions);
 /**
  * Adding event listener when joinButton is clicked
  */
-joinButton.addEventListener('click', joinRoom);
+joinButton.addEventListener('click', joinSession);
 
 /**
  * Adding event listener when nicknameField is changed

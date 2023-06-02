@@ -1,11 +1,11 @@
 /** ****************** Imports ******************* */
 
-/* import {
+import {
   closePopUp,
   showExitPopup,
   createRemovePlayerMessage,
 // eslint-disable-next-line import/extensions
-} from './exitPopUp.js'; */
+} from './exitPopUp.js';
 
 /** ****************** Creating constants for script ******************* */
 
@@ -384,12 +384,13 @@ function handleNewPlayer(message) {
     const playerArray = message.players;
 
     for (let playerIndex = 0; playerIndex < playerArray.length; playerIndex += 1) {
-      const avatarRoute = '/design/images/Icons/profile/' + playerArray[playerIndex].avatar.route;
+      const avatarInfo = `/design/images/icons/profile/${playerArray[playerIndex].avatar}`;
       playerTable.innerHTML
         += '<tr class="ranking-row">'
           + `<td class="ranking-col">${playerIndex}</td>`
-          //
-          + `<td class="ranking-col"><img class="profile-image" src=${avatarRoute} alt="Icono de Zanahoria" /></td>`
+          + `<td class="ranking-col">
+              <img class="profile-image" src=${avatarInfo.route} alt="Icono de ${avatarInfo.description}"/>
+            </td>`
           + `<td class="ranking-col">${playerArray[playerIndex].nickname}</td>`
           + `<td class="ranking-col">${playerArray[playerIndex].points} puntos</td>`
         + '</tr>';

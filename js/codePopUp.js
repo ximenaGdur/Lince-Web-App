@@ -40,12 +40,3 @@ export function cancelPopUp() {
   document.getElementById('popup-input').value = '';
   document.getElementById('room-validation-text').innerHTML = '';
 }
-
-/**
- * Joins given room when button is clicked.
- */
-export function joinRoom() {
-  if (joinButton) {
-    window.location.href = './waitingRoom.xhtml';
-  }
-}
