@@ -487,7 +487,7 @@ function infoAdapPopUp(adaptation) {
 function returnToMain() {
   if (acceptButton) {
     // Aqui se manda el msj de eliminar el jugador de la lista.
-    window.location.href = './index.xhtml';
+    window.location.href = './index.html';
   }
   // send message to server letting them know player is leaving.
   // socket.send(createRemovePlayerMessage());
