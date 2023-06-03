@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /** ****************** Imports ******************* */
 import {
   showCodePopUp,
@@ -56,6 +57,7 @@ function enterNickname() {
     createRoomBtn.style.cursor = 'default';
     joinRoomBtn.style.cursor = 'default';
   }
+  sessionStorage.setItem(nicknameField.value, socket);
 }
 
 /**
@@ -80,7 +82,6 @@ function createSession() {
     nickname: playerNickname,
   };
   socket.send(JSON.stringify(message));
-
   window.location.href = './waitingRoom.xhtml';
 }
 
@@ -99,7 +100,6 @@ function joinSession() {
       sessionCode: popupInput.value,
     };
     socket.send(JSON.stringify(message));
-
     window.location.href = './waitingRoom.xhtml';
   }
 }

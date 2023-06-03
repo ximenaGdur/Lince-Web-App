@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 // import { ip , port } from 'config.js';
 
 // Maximum number of clients allowed in webpage.
@@ -10,6 +11,8 @@ const server = new WebSocket.Server({ port: 8009 });
 const sockets = [];
 
 const availableRooms = {};
+
+const rooms = new Map();
 
 const cardRoutes = {
   Sueter: 'hoodie.png',
@@ -252,6 +255,33 @@ function generateCode() {
   return randomRoomCode;
 }
 
+function sortPlayersByPosition() {
+  const sortedEntries = Array.from(players).sort((a, b) => a[0].points.localeCompare(b[0].points));
+
+  const orderedValues = sortedEntries.map((entry) => entry[1]);
+
+  console.log(orderedValues);
+
+  // let iter = players.values();
+  // iter.sort();
+  // console.log(iter);
+
+  // const i = [1, 2, 3];
+}
+function setDefaultGameConfiguration(roomCode) {
+  const configurations = new Map();
+  configurations.set('maxTime', 20);
+  configurations.set('cardsPerPlayer', 5);
+  configurations.set('cardsPerRound', 100);
+  configurations.set('adaptation1a', false);
+  configurations.set('adaptation1b', false);
+  configurations.set('adaptation2a', false);
+  configurations.set('adaptation2b', false);
+  configurations.set('adaptation3a', false);
+  configurations.set('adaptation3b', false);
+  rooms.get(roomCode).config = configurations;
+}
+
 /**
  * Creates new room for host.
  */
@@ -269,6 +299,25 @@ function createRoom(socket, message) {
   console.log('createRoom');
   console.log('');
   console.log(`availableRooms ${JSON.stringify(availableRooms)}`);
+
+  rooms.set(1234, { code: 1234 });
+  setDefaultGameConfiguration(1234);
+  const players = new Map();
+  rooms.get(1234).players = players;
+  console.log(rooms.keys());
+  // rooms.get(1234).config.set('adaptation1a', 'true');
+  // console.log(rooms.get(1234));
+
+  // rooms.get(1234).set('adaptation1b', 'true');
+  // console.log(rooms.get(1234));
+
+  // players.set('cris', 0);
+  // players.set('xime', 100);
+  // players.set('Panchita', 200);
+  // players.set('jj', 50);
+  // console.log(rooms.get(1234).code);
+  // console.log(rooms.get(1234).players);
+  // sortPlayersByPosition();
 }
 
 /**
@@ -276,6 +325,11 @@ function createRoom(socket, message) {
  */
 function setCardsPerRound(socket, message) {
   console.log('setCardsPerRound');
+  const rCode = message.roomCode;
+  const cPerRound = message.cardsPerRound;
+  rooms.get(rCode).config.set('cardPerPlayer', cPerRound);
+  console.log(rooms.get(1234));
+  // broadcast
 }
 
 /**
@@ -283,16 +337,27 @@ function setCardsPerRound(socket, message) {
  */
 function setMaxTime(socket, message) {
   console.log('setMaxTime');
+  const rCode = message.roomCode;
+  const mTime = message.maxTime;
+  rooms.get(rCode).config.set('maxTime', mTime);
+  console.log(rooms.get(1234));
+  // broadcast
 }
 
 /**
  * Sets amount of card per player to other players in room.
  */
 function setCardsPerPlayer(socket, message) {
-  const roomCodes = Object.keys(availableRooms);
-  console.log('availableRooms[roomCodes[0]].players: ' + JSON.stringify(availableRooms[roomCodes[0]].players));
-  addPlayer(socket, availableRooms[roomCodes[0]].players);
+  // const roomCodes = Object.keys(availableRooms);
+  // console.log('availableRooms[roomCodes[0]].players: ' + JSON.stringify(availableRooms[roomCodes[0]].players));
+  // addPlayer(socket, availableRooms[roomCodes[0]].players);
+  // console.log('setCardsPerPlayer');
   console.log('setCardsPerPlayer');
+  const rCode = message.roomCode;
+  const cPerPlayer = message.cardsPerPlayer;
+  rooms.get(rCode).config.set('cardsPerPlayer', cPerPlayer);
+  console.log(rooms.get(1234));
+  // broadcast
 }
 
 /**
@@ -300,6 +365,15 @@ function setCardsPerPlayer(socket, message) {
  */
 function toggleAdp1a(socket, message) {
   console.log('toggleAdp1a');
+  const rCode = message.roomCode;
+  if (rooms.get(rCode).config.get('adaptation1a') === false && rooms.get(rCode).config.get('adaptation1b') === false) {
+    rooms.get(rCode).config.set('adaptation1a', true);
+  } else if (rooms.get(rCode).config.get('adaptation1b') === true) {
+    rooms.get(rCode).config.set('adaptation1b', false);
+    rooms.get(rCode).config.set('adaptation1a', true);
+  }
+  console.log(rooms.get(1234));
+  // broadcast
 }
 
 /**
@@ -307,6 +381,15 @@ function toggleAdp1a(socket, message) {
  */
 function toggleAdp1b(socket, message) {
   console.log('toggleAdp1b');
+  const rCode = message.roomCode;
+  if (rooms.get(rCode).config.get('adaptation1a') === false && rooms.get(rCode).config.get('adaptation1b') === false) {
+    rooms.get(rCode).config.set('adaptation1b', true);
+  } else if (rooms.get(rCode).config.get('adaptation1a') === true) {
+    rooms.get(rCode).config.set('adaptation1a', false);
+    rooms.get(rCode).config.set('adaptation1b', true);
+  }
+  console.log(rooms.get(1234));
+  // broadcast
 }
 
 /**
@@ -314,6 +397,15 @@ function toggleAdp1b(socket, message) {
  */
 function toggleAdp2a(socket, message) {
   console.log('toggleAdp2a');
+  const rCode = message.roomCode;
+  if (rooms.get(rCode).config.get('adaptation2a') === false && rooms.get(rCode).config.get('adaptation2b') === false) {
+    rooms.get(rCode).config.set('adaptation2a', true);
+  } else if (rooms.get(rCode).config.get('adaptation2b') === true) {
+    rooms.get(rCode).config.set('adaptation2b', false);
+    rooms.get(rCode).config.set('adaptation2a', true);
+  }
+  console.log(rooms.get(1234));
+  // broadcast
 }
 
 /**
@@ -321,6 +413,15 @@ function toggleAdp2a(socket, message) {
  */
 function toggleAdp2b(socket, message) {
   console.log('toggleAdp2b');
+  const rCode = message.roomCode;
+  if (rooms.get(rCode).config.get('adaptation2a') === false && rooms.get(rCode).config.get('adaptation2b') === false) {
+    rooms.get(rCode).config.set('adaptation2b', true);
+  } else if (rooms.get(rCode).config.get('adaptation2a') === true) {
+    rooms.get(rCode).config.set('adaptation2a', false);
+    rooms.get(rCode).config.set('adaptation2b', true);
+  }
+  console.log(rooms.get(1234));
+  // broadcast
 }
 
 /**
@@ -328,6 +429,15 @@ function toggleAdp2b(socket, message) {
  */
 function toggleAdp3a(socket, message) {
   console.log('toggleAdp3a');
+  const rCode = message.roomCode;
+  if (rooms.get(rCode).config.get('adaptation3a') === false && rooms.get(rCode).config.get('adaptation3b') === false) {
+    rooms.get(rCode).config.set('adaptation3a', true);
+  } else if (rooms.get(rCode).config.get('adaptation3b') === true) {
+    rooms.get(rCode).config.set('adaptation3b', false);
+    rooms.get(rCode).config.set('adaptation3a', true);
+  }
+  console.log(rooms.get(1234));
+  // broadcast
 }
 
 /**
@@ -335,6 +445,15 @@ function toggleAdp3a(socket, message) {
  */
 function toggleAdp3b(socket, message) {
   console.log('toggleAdp3b');
+  const rCode = message.roomCode;
+  if (rooms.get(rCode).config.get('adaptation3a') === false && rooms.get(rCode).config.get('adaptation3b') === false) {
+    rooms.get(rCode).config.set('adaptation3b', true);
+  } else if (rooms.get(rCode).config.get('adaptation3a') === true) {
+    rooms.get(rCode).config.set('adaptation3a', false);
+    rooms.get(rCode).config.set('adaptation3b', true);
+  }
+  console.log(rooms.get(1234));
+  // broadcast
 }
 
 /**

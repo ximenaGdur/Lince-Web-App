@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /** ****************** Imports ******************* */
 
 import {
@@ -119,6 +120,7 @@ function chooseCardsPerRound() {
       from: 'client',
       to: 'server',
       when: 'when a host client change the amount of card per round',
+      roomCode: 1234,
       cardsPerRound: cardsRound,
     };
     socket.send(JSON.stringify(message));
@@ -138,7 +140,8 @@ function chooseMaxTime() {
       from: 'client',
       to: 'server',
       when: 'when a host client change the max time',
-      MaxTime: time,
+      roomCode: 1234,
+      maxTime: time,
     };
     socket.send(JSON.stringify(message));
     console.log('Message sent to server');
@@ -157,6 +160,7 @@ function chooseCardsPerPlayer() {
       from: 'client',
       to: 'server',
       when: 'when a host client change the cards per player',
+      roomCode: 1234,
       cardsPerPlayer: cardsPlayer,
     };
     socket.send(JSON.stringify(message));
@@ -174,6 +178,7 @@ function chooseAdp1a() {
     from: 'client',
     to: 'server',
     when: 'when a host client selects the adaptation 1a',
+    roomCode: 1234,
   };
   socket.send(JSON.stringify(message));
 }
@@ -189,6 +194,7 @@ function chooseAdp1b() {
     from: 'client',
     to: 'server',
     when: 'when a host client selects the adaptation 1b',
+    roomCode: 1234,
   };
   socket.send(JSON.stringify(message));
 }
@@ -204,6 +210,7 @@ function chooseAdp2a() {
     from: 'client',
     to: 'server',
     when: 'when a host client selects the adaptation 2a',
+    roomCode: 1234,
   };
   socket.send(JSON.stringify(message));
 }
@@ -219,6 +226,7 @@ function chooseAdp2b() {
     from: 'client',
     to: 'server',
     when: 'when a host client selects the adaptation 2b',
+    roomCode: 1234,
   };
   socket.send(JSON.stringify(message));
 }
@@ -234,6 +242,7 @@ function chooseAdp3a() {
     from: 'client',
     to: 'server',
     when: 'when a host client selects the adaptation 3a',
+    roomCode: 1234,
   };
   socket.send(JSON.stringify(message));
 }
@@ -249,6 +258,7 @@ function chooseAdp3b() {
     from: 'client',
     to: 'server',
     when: 'when a host client selects the adaptation 3b',
+    roomCode: 1234,
   };
   socket.send(JSON.stringify(message));
 }
