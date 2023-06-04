@@ -499,7 +499,7 @@ function toggleAdp1a(socket, message) {
   const roomCode = message.sessionCode;
   if (availableRooms.has(roomCode)) {
     const roomMap = availableRooms.get(roomCode);
-    const roomConfig = roomMap.config;
+    const roomConfig = roomMap.get('config');
 
     // Storing configuration
     roomConfig.set('adaptation1a', true);
@@ -523,7 +523,7 @@ function toggleAdp1b(socket, message) {
   const roomCode = message.sessionCode;
   if (availableRooms.has(roomCode)) {
     const roomMap = availableRooms.get(roomCode);
-    const roomConfig = roomMap.config;
+    const roomConfig = roomMap.get('config');
 
     // Storing configuration
     roomConfig.set('adaptation1b', true);
@@ -547,7 +547,7 @@ function toggleAdp2a(socket, message) {
   const roomCode = message.sessionCode;
   if (availableRooms.has(roomCode)) {
     const roomMap = availableRooms.get(roomCode);
-    const roomConfig = roomMap.config;
+    const roomConfig = roomMap.get('config');
 
     // Storing configuration
     roomConfig.set('adaptation2a', true);
@@ -571,7 +571,7 @@ function toggleAdp2b(socket, message) {
   const roomCode = message.sessionCode;
   if (availableRooms.has(roomCode)) {
     const roomMap = availableRooms.get(roomCode);
-    const roomConfig = roomMap.config;
+    const roomConfig = roomMap.get('config');
 
     // Storing configuration
     roomConfig.set('adaptation2b', true);
@@ -595,7 +595,7 @@ function toggleAdp3a(socket, message) {
   const roomCode = message.sessionCode;
   if (availableRooms.has(roomCode)) {
     const roomMap = availableRooms.get(roomCode);
-    const roomConfig = roomMap.config;
+    const roomConfig = roomMap.get('config');
 
     // Storing configuration
     roomConfig.set('adaptation3a', true);
@@ -619,7 +619,7 @@ function toggleAdp3b(socket, message) {
   const roomCode = message.sessionCode;
   if (availableRooms.has(roomCode)) {
     const roomMap = availableRooms.get(roomCode);
-    const roomConfig = roomMap.config;
+    const roomConfig = roomMap.get('config');
 
     // Storing configuration
     roomConfig.set('adaptation3b', true);
