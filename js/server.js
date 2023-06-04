@@ -1,10 +1,13 @@
 /** ****************** Imports ******************* */
 
+/* eslint-disable linebreak-style */
+// import { ip , port } from 'config.js';
+// const configuration = require('./config.js');
+
 // Including ws module.
 const WebSocket = require('ws');
 
 // eslint-disable-next-line import/extensions
-// const configuration = require('./config.js');
 
 /** ****************** Creating constants for script ******************* */
 
@@ -297,25 +300,55 @@ function generateCode() {
   return randomRoomCode;
 }
 
-function setBasicConfiguration() {
+// function sortPlayersByPosition() {
+//   const sortedEntries = Array.from(players).sort((a, b)=>a[0].points.localeCompare(b[0].points));
 
+//   const orderedValues = sortedEntries.map((entry) => entry[1]);
+
+//   console.log(orderedValues);
+
+//   let iter = players.values();
+//   iter.sort();
+//   console.log(iter);
+
+//   const i = [1, 2, 3];
+// }
+
+/**
+ * Set default game configuration every time a game is created.
+ * @param {*} roomCode room code to add the default configuration.
+ */
+function setDefaultGameConfiguration(roomCode) {
+  const configurations = new Map();
+  configurations.set('maxTime', 20);
+  configurations.set('cardsPerPlayer', 5);
+  configurations.set('cardsPerRound', 100);
+  configurations.set('adaptation1a', false);
+  configurations.set('adaptation1b', false);
+  configurations.set('adaptation2a', false);
+  configurations.set('adaptation2b', false);
+  configurations.set('adaptation3a', false);
+  configurations.set('adaptation3b', false);
+  rooms.get(roomCode).config = configurations;
 }
 
 /**
- * Sends message to client with room code assigned.
+ * Sends the room code to the client who created a game
  */
-function sendRoomCode(socket, roomCode) {
+function sendRoomCode(socket, rCode) {
   const newMessage = {
     type: 'handleRoomCode',
     from: 'server',
     to: 'player',
-    when: 'When the server lets client know the room code assigned to it',
-    sessionCode: roomCode,
+    when: 'When the server lets clients know the room code',
+    sessionCode: rCode,
   };
+  console.log(newMessage);
+  console.log(rCode);
   socket.send(JSON.stringify(newMessage));
 }
 
-/**
+/** 
  * Creates new room for host.
  */
 function createRoom(socket, message) {
@@ -335,7 +368,7 @@ function createRoom(socket, message) {
     [playerNickname, playerMap],
   ]);
   const roomMap = new Map([
-    ['config', setBasicConfiguration()],
+    ['config', setDefaultGameConfiguration()],
     ['players', playersMap],
   ]);
 
@@ -366,6 +399,26 @@ function addToRoom(socket, message) {
 
     addPlayer(socket, playersMap);
   }
+  // asign avatar and store in room
+  console.log('createRoom');
+  console.log('');
+  console.log(`availableRooms ${JSON.stringify(availableRooms)}`);
+
+  rooms.set(roomCode, { code: roomCode });
+  setDefaultGameConfiguration(roomCode);
+  const players = new Map();
+  rooms.get(roomCode).players = players;
+  console.log(rooms.keys());
+
+  sendRoomCode(socket, roomCode);
+
+  // players.set('cris', 0);
+  // players.set('xime', 100);
+  // players.set('Panchita', 200);
+  // players.set('jj', 50);
+  // console.log(rooms.get(1234).code);
+  // console.log(rooms.get(1234).players);
+  // sortPlayersByPosition();
 }
 
 /**
@@ -384,6 +437,11 @@ function setCardsPerRound(socket, message) {
   };
   socket.send(JSON.stringify(newMessage));
   console.log('setCardsPerRound');
+  const rCode = message.roomCode;
+  const cPerRound = message.cardsPerRound;
+  rooms.get(rCode).config.set('cardsPerRound', cPerRound);
+  console.log(rooms.get(rCode));
+  // broadcast
 }
 
 /**
@@ -402,6 +460,12 @@ function setMaxTime(socket, message) {
   };
   socket.send(JSON.stringify(newMessage));
   console.log('setMaxTime');
+  const rCode = message.roomCode;
+  console.log(rCode);
+  const mTime = message.maxTime;
+  rooms.get(rCode).config.set('maxTime', mTime);
+  console.log(rooms.get(rCode));
+  // broadcast
 }
 
 /**
@@ -425,7 +489,17 @@ function setCardsPerPlayer(socket, message) {
   };
   socket.send(JSON.stringify(newMessage)); */
 
+  // const roomCodes = Object.keys(availableRooms);
+  // console.log('availableRooms[roomCodes[0]].players: ' +
+  // JSON.stringify(availableRooms[roomCodes[0]].players));
+  // addPlayer(socket, availableRooms[roomCodes[0]].players);
+  // console.log('setCardsPerPlayer');
   console.log('setCardsPerPlayer');
+  const rCode = message.roomCode;
+  const cPerPlayer = message.cardsPerPlayer;
+  rooms.get(rCode).config.set('cardsPerPlayer', cPerPlayer);
+  console.log(rooms.get(rCode));
+  // broadcast
 }
 
 /**
@@ -444,6 +518,15 @@ function toggleAdp1a(socket) {
   socket.send(JSON.stringify(newMessage));
 
   console.log('toggleAdp1a');
+  const rCode = message.roomCode;
+  if (rooms.get(rCode).config.get('adaptation1a') === false && rooms.get(rCode).config.get('adaptation1b') === false) {
+    rooms.get(rCode).config.set('adaptation1a', true);
+  } else if (rooms.get(rCode).config.get('adaptation1b') === true) {
+    rooms.get(rCode).config.set('adaptation1b', false);
+    rooms.get(rCode).config.set('adaptation1a', true);
+  }
+  console.log(rooms.get(rCode));
+  // broadcast
 }
 
 /**
@@ -462,6 +545,15 @@ function toggleAdp1b(socket) {
   socket.send(JSON.stringify(newMessage));
 
   console.log('toggleAdp1b');
+  const rCode = message.roomCode;
+  if (rooms.get(rCode).config.get('adaptation1a') === false && rooms.get(rCode).config.get('adaptation1b') === false) {
+    rooms.get(rCode).config.set('adaptation1b', true);
+  } else if (rooms.get(rCode).config.get('adaptation1a') === true) {
+    rooms.get(rCode).config.set('adaptation1a', false);
+    rooms.get(rCode).config.set('adaptation1b', true);
+  }
+  console.log(rooms.get(rCode));
+  // broadcast
 }
 
 /**
@@ -480,6 +572,15 @@ function toggleAdp2a(socket) {
   socket.send(JSON.stringify(newMessage));
 
   console.log('toggleAdp2a');
+  const rCode = message.roomCode;
+  if (rooms.get(rCode).config.get('adaptation2a') === false && rooms.get(rCode).config.get('adaptation2b') === false) {
+    rooms.get(rCode).config.set('adaptation2a', true);
+  } else if (rooms.get(rCode).config.get('adaptation2b') === true) {
+    rooms.get(rCode).config.set('adaptation2b', false);
+    rooms.get(rCode).config.set('adaptation2a', true);
+  }
+  console.log(rooms.get(rCode));
+  // broadcast
 }
 
 /**
@@ -498,6 +599,15 @@ function toggleAdp2b(socket) {
   socket.send(JSON.stringify(newMessage));
 
   console.log('toggleAdp2b');
+  const rCode = message.roomCode;
+  if (rooms.get(rCode).config.get('adaptation2a') === false && rooms.get(rCode).config.get('adaptation2b') === false) {
+    rooms.get(rCode).config.set('adaptation2b', true);
+  } else if (rooms.get(rCode).config.get('adaptation2a') === true) {
+    rooms.get(rCode).config.set('adaptation2a', false);
+    rooms.get(rCode).config.set('adaptation2b', true);
+  }
+  console.log(rooms.get(rCode));
+  // broadcast
 }
 
 /**
@@ -516,6 +626,15 @@ function toggleAdp3a(socket) {
   socket.send(JSON.stringify(newMessage));
 
   console.log('toggleAdp3a');
+  const rCode = message.roomCode;
+  if (rooms.get(rCode).config.get('adaptation3a') === false && rooms.get(rCode).config.get('adaptation3b') === false) {
+    rooms.get(rCode).config.set('adaptation3a', true);
+  } else if (rooms.get(rCode).config.get('adaptation3b') === true) {
+    rooms.get(rCode).config.set('adaptation3b', false);
+    rooms.get(rCode).config.set('adaptation3a', true);
+  }
+  console.log(rooms.get(rCode));
+  // broadcast
 }
 
 /**
@@ -534,6 +653,15 @@ function toggleAdp3b(socket) {
   socket.send(JSON.stringify(newMessage));
 
   console.log('toggleAdp3b');
+  const rCode = message.roomCode;
+  if (rooms.get(rCode).config.get('adaptation3a') === false && rooms.get(rCode).config.get('adaptation3b') === false) {
+    rooms.get(rCode).config.set('adaptation3b', true);
+  } else if (rooms.get(rCode).config.get('adaptation3a') === true) {
+    rooms.get(rCode).config.set('adaptation3a', false);
+    rooms.get(rCode).config.set('adaptation3b', true);
+  }
+  console.log(rooms.get(rCode));
+  // broadcast
 }
 
 /**
