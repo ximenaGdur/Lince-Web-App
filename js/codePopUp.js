@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /** ****************** Creating constants for script ******************* */
 
 // Feedback given by server about given room code.

@@ -120,7 +120,7 @@ function chooseCardsPerRound() {
       from: 'client',
       to: 'server',
       when: 'when a host client change the amount of card per round',
-      roomCode: 1234,
+      roomCode: sessionStorage.getItem('roomCode'),
       cardsPerRound: cardsRound,
     };
     socket.send(JSON.stringify(message));
@@ -140,11 +140,13 @@ function chooseMaxTime() {
       from: 'client',
       to: 'server',
       when: 'when a host client change the max time',
-      roomCode: 1234,
+      roomCode: sessionStorage.getItem('roomCode'),
       maxTime: time,
     };
     socket.send(JSON.stringify(message));
     console.log('Message sent to server');
+    console.log(sessionStorage.getItem('nickname'));
+    console.log(sessionStorage.getItem('roomCode'));
   }
 }
 
@@ -160,7 +162,7 @@ function chooseCardsPerPlayer() {
       from: 'client',
       to: 'server',
       when: 'when a host client change the cards per player',
-      roomCode: 1234,
+      roomCode: sessionStorage.getItem('roomCode'),
       cardsPerPlayer: cardsPlayer,
     };
     socket.send(JSON.stringify(message));
@@ -178,7 +180,7 @@ function chooseAdp1a() {
     from: 'client',
     to: 'server',
     when: 'when a host client selects the adaptation 1a',
-    roomCode: 1234,
+    roomCode: sessionStorage.getItem('roomCode'),
   };
   socket.send(JSON.stringify(message));
 }
@@ -194,7 +196,7 @@ function chooseAdp1b() {
     from: 'client',
     to: 'server',
     when: 'when a host client selects the adaptation 1b',
-    roomCode: 1234,
+    roomCode: sessionStorage.getItem('roomCode'),
   };
   socket.send(JSON.stringify(message));
 }
@@ -210,7 +212,7 @@ function chooseAdp2a() {
     from: 'client',
     to: 'server',
     when: 'when a host client selects the adaptation 2a',
-    roomCode: 1234,
+    roomCode: sessionStorage.getItem('roomCode'),
   };
   socket.send(JSON.stringify(message));
 }
@@ -226,7 +228,7 @@ function chooseAdp2b() {
     from: 'client',
     to: 'server',
     when: 'when a host client selects the adaptation 2b',
-    roomCode: 1234,
+    roomCode: sessionStorage.getItem('roomCode'),
   };
   socket.send(JSON.stringify(message));
 }
@@ -242,7 +244,7 @@ function chooseAdp3a() {
     from: 'client',
     to: 'server',
     when: 'when a host client selects the adaptation 3a',
-    roomCode: 1234,
+    roomCode: sessionStorage.getItem('roomCode'),
   };
   socket.send(JSON.stringify(message));
 }
@@ -258,7 +260,7 @@ function chooseAdp3b() {
     from: 'client',
     to: 'server',
     when: 'when a host client selects the adaptation 3b',
-    roomCode: 1234,
+    roomCode: sessionStorage.getItem('roomCode'),
   };
   socket.send(JSON.stringify(message));
 }

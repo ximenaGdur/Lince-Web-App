@@ -255,19 +255,24 @@ function generateCode() {
   return randomRoomCode;
 }
 
-function sortPlayersByPosition() {
-  const sortedEntries = Array.from(players).sort((a, b) => a[0].points.localeCompare(b[0].points));
+// function sortPlayersByPosition() {
+//   const sortedEntries = Array.from(players).sort((a, b)=>a[0].points.localeCompare(b[0].points));
 
-  const orderedValues = sortedEntries.map((entry) => entry[1]);
+//   const orderedValues = sortedEntries.map((entry) => entry[1]);
 
-  console.log(orderedValues);
+//   console.log(orderedValues);
 
-  // let iter = players.values();
-  // iter.sort();
-  // console.log(iter);
+//   let iter = players.values();
+//   iter.sort();
+//   console.log(iter);
 
-  // const i = [1, 2, 3];
-}
+//   const i = [1, 2, 3];
+// }
+
+/**
+ * Set default game configuration every time a game is created.
+ * @param {*} roomCode room code to add the default configuration.
+ */
 function setDefaultGameConfiguration(roomCode) {
   const configurations = new Map();
   configurations.set('maxTime', 20);
@@ -280,6 +285,22 @@ function setDefaultGameConfiguration(roomCode) {
   configurations.set('adaptation3a', false);
   configurations.set('adaptation3b', false);
   rooms.get(roomCode).config = configurations;
+}
+
+/**
+ * Sends the room code to the client who created a game
+ */
+function sendRoomCode(socket, rCode) {
+  const newMessage = {
+    type: 'handleRoomCode',
+    from: 'server',
+    to: 'player',
+    when: 'When the server lets clients know the room code',
+    roomCode: rCode,
+  };
+  console.log(newMessage);
+  console.log(rCode);
+  socket.send(JSON.stringify(newMessage));
 }
 
 /**
@@ -300,16 +321,13 @@ function createRoom(socket, message) {
   console.log('');
   console.log(`availableRooms ${JSON.stringify(availableRooms)}`);
 
-  rooms.set(1234, { code: 1234 });
-  setDefaultGameConfiguration(1234);
+  rooms.set(roomCode, { code: roomCode });
+  setDefaultGameConfiguration(roomCode);
   const players = new Map();
-  rooms.get(1234).players = players;
+  rooms.get(roomCode).players = players;
   console.log(rooms.keys());
-  // rooms.get(1234).config.set('adaptation1a', 'true');
-  // console.log(rooms.get(1234));
 
-  // rooms.get(1234).set('adaptation1b', 'true');
-  // console.log(rooms.get(1234));
+  sendRoomCode(socket, roomCode);
 
   // players.set('cris', 0);
   // players.set('xime', 100);
@@ -327,8 +345,8 @@ function setCardsPerRound(socket, message) {
   console.log('setCardsPerRound');
   const rCode = message.roomCode;
   const cPerRound = message.cardsPerRound;
-  rooms.get(rCode).config.set('cardPerPlayer', cPerRound);
-  console.log(rooms.get(1234));
+  rooms.get(rCode).config.set('cardsPerRound', cPerRound);
+  console.log(rooms.get(rCode));
   // broadcast
 }
 
@@ -338,9 +356,10 @@ function setCardsPerRound(socket, message) {
 function setMaxTime(socket, message) {
   console.log('setMaxTime');
   const rCode = message.roomCode;
+  console.log(rCode);
   const mTime = message.maxTime;
   rooms.get(rCode).config.set('maxTime', mTime);
-  console.log(rooms.get(1234));
+  console.log(rooms.get(rCode));
   // broadcast
 }
 
@@ -349,14 +368,15 @@ function setMaxTime(socket, message) {
  */
 function setCardsPerPlayer(socket, message) {
   // const roomCodes = Object.keys(availableRooms);
-  // console.log('availableRooms[roomCodes[0]].players: ' + JSON.stringify(availableRooms[roomCodes[0]].players));
+  // console.log('availableRooms[roomCodes[0]].players: ' +
+  // JSON.stringify(availableRooms[roomCodes[0]].players));
   // addPlayer(socket, availableRooms[roomCodes[0]].players);
   // console.log('setCardsPerPlayer');
   console.log('setCardsPerPlayer');
   const rCode = message.roomCode;
   const cPerPlayer = message.cardsPerPlayer;
   rooms.get(rCode).config.set('cardsPerPlayer', cPerPlayer);
-  console.log(rooms.get(1234));
+  console.log(rooms.get(rCode));
   // broadcast
 }
 
@@ -372,7 +392,7 @@ function toggleAdp1a(socket, message) {
     rooms.get(rCode).config.set('adaptation1b', false);
     rooms.get(rCode).config.set('adaptation1a', true);
   }
-  console.log(rooms.get(1234));
+  console.log(rooms.get(rCode));
   // broadcast
 }
 
@@ -388,7 +408,7 @@ function toggleAdp1b(socket, message) {
     rooms.get(rCode).config.set('adaptation1a', false);
     rooms.get(rCode).config.set('adaptation1b', true);
   }
-  console.log(rooms.get(1234));
+  console.log(rooms.get(rCode));
   // broadcast
 }
 
@@ -404,7 +424,7 @@ function toggleAdp2a(socket, message) {
     rooms.get(rCode).config.set('adaptation2b', false);
     rooms.get(rCode).config.set('adaptation2a', true);
   }
-  console.log(rooms.get(1234));
+  console.log(rooms.get(rCode));
   // broadcast
 }
 
@@ -420,7 +440,7 @@ function toggleAdp2b(socket, message) {
     rooms.get(rCode).config.set('adaptation2a', false);
     rooms.get(rCode).config.set('adaptation2b', true);
   }
-  console.log(rooms.get(1234));
+  console.log(rooms.get(rCode));
   // broadcast
 }
 
@@ -436,7 +456,7 @@ function toggleAdp3a(socket, message) {
     rooms.get(rCode).config.set('adaptation3b', false);
     rooms.get(rCode).config.set('adaptation3a', true);
   }
-  console.log(rooms.get(1234));
+  console.log(rooms.get(rCode));
   // broadcast
 }
 
@@ -452,7 +472,7 @@ function toggleAdp3b(socket, message) {
     rooms.get(rCode).config.set('adaptation3a', false);
     rooms.get(rCode).config.set('adaptation3b', true);
   }
-  console.log(rooms.get(1234));
+  console.log(rooms.get(rCode));
   // broadcast
 }
 

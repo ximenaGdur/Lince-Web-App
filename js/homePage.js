@@ -57,7 +57,7 @@ function enterNickname() {
     createRoomBtn.style.cursor = 'default';
     joinRoomBtn.style.cursor = 'default';
   }
-  sessionStorage.setItem(nicknameField.value, socket);
+  sessionStorage.setItem('nickname', nicknameField.value);
 }
 
 /**
@@ -82,6 +82,19 @@ function createSession() {
     nickname: playerNickname,
   };
   socket.send(JSON.stringify(message));
+}
+
+/**
+ * Receive and save the room code assigned by the server after clicking the create room button.
+ * @param {*} receivedMessage Message sent by the server containing the room code to save.
+ */
+function handleRoomCode(receivedMessage) {
+  const rCode = receivedMessage.roomCode;
+  console.log(rCode);
+  sessionStorage.roomCode = rCode;
+  // sessionStorage.setItem('roomcode', 1234);
+  console.log(sessionStorage.getItem('nickname'));
+  console.log(sessionStorage.getItem('roomCode'));
   window.location.href = './waitingRoom.xhtml';
 }
 
@@ -162,6 +175,9 @@ function identifyMessage(receivedMessage) {
   switch (receivedMessage.type) {
     case 'handleCodeValidation':
       handleCodeValidation(receivedMessage);
+      break;
+    case 'handleRoomCode':
+      handleRoomCode(receivedMessage);
       break;
     default:
       console.error('No se reconoce ese mensaje.');
