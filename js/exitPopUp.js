@@ -38,5 +38,5 @@ export function createRemovePlayerMessage() {
     to: 'server',
     when: 'when a client leaves the room',
   };
-  return message;
+  return JSON.stringify(message);
 }

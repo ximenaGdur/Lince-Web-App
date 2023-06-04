@@ -1086,16 +1086,14 @@ sendMessage({
 gameTiles.makeBlurred()
 ~~~
 
-#### applyExtraCards(name, code)
+#### applyExtraCards(name)
 
 ~~~ js
 sendMessage({
     "type": "applyExtraCards",
     "from": "client",
     "to": "server",
-    "when": "when a client adds cards to other players",
-    "nickname": name,
-    "sessionCode": code
+    "when": "when a client adds cards to other players"
 })
 ~~~
 
@@ -1161,7 +1159,7 @@ for player in rooms[roomCode].getPlayers()
     sendMessage({
         "type": "handleNewPlayer",
         "from": "server",
-        "to": player,
+        "to": "client",
         "when": "When the server lets clients know a new player has been added",
         "players": {
             "1": {
@@ -1200,7 +1198,7 @@ for player in rooms[roomCode].getPlayers()
         sendMessage({
             "type": "handleAdp1b",
             "from": "server",
-            "to": player,
+            "to": "client",
             "when": "When the server lets players know adaptation 1b has been activated"
         })
 ~~~
@@ -1213,7 +1211,7 @@ for player in rooms[roomCode].getPlayers()
         sendMessage({
             "type": "handleAdp2a",
             "from": "server",
-            "to": player,
+            "to": "client",
             "when": "When the server lets players know adaptation 2a has been activated"
         })
 ~~~
@@ -1226,7 +1224,7 @@ for player in rooms[roomCode].getPlayers()
         sendMessage({
             "type": "handleAdp2b",
             "from": "server",
-            "to": player,
+            "to": "client",
             "when": "When the server lets players know adaptation 2b has been activated"
         })
 ~~~
@@ -1239,7 +1237,7 @@ for player in rooms[roomCode].getPlayers()
         sendMessage({
             "type": "handleAdp3a",
             "from": "server",
-            "to": player,
+            "to": "client",
             "when": "When the server lets players know adaptation 3a has been activated"
         })
 ~~~
@@ -1252,7 +1250,7 @@ for player in rooms[roomCode].getPlayers()
         sendMessage({
             "type": "handleAdp3b",
             "from": "server",
-            "to": player,
+            "to": "client",
             "when": "When the server lets players know adaptation 3b has been activated"
         })
 ~~~
@@ -1265,7 +1263,7 @@ for player in rooms[roomCode].getPlayers()
         sendMessage({
             "type": "handleMaxTime",
             "from": "server",
-            "to": player,
+            "to": "client",
             "when": "When the server lets players know to change the max time",
             "maxTime": maxTime
         })
@@ -1279,7 +1277,7 @@ for player in rooms[roomCode].getPlayers()
         sendMessage({
             "type": "handleCardsPerPlayer",
             "from": "server",
-            "to": player,
+            "to": "client",
             "when": "When the server lets players know to change the cards per player",
             "cardsPerPlayer": cards
         })
@@ -1293,7 +1291,7 @@ for player in rooms[roomCode].getPlayers()
         sendMessage({
             "type": "handleCardsPerPlayer",
             "from": "server",
-            "to": player,
+            "to": "client",
             "when": "When the server lets players know to change the cards per round",
             "cardsPerRound": cards
         })
@@ -1307,7 +1305,7 @@ for player in rooms[roomCode].getPlayers()
     sendMessage({
         "type": "handleRemovePlayer",
         "from": "server",
-        "to": player,
+        "to": "client",
         "when": "When the server lets players know a player left the room",
         "players": {
             "1": {
@@ -1329,7 +1327,7 @@ for player in rooms[roomCode].getPlayers()
     sendMessage({
         "type": "handleStartGame",
         "from": "server",
-        "to": player,
+        "to": "client",
         "when": "When the server lets players know game has started"
 ~~~
 
@@ -1342,7 +1340,7 @@ for player in rooms[roomCode].getPlayers()
     sendMessage({
         "type": "handleTimesUp",
         "from": "server",
-        "to": player,
+        "to": "client",
         "when": "When the server lets players know times up",
         "Ranking": ranking
     }))
@@ -1359,7 +1357,7 @@ else
 sendMessage({
     "type": "handleMatchResponse",
     "from": "server",
-    "to": player,
+    "to": "client",
     "when": "When the server tells player if their match was correct or not",
     "Score": rooms[roomCode].getPlayerScore(player)
 })
@@ -1370,7 +1368,7 @@ for player in rooms[roomCode].getPlayers()
         sendMessage({
             "type": "handleScores",
             "from": "server",
-            "to": player,
+            "to": "client",
             "when": "When the server lets players know to update scores",
             "Ranking": ranking
         })
@@ -1384,7 +1382,7 @@ for player in rooms[roomCode].getPlayers()
         sendMessage({
             "type": "handleBlur",
             "from": "server",
-            "to": nickname,
+            "to": "client",
             "when": "When the server lets players know to activate blur",
         })
 ~~~
@@ -1401,8 +1399,8 @@ for player in rooms[roomCode].getPlayers()
         sendMessage({
             "type": "handleExtraCards",
             "from": "server",
-            "to": player,
+            "to": "client",
             "when": "When the server lets players know to apply extra cards",
-            "ExtraCards": extraCards
+            "extraCards": extraCards
         }))
 ~~~

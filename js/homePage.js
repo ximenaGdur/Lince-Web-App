@@ -39,13 +39,18 @@ const showPopUpButton = document.getElementById('show-popup-button');
 // Socket that connects to server
 const socket = new WebSocket('ws://localhost:8009');
 
+// Global variable with room code
+sessionStorage.setItem('roomCode', '');
+sessionStorage.setItem('roomCode', '');
+
 /** ******************** Functions used on script ********************* */
 
 /**
  * Lock or enable create room and join room buttons after entering a nickname.
  */
 function enterNickname() {
-  if (nicknameField.value.length > 0 && nicknameField.value.trim() !== '') {
+  const playerNickname = nicknameField.value;
+  if (playerNickname.length > 0 && playerNickname.trim() !== '') {
     createRoomBtn.disabled = false;
     createRoomBtn.style.cursor = 'pointer';
     joinRoomBtn.style.cursor = 'pointer';
@@ -56,6 +61,7 @@ function enterNickname() {
     createRoomBtn.style.cursor = 'default';
     joinRoomBtn.style.cursor = 'default';
   }
+  sessionStorage.setItem('playerNickname', playerNickname);
 }
 
 /**
@@ -80,8 +86,6 @@ function createSession() {
     nickname: playerNickname,
   };
   socket.send(JSON.stringify(message));
-
-  window.location.href = './waitingRoom.xhtml';
 }
 
 /**
@@ -100,6 +104,7 @@ function joinSession() {
     };
     socket.send(JSON.stringify(message));
 
+    sessionStorage.setItem('roomCode', popupInput.value);
     window.location.href = './waitingRoom.xhtml';
   }
 }
@@ -156,12 +161,23 @@ function showInstructions() {
 }
 
 /**
+ * Indicates client room code.
+ */
+function handleRoomCode(message) {
+  sessionStorage.setItem('roomCode', message.sessionCode);
+  window.location.href = './waitingRoom.xhtml';
+}
+
+/**
  * Identifying message type in order to call appropiate function.
  */
 function identifyMessage(receivedMessage) {
   switch (receivedMessage.type) {
     case 'handleCodeValidation':
       handleCodeValidation(receivedMessage);
+      break;
+    case 'handleRoomCode':
+      handleRoomCode(receivedMessage);
       break;
     default:
       console.error('No se reconoce ese mensaje.');

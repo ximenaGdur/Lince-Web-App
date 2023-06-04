@@ -1,4 +1,4 @@
-/** ****************** Imports ******************* */
+/** ******************* Imports ******************* */
 
 import {
   closePopUp,
@@ -7,7 +7,7 @@ import {
 // eslint-disable-next-line import/extensions
 } from './exitPopUp.js';
 
-/** ****************** Creating constants for script ******************* */
+/** ******************* Creating constants for script ******************* */
 
 // Button that allows player to return to main page.
 const acceptButton = document.getElementById('accept-button');
@@ -105,7 +105,18 @@ const timeMin = 20;
 // Maximum amount of time permitted
 const timeMax = 120;
 
+// Waiting Room Title
+const title = document.getElementById('waiting-room-title');
+
 /** ******************** Functions used on script ********************* */
+
+/**
+ * When page is loaded...
+ */
+function loadPage() {
+  const roomCode = sessionStorage.getItem('roomCode');
+  title.innerHTML += roomCode;
+}
 
 /**
  * Sends a message to the server to update the amount of cards per round.
@@ -119,6 +130,8 @@ function chooseCardsPerRound() {
       from: 'client',
       to: 'server',
       when: 'when a host client change the amount of card per round',
+      nickname: sessionStorage.getItem('playerNickname'),
+      sessionCode: sessionStorage.getItem('roomCode'),
       cardsPerRound: cardsRound,
     };
     socket.send(JSON.stringify(message));
@@ -138,7 +151,9 @@ function chooseMaxTime() {
       from: 'client',
       to: 'server',
       when: 'when a host client change the max time',
-      MaxTime: time,
+      nickname: sessionStorage.getItem('playerNickname'),
+      sessionCode: sessionStorage.getItem('roomCode'),
+      maxTime: time,
     };
     socket.send(JSON.stringify(message));
     console.log('Message sent to server');
@@ -157,6 +172,8 @@ function chooseCardsPerPlayer() {
       from: 'client',
       to: 'server',
       when: 'when a host client change the cards per player',
+      nickname: sessionStorage.getItem('playerNickname'),
+      sessionCode: sessionStorage.getItem('roomCode'),
       cardsPerPlayer: cardsPlayer,
     };
     socket.send(JSON.stringify(message));
@@ -174,6 +191,8 @@ function chooseAdp1a() {
     from: 'client',
     to: 'server',
     when: 'when a host client selects the adaptation 1a',
+    nickname: sessionStorage.getItem('playerNickname'),
+    sessionCode: sessionStorage.getItem('roomCode'),
   };
   socket.send(JSON.stringify(message));
 }
@@ -189,6 +208,8 @@ function chooseAdp1b() {
     from: 'client',
     to: 'server',
     when: 'when a host client selects the adaptation 1b',
+    nickname: sessionStorage.getItem('playerNickname'),
+    sessionCode: sessionStorage.getItem('roomCode'),
   };
   socket.send(JSON.stringify(message));
 }
@@ -204,6 +225,8 @@ function chooseAdp2a() {
     from: 'client',
     to: 'server',
     when: 'when a host client selects the adaptation 2a',
+    nickname: sessionStorage.getItem('playerNickname'),
+    sessionCode: sessionStorage.getItem('roomCode'),
   };
   socket.send(JSON.stringify(message));
 }
@@ -219,6 +242,8 @@ function chooseAdp2b() {
     from: 'client',
     to: 'server',
     when: 'when a host client selects the adaptation 2b',
+    nickname: sessionStorage.getItem('playerNickname'),
+    sessionCode: sessionStorage.getItem('roomCode'),
   };
   socket.send(JSON.stringify(message));
 }
@@ -234,6 +259,8 @@ function chooseAdp3a() {
     from: 'client',
     to: 'server',
     when: 'when a host client selects the adaptation 3a',
+    nickname: sessionStorage.getItem('playerNickname'),
+    sessionCode: sessionStorage.getItem('roomCode'),
   };
   socket.send(JSON.stringify(message));
 }
@@ -249,6 +276,8 @@ function chooseAdp3b() {
     from: 'client',
     to: 'server',
     when: 'when a host client selects the adaptation 3b',
+    nickname: sessionStorage.getItem('playerNickname'),
+    sessionCode: sessionStorage.getItem('roomCode'),
   };
   socket.send(JSON.stringify(message));
 }
@@ -262,6 +291,8 @@ function startGame() {
     from: 'client',
     to: 'server',
     when: 'when a host client selects the start game botton',
+    nickname: sessionStorage.getItem('playerNickname'),
+    sessionCode: sessionStorage.getItem('roomCode'),
   };
   socket.send(JSON.stringify(message));
   window.location.href = './game.xhtml';
@@ -480,11 +511,11 @@ function infoAdapPopUp(adaptation) {
  */
 function returnToMain() {
   if (acceptButton) {
+    // send message to server letting them know player is leaving.
+    socket.send(createRemovePlayerMessage());
     // Aqui se manda el msj de eliminar el jugador de la lista.
     window.location.href = './index.html';
   }
-  // send message to server letting them know player is leaving.
-  socket.send(createRemovePlayerMessage());
 }
 
 /**
@@ -533,13 +564,18 @@ function identifyMessage(receivedMessage) {
   }
 }
 
-/** ********************** Listeners for waiting room *********************** */
+/** ******************* Listeners for waiting room ******************* */
+
+// Adding event listeners when the window is load
+window.addEventListener('load', loadPage);
 
 /**
  * When a connection is made with server.
  */
 socket.addEventListener('open', () => {
   console.log('Conectado al servidor desde Waiting Room.');
+  const data = sessionStorage.getItem('roomCode');
+  console.log(`roomCode: ${data}`);
 });
 
 /**
