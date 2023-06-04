@@ -19,15 +19,15 @@ This is it's structure:
   {
     12345: {
       config: {
-        adp1a: 'true',
-        adp1b: 'false',
-        adp2a: 'true',
-        adp2b: 'false',
-        adp3a: 'true',
-        adp3b: 'false',
+        adaptation1a: 'true',
+        adaptation1b: 'false',
+        adaptation2a: 'true',
+        adaptation2b: 'false',
+        adaptation3a: 'true',
+        adaptation3b: 'false',
         maxTime: 20,
-        cardsPlayer: 5,
-        cardsBoard: 100,
+        cardsPerPlayer: 5,
+        cardsPerRound: 100,
         },
       players: {
         'Ximena': {
@@ -48,7 +48,10 @@ function printRooms() {
   availableRooms.forEach((roomData, roomCode) => {
     console.log(`${roomCode}: `);
 
-    console.log(`players: ${JSON.stringify(Array.from(roomData))}`);
+    const configMap = roomData.get('config');
+    console.log(`config: ${JSON.stringify(Array.from(configMap))}`);
+
+    console.log('players:');
     const playerMap = roomData.get('players');
     playerMap.forEach((playerData, playerName) => {
       console.log(`
@@ -203,7 +206,7 @@ const server = new WebSocket.Server({ port: 8009 });
  * Closes connection with client.
  */
 function closeConnection(socket, message) {
-  console.log('closeConnection');
+  console.log(`message: ${message}`);
 }
 
 /**
@@ -318,7 +321,7 @@ function generateCode() {
  * Set default game configuration every time a game is created.
  * @param {*} roomCode room code to add the default configuration.
  */
-function setDefaultGameConfiguration(roomCode) {
+function setDefaultGameConfiguration() {
   const configurations = new Map();
   configurations.set('maxTime', 20);
   configurations.set('cardsPerPlayer', 5);
@@ -329,26 +332,26 @@ function setDefaultGameConfiguration(roomCode) {
   configurations.set('adaptation2b', false);
   configurations.set('adaptation3a', false);
   configurations.set('adaptation3b', false);
-  rooms.get(roomCode).config = configurations;
+  return configurations;
 }
 
 /**
  * Sends the room code to the client who created a game
  */
-function sendRoomCode(socket, rCode) {
+function sendRoomCode(socket, roomCode) {
   const newMessage = {
     type: 'handleRoomCode',
     from: 'server',
     to: 'player',
     when: 'When the server lets clients know the room code',
-    sessionCode: rCode,
+    sessionCode: roomCode,
   };
   console.log(newMessage);
-  console.log(rCode);
+  console.log(roomCode);
   socket.send(JSON.stringify(newMessage));
 }
 
-/** 
+/**
  * Creates new room for host.
  */
 function createRoom(socket, message) {
@@ -374,7 +377,6 @@ function createRoom(socket, message) {
 
   availableRooms.set(roomCode, roomMap);
 
-  printRooms();
   sendRoomCode(socket, roomCode);
 }
 
@@ -404,12 +406,6 @@ function addToRoom(socket, message) {
   console.log('');
   console.log(`availableRooms ${JSON.stringify(availableRooms)}`);
 
-  rooms.set(roomCode, { code: roomCode });
-  setDefaultGameConfiguration(roomCode);
-  const players = new Map();
-  rooms.get(roomCode).players = players;
-  console.log(rooms.keys());
-
   sendRoomCode(socket, roomCode);
 
   // players.set('cris', 0);
@@ -425,47 +421,50 @@ function addToRoom(socket, message) {
  * Sets amount of card per round to other players in room.
  */
 function setCardsPerRound(socket, message) {
-  // TODO: Store configuration
+  const roomCode = message.sessionCode;
+  if (availableRooms.has(roomCode)) {
+    const cards = message.cardsPerRound;
+    const roomMap = availableRooms.get(roomCode);
+    const roomConfig = roomMap.get('config');
 
-  // TODO: send to all players
-  const newMessage = {
-    type: 'handleCardsPerRound',
-    from: 'server',
-    to: 'player',
-    when: 'When the server lets players know to change the cards per round',
-    cardsPerRound: message.cardsPerRound,
-  };
-  socket.send(JSON.stringify(newMessage));
-  console.log('setCardsPerRound');
-  const rCode = message.roomCode;
-  const cPerRound = message.cardsPerRound;
-  rooms.get(rCode).config.set('cardsPerRound', cPerRound);
-  console.log(rooms.get(rCode));
-  // broadcast
+    // Storing configuration
+    roomConfig.set('cardsPerRound', cards);
+
+    // TODO: send to all players
+    const newMessage = {
+      type: 'handleCardsPerRound',
+      from: 'server',
+      to: 'player',
+      when: 'When the server lets players know to change the cards per round',
+      cardsPerRound: cards,
+    };
+    socket.send(JSON.stringify(newMessage));
+  }
 }
 
 /**
  * Sets maximum time per round to other players in room.
  */
 function setMaxTime(socket, message) {
-  // TODO: Store configuration
+  const roomCode = message.sessionCode;
+  if (availableRooms.has(roomCode)) {
+    const time = message.maxTime;
+    const roomMap = availableRooms.get(roomCode);
+    const roomConfig = roomMap.get('config');
 
-  // TODO: send to all players
-  const newMessage = {
-    type: 'handleMaxTime',
-    from: 'server',
-    to: 'player',
-    when: 'When the server lets players know to change the max time',
-    maxTime: message.maxTime,
-  };
-  socket.send(JSON.stringify(newMessage));
-  console.log('setMaxTime');
-  const rCode = message.roomCode;
-  console.log(rCode);
-  const mTime = message.maxTime;
-  rooms.get(rCode).config.set('maxTime', mTime);
-  console.log(rooms.get(rCode));
-  // broadcast
+    // Storing configuration
+    roomConfig.set('maxTime', time);
+
+    // TODO: send to all players
+    const newMessage = {
+      type: 'handleMaxTime',
+      from: 'server',
+      to: 'player',
+      when: 'When the server lets players know to change the max time',
+      maxTime: time,
+    };
+    socket.send(JSON.stringify(newMessage));
+  }
 }
 
 /**
@@ -473,195 +472,168 @@ function setMaxTime(socket, message) {
  */
 function setCardsPerPlayer(socket, message) {
   const roomCode = message.sessionCode;
-  const roomInfo = availableRooms.get(roomCode);
-  const playersMap = roomInfo.get('players');
-  addPlayer(socket, playersMap);
+  if (availableRooms.has(roomCode)) {
+    const cards = message.cardsPerPlayer;
+    const roomMap = availableRooms.get(roomCode);
+    const roomConfig = roomMap.get('config');
 
-  // TODO: Store configuration
+    // Storing configuration
+    roomConfig.set('cardsPerPlayer', cards);
 
-  // TODO: send to all players
-  /* const newMessage = {
-    type: 'handleCardsPerPlayer',
-    from: 'server',
-    to: 'player',
-    when: 'When the server lets players know to change the cards per player',
-    cardsPerPlayer: message.cardsPerPlayer,
-  };
-  socket.send(JSON.stringify(newMessage)); */
-
-  // const roomCodes = Object.keys(availableRooms);
-  // console.log('availableRooms[roomCodes[0]].players: ' +
-  // JSON.stringify(availableRooms[roomCodes[0]].players));
-  // addPlayer(socket, availableRooms[roomCodes[0]].players);
-  // console.log('setCardsPerPlayer');
-  console.log('setCardsPerPlayer');
-  const rCode = message.roomCode;
-  const cPerPlayer = message.cardsPerPlayer;
-  rooms.get(rCode).config.set('cardsPerPlayer', cPerPlayer);
-  console.log(rooms.get(rCode));
-  // broadcast
+    // TODO: send to all players
+    const newMessage = {
+      type: 'handleCardsPerPlayer',
+      from: 'server',
+      to: 'player',
+      when: 'When the server lets players know to change the cards per player',
+      cardsPerPlayer: message.cardsPerPlayer,
+    };
+    socket.send(JSON.stringify(newMessage));
+  }
 }
 
 /**
  * Sets adaption 1a to other players in room.
  */
-function toggleAdp1a(socket) {
-  // TODO: Store configuration
+function toggleAdp1a(socket, message) {
+  const roomCode = message.sessionCode;
+  if (availableRooms.has(roomCode)) {
+    const roomMap = availableRooms.get(roomCode);
+    const roomConfig = roomMap.config;
 
-  // TODO: send to all players
-  const newMessage = {
-    type: 'handleAdp1a',
-    from: 'server',
-    to: 'player1',
-    when: 'When the server lets players know adaptation 1a has been activated',
-  };
-  socket.send(JSON.stringify(newMessage));
+    // Storing configuration
+    roomConfig.set('adaptation1a', true);
+    roomConfig.set('adaptation1b', false);
 
-  console.log('toggleAdp1a');
-  const rCode = message.roomCode;
-  if (rooms.get(rCode).config.get('adaptation1a') === false && rooms.get(rCode).config.get('adaptation1b') === false) {
-    rooms.get(rCode).config.set('adaptation1a', true);
-  } else if (rooms.get(rCode).config.get('adaptation1b') === true) {
-    rooms.get(rCode).config.set('adaptation1b', false);
-    rooms.get(rCode).config.set('adaptation1a', true);
+    // TODO: send to all players
+    const newMessage = {
+      type: 'handleAdp1a',
+      from: 'server',
+      to: 'player1',
+      when: 'When the server lets players know adaptation 1a has been activated',
+    };
+    socket.send(JSON.stringify(newMessage));
   }
-  console.log(rooms.get(rCode));
-  // broadcast
 }
 
 /**
  * Sets adaption 1b to other players in room.
  */
-function toggleAdp1b(socket) {
-  // TODO: Store configuration
+function toggleAdp1b(socket, message) {
+  const roomCode = message.sessionCode;
+  if (availableRooms.has(roomCode)) {
+    const roomMap = availableRooms.get(roomCode);
+    const roomConfig = roomMap.config;
 
-  // TODO: send to all players
-  const newMessage = {
-    type: 'handleAdp1b',
-    from: 'server',
-    to: 'player1',
-    when: 'When the server lets players know adaptation 1b has been activated',
-  };
-  socket.send(JSON.stringify(newMessage));
+    // Storing configuration
+    roomConfig.set('adaptation1b', true);
+    roomConfig.set('adaptation1a', false);
 
-  console.log('toggleAdp1b');
-  const rCode = message.roomCode;
-  if (rooms.get(rCode).config.get('adaptation1a') === false && rooms.get(rCode).config.get('adaptation1b') === false) {
-    rooms.get(rCode).config.set('adaptation1b', true);
-  } else if (rooms.get(rCode).config.get('adaptation1a') === true) {
-    rooms.get(rCode).config.set('adaptation1a', false);
-    rooms.get(rCode).config.set('adaptation1b', true);
+    // TODO: send to all players
+    const newMessage = {
+      type: 'handleAdp1b',
+      from: 'server',
+      to: 'player1',
+      when: 'When the server lets players know adaptation 1b has been activated',
+    };
+    socket.send(JSON.stringify(newMessage));
   }
-  console.log(rooms.get(rCode));
-  // broadcast
 }
 
 /**
  * Sets adaption 2a to other players in room.
  */
-function toggleAdp2a(socket) {
-  // TODO: Store configuration
+function toggleAdp2a(socket, message) {
+  const roomCode = message.sessionCode;
+  if (availableRooms.has(roomCode)) {
+    const roomMap = availableRooms.get(roomCode);
+    const roomConfig = roomMap.config;
 
-  // TODO: send to all players
-  const newMessage = {
-    type: 'handleAdp2a',
-    from: 'server',
-    to: 'player1',
-    when: 'When the server lets players know adaptation 2a has been activated',
-  };
-  socket.send(JSON.stringify(newMessage));
+    // Storing configuration
+    roomConfig.set('adaptation2a', true);
+    roomConfig.set('adaptation2b', false);
 
-  console.log('toggleAdp2a');
-  const rCode = message.roomCode;
-  if (rooms.get(rCode).config.get('adaptation2a') === false && rooms.get(rCode).config.get('adaptation2b') === false) {
-    rooms.get(rCode).config.set('adaptation2a', true);
-  } else if (rooms.get(rCode).config.get('adaptation2b') === true) {
-    rooms.get(rCode).config.set('adaptation2b', false);
-    rooms.get(rCode).config.set('adaptation2a', true);
+    // TODO: send to all players
+    const newMessage = {
+      type: 'handleAdp2a',
+      from: 'server',
+      to: 'player1',
+      when: 'When the server lets players know adaptation 2a has been activated',
+    };
+    socket.send(JSON.stringify(newMessage));
   }
-  console.log(rooms.get(rCode));
-  // broadcast
 }
 
 /**
  * Sets adaption 2b to other players in room.
  */
-function toggleAdp2b(socket) {
-  // TODO: Store configuration
+function toggleAdp2b(socket, message) {
+  const roomCode = message.sessionCode;
+  if (availableRooms.has(roomCode)) {
+    const roomMap = availableRooms.get(roomCode);
+    const roomConfig = roomMap.config;
 
-  // TODO: send to all players
-  const newMessage = {
-    type: 'handleAdp2b',
-    from: 'server',
-    to: 'player1',
-    when: 'When the server lets players know adaptation 2b has been activated',
-  };
-  socket.send(JSON.stringify(newMessage));
+    // Storing configuration
+    roomConfig.set('adaptation2b', true);
+    roomConfig.set('adaptation2a', false);
 
-  console.log('toggleAdp2b');
-  const rCode = message.roomCode;
-  if (rooms.get(rCode).config.get('adaptation2a') === false && rooms.get(rCode).config.get('adaptation2b') === false) {
-    rooms.get(rCode).config.set('adaptation2b', true);
-  } else if (rooms.get(rCode).config.get('adaptation2a') === true) {
-    rooms.get(rCode).config.set('adaptation2a', false);
-    rooms.get(rCode).config.set('adaptation2b', true);
+    // TODO: send to all players
+    const newMessage = {
+      type: 'handleAdp2b',
+      from: 'server',
+      to: 'player1',
+      when: 'When the server lets players know adaptation 2b has been activated',
+    };
+    socket.send(JSON.stringify(newMessage));
   }
-  console.log(rooms.get(rCode));
-  // broadcast
 }
 
 /**
  * Sets adaption 3a to other players in room.
  */
-function toggleAdp3a(socket) {
-  // TODO: Store configuration
+function toggleAdp3a(socket, message) {
+  const roomCode = message.sessionCode;
+  if (availableRooms.has(roomCode)) {
+    const roomMap = availableRooms.get(roomCode);
+    const roomConfig = roomMap.config;
 
-  // TODO: send to all players
-  const newMessage = {
-    type: 'handleAdp3a',
-    from: 'server',
-    to: 'player1',
-    when: 'When the server lets players know adaptation 3a has been activated',
-  };
-  socket.send(JSON.stringify(newMessage));
+    // Storing configuration
+    roomConfig.set('adaptation3a', true);
+    roomConfig.set('adaptation3b', false);
 
-  console.log('toggleAdp3a');
-  const rCode = message.roomCode;
-  if (rooms.get(rCode).config.get('adaptation3a') === false && rooms.get(rCode).config.get('adaptation3b') === false) {
-    rooms.get(rCode).config.set('adaptation3a', true);
-  } else if (rooms.get(rCode).config.get('adaptation3b') === true) {
-    rooms.get(rCode).config.set('adaptation3b', false);
-    rooms.get(rCode).config.set('adaptation3a', true);
+    // TODO: send to all players
+    const newMessage = {
+      type: 'handleAdp3a',
+      from: 'server',
+      to: 'player1',
+      when: 'When the server lets players know adaptation 3a has been activated',
+    };
+    socket.send(JSON.stringify(newMessage));
   }
-  console.log(rooms.get(rCode));
-  // broadcast
 }
 
 /**
  * Sets adaption 3b to other players in room.
  */
-function toggleAdp3b(socket) {
-  // TODO: Store configuration
+function toggleAdp3b(socket, message) {
+  const roomCode = message.sessionCode;
+  if (availableRooms.has(roomCode)) {
+    const roomMap = availableRooms.get(roomCode);
+    const roomConfig = roomMap.config;
 
-  // TODO: send to all players
-  const newMessage = {
-    type: 'handleAdp3b',
-    from: 'server',
-    to: 'player1',
-    when: 'When the server lets players know adaptation 3b has been activated',
-  };
-  socket.send(JSON.stringify(newMessage));
+    // Storing configuration
+    roomConfig.set('adaptation3b', true);
+    roomConfig.set('adaptation3a', false);
 
-  console.log('toggleAdp3b');
-  const rCode = message.roomCode;
-  if (rooms.get(rCode).config.get('adaptation3a') === false && rooms.get(rCode).config.get('adaptation3b') === false) {
-    rooms.get(rCode).config.set('adaptation3b', true);
-  } else if (rooms.get(rCode).config.get('adaptation3a') === true) {
-    rooms.get(rCode).config.set('adaptation3a', false);
-    rooms.get(rCode).config.set('adaptation3b', true);
+    // TODO: send to all players
+    const newMessage = {
+      type: 'handleAdp3b',
+      from: 'server',
+      to: 'player1',
+      when: 'When the server lets players know adaptation 3b has been activated',
+    };
+    socket.send(JSON.stringify(newMessage));
   }
-  console.log(rooms.get(rCode));
-  // broadcast
 }
 
 /**
@@ -695,7 +667,7 @@ function removePlayer(socket, playerArray, nickname) {
 /**
  * Starts game for all players in room.
  */
-function startGame(socket) {
+function startGame(socket, message) {
   // TODO: send to all players
   // Prepare cards?
   const newMessage = {
@@ -718,7 +690,7 @@ function checkMatch(socket, message) {
 /**
  * Finishes game for all players in room.
  */
-function finishGame(socket) {
+function finishGame(socket, message) {
   console.log('finishGame');
 }
 
@@ -736,7 +708,7 @@ function selectNewCard() {
 /**
  * Applies extra cards to other players in room.
  */
-function applyExtraCards(socket) {
+function applyExtraCards(socket, message) {
   // TODO: send to all players
 
   const newCards = {
@@ -760,7 +732,7 @@ function applyExtraCards(socket) {
 /**
  * Applies blur to other players in room.
  */
-function applyBlur(socket) {
+function applyBlur(socket, message) {
   // TODO: send to all players
   const newMessage = {
     type: 'handleBlur',
@@ -799,37 +771,37 @@ function identifyMessage(socket, receivedMessage) {
       setCardsPerPlayer(socket, receivedMessage);
       break;
     case 'toggleAdp1a':
-      toggleAdp1a(socket);
+      toggleAdp1a(socket, receivedMessage);
       break;
     case 'toggleAdp1b':
-      toggleAdp1b(socket);
+      toggleAdp1b(socket, receivedMessage);
       break;
     case 'toggleAdp2a':
-      toggleAdp2a(socket);
+      toggleAdp2a(socket, receivedMessage);
       break;
     case 'toggleAdp2b':
-      toggleAdp2b(socket);
+      toggleAdp2b(socket, receivedMessage);
       break;
     case 'toggleAdp3a':
-      toggleAdp3a(socket);
+      toggleAdp3a(socket, receivedMessage);
       break;
     case 'toggleAdp3b':
-      toggleAdp3b(socket);
+      toggleAdp3b(socket, receivedMessage);
       break;
     case 'startGame':
-      startGame(socket);
+      startGame(socket, receivedMessage);
       break;
     case 'checkMatch':
       checkMatch(socket, receivedMessage);
       break;
     case 'finishGame':
-      finishGame(socket);
+      finishGame(socket, receivedMessage);
       break;
     case 'applyExtraCards':
-      applyExtraCards(socket);
+      applyExtraCards(socket, receivedMessage);
       break;
     case 'applyBlur':
-      applyBlur(socket);
+      applyBlur(socket, receivedMessage);
       break;
     default:
       console.error('No se reconoce ese mensaje.');
@@ -843,9 +815,15 @@ server.on('connection', (clientSocket) => {
   console.log('Estableciendo de conexión con cliente...');
 
   clientSocket.on('message', (message) => {
-    console.log(`Recibi mensaje del cliente: ${message}`);
+    console.log(`
+    Recibi mensaje del cliente: ${message}`);
     const receivedMessage = JSON.parse(message);
     identifyMessage(clientSocket, receivedMessage);
+    console.log(`
+    `);
+    printRooms();
+    console.log(`
+    `);
   });
 
   clientSocket.on('close', () => {

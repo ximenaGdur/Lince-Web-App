@@ -158,8 +158,6 @@ function chooseMaxTime() {
     };
     socket.send(JSON.stringify(message));
     console.log('Message sent to server');
-    console.log(sessionStorage.getItem('nickname'));
-    console.log(sessionStorage.getItem('roomCode'));
   }
 }
 
