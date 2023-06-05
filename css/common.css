@@ -198,24 +198,49 @@ button:hover {
 
 
 /* border of the table */
-.ranking-table {
+.player-table {
     border-collapse: collapse;
-    max-width: 100%;
-    margin: 1%;
+    width: 70%;
 }
 
 /** Style for ranking row. **/
-.ranking-row {
-    border-color: var(--plum);
-    border-style: solid;
+.table-row {
+    display: table-row;
     text-align: center;
+    min-width: 100%;
 }
 
 /** Style for ranking col. **/
-.ranking-col {
+.table-col {
     border-color: var(--plum);
     border-style: solid;
     color: var(--violet);
+    display: table-cell;
+    font-size: 1.3rem;
+    font-weight: bold;
+    min-height: 100%;
+    min-width: 100%;
+    padding: 1%;
+}
+
+/** Sets size for column in table. **/
+.ranking-column {
+    width: 10%;
+}
+
+/** Sets size for column in table. **/
+.avatar-column {
+    width: 15%;
+}
+
+/** Sets size for column in table. **/
+.name-column {
+    width: 50%;
+}
+
+/** Sets size for column in table. **/
+.score-column {
+    width: 25%;
 }
 
 /** Style for every title. **/
@@ -265,18 +290,13 @@ button:hover {
 
 /** Style for every avatar image. **/
 .profile-image {
-    max-width: 25%;
-}
-
-/* Change the width of the cell with the image. */
-.ranking-row td:nth-child(2) {
-    width: 20%;
+    max-width: 40%;
 }
 
 /******************* MEDIA QUERIES *******************/
 
 /* Styles for header on screens smaller than 933px */
-@media screen and (max-width: 933px) {
+@media screen and (1px <= width <= 933px) {
     /** New size for header title. **/
     .header-title {
         font-size: 1.7rem;

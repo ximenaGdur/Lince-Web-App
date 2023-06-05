@@ -261,11 +261,25 @@ function createPlayer(playerPosition, isHost) {
   const newPlayer = new Map([
     ['position', playerPosition],
     ['avatar', playerAvatar],
-    ['points', '0'],
+    ['points', 0],
     ['host', isHost],
     // TODO: asignar cartas?????
   ]);
   return newPlayer;
+}
+
+function createPlayerMap(playerArray) {
+  const playerMap = {};
+  playerArray.forEach((playerData, playerNickname) => {
+    const playerInfo = playerData.get('playerInfo');
+    playerMap[playerNickname] = {
+      position: playerInfo.get('position'),
+      avatar: playerInfo.get('avatar'),
+      points: playerInfo.get('points'),
+      host: playerInfo.get('host'),
+    };
+  });
+  return JSON.stringify(playerMap);
 }
 
 /**
@@ -278,7 +292,7 @@ function addPlayer(playerName, playerArray) {
       from: 'server',
       to: 'player',
       when: 'When the server lets clients know a new player has been added',
-      players: JSON.stringify(Array.from(playerArray)),
+      players: createPlayerMap(playerArray),
     };
 
     playerArray.forEach((playerData, playerNickname) => {
@@ -356,7 +370,7 @@ function sendRoomCode(socket, roomCode) {
  */
 function createRoom(socket, message) {
   const playerNickname = message.nickname;
-  const newPlayer = createPlayer(1, 'true');
+  const newPlayer = createPlayer(1, true);
 
   let roomCode = 0;
   do {
@@ -389,8 +403,9 @@ function addToRoom(socket, message) {
   const roomInfo = availableRooms.get(roomCode);
   const playersMap = roomInfo.get('players');
 
-  const playerPosition = playersMap.keys().length + 1;
-  const newPlayer = createPlayer(playerPosition, 'false');
+  const playerPosition = playersMap.size + 1;
+  console.log('playerPosition: ' + playerPosition);
+  const newPlayer = createPlayer(playerPosition, false);
 
   if (availableRooms.has(roomCode) === true) {
     const playerMap = new Map([
@@ -407,14 +422,31 @@ function addToRoom(socket, message) {
   console.log(`availableRooms ${JSON.stringify(availableRooms)}`);
 
   sendRoomCode(socket, roomCode);
+}
 
-  // players.set('cris', 0);
-  // players.set('xime', 100);
-  // players.set('Panchita', 200);
-  // players.set('jj', 50);
-  // console.log(rooms.get(1234).code);
-  // console.log(rooms.get(1234).players);
-  // sortPlayersByPosition();
+/**
+ * Sets amount of card per round to other players in room.
+ */
+function getWaitingRoom(socket, message) {
+  const playerNickname = message.nickname;
+  const roomCode = message.sessionCode;
+  if (roomCode && playerNickname) {
+    const roomInfo = availableRooms.get(roomCode);
+    const playersMap = roomInfo.get('players');
+    const playerInfo = playersMap.get(playerNickname).get('playerInfo');
+    if (playerInfo) {
+      const newMessage = {
+        type: 'handleWaitingRoom',
+        from: 'server',
+        to: 'player',
+        when: 'When the server send personalized waiting room',
+        isHost: playerInfo.get('host'),
+        players: createPlayerMap(playersMap),
+      };
+      console.log(`createPlayerMap(playersMap): ${createPlayerMap(playersMap)}`);
+      socket.send(JSON.stringify(newMessage));
+    }
+  }
 }
 
 /**
@@ -658,7 +690,7 @@ function removePlayer(socket, playerArray, nickname) {
     from: 'server',
     to: 'player',
     when: 'When the server lets players know a player left the room',
-    players: JSON.stringify(Array.from(playerArray)),
+    players: createPlayerMap(playerArray),
   };
   socket.send(JSON.stringify(newMessage));
   console.log('removePlayer');
@@ -761,6 +793,9 @@ function identifyMessage(socket, receivedMessage) {
     case 'createRoom':
       createRoom(socket, receivedMessage);
       break;
+    case 'getWaitingRoom':
+      getWaitingRoom(socket, receivedMessage);
+      break;
     case 'setCardsPerRound':
       setCardsPerRound(socket, receivedMessage);
       break;
@@ -819,11 +854,6 @@ server.on('connection', (clientSocket) => {
     Recibi mensaje del cliente: ${message}`);
     const receivedMessage = JSON.parse(message);
     identifyMessage(clientSocket, receivedMessage);
-    console.log(`
-    `);
-    printRooms();
-    console.log(`
-    `);
   });
 
   clientSocket.on('close', () => {

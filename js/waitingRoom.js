@@ -116,7 +116,95 @@ const title = document.getElementById('waiting-room-title');
  */
 function loadPage() {
   const roomCode = sessionStorage.getItem('roomCode');
-  title.innerHTML += roomCode;
+  if (roomCode) {
+    title.innerHTML += roomCode;
+  } else {
+    const main = document.getElementsByClassName('main-content');
+    main[0].innerHTML = `<h2 class="page-title" id="waiting-room-title">La sala ${roomCode} no existe</h2>`;
+    main[0].innerHTML += `<img class="information-icon" src="/design/images/Icons/informationIcon.png"
+    alt="información"></img>`;
+  }
+}
+
+/**
+ * Creates new player row in ranking table.
+ */
+function createNewPlayer(nickname, playerInfo) {
+  const iconsRoute = '/design/images/icons/';
+  const avatarRoute = `${iconsRoute}profile/${playerInfo.avatar.route}`;
+  const crownRoute = `${iconsRoute}hostCrown.png`;
+
+  let playerHTML = '<tr class="table-row">';
+
+  if (playerInfo.host === true) {
+    playerHTML += '  <td class="table-col ranking-column">';
+    playerHTML += `    <img class="profile-image" src="${crownRoute}" alt="Icono de Anfitrión"/>`;
+    playerHTML += `    ${playerInfo.position}`;
+    playerHTML += '  </td>';
+  } else {
+    playerHTML += `  <td class="table-col ranking-column">${playerInfo.position}</td>`;
+  }
+
+  playerHTML += '  <td class="table-col avatar-column">';
+  playerHTML += `    <img class="profile-image" src="${avatarRoute}" alt="Icono de ${playerInfo.avatar.description}"/>`;
+  playerHTML += '  </td>';
+
+  playerHTML += `  <td class="table-col name-column">${nickname}</td>`;
+  playerHTML += `  <td class="table-col score-column">${playerInfo.points} puntos</td>`;
+  playerHTML += '</tr>';
+
+  return playerHTML;
+}
+
+/**
+ * Adds new player to player list.
+ */
+function handleNewPlayer(message) {
+  // Order by points
+  if (playerTable) {
+    const playerArray = JSON.parse(message.players);
+    console.log(playerArray);
+    if (playerArray) {
+      Object.keys(playerArray).forEach((nickname) => {
+        if (Object.hasOwn(playerArray, nickname)) {
+          console.log(`playerInfo: ${JSON.stringify(playerArray[nickname])}`);
+          playerTable.innerHTML += createNewPlayer(nickname, playerArray[nickname]);
+        }
+      });
+    }
+  }
+}
+
+/**
+ * Sets ranges and radio buttons to read only.
+ */
+function setToReadOnly() {
+  maxTimeRange.disabled = true;
+  maxTimeRange.style.cursor = 'default';
+
+  cardsPerPlayerRange.disabled = true;
+  cardsPerPlayerRange.style.cursor = 'default';
+
+  cardsPerRoundRange.disabled = true;
+  cardsPerRoundRange.style.cursor = 'default';
+
+  option1a.disabled = true;
+  option1b.disabled = true;
+  option2a.disabled = true;
+  option2b.disabled = true;
+  option3a.disabled = true;
+  option3b.disabled = true;
+}
+
+/**
+ * When server sends a message with personalized waiting room.
+ */
+function handleWaitingRoom(message) {
+  // const playerMap = new Map(playerArray.map((player) => [player.nickname, player]));
+  if (message.isHost === false) {
+    setToReadOnly();
+  }
+  handleNewPlayer(message);
 }
 
 /**
@@ -395,59 +483,29 @@ function handleStartGame() {
 }
 
 /**
- * Adds new player to player list.
- */
-function handleNewPlayer(message) {
-  // Order by points
-  if (playerTable) {
-    const playerArray = JSON.parse(message.players);
-    console.log(playerArray);
-    if (playerArray) {
-      for (let playerIndex = 1; playerIndex <= Object.keys(playerArray).length; playerIndex += 1) {
-        const playerInfo = playerArray[playerIndex];
-        if (playerInfo) {
-          console.log(`playerInfo: ${JSON.stringify(playerInfo)}`);
-          const avatarRoute = `/design/images/icons/profile/${playerInfo.avatar.route}`;
-          console.log(`avatarRoute: ${avatarRoute}`);
-          playerTable.innerHTML
-            += '<tr class="ranking-row">'
-              + `<td class="ranking-col">${playerIndex}</td>`
-              + `<td class="ranking-col">
-                  <img class="profile-image" src="${avatarRoute}" alt="Icono de ${playerInfo.avatar.description}"/>
-                </td>`
-              + `<td class="ranking-col">${playerInfo.nickname}</td>`
-              + `<td class="ranking-col">${playerInfo.points} puntos</td>`
-            + '</tr>';
-        }
-      }
-    }
-  }
-}
-
-/**
  * Sends a message to the server to remove a player from a specific room at the
  * time the host client selects a player to be removed.
  */
 function handleRemovePlayer() {
   if (playerTable) {
-    const firstColumn = '<tr class="ranking-row">'
-                        + '<td class="ranking-row">#</td>'
-                        + '<td class="ranking-row">Imgen</td>'
-                        + '<td class="ranking-row">Apodo</td>'
-                        + '<td class="ranking-row">Puntaje</td>'
+    const firstColumn = '<tr class="table-row">'
+                        + '<td class="table-row">#</td>'
+                        + '<td class="table-row">Imgen</td>'
+                        + '<td class="table-row">Apodo</td>'
+                        + '<td class="table-row">Puntaje</td>'
                     + '</tr>';
-    const player1 = '<tr class="ranking-row">'
-                        + '<td class="ranking-col">1</td>'
-                        + '<td class="ranking-col">avatar</td>'
-                        + '<td class="ranking-col">mariaPerez</td>'
-                        + '<td class="ranking-col">250puntos </td>'
+    const player1 = '<tr class="table-row">'
+                        + '<td class="table-col">1</td>'
+                        + '<td class="table-col">avatar</td>'
+                        + '<td class="table-col">mariaPerez</td>'
+                        + '<td class="table-col">250puntos </td>'
                     + '</tr>';
 
-    const player2 = '<tr class="ranking-row">'
-                        + '<td class="ranking-col">2</td>'
-                        + '<td class="ranking-col">avatar</td>'
-                        + '<td class="ranking-col">juanPerez</td>'
-                        + '<td class="ranking-col">100 puntos </td>'
+    const player2 = '<tr class="table-row">'
+                        + '<td class="table-col">2</td>'
+                        + '<td class="table-col">avatar</td>'
+                        + '<td class="table-col">juanPerez</td>'
+                        + '<td class="table-col">100 puntos </td>'
                     + '</tr>';
 
     playerTable.innerHTML = firstColumn + player1 + player2;
@@ -524,6 +582,9 @@ function returnToMain() {
  */
 function identifyMessage(receivedMessage) {
   switch (receivedMessage.type) {
+    case 'handleWaitingRoom':
+      handleWaitingRoom(receivedMessage);
+      break;
     case 'handleAdp1a':
       handleAdp1a(receivedMessage);
       break;
@@ -575,8 +636,16 @@ window.addEventListener('load', loadPage);
  */
 socket.addEventListener('open', () => {
   console.log('Conectado al servidor desde Waiting Room.');
-  const data = sessionStorage.getItem('roomCode');
-  console.log(`roomCode: ${data}`);
+  const message = {
+    type: 'getWaitingRoom',
+    from: 'client',
+    to: 'server',
+    when: 'when a client asks for a personalized waiting room',
+    nickname: sessionStorage.getItem('playerNickname'),
+    sessionCode: sessionStorage.getItem('roomCode'),
+  };
+  socket.send(JSON.stringify(message));
+  console.log('Message sent to server');
 });
 
 /**
