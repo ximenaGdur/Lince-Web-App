@@ -34,7 +34,7 @@ This is it's structure:
           playerSocket: socket,
           playerInfo: {
               position: '1',
-              avatar: { route: 'bear.png', description: 'Oso' },
+              avatar: { description: 'Oso', route: 'bear.png' },
               points: 23,
               host: isHost,
           },
@@ -66,132 +66,130 @@ function printRooms() {
 
 // Dictionary with all available avatar options.
 const avatarRoutes = {
-  1: { route: 'bear.png', description: 'Oso' },
-  2: { route: 'chicken.png', description: 'Pollo' },
-  3: { route: 'elephant.png', description: 'Elefante' },
-  4: { route: 'hedgehog.png', description: 'Erizo' },
-  5: { route: 'hippo.png', description: 'Hipopótamo' },
-  6: { route: 'koala.png', description: 'Koala' },
-  7: { route: 'lion.png', description: 'León' },
-  8: { route: 'llama.png', description: 'Llama' },
-  9: { route: 'meerkat.png', description: 'Suricata' },
-  10: { route: 'monkey.png', description: 'Mono' },
-  11: { route: 'panda.png', description: 'Panda' },
-  12: { route: 'parrot.png', description: 'Lora' },
-  13: { route: 'penguin.png', description: 'Pinguino' },
-  14: { route: 'Polar', description: 'polarBear.png' },
-  15: { route: 'rabbit.png', description: 'Conejo' },
-  16: { route: 'seaLion.png', description: 'Foca' },
-  17: { route: 'snake.png', description: 'Serpiente' },
-  18: { route: 'tiger.png', description: 'Tigre' },
-  19: { route: 'turtle.png', description: 'Tortuga' },
-  20: { route: 'weasel.png', description: 'Comadreja' },
+  1: { description: 'Oso', route: 'bear.png' },
+  2: { description: 'Pollo', route: 'chicken.png' },
+  3: { description: 'Elefante', route: 'elephant.png' },
+  4: { description: 'Erizo', route: 'hedgehog.png' },
+  5: { description: 'Hipopótamo', route: 'hippo.png' },
+  6: { description: 'Koala', route: 'koala.png' },
+  7: { description: 'León', route: 'lion.png' },
+  8: { description: 'Llama', route: 'llama.png' },
+  9: { description: 'Suricata', route: 'meerkat.png' },
+  10: { description: 'Mono', route: 'monkey.png' },
+  11: { description: 'Panda', route: 'panda.png' },
+  12: { description: 'Lora', route: 'parrot.png' },
+  13: { description: 'Pinguino', route: 'penguin.png' },
+  14: { description: 'polarBear.png', route: 'Polar' },
+  15: { description: 'Conejo', route: 'rabbit.png' },
+  16: { description: 'Foca', route: 'seaLion.png' },
+  17: { description: 'Serpiente', route: 'snake.png' },
+  18: { description: 'Tigre', route: 'tiger.png' },
+  19: { description: 'Tortuga', route: 'turtle.png' },
+  20: { description: 'Comadreja', route: 'weasel.png' },
 };
 
-/**
- * Dictionary with all available card options.
- */
+// Dictionary with all available card options.
 const cardRoutes = {
-  Sueter: 'hoodie.png',
-  Pantaloncillo: 'shorts.png',
-  Camarón: 'shrimp.png',
-  Zanahoria: 'carrot.png',
-  Avión: 'airplane.png',
-  Globo: 'balloon.png',
-  Bicicleta: 'bike.png',
-  Bote: 'boat.png',
-  Excavadora: 'bulldozer.png',
-  Bus: 'bus.png',
-  Teléferico: 'cableCar.png',
-  Carro: 'car.png',
-  Grúa: 'crane.png',
-  Helicoptero: 'chopper.png',
-  Hoverboard: 'hoverboard.png',
-  Moto: 'motorcycle.png',
-  Pogo: 'pogo.png',
-  Cohete: 'rocket.png',
-  Scooter: 'scooter.png',
-  Barco: 'ship.png',
-  Skateboard: 'skateboard.png',
-  Patines: 'skates.png',
-  Nave: 'spaceship.png',
-  Tractor: 'tractor.png',
-  Tren: 'train.png',
-  Triciclo: 'tricycle.png',
-  Camión: 'truck.png',
-  Uniciclo: 'unicycle.png',
-  Carreta: 'wagon.png',
-  Pájaro: 'bird.png',
-  Gato: 'cat.png',
-  Camaleón: 'chameleon.png',
-  Cangrejo: 'crab.png',
-  Delfín: 'dolphin.png',
-  Elefante: 'elephant.png',
-  Zorro: 'fox.png',
-  Jirafa: 'giraffe.png',
-  Erizo: 'hedgehog.png',
-  Gallina: 'hen.png',
-  Caballo: 'horse.png',
-  Medusa: 'jellyfish.png',
-  Canguro: 'kangaroo.png',
-  Koala: 'koala.png',
-  Mono: 'monkey.png',
-  Ratón: 'mouse.png',
-  Cerdo: 'pig.png',
-  Conejo: 'rabbit.png',
-  Escorpión: 'scorpion.png',
-  Hipocampo: 'seahorse.png',
-  Tiburón: 'shark.png',
-  Perezoso: 'sloth.png',
-  Ardilla: 'squirrel.png',
-  Tortuga: 'turtle.png',
-  Ballena: 'whale.png',
-  Frijoles: 'beans.png',
-  Brocoli: 'broccoli.png',
-  Carne: 'meat.png',
-  Hongo: 'mushroom.png',
-  Helado: 'iceCream.png',
-  Espaguetti: 'spaguetti.png',
-  Hamburguesa: 'burger.png',
-  Huevo: 'friedEgg.png',
-  Manzana: 'apple.png',
-  Patatas: 'frenchFries.png',
-  Pepino: 'cucumber.png',
-  Pera: 'pear.png',
-  Pescado: 'friedFish.png',
-  Pollo: 'chickenLeg.png',
-  Pizza: 'pizza.png',
-  Platanos: 'banana.png',
-  Queso: 'cheese.png',
-  Ramen: 'ramen.png',
-  Sushi: 'sushi.png',
-  Sandía: 'watermelon.png',
-  Atún: 'tuna.png',
-  Tomate: 'tomato.png',
-  Uvas: 'grapes.png',
-  Blusón: 'dressShirt.png',
-  Tacones: 'heels.png',
-  Overoles: 'overall.png',
-  Sandalias: 'sandals.png',
-  Pantalones: 'pants.png',
-  Blusa: 'shirt.png',
-  Camiseta: 'jersey.png',
-  Anteojos: 'glasses.png',
-  Traje: 'suit.png',
-  Medias: 'socks.png',
-  Gorro: 'beanie.png',
-  Sombrero: 'hat.png',
-  Tenis: 'sneakers.png',
-  Vestido: 'dress.png',
-  Enterizo: 'onesie.png',
-  Enagua: 'skirt.png',
-  Camisa: 'tshirt.png',
-  Bufanda: 'scarf.png',
-  Guantes: 'gloves.png',
-  Lazo: 'hairBow.png',
-  Prensa: 'hairClip.png',
-  Leggings: 'legging.png',
-  Reloj: 'watch.png',
+  1: { description: 'Sueter', route: 'hoodie.png' },
+  2: { description: 'Pantaloncillo', route: 'shorts.png' },
+  3: { description: 'Camarón', route: 'shrimp.png' },
+  4: { description: 'Zanahoria', route: 'carrot.png' },
+  5: { description: 'Avión', route: 'airplane.png' },
+  6: { description: 'Globo', route: 'balloon.png' },
+  7: { description: 'Bicicleta', route: 'bike.png' },
+  8: { description: 'Bote', route: 'boat.png' },
+  9: { description: 'Excavadora', route: 'bulldozer.png' },
+  10: { description: 'Bus', route: 'bus.png' },
+  11: { description: 'Teléferico', route: 'cableCar.png' },
+  12: { description: 'Carro', route: 'car.png' },
+  13: { description: 'Grúa', route: 'crane.png' },
+  14: { description: 'Helicoptero', route: 'chopper.png' },
+  15: { description: 'Hoverboard', route: 'hoverboard.png' },
+  16: { description: 'Moto', route: 'motorcycle.png' },
+  17: { description: 'Pogo', route: 'pogo.png' },
+  18: { description: 'Cohete', route: 'rocket.png' },
+  19: { description: 'Scooter', route: 'scooter.png' },
+  20: { description: 'Barco', route: 'ship.png' },
+  21: { description: 'Skateboard', route: 'skateboard.png' },
+  22: { description: 'Patines', route: 'skates.png' },
+  23: { description: 'Nave', route: 'spaceship.png' },
+  24: { description: 'Tractor', route: 'tractor.png' },
+  25: { description: 'Tren', route: 'train.png' },
+  26: { description: 'Triciclo', route: 'tricycle.png' },
+  27: { description: 'Camión', route: 'truck.png' },
+  28: { description: 'Uniciclo', route: 'unicycle.png' },
+  29: { description: 'Carreta', route: 'wagon.png' },
+  30: { description: 'Pájaro', route: 'bird.png' },
+  31: { description: 'Gato', route: 'cat.png' },
+  32: { description: 'Camaleón', route: 'chameleon.png' },
+  33: { description: 'Cangrejo', route: 'crab.png' },
+  34: { description: 'Delfín', route: 'dolphin.png' },
+  35: { description: 'Elefante', route: 'elephant.png' },
+  36: { description: 'Zorro', route: 'fox.png' },
+  37: { description: 'Jirafa', route: 'giraffe.png' },
+  38: { description: 'Erizo', route: 'hedgehog.png' },
+  39: { description: 'Gallina', route: 'hen.png' },
+  40: { description: 'Caballo', route: 'horse.png' },
+  41: { description: 'Medusa', route: 'jellyfish.png' },
+  42: { description: 'Canguro', route: 'kangaroo.png' },
+  43: { description: 'Koala', route: 'koala.png' },
+  44: { description: 'Mono', route: 'monkey.png' },
+  45: { description: 'Ratón', route: 'mouse.png' },
+  46: { description: 'Cerdo', route: 'pig.png' },
+  47: { description: 'Conejo', route: 'rabbit.png' },
+  48: { description: 'Escorpión', route: 'scorpion.png' },
+  49: { description: 'Hipocampo', route: 'seahorse.png' },
+  50: { description: 'Tiburón', route: 'shark.png' },
+  51: { description: 'Perezoso', route: 'sloth.png' },
+  52: { description: 'Ardilla', route: 'squirrel.png' },
+  53: { description: 'Tortuga', route: 'turtle.png' },
+  54: { description: 'Ballena', route: 'whale.png' },
+  55: { description: 'Frijoles', route: 'beans.png' },
+  56: { description: 'Brocoli', route: 'broccoli.png' },
+  57: { description: 'Carne', route: 'meat.png' },
+  58: { description: 'Hongo', route: 'mushroom.png' },
+  59: { description: 'Helado', route: 'iceCream.png' },
+  60: { description: 'Espaguetti', route: 'spaguetti.png' },
+  61: { description: 'Hamburguesa', route: 'burger.png' },
+  62: { description: 'Huevo', route: 'friedEgg.png' },
+  63: { description: 'Manzana', route: 'apple.png' },
+  64: { description: 'Patatas', route: 'frenchFries.png' },
+  65: { description: 'Pepino', route: 'cucumber.png' },
+  66: { description: 'Pera', route: 'pear.png' },
+  67: { description: 'Pescado', route: 'friedFish.png' },
+  68: { description: 'Pollo', route: 'chickenLeg.png' },
+  69: { description: 'Pizza', route: 'pizza.png' },
+  70: { description: 'Platanos', route: 'banana.png' },
+  71: { description: 'Queso', route: 'cheese.png' },
+  72: { description: 'Ramen', route: 'ramen.png' },
+  73: { description: 'Sushi', route: 'sushi.png' },
+  74: { description: 'Sandía', route: 'watermelon.png' },
+  75: { description: 'Atún', route: 'tuna.png' },
+  76: { description: 'Tomate', route: 'tomato.png' },
+  77: { description: 'Uvas', route: 'grapes.png' },
+  78: { description: 'Blusón', route: 'dressShirt.png' },
+  79: { description: 'Tacones', route: 'heels.png' },
+  80: { description: 'Overoles', route: 'overall.png' },
+  81: { description: 'Sandalias', route: 'sandals.png' },
+  82: { description: 'Pantalones', route: 'pants.png' },
+  83: { description: 'Blusa', route: 'shirt.png' },
+  84: { description: 'Camiseta', route: 'jersey.png' },
+  85: { description: 'Anteojos', route: 'glasses.png' },
+  86: { description: 'Traje', route: 'suit.png' },
+  87: { description: 'Medias', route: 'socks.png' },
+  88: { description: 'Gorro', route: 'beanie.png' },
+  89: { description: 'Sombrero', route: 'hat.png' },
+  90: { description: 'Tenis', route: 'sneakers.png' },
+  91: { description: 'Vestido', route: 'dress.png' },
+  92: { description: 'Enterizo', route: 'onesie.png' },
+  93: { description: 'Enagua', route: 'skirt.png' },
+  94: { description: 'Camisa', route: 'tshirt.png' },
+  95: { description: 'Bufanda', route: 'scarf.png' },
+  96: { description: 'Guantes', route: 'gloves.png' },
+  97: { description: 'Lazo', route: 'hairBow.png' },
+  98: { description: 'Prensa', route: 'hairClip.png' },
+  99: { description: 'Leggings', route: 'legging.png' },
+  100: { description: 'Reloj', route: 'watch.png' },
 };
 
 // Maximum number of clients allowed in webpage.
@@ -296,12 +294,13 @@ function addPlayer(playerName, playerArray) {
     };
 
     playerArray.forEach((playerData, playerNickname) => {
-      if (playerNickname !== playerName) {
-        // no manda a socket bien
-        const socket = playerData.get('playerSocket');
-        console.log('aqui');
-        socket.send(JSON.stringify(newMessage));
-      }
+      console.log(`Sending player to host and other player${playerNickname}`);
+      // if (playerNickname !== playerName) {
+      // no manda a socket bien
+      const socket = playerData.get('playerSocket');
+      console.log(`socket: ${JSON.stringify(socket)}`);
+      socket.send(JSON.stringify(newMessage));
+      // }
     });
   }
 }
@@ -404,7 +403,7 @@ function addToRoom(socket, message) {
   const playersMap = roomInfo.get('players');
 
   const playerPosition = playersMap.size + 1;
-  console.log('playerPosition: ' + playerPosition);
+  console.log(`playerPosition: ${playerPosition}`);
   const newPlayer = createPlayer(playerPosition, false);
 
   if (availableRooms.has(roomCode) === true) {
@@ -413,8 +412,7 @@ function addToRoom(socket, message) {
       ['playerInfo', newPlayer],
     ]);
     playersMap.set(playerNickname, playerMap);
-
-    addPlayer(socket, playersMap);
+    addPlayer(playerNickname, playersMap);
   }
   // asign avatar and store in room
   console.log('createRoom');
@@ -432,19 +430,23 @@ function getWaitingRoom(socket, message) {
   const roomCode = message.sessionCode;
   if (roomCode && playerNickname) {
     const roomInfo = availableRooms.get(roomCode);
-    const playersMap = roomInfo.get('players');
-    const playerInfo = playersMap.get(playerNickname).get('playerInfo');
-    if (playerInfo) {
-      const newMessage = {
-        type: 'handleWaitingRoom',
-        from: 'server',
-        to: 'player',
-        when: 'When the server send personalized waiting room',
-        isHost: playerInfo.get('host'),
-        players: createPlayerMap(playersMap),
-      };
-      console.log(`createPlayerMap(playersMap): ${createPlayerMap(playersMap)}`);
-      socket.send(JSON.stringify(newMessage));
+    if (roomInfo) {
+      const playersMap = roomInfo.get('players');
+      if (playersMap) {
+        const playerInfo = playersMap.get(playerNickname).get('playerInfo');
+        if (playerInfo) {
+          const newMessage = {
+            type: 'handleWaitingRoom',
+            from: 'server',
+            to: 'player',
+            when: 'When the server send personalized waiting room',
+            isHost: playerInfo.get('host'),
+            players: createPlayerMap(playersMap),
+          };
+          console.log(`createPlayerMap(playersMap): ${createPlayerMap(playersMap)}`);
+          socket.send(JSON.stringify(newMessage));
+        }
+      }
     }
   }
 }
