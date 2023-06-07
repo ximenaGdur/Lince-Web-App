@@ -223,14 +223,9 @@ const server = new WebSocket.Server({ port: 8009 });
 /** ******************** Functions used on script ********************* */
 
 /**
- * Closes connection with client.
- */
-function closeConnection(socket, message) {
-  console.log(`message: ${message}`);
-}
-
-/**
  * Checks if room with given code exists.
+ * @param {WebSocket} socket Player socket.
+ * @param {String} messageReceived Message player sent.
  */
 function validateCode(socket, messageReceived) {
   const code = messageReceived.sessionCode;
@@ -258,6 +253,9 @@ function validateCode(socket, messageReceived) {
 /**
  * Calculates a random number in a range.
  * TODO: Move to common js.
+ * @param {Number} min Minimum number in range.
+ * @param {Number} max Maximum number in range.
+ * @returns A random number.
  */
 function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -265,6 +263,7 @@ function getRandomNumber(min, max) {
 
 /**
  * Assigns random avatar to player.
+ * @returns Randomly generated avatar.
  */
 function selectAvatar() {
   const randomNumber = getRandomNumber(1, Object.keys(avatarRoutes).length);
@@ -274,6 +273,9 @@ function selectAvatar() {
 
 /**
  * Creates new player and adds it to the room.
+ * @param {Number} playerPosition Player's position in ranking.
+ * @param {Boolean} isHost Whether player is host or not.
+ * @returns New player Map with relevant information.
  */
 function createPlayer(playerPosition, isHost) {
   const playerAvatar = selectAvatar();
@@ -287,6 +289,11 @@ function createPlayer(playerPosition, isHost) {
   return newPlayer;
 }
 
+/**
+ * Converts Map object into a string in order to send it.
+ * @param {Map} playerMap Map object with player's information.
+ * @returns String with all player information.
+ */
 function createPlayerStringMap(playerMap) {
   const playerStringMap = {};
   if (playerMap) {
@@ -308,40 +315,69 @@ function createPlayerStringMap(playerMap) {
 }
 
 /**
- * Broadcasts message to everyone but one player.
+ * Converts Map object into a string in order to send it.
+ * @param {Map} playerMap Map object with room's configuration.
+ * @returns String with all room's configuration.
  */
-function broadcastToOthers(newMessage, roomCode, excludedPlayerNickname) {
+function createConfigStringMap(roomConfig) {
+  const configStringMap = {};
+  if (roomConfig) {
+    configStringMap.adaptation1a = roomConfig.get('adaptation1a');
+    configStringMap.adaptation1b = roomConfig.get('adaptation1b');
+    configStringMap.adaptation2a = roomConfig.get('adaptation2a');
+    configStringMap.adaptation2b = roomConfig.get('adaptation2b');
+    configStringMap.adaptation3a = roomConfig.get('adaptation3a');
+    configStringMap.adaptation3b = roomConfig.get('adaptation3b');
+    configStringMap.maxTime = roomConfig.get('maxTime');
+    configStringMap.cardsPerPlayer = roomConfig.get('cardsPerPlayer');
+    configStringMap.cardsPerRound = roomConfig.get('cardsPerRound');
+  }
+  return JSON.stringify(configStringMap);
+}
+
+/**
+ * Broadcasts message to everyone but one player.
+ * @param {String} message Message to be broadcasted.
+ * @param {Number} roomCode Room that contains players to which message will be sent.
+ * @param {String} excludedPlayerNickname Nickname of player that will be excluded.
+ */
+function broadcastToOthers(message, roomCode, excludedPlayerNickname) {
   const roomInfo = availableRooms.get(roomCode);
   const playersMap = roomInfo.get('players');
   playersMap.forEach((playerData, playerNickname) => {
     if (playerNickname !== excludedPlayerNickname) {
       const socket = playerData.get('playerSocket');
-      socket.send(JSON.stringify(newMessage));
+      socket.send(JSON.stringify(message));
     }
   });
 }
 
 /**
- * Broadcasts message to everyone in room.
+ * Broadcasts message to everyone in a room.
+ * @param {String} message Message to be broadcasted.
+ * @param {Number} roomCode Room that contains players to which message will be sent.
  */
-function broadcastToAll(newMessage, roomCode) {
+function broadcastToAll(message, roomCode) {
   const roomInfo = availableRooms.get(roomCode);
   const playersMap = roomInfo.get('players');
   playersMap.forEach((playerData) => {
     const socket = playerData.get('playerSocket');
-    socket.send(JSON.stringify(newMessage));
+    socket.send(JSON.stringify(message));
   });
 }
 
+// TODO: esta funcion siempre debe exluir a alguien?
 
 /**
  * Adds player to list for other players in room.
+ * @param {String} playerName Nombre del jugador
+ * @param {Number} roomCode 
  */
 function sendUpdatedPlayers(playerName, roomCode) {
   const roomInfo = availableRooms.get(roomCode);
   const playersMap = roomInfo.get('players');
   const newMessage = {
-    type: 'handleNewPlayer',
+    type: 'handlePlayerList',
     from: 'server',
     to: 'player',
     when: 'When the server lets clients know a new player has been added',
@@ -468,28 +504,34 @@ function getWaitingRoom(socket, message) {
 
   if (roomCode && playerNickname && availableRooms.has(roomCode)) {
     const roomInfo = availableRooms.get(roomCode);
-    const playersMap = roomInfo.get('players');
-    const playerMap = playersMap.get(playerNickname);
-    const playerInfo = playerMap.get('playerInfo');
+    if (roomInfo.has('players') && roomInfo.has('players')) {
+      const playersMap = roomInfo.get('players');
+      const roomConfig = roomInfo.get('config');
+      if (playersMap.has(playerNickname)) {
+        const playerMap = playersMap.get(playerNickname);
+        const playerInfo = playerMap.get('playerInfo');
 
-    if (playersMap.keys.length <= maximumClientAmount) {
-      playerMap.set('playerSocket', socket);
-      // Sending messages to other players to let them know a new player has entered
-      sendUpdatedPlayers(playerNickname, roomCode);
+        if (playersMap.keys.length <= maximumClientAmount) {
+          playerMap.set('playerSocket', socket);
+          // Sending messages to other players to let them know a new player has entered
+          sendUpdatedPlayers(playerNickname, roomCode);
 
-      // Sending player personalized waiting room.
-      const newMessage = {
-        type: 'handleWaitingRoom',
-        from: 'server',
-        to: 'player',
-        when: 'When the server send personalized waiting room',
-        isHost: playerInfo.get('host'),
-        players: createPlayerStringMap(playersMap),
-      };
+          // Sending player personalized waiting room.
+          const newMessage = {
+            type: 'handleWaitingRoom',
+            from: 'server',
+            to: 'player',
+            when: 'When the server send personalized waiting room',
+            isHost: playerInfo.get('host'),
+            players: createPlayerStringMap(playersMap),
+            config: createConfigStringMap(roomConfig),
+          };
 
-      // TODO: Send configuration too, in case of non host
+          // TODO: Send configuration too, in case of non host
 
-      socket.send(JSON.stringify(newMessage));
+          socket.send(JSON.stringify(newMessage));
+        }
+      }
     }
   }
 }
@@ -733,24 +775,31 @@ function toggleAdp3b(message) {
 /**
  * Assigns a random player the host title.
  */
-function assignNewHost(playerMap) {
-  const playerNicknames = playerMap.keys();
+function assignNewHost(playersMap) {
+  const playerNicknames = Array.from(playersMap.keys());
   const randomNumber = getRandomNumber(1, playerNicknames.length);
-  playerNicknames[randomNumber].playerInfo.isHost = 'true';
+  const newHost = playerNicknames[randomNumber - 1];
+  if (playersMap.has(newHost)) {
+    const hostMap = playersMap.get(newHost);
+    const hostInfo = hostMap.get('playerInfo');
+    hostInfo.set('host', true);
+  }
 }
 
 /**
  * Removes player in list for other players in room.
  */
-function removePlayer(roomCode, nickname) {
-  const roomInfo = availableRooms.get(roomCode);
-  const playersMap = roomInfo.get('players');
-  const playerMap = playersMap.get(nickname);
-  playerMap.delete(nickname);
-  assignNewHost(playerMap);
+function removePlayer(roomCode, playerNickname) {
+  if (roomCode && playerNickname && availableRooms.has(roomCode)) {
+    const roomInfo = availableRooms.get(roomCode);
+    const playersMap = roomInfo.get('players');
+    playersMap.delete(playerNickname);
+    // TODO: update ranking
+    assignNewHost(playersMap);
 
-  // Sending messages to other players to let them know a player has left.
-  sendUpdatedPlayers(nickname, roomCode);
+    // Sending messages to other players to let them know a player has left.
+    sendUpdatedPlayers(playerNickname, roomCode);
+  }
 }
 
 /**
@@ -884,6 +933,8 @@ function applyBlur(message) {
  * Identifying message type in order to call appropiate function.
  */
 function identifyMessage(socket, receivedMessage) {
+  const playerNickname = receivedMessage.nickname;
+  const code = receivedMessage.sessionCode;
   switch (receivedMessage.type) {
     case 'closeConnection':
       closeConnection(socket, receivedMessage);
@@ -939,8 +990,27 @@ function identifyMessage(socket, receivedMessage) {
     case 'applyBlur':
       applyBlur(receivedMessage);
       break;
+    case 'removePlayer':
+      removePlayer(code, playerNickname);
+      break;
     default:
       console.error('No se reconoce ese mensaje.');
+  }
+}
+
+/**
+ * Closes connection with client.
+ */
+function closeConnection(playerNickname, roomCode) {
+  printRooms();
+  if (playerNickname && roomCode) {
+    if (availableRooms.has(roomCode)) {
+      const roomMap = availableRooms.get(roomCode);
+      const roomPlayers = roomMap.get('players');
+      if (roomPlayers.has(playerNickname)) {
+        removePlayer(roomCode, playerNickname);
+      }
+    }
   }
 }
 
@@ -948,15 +1018,26 @@ function identifyMessage(socket, receivedMessage) {
  * When a connection is made with a client.
  */
 server.on('connection', (clientSocket) => {
+  // let nickname = '';
+  // let code = '';
+
   console.log('Estableciendo de conexión con cliente...');
 
   clientSocket.on('message', (message) => {
     console.log(`Recibi mensaje del cliente: ${message}`);
-    const receivedMessage = JSON.parse(message);
-    identifyMessage(clientSocket, receivedMessage);
+    const parsedMessage = JSON.parse(message);
+
+    /* if (parsedMessage.nickname && parsedMessage.sessionCode) {
+      nickname = parsedMessage.nickname;
+      code = parsedMessage.sessionCode;
+    } */
+
+    identifyMessage(clientSocket, parsedMessage);
   });
 
   clientSocket.on('close', () => {
     console.log('Cerrando conexión con cliente...');
+    // closeConnection(nickname, code);
+    // TODO: arreglar esto, actualmente no se como detectar de que pagina es el socket
   });
 });

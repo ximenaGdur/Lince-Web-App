@@ -165,7 +165,7 @@ Los eventos principales para un cliente en cada pantalla de juego son:
 
 #### Sala de espera
 
-1. handleNewPlayer
+1. handlePlayerList
 2. handleRemovePlayer
 3. showExitPopUp
 
@@ -586,7 +586,7 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 ~~~ JSON
 11. Aviso de nuevo jugador
 {
-    "type": "handleNewPlayer",
+    "type": "handlePlayerList",
     "from": "server",
     "to": "player",
     "when": "When the server lets clients know a new player has been added",
@@ -928,7 +928,7 @@ sendMessage({
 })
 ~~~
 
-#### handleNewPlayer(playerNickName)
+#### handlePlayerList(playerNickName)
 
 ~~~ js
 players.push(playerNickName)
@@ -1158,7 +1158,7 @@ newRoom.addHost(nickname)
 ~~~ js
 for player in rooms[roomCode].getPlayers()
     sendMessage({
-        "type": "handleNewPlayer",
+        "type": "handlePlayerList",
         "from": "server",
         "to": "client",
         "when": "When the server lets clients know a new player has been added",
