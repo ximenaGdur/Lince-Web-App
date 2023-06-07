@@ -768,7 +768,31 @@ function startGame(socket, message) {
  * Checks if match is correct.
  */
 function checkMatch(socket, message) {
-  console.log('checkMatch');
+  const pCardid = message.playerCard;
+  const bCardid = message.boardCard;
+  console.log(pCardid);
+  console.log(bCardid);
+
+  if (pCardid === bCardid) {
+    const newMessage = {
+      type: 'handleMatchResponse',
+      from: 'server',
+      to: 'player',
+      when: 'when a checks a match',
+      match: true,
+    };
+    socket.send(JSON.stringify(newMessage));
+  } else {
+    const newMessage = {
+      type: 'handleMatchResponse',
+      from: 'server',
+      to: 'player',
+      when: 'when a checks a match',
+      match: false,
+    };
+    socket.send(JSON.stringify(newMessage));
+  }
+  console.log('Checking Match');
 }
 
 /**

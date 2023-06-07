@@ -76,7 +76,21 @@ function loadPage() {
  */
 function match(secondCard) {
   if (firstCard) {
-    console.log(firstCard.altText);
+    const message = {
+      type: 'checkMatch',
+      from: 'player',
+      to: 'server',
+      when: 'when a player makes a match',
+      nickname: sessionStorage.getItem('playerNickname'),
+      roomcode: sessionStorage.getItem('roomCode'),
+      playerCard: firstCard.getAttribute('id'),
+      boardCard: secondCard.getAttribute('id'),
+    };
+    socket.send(JSON.stringify(message));
+    console.log(sessionStorage.getItem('playerNickname'));
+    console.log(sessionStorage.getItem('roomCode'));
+    console.log(firstCard.getAttribute('id'));
+    console.log(secondCard.getAttribute('id'));
   } else {
     console.log('Escoga ficha de su mano primero.');
   }
@@ -85,8 +99,12 @@ function match(secondCard) {
 /**
  * Handles response from server to player match.
  */
-function handleMatchResponse() {
-
+function handleMatchResponse(receivedMessage) {
+  if (receivedMessage.match === true) {
+    console.log('El match es correcto');
+  } else {
+    console.log('El match es incorrecto');
+  }
 }
 
 /**
@@ -260,6 +278,7 @@ for (let index = 0; index < myImages.length; index += 1) {
 
 for (let index = 0; index < boardImages.length; index += 1) {
   const boardCard = boardImages[index];
+  //const imageCard = boardImages[index].getElementsByClassName('board-image');
   boardCard.addEventListener('click', () => {
     match(boardCard);
   });
