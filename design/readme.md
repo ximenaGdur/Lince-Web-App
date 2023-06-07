@@ -471,7 +471,7 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 {
     "type": "handleCodeValidation",
     "from": "server",
-    "to": "player1",
+    "to": "player",
     "when": "When the server validates room",
     "isValid": "true"
 }
@@ -484,7 +484,7 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 {
     "type": "handleAdp1a",
     "from": "server",
-    "to": "player1",
+    "to": "player",
     "when": "When the server lets players know adaptation 1a has been activated"
 })
 ~~~
@@ -494,7 +494,7 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 {
     "type": "handleAdp1b",
     "from": "server",
-    "to": "player1",
+    "to": "player",
     "when": "When the server lets players know adaptation 1b has been activated"
 })
 ~~~
@@ -504,7 +504,7 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 {
     "type": "handleAdp2a",
     "from": "server",
-    "to": "player1",
+    "to": "player",
     "when": "When the server lets players know adaptation 2a has been activated"
 })
 ~~~
@@ -514,7 +514,7 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 {
     "type": "handleAdp2b",
     "from": "server",
-    "to": "player1",
+    "to": "player",
     "when": "When the server lets players know adaptation 2b has been activated"
 })
 ~~~
@@ -524,7 +524,7 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 {
     "type": "handleAdp3a",
     "from": "server",
-    "to": "player1",
+    "to": "player",
     "when": "When the server lets players know adaptation 3a has been activated"
 })
 ~~~
@@ -534,7 +534,7 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 {
     "type": "handleAdp3b",
     "from": "server",
-    "to": "player1",
+    "to": "player",
     "when": "When the server lets players know adaptation 3b has been activated"
 })
 ~~~
@@ -544,7 +544,7 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 {
     "type": "handleMaxTime",
     "from": "server",
-    "to": "player1",
+    "to": "player",
     "when": "When the server lets players know to change the max time",
     "maxTime": "30"
 })
@@ -555,7 +555,7 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 {
     "type": "handleCardsPerPlayer",
     "from": "server",
-    "to": "player1",
+    "to": "player",
     "when": "When the server lets players know to change the cards per player",
     "cardsPerPlayer": "7"
 })
@@ -566,7 +566,7 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 {
     "type": "handleCardsPerRound",
     "from": "server",
-    "to": "player1",
+    "to": "player",
     "when": "When the server lets players know to change the cards per round",
     "cardsPerRound": "100"
 })
@@ -577,7 +577,7 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 {
     "type": "handleRemovePlayer",
     "from": "server",
-    "to": "player2",
+    "to": "player",
     "when": "When the server lets players know a player left the room",
     "nickname": "player1"
 })
@@ -588,7 +588,7 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 {
     "type": "handleNewPlayer",
     "from": "server",
-    "to": "player1",
+    "to": "player",
     "when": "When the server lets clients know a new player has been added",
     "nickname": "player1",
     "avatar": "bear.png",
@@ -600,7 +600,7 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 {
     "type": "handleStartGame",
     "from": "server",
-    "to": "player2",
+    "to": "player",
     "when": "When the server lets players know game has started"
 })
 ~~~
@@ -612,7 +612,7 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 {
     "type": "handleTimesUp",
     "from": "server",
-    "to": "player1",
+    "to": "player",
     "when": "When the server lets players know times up",
     "ranking":
         { "player1": "300",
@@ -627,8 +627,9 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 {
     "type": "handleMatchResponse",
     "from": "server",
-    "to": "player2",
+    "to": "player",
     "when": "When the server tells player if their match was correct or not",
+    "isCorrect": "true",
     "score": "350"
 }
 ~~~
@@ -638,7 +639,7 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 {
     "type": "handleScores",
     "from": "server",
-    "to": "player1",
+    "to": "player",
     "when": "When the server lets players know to update scores",
     "ranking":
         { "player2": "350",
@@ -653,7 +654,7 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 {
     "type": "handleBlur",
     "from": "server",
-    "to": "player2",
+    "to": "player",
     "when": "When the server lets players know to activate blur"
 }
 ~~~
@@ -663,7 +664,7 @@ En el caso del servidor, este puede mandarle un objeto html al cliente.
 {
     "type": "handleExtraCards",
     "from": "server",
-    "to": "player2",
+    "to": "player",
     "when": "When the server lets players know to apply extra cards",
     "extraCards": { "card1": "blue apple", "card2": "red dog"}
 }
@@ -1171,7 +1172,7 @@ for player in rooms[roomCode].getPlayers()
         }
     })
 
-rooms[roomCode].addPlayer(nickname)
+rooms[roomCode].sendUpdatedPlayers(nickname)
 // send waiting room
 ~~~
 
@@ -1185,7 +1186,7 @@ for player in rooms[roomCode].getPlayers()
         sendMessage({
             "type": "handleAdp1a",
             "from": "server",
-            "to": "player1",
+            "to": "player",
             "when": "When the server lets players know adaptation 1a has been activated"
         })
 ~~~
@@ -1350,15 +1351,18 @@ for player in rooms[roomCode].getPlayers()
 
 ~~~ js
 if rooms[roomCode].getCard(column, row) == card
+    isCorrect = true
     rooms[roomCode].getPlayerScore(player) += 100
 else
     rooms[roomCode].getPlayerScore(player) -= 50
+    isCorrect = false
 
 sendMessage({
     "type": "handleMatchResponse",
     "from": "server",
     "to": "client",
     "when": "When the server tells player if their match was correct or not",
+    "isCorrect": isCorrect,
     "Score": rooms[roomCode].getPlayerScore(player)
 })
 
