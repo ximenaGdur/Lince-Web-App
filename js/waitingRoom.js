@@ -38,7 +38,7 @@ const cardsPlayerMax = 20;
 const cardsRoundMin = 5;
 
 // Maximum amount of cards per round permitted
-const cardsRoundMax = 20;
+const cardsRoundMax = 400;
 
 // Button that allows the user to see the exit popup.
 const exitButton = document.getElementById('exit-button');
@@ -163,11 +163,10 @@ function handleNewPlayer(message) {
   // Order by points
   if (playerTable) {
     const playerArray = JSON.parse(message.players);
-    console.log(playerArray);
     if (playerArray) {
+      playerTable.innerHTML = '';
       Object.keys(playerArray).forEach((nickname) => {
         if (Object.hasOwn(playerArray, nickname)) {
-          console.log(`playerInfo: ${JSON.stringify(playerArray[nickname])}`);
           playerTable.innerHTML += createNewPlayer(nickname, playerArray[nickname]);
         }
       });
@@ -224,7 +223,6 @@ function chooseCardsPerRound() {
       cardsPerRound: cardsRound,
     };
     socket.send(JSON.stringify(message));
-    console.log('Message sent to server');
   }
 }
 
@@ -245,7 +243,6 @@ function chooseMaxTime() {
       maxTime: time,
     };
     socket.send(JSON.stringify(message));
-    console.log('Message sent to server');
   }
 }
 
@@ -274,7 +271,6 @@ function chooseCardsPerPlayer() {
  * adaptation as 1a when the host client selects that option.
  */
 function chooseAdp1a() {
-  console.log('Adaptacion 1a escogida');
   const message = {
     type: 'toggleAdp1a',
     from: 'client',
@@ -291,7 +287,6 @@ function chooseAdp1a() {
  * adaptation as 1b when the host client selects that option.
  */
 function chooseAdp1b() {
-  console.log('Adaptacion 1b escogida');
   const message = {
     type: 'toggleAdp1b',
     from: 'client',
@@ -308,7 +303,6 @@ function chooseAdp1b() {
  * adaptation as 2a when the host client selects that option.
  */
 function chooseAdp2a() {
-  console.log('Adaptacion 2a escogida');
   const message = {
     type: 'toggleAdp2a',
     from: 'client',
@@ -325,7 +319,6 @@ function chooseAdp2a() {
  * adaptation as 2b when the host client selects that option.
  */
 function chooseAdp2b() {
-  console.log('Adaptacion 2b escogida');
   const message = {
     type: 'toggleAdp2b',
     from: 'client',
@@ -342,7 +335,6 @@ function chooseAdp2b() {
  * adaptation as 3a when the host client selects that option.
  */
 function chooseAdp3a() {
-  console.log('Adaptacion 3a escogida');
   const message = {
     type: 'toggleAdp3a',
     from: 'client',
@@ -359,7 +351,6 @@ function chooseAdp3a() {
  * adaptation as 3b when the host client selects that option.
  */
 function chooseAdp3b() {
-  console.log('Adaptacion 3b escogida');
   const message = {
     type: 'toggleAdp3b',
     from: 'client',

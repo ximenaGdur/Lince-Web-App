@@ -163,27 +163,12 @@ function showInstructions() {
 
 /**
  * Indicates client room code.
+ * @param {*} receivedMessage Message sent by the server containing the room code to save.
  */
 function handleRoomCode(message) {
   sessionStorage.setItem('roomCode', message.sessionCode);
   window.location.href = './waitingRoom.xhtml';
 }
-
-/*
- * **
- * Receive and save the room code assigned by the server after clicking the create room button.
- * @param {*} receivedMessage Message sent by the server containing the room code to save.
- *
-function handleRoomCode(receivedMessage) {
-    const rCode = receivedMessage.roomCode;
-    console.log(rCode);
-    sessionStorage.roomCode = rCode;
-    // sessionStorage.setItem('roomcode', 1234);
-    console.log(sessionStorage.getItem('nickname'));
-    console.log(sessionStorage.getItem('roomCode'));
-    window.location.href = './waitingRoom.xhtml';
-}
-*/
 
 /**
  * Identifying message type in order to call appropiate function.

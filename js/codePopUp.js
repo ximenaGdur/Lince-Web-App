@@ -21,8 +21,6 @@ export function showCodePopUp() {
  * Checks server response to whether code is valid or not.
  */
 export function handleCodeValidation(receivedMessage) {
-  console.log('Recibi mensaje de validacion');
-  console.log('receivedMessage.isValid: ' + receivedMessage.isValid);
   if (receivedMessage.isValid === 'false') {
     feedbackMessage.innerHTML = 'Sala no existe';
     joinButton.style.cursor = 'pointer';
