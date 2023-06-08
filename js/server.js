@@ -844,7 +844,6 @@ function getGameRoom(socket, message) {
     const playersMap = roomInfo.get('players');
     const configMap = roomInfo.get('config');
     const playerMap = playersMap.get(playerNickname);
-    const playerInfo = playerMap.get('playerInfo');
 
     playerMap.set('playerSocket', socket);
     sendUpdatedPlayers(playerNickname, roomCode, 'handlePlayerList');
@@ -855,7 +854,7 @@ function getGameRoom(socket, message) {
       from: 'server',
       to: 'player',
       when: 'When the server send personalized game room',
-      maxTime: configMap.get();
+      maxTime: configMap.get('maxTime'),
       players: createPlayerStringMap(playersMap),
     };
     socket.send(JSON.stringify(newMessage));
