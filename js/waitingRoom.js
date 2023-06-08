@@ -1,4 +1,5 @@
 /* eslint-disable linebreak-style */
+
 /** ******************* Imports ******************* */
 
 import {
@@ -7,6 +8,11 @@ import {
   createRemovePlayerMessage,
 // eslint-disable-next-line import/extensions
 } from './exitPopUp.js';
+
+import {
+  handlePlayerList,
+// eslint-disable-next-line import/extensions
+} from './common.js';
 
 /** ******************* Creating constants for script ******************* */
 
@@ -95,7 +101,7 @@ const option3b = document.getElementById('Adp3b');
 const playerTable = document.getElementById('waiting-room-ranking');
 
 // Player nickname
-const playerNickname  = sessionStorage.getItem('playerNickname');
+const playerNickname = sessionStorage.getItem('playerNickname');
 
 // Room Code
 const roomCode = sessionStorage.getItem('roomCode');
@@ -128,36 +134,6 @@ function loadPage() {
     main[0].innerHTML = `<h2 class="page-title" id="waiting-room-title">La sala ${roomCode} no existe</h2>`;
     main[0].innerHTML += '<img class="information-icon" src="/design/images/Icons/informationIcon.png" alt="información"></img>';
   }
-}
-
-/**
- * Creates new player row in ranking table.
- */
-function createNewPlayer(nickname, playerInfo) {
-  const iconsRoute = '/design/images/icons/';
-  const avatarRoute = `${iconsRoute}profile/${playerInfo.avatar.route}`;
-  const crownRoute = `${iconsRoute}hostCrown.png`;
-
-  let playerHTML = '<tr class="table-row">';
-
-  if (playerInfo.host === true) {
-    playerHTML += '  <td class="table-col ranking-column">';
-    playerHTML += `    <img class="profile-image" src="${crownRoute}" alt="Icono de Anfitrión"/>`;
-    playerHTML += `    ${playerInfo.position}`;
-    playerHTML += '  </td>';
-  } else {
-    playerHTML += `  <td class="table-col ranking-column">${playerInfo.position}</td>`;
-  }
-
-  playerHTML += '  <td class="table-col avatar-column">';
-  playerHTML += `    <img class="profile-image" src="${avatarRoute}" alt="Icono de ${playerInfo.avatar.description}"/>`;
-  playerHTML += '  </td>';
-
-  playerHTML += `  <td class="table-col name-column">${nickname}</td>`;
-  playerHTML += `  <td class="table-col score-column">${playerInfo.points} puntos</td>`;
-  playerHTML += '</tr>';
-
-  return playerHTML;
 }
 
 /**
@@ -212,28 +188,6 @@ function setToEdit() {
 }
 
 /**
- * Adds new player to player list.
- */
-function handlePlayerList(message) {
-  // Order by points
-  if (playerTable) {
-    const playerArray = JSON.parse(message.players);
-    if (playerArray) {
-      playerTable.innerHTML = '';
-      Object.keys(playerArray).forEach((nickname) => {
-        if (Object.hasOwn(playerArray, nickname)) {
-          const playerInfo = playerArray[nickname];
-          playerTable.innerHTML += createNewPlayer(nickname, playerInfo);
-          if (nickname === playerNickname && playerInfo.host === true) {
-            setToEdit();
-          }
-        }
-      });
-    }
-  }
-}
-
-/**
  * Interprets current configuration and reflects it on screen
  * @param {*} message Message received from server.
  */
@@ -262,15 +216,12 @@ function handleConfiguration(message) {
  * When server sends a message with personalized waiting room.
  */
 function handleWaitingRoom(message) {
-  console.log('message.isHost: ' + message.isHost);
   if (message.isHost === false) {
-    console.log('GUESTTTTT');
     setToReadOnly();
   } else {
-    console.log('HOOOOOOOOST');
     setToEdit();
   }
-  handlePlayerList(message);
+  handlePlayerList(message, playerTable);
   handleConfiguration(message);
 }
 
@@ -428,6 +379,33 @@ function chooseAdp3b() {
     sessionCode: roomCode,
   };
   socket.send(JSON.stringify(message));
+}
+
+/**
+ * Checks if current player is new host.
+ * @param {*} message Message sent by server.
+ */
+function changeHost(message) {
+  const playerArray = JSON.parse(message.players);
+  if (playerArray) {
+    Object.keys(playerArray).forEach((nickname) => {
+      if (Object.hasOwn(playerArray, nickname)) {
+        const playerInfo = playerArray[nickname];
+        if (nickname === playerNickname && playerInfo.host === true) {
+          setToEdit();
+        }
+      }
+    });
+  }
+}
+
+/**
+ * Handles player removal from player list.
+ * @param {*} message Message sent by server.
+ */
+function handleRemovePlayer(message) {
+  handlePlayerList(message, playerTable);
+  changeHost(message);
 }
 
 /**
@@ -642,7 +620,10 @@ function identifyMessage(receivedMessage) {
       handleCardsPerRound(receivedMessage);
       break;
     case 'handlePlayerList':
-      handlePlayerList(receivedMessage);
+      handlePlayerList(receivedMessage, playerTable);
+      break;
+    case 'handleRemovePlayer':
+      handleRemovePlayer(receivedMessage, playerTable);
       break;
     case 'handleStartGame':
       handleStartGame(receivedMessage);
@@ -671,7 +652,6 @@ socket.addEventListener('open', () => {
     sessionCode: roomCode,
   };
   socket.send(JSON.stringify(message));
-  console.log('Message sent to server');
 });
 
 /**

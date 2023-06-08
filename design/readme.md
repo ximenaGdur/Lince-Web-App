@@ -199,7 +199,7 @@ Los eventos principales para un cliente en cada pantalla de juego son:
 
 1. match
 2. handleMatchResponse
-3. handleScores
+3. handlePlayerList
 4. handleTimesUp
 5. applyBlur
 6. handleBlur

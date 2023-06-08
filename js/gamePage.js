@@ -1,4 +1,5 @@
 /* eslint-disable linebreak-style */
+
 /** ******************* Imports ******************* */
 
 import {
@@ -14,6 +15,11 @@ import {
 // eslint-disable-next-line import/extensions
 } from './exitPopUp.js';
 
+import {
+  handlePlayerList,
+// eslint-disable-next-line import/extensions
+} from './common.js';
+
 /** ******************* Creating constants for script ******************* */
 
 // Button that allows player to return to main page.
@@ -21,12 +27,6 @@ const acceptButton = document.getElementById('accept-button');
 
 // Contains all game board cards
 const boardImages = document.getElementsByClassName('board-image-container');
-
-// Percentage of time when blur happens
-const blurPorcentage = 95;
-
-// Time when blur happens
-let blurTime = null;
 
 // Button that allows player to continue session.
 const continueButton = document.getElementById('continue-button');
@@ -43,9 +43,6 @@ let firstCard = null;
 // Button that allows player to exit session.
 const homeButton = document.getElementById('home-button');
 
-// Maximum time chosen
-const maxTime = 5000;
-
 // Contains all cards
 const myImage = document.getElementsByClassName('my-image');
 
@@ -55,11 +52,23 @@ const myImages = document.getElementsByClassName('my-image-container');
 // Pop Up that is shown when game is finished.
 const popUpFinished = document.getElementById('popUpFinished');
 
+// Player table with ranking during game.
+const playerTable = document.getElementById('mainPageRanking');
+
+// Player nickname
+const playerNickname = sessionStorage.getItem('playerNickname');
+
+// Room Code
+const roomCode = sessionStorage.getItem('roomCode');
+
 // Socket that connects to server
 const socket = new WebSocket('ws://localhost:8009');
 
 // Contains all word cards
 const word = document.getElementsByClassName('word');
+
+// Current time in game
+let time = 0;
 
 /** ******************* Functions used on script ******************* */
 
@@ -67,8 +76,67 @@ const word = document.getElementsByClassName('word');
  * When page is loaded...
  */
 function loadPage() {
-  // blurTime = (maxTime * 100) / blurPorcentage;
-  // applyBlurTimeout = setTimeout(handleBlur, blurTime);
+  if (roomCode) {
+    const timeString = `Tiempo: ${time} segundos`;
+    document.getElementById('current-time').innerHTML = timeString;
+  } else {
+    const main = document.getElementsByClassName('main-content');
+    main[0].innerHTML = `<h2 class="page-title" id="waiting-room-title">La sala ${roomCode} no existe</h2>`;
+    main[0].innerHTML += '<img class="information-icon" src="/design/images/Icons/informationIcon.png" alt="información"></img>';
+  }
+}
+
+/**
+ * Updates board with corresponding cards.
+ * @param {Map} message Message from server.
+ */
+function handleBoardCards(message) {
+
+}
+
+/**
+ * Updates player hand with corresponding cards.
+ * @param {Map} message Message from server.
+ */
+function handlePlayerCards(message) {
+
+}
+
+/**
+ * Lets server know time is up or player hand is empty.
+ */
+function stopGame() {
+  const message = {
+    type: 'timesUp',
+    from: 'client',
+    to: 'server',
+    when: 'when a host client lets server know time is up',
+    nickname: playerNickname,
+    sessionCode: roomCode,
+  };
+  socket.send(JSON.stringify(message));
+}
+
+/**
+ * Updates time on screen.
+ */
+function updateTime() {
+  time += 1;
+  const timeString = `Tiempo: ${time} segundos`;
+  document.getElementById('current-time').innerHTML = timeString;
+}
+
+/**
+ * When server sends a message with personalized waiting room.
+ */
+function handleGameRoom(message) {
+  const matchDuration = message.maxTime * 1000;
+  setTimeout(stopGame, matchDuration);
+  setInterval(updateTime, 1000);
+
+  handleBoardCards(message);
+  handlePlayerCards(message);
+  handlePlayerList(message, playerTable);
 }
 
 /**
@@ -108,6 +176,20 @@ function handleMatchResponse(receivedMessage) {
 }
 
 /**
+ * When timer runs out or player has finished their cards...
+ * @param {Map} message Message sent by server.
+ */
+function handleTimesUp(message) {
+  const timeLeft = time;
+  let timer = 'Tiempo';
+  timer += 'time'; // hay que acomodar el dato para mostrarlo en la vista ( 0:00 )
+  document.getElementById('isValid').innerHTML = timer;
+  if (time === 0) {
+    popUpFinished.style.display = 'flex';
+  }
+}
+
+/**
  * Applies blur to player.
  */
 function handleBlur() {
@@ -142,8 +224,6 @@ function storeFirstMatch(card) {
   firstCard = card;
 }
 
-
-
 /**
  * Change the pictures on the player's cards to the corresponding words.
  */
@@ -157,40 +237,12 @@ function changeImagesToWords() {
   }
 }
 
-/*
-*   Handles scores of the players
-*   players => array of players
-*   scores => map with (player, score)
-*/
-function handleScores() {
-  const players = [];
-  const scores = new Map();
-  players.forEach((player) => {
-    player.updateScore(scores.get(player));
-  });
-}
-
-/** ******************* TIME FUNCTIONS ******************* */
-
-/** handleMaxTime
- * when changing max time, update
+/**
+ *
+ * @param {*} receivedMessage
  */
-function updateTime(time) {
-  const timeLeft = time;
-  let timer = 'Tiempo';
-  timer += 'time'; // hay que acomodar el dato para mostrarlo en la vista ( 0:00 )
-  document.getElementById('isValid').innerHTML = timer;
-  updateScreen();
-}
+function handleExtraCards(receivedMessage) {
 
-/** handleTimesUp
- * if time runs out the game is over
- */
-function TimesUp(time) {
-  if (time === 0) {
-    popUpFinished.style.display = 'flex';
-  }
-  // block everything later
 }
 
 /**
@@ -211,11 +263,17 @@ function returnToMain() {
  */
 function identifyMessage(receivedMessage) {
   switch (receivedMessage.type) {
+    case 'handleGameRoom':
+      handleGameRoom(receivedMessage);
+      break;
+    case 'handlePlayerList':
+      handlePlayerList(receivedMessage, playerTable);
+      break;
+    case 'handleRemovePlayer':
+      handlePlayerList(receivedMessage, playerTable);
+      break;
     case 'handleMatchResponse':
       handleMatchResponse(receivedMessage);
-      break;
-    case 'handleScores':
-      handleScores(receivedMessage);
       break;
     case 'handleTimesUp':
       handleTimesUp(receivedMessage);
@@ -241,6 +299,15 @@ window.addEventListener('load', loadPage);
  */
 socket.addEventListener('open', () => {
   console.log('Conectado al servidor desde Game Page.');
+  const message = {
+    type: 'getGameRoom',
+    from: 'client',
+    to: 'server',
+    when: 'when a client asks for a personalized game room',
+    nickname: playerNickname,
+    sessionCode: roomCode,
+  };
+  socket.send(JSON.stringify(message));
 });
 
 /**
@@ -256,6 +323,9 @@ socket.addEventListener('message', (event) => {
   console.log(`Recibi del servidor: ${JSON.stringify(receivedMessage)}`);
   identifyMessage(receivedMessage);
 });
+
+// Adding event listener to acceptButton
+acceptButton.addEventListener('click', returnToMain);
 
 // Adding event listener to cancelButton
 cancelButton.addEventListener('click', closePopUp);
