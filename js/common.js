@@ -1,3 +1,5 @@
+/* eslint-disable linebreak-style */
+
 /**
  * Creates new player row in ranking table.
  */

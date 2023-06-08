@@ -1019,7 +1019,7 @@ function getGameRoom(socket, message) {
     const playerMap = playersMap.get(playerNickname);
 
     playerMap.set('playerSocket', socket);
-    sendUpdatedPlayers(playerNickname, roomCode, 'handlePlayerList');
+    sendUpdatedPlayers(playerNickname, roomCode, 'handleNewScores');
 
     setSpecialEvents(playerNickname, roomCode);
 
@@ -1038,41 +1038,62 @@ function getGameRoom(socket, message) {
   }
 }
 
+function changePlayerScore(playerNickname, roomCode, points) {
+  const room = availableRooms.get(roomCode);
+  const players = room.get('players');
+  const player = players.get(playerNickname);
+  const playerInfo = player.get('playerInfo');
+  let playerPoints = playerInfo.get('points');
+  playerPoints += points;
+  playerInfo.set('points', playerPoints);
+  return playerPoints;
+}
+
 /**
  * Checks if match is correct.
  */
-function checkMatch(message) {
+function checkMatch(socket, message) {
+  const playerCardId = message.playerCard;
+  const boardCardId = message.boardCard;
   const roomCode = message.sessionCode;
   const playerNickname = message.nickname;
 
-  const roomInfo = availableRooms.get(roomCode);
-  const playersMap = roomInfo.get('players');
-  const playerMap = playersMap.get(playerNickname);
-  const socket = playerMap.get('playerSocket');
-
-  const isCorrectMatch = false;
-  const newScore = 0;
+  // const isCorrectMatch = false;
+  // const newScore = 0;
 
   // if time is up or player has no more cards:
   // finishGame(playerNickname, roomCode);
 
   // Checks if match is correct and updates score
-
-  // Sending player a message indicating if match is correct or not.
-  const newMessage = {
-    type: 'handleMatchResponse',
-    from: 'server',
-    to: 'player',
-    when: 'When the server tells player if their match was correct or not',
-    isCorrect: isCorrectMatch,
-    score: newScore,
-  };
-  socket.send(JSON.stringify(newMessage));
-
-  // Sending messages to other players to let them know a player has updated their score.
-  if (isCorrectMatch === true) {
-    sendUpdatedPlayers(playerNickname, roomCode, 'handlePlayerList');
+  if (playerCardId === boardCardId) {
+    const playerPoints = changePlayerScore(playerNickname, roomCode, 100);
+    const newMessage = {
+      type: 'handleMatchResponse',
+      from: 'server',
+      to: 'player',
+      when: 'when server checks a match',
+      isCorrectMatch: true,
+      newScore: playerPoints,
+    };
+    console.log('Match CORRECTO');
+    // Sending player a message indicating if match is not correct.
+    socket.send(JSON.stringify(newMessage));
+  } else {
+    const playerPoints = changePlayerScore(playerNickname, roomCode, -10);
+    const newMessage = {
+      type: 'handleMatchResponse',
+      from: 'server',
+      to: 'player',
+      when: 'when server checks a match',
+      isCorrectMatch: false,
+      newScore: playerPoints,
+    };
+    console.log('Match INCORRECTO');
+    // Sending player a message indicating if match is not correct.
+    socket.send(JSON.stringify(newMessage));
   }
+
+  sendUpdatedPlayers('', roomCode, 'handlePlayerList');
 }
 
 /**
@@ -1165,7 +1186,7 @@ function identifyMessage(socket, receivedMessage) {
       getGameRoom(socket, receivedMessage);
       break;
     case 'checkMatch':
-      checkMatch(receivedMessage);
+      checkMatch(socket, receivedMessage);
       break;
     case 'applyExtraCards':
       applyExtraCards(receivedMessage);
@@ -1188,9 +1209,6 @@ function identifyMessage(socket, receivedMessage) {
  * When a connection is made with a client.
  */
 server.on('connection', (clientSocket) => {
-  // let nickname = '';
-  // let code = '';
-
   console.log('Estableciendo de conexión con cliente...');
 
   clientSocket.on('message', (message) => {

@@ -54,107 +54,109 @@
             <div class="game-sections">
                 <section class="board-container">
                     <h3 class="section-title">Tablero del juego</h3>
+                    <audio id="correctoMatchSound" src="/design/sounds/CorrectMatch.mp3"></audio>
+                    <audio id="incorrectoMatchSound" src="/design/sounds/IncorrectMatch.mp3"></audio>
                     <ul id="game-board">
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/hoodie.png" alt="Icono de Sueter"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/shorts.png" alt="Icono de Pantalones cortos"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/shrimp.png" alt="Icono de Camarón"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/carrot.png" alt="Icono de Zanahoria"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/airplane.png" alt="Icono de Avión"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/balloon.png" alt="Icono de Globo"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/bike.png" alt="Icono de Bicicleta"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/boat.png" alt="Icono de Bote"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/bulldozer.png" alt="Icono de Excavadora"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/bus.png" alt="Icono de Bus"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/cableCar.png" alt="Icono de Teléferico"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/car.png" alt="Icono de Carro"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/crane.png" alt="Icono de Grúa"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/chopper.png" alt="Icono de Helicóptero"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/hoverboard.png" alt="Icono de Hoverboard"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/motorcycle.png" alt="Icono de Moto"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/pogo.png" alt="Icono de Pogo"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/rocket.png" alt="Icono de Cohete"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/scooter.png" alt="Icono de Scooter"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/ship.png" alt="Icono de Barco"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/skateboard.png" alt="Icono de Skateboard"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/skates.png" alt="Icono de Patines"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/spaceship.png" alt="Icono de Nave"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/tractor.png" alt="Icono de Tractor"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/train.png" alt="Icono de Tren"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/tricycle.png" alt="Icono de Triciclo"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/truck.png" alt="Icono de Camión"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/unicycle.png" alt="Icono de Uniciclo"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/wagon.png" alt="Icono de Carreta"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/bird.png" alt="Icono de Pájaro"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/cat.png" alt="Icono de Gato"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/chameleon.png" alt="Icono de Camaleón"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/crab.png" alt="Icono de Cangrejo"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/dolphin.png" alt="Icono de Delfín"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/elephant.png" alt="Icono de Elefante"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/fox.png" alt="Icono de Zorro"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/giraffe.png" alt="Icono de Jirafa"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/hedgehog.png" alt="Icono de Erizo"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/hen.png" alt="Icono de Gallina"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/horse.png" alt="Icono de Caballo"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/jellyfish.png" alt="Icono de Medusa"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/kangaroo.png" alt="Icono de Canguro"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/koala.png" alt="Icono de Koala"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/monkey.png" alt="Icono de Mono"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/mouse.png" alt="Icono de Ratón"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/pig.png" alt="Icono de Cerdo"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/rabbit.png" alt="Icono de Conejo"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/scorpion.png" alt="Icono de Escorpión"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/seahorse.png" alt="Icono de Hipocampo"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/shark.png" alt="Icono de Tiburón"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/sloth.png" alt="Icono de Perezoso"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/squirrel.png" alt="Icono de Ardilla"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/turtle.png" alt="Icono de Tortuga"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/whale.png" alt="Icono de Ballena"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/beans.png" alt="Icono de Frijoles"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/broccoli.png" alt="Icono de Brocoli"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/meat.png" alt="Icono de Carne"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/mushroom.png" alt="Icono de Hongo"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/iceCream.png" alt="Icono de Helado"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/spaguetti.png" alt="Icono de Espaguetti"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/burger.png" alt="Icono de Hamburguesa"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/friedEgg.png" alt="Icono de Huevo"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/apple.png" alt="Icono de Manzana"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/frenchFries.png" alt="Icono de Patatas"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/cucumber.png" alt="Icono de Pepino"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/pear.png" alt="Icono de Pera"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/friedFish.png" alt="Icono de Pescado"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/chickenLeg.png" alt="Icono de Pollo"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/pizza.png" alt="Icono de Pizza"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/banana.png" alt="Icono de Plátanos"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/cheese.png" alt="Icono de Queso"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/ramen.png" alt="Icono de Ramen"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/sushi.png" alt="Icono de Sushi"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/watermelon.png" alt="Icono de Sandía"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/tuna.png" alt="Icono de Atún"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/tomato.png" alt="Icono de Tomate"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/grapes.png" alt="Icono de Uvas"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/dressShirt.png" alt="Icono de Blusón"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/heels.png" alt="Icono de Tacones"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/overall.png" alt="Icono de Overoles"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/sandals.png" alt="Icono de Sandalias"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/pants.png" alt="Icono de Pantalones"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/shirt.png" alt="Icono de Blusa"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/jersey.png" alt="Icono de Camiseta"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/glasses.png" alt="Icono de Anteojos"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/suit.png" alt="Icono de Traje"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/socks.png" alt="Icono de Medias"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/beanie.png" alt="Icono de Gorro"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/hat.png" alt="Icono de Sombrero"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/sneakers.png" alt="Icono de Tenis"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/dress.png" alt="Icono de Vestido"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/onesie.png" alt="Icono de Enterizo"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/skirt.png" alt="Icono de Enagua"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/tshirt.png" alt="Icono de Camisa"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/scarf.png" alt="Icono de Bufanda"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/gloves.png" alt="Icono de Guantes"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/hairBow.png" alt="Icono de Lazo"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/hairClip.png" alt="Icono de Prensa"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/legging.png" alt="Icono de Leggings"/></li>
-                        <li class="board-image-container"><img class="board-image" src="/design/images/icons/board/watch.png" alt="Icono de Reloj"/></li>
+                        <li class="board-image-container" id="Sueter"><img class="board-image" src="/design/images/icons/board/hoodie.png" alt="Icono de Sueter"/></li>
+                        <li class="board-image-container" id="Pantaloncillo"><img class="board-image" src="/design/images/icons/board/shorts.png" alt="Icono de Pantalones cortos"/></li>
+                        <li class="board-image-container" id="Camarón"><img class="board-image" src="/design/images/icons/board/shrimp.png" alt="Icono de Camarón"/></li>
+                        <li class="board-image-container" id="Zanahoria"><img class="board-image" src="/design/images/icons/board/carrot.png" alt="Icono de Zanahoria"/></li>
+                        <li class="board-image-container" id="Avión"><img class="board-image" src="/design/images/icons/board/airplane.png" alt="Icono de Avión"/></li>
+                        <li class="board-image-container" id="Globo"><img class="board-image" src="/design/images/icons/board/balloon.png" alt="Icono de Globo"/></li>
+                        <li class="board-image-container" id="Bicicleta"><img class="board-image" src="/design/images/icons/board/bike.png" alt="Icono de Bicicleta"/></li>
+                        <li class="board-image-container" id="Bote"><img class="board-image" src="/design/images/icons/board/boat.png" alt="Icono de Bote"/></li>
+                        <li class="board-image-container" id="Excavadora"><img class="board-image" src="/design/images/icons/board/bulldozer.png" alt="Icono de Excavadora"/></li>
+                        <li class="board-image-container" id="Bus"><img class="board-image" src="/design/images/icons/board/bus.png" alt="Icono de Bus"/></li>
+                        <li class="board-image-container" id="Teléferico"><img class="board-image" src="/design/images/icons/board/cableCar.png" alt="Icono de Teléferico"/></li>
+                        <li class="board-image-container" id="Carro"><img class="board-image" src="/design/images/icons/board/car.png" alt="Icono de Carro"/></li>
+                        <li class="board-image-container" id="Grúa"><img class="board-image" src="/design/images/icons/board/crane.png" alt="Icono de Grúa"/></li>
+                        <li class="board-image-container" id="Helicoptero"><img class="board-image" src="/design/images/icons/board/chopper.png" alt="Icono de Helicóptero"/></li>
+                        <li class="board-image-container" id="Hoverboard"><img class="board-image" src="/design/images/icons/board/hoverboard.png" alt="Icono de Hoverboard"/></li>
+                        <li class="board-image-container" id="Moto"><img class="board-image" src="/design/images/icons/board/motorcycle.png" alt="Icono de Moto"/></li>
+                        <li class="board-image-container" id="Pogo"><img class="board-image" src="/design/images/icons/board/pogo.png" alt="Icono de Pogo"/></li>
+                        <li class="board-image-container" id="Cohete"><img class="board-image" src="/design/images/icons/board/rocket.png" alt="Icono de Cohete"/></li>
+                        <li class="board-image-container" id="Scooter"><img class="board-image" src="/design/images/icons/board/scooter.png" alt="Icono de Scooter"/></li>
+                        <li class="board-image-container" id="Barco"><img class="board-image" src="/design/images/icons/board/ship.png" alt="Icono de Barco"/></li>
+                        <li class="board-image-container" id="Skateboard"><img class="board-image" src="/design/images/icons/board/skateboard.png" alt="Icono de Skateboard"/></li>
+                        <li class="board-image-container" id="Patines"><img class="board-image" src="/design/images/icons/board/skates.png" alt="Icono de Patines"/></li>
+                        <li class="board-image-container" id="Nave"><img class="board-image" src="/design/images/icons/board/spaceship.png" alt="Icono de Nave"/></li>
+                        <li class="board-image-container" id="Tractor"><img class="board-image" src="/design/images/icons/board/tractor.png" alt="Icono de Tractor"/></li>
+                        <li class="board-image-container" id="Tren"><img class="board-image" src="/design/images/icons/board/train.png" alt="Icono de Tren"/></li>
+                        <li class="board-image-container" id="Triciclo"><img class="board-image" src="/design/images/icons/board/tricycle.png" alt="Icono de Triciclo"/></li>
+                        <li class="board-image-container" id="Camión"><img class="board-image" src="/design/images/icons/board/truck.png" alt="Icono de Camión"/></li>
+                        <li class="board-image-container" id="Uniciclo"><img class="board-image" src="/design/images/icons/board/unicycle.png" alt="Icono de Uniciclo"/></li>
+                        <li class="board-image-container" id="Carreta"><img class="board-image" src="/design/images/icons/board/wagon.png" alt="Icono de Carreta"/></li>
+                        <li class="board-image-container" id="Pájaro"><img class="board-image" src="/design/images/icons/board/bird.png" alt="Icono de Pájaro"/></li>
+                        <li class="board-image-container" id="Gato"><img class="board-image" src="/design/images/icons/board/cat.png" alt="Icono de Gato"/></li>
+                        <li class="board-image-container" id="Camaleón"><img class="board-image" src="/design/images/icons/board/chameleon.png" alt="Icono de Camaleón"/></li>
+                        <li class="board-image-container" id="Cangrejo"><img class="board-image" src="/design/images/icons/board/crab.png" alt="Icono de Cangrejo"/></li>
+                        <li class="board-image-container" id="Delfín"><img class="board-image" src="/design/images/icons/board/dolphin.png" alt="Icono de Delfín"/></li>
+                        <li class="board-image-container" id="Elefante"><img class="board-image" src="/design/images/icons/board/elephant.png" alt="Icono de Elefante"/></li>
+                        <li class="board-image-container" id="Zorro"><img class="board-image" src="/design/images/icons/board/fox.png" alt="Icono de Zorro"/></li>
+                        <li class="board-image-container" id="Jirafa"><img class="board-image" src="/design/images/icons/board/giraffe.png" alt="Icono de Jirafa"/></li>
+                        <li class="board-image-container" id="Erizo"><img class="board-image" src="/design/images/icons/board/hedgehog.png" alt="Icono de Erizo"/></li>
+                        <li class="board-image-container" id="Gallina"><img class="board-image" src="/design/images/icons/board/hen.png" alt="Icono de Gallina"/></li>
+                        <li class="board-image-container" id="Caballo"><img class="board-image" src="/design/images/icons/board/horse.png" alt="Icono de Caballo"/></li>
+                        <li class="board-image-container" id="Medusa"><img class="board-image" src="/design/images/icons/board/jellyfish.png" alt="Icono de Medusa"/></li>
+                        <li class="board-image-container" id="Canguro"><img class="board-image" src="/design/images/icons/board/kangaroo.png" alt="Icono de Canguro"/></li>
+                        <li class="board-image-container" id="Koala"><img class="board-image" src="/design/images/icons/board/koala.png" alt="Icono de Koala"/></li>
+                        <li class="board-image-container" id="Mono"><img class="board-image" src="/design/images/icons/board/monkey.png" alt="Icono de Mono"/></li>
+                        <li class="board-image-container" id="Ratón"><img class="board-image" src="/design/images/icons/board/mouse.png" alt="Icono de Ratón"/></li>
+                        <li class="board-image-container" id="Cerdo"><img class="board-image" src="/design/images/icons/board/pig.png" alt="Icono de Cerdo"/></li>
+                        <li class="board-image-container" id="Conejo"><img class="board-image" src="/design/images/icons/board/rabbit.png" alt="Icono de Conejo"/></li>
+                        <li class="board-image-container" id="Escorpión"><img class="board-image" src="/design/images/icons/board/scorpion.png" alt="Icono de Escorpión"/></li>
+                        <li class="board-image-container" id="Hipocampo"><img class="board-image" src="/design/images/icons/board/seahorse.png" alt="Icono de Hipocampo"/></li>
+                        <li class="board-image-container" id="Tiburón"><img class="board-image" src="/design/images/icons/board/shark.png" alt="Icono de Tiburón"/></li>
+                        <li class="board-image-container" id="Perezoso"><img class="board-image" src="/design/images/icons/board/sloth.png" alt="Icono de Perezoso"/></li>
+                        <li class="board-image-container" id="Ardilla"><img class="board-image" src="/design/images/icons/board/squirrel.png" alt="Icono de Ardilla"/></li>
+                        <li class="board-image-container" id="Tortuga"><img class="board-image" src="/design/images/icons/board/turtle.png" alt="Icono de Tortuga"/></li>
+                        <li class="board-image-container" id="Ballena"><img class="board-image" src="/design/images/icons/board/whale.png" alt="Icono de Ballena"/></li>
+                        <li class="board-image-container" id="Frijoles"><img class="board-image" src="/design/images/icons/board/beans.png" alt="Icono de Frijoles"/></li>
+                        <li class="board-image-container" id="Brocoli"><img class="board-image" src="/design/images/icons/board/broccoli.png" alt="Icono de Brocoli"/></li>
+                        <li class="board-image-container" id="Carne"><img class="board-image" src="/design/images/icons/board/meat.png" alt="Icono de Carne"/></li>
+                        <li class="board-image-container" id="Hongo"><img class="board-image" src="/design/images/icons/board/mushroom.png" alt="Icono de Hongo"/></li>
+                        <li class="board-image-container" id="Helado"><img class="board-image" src="/design/images/icons/board/iceCream.png" alt="Icono de Helado"/></li>
+                        <li class="board-image-container" id="Espaguetti"><img class="board-image" src="/design/images/icons/board/spaguetti.png" alt="Icono de Espaguetti"/></li>
+                        <li class="board-image-container" id="Hamburguesa"><img class="board-image" src="/design/images/icons/board/burger.png" alt="Icono de Hamburguesa"/></li>
+                        <li class="board-image-container" id="Huevo"><img class="board-image" src="/design/images/icons/board/friedEgg.png" alt="Icono de Huevo"/></li>
+                        <li class="board-image-container" id="Manzana"><img class="board-image" src="/design/images/icons/board/apple.png" alt="Icono de Manzana"/></li>
+                        <li class="board-image-container" id="Patatas"><img class="board-image" src="/design/images/icons/board/frenchFries.png" alt="Icono de Patatas"/></li>
+                        <li class="board-image-container" id="Pepino"><img class="board-image" src="/design/images/icons/board/cucumber.png" alt="Icono de Pepino"/></li>
+                        <li class="board-image-container" id="Pera"><img class="board-image" src="/design/images/icons/board/pear.png" alt="Icono de Pera"/></li>
+                        <li class="board-image-container" id="Pescado"><img class="board-image" src="/design/images/icons/board/friedFish.png" alt="Icono de Pescado"/></li>
+                        <li class="board-image-container" id="Pollo"><img class="board-image" src="/design/images/icons/board/chickenLeg.png" alt="Icono de Pollo"/></li>
+                        <li class="board-image-container" id="Pizza"><img class="board-image" src="/design/images/icons/board/pizza.png" alt="Icono de Pizza"/></li>
+                        <li class="board-image-container" id="Platanos"><img class="board-image" src="/design/images/icons/board/banana.png" alt="Icono de Plátanos"/></li>
+                        <li class="board-image-container" id="Queso"><img class="board-image" src="/design/images/icons/board/cheese.png" alt="Icono de Queso"/></li>
+                        <li class="board-image-container" id="Ramen"><img class="board-image" src="/design/images/icons/board/ramen.png" alt="Icono de Ramen"/></li>
+                        <li class="board-image-container" id="Sushi"><img class="board-image" src="/design/images/icons/board/sushi.png" alt="Icono de Sushi"/></li>
+                        <li class="board-image-container" id="Sandía"><img class="board-image" src="/design/images/icons/board/watermelon.png" alt="Icono de Sandía"/></li>
+                        <li class="board-image-container" id="Atún"><img class="board-image" src="/design/images/icons/board/tuna.png" alt="Icono de Atún"/></li>
+                        <li class="board-image-container" id="Tomate"><img class="board-image" src="/design/images/icons/board/tomato.png" alt="Icono de Tomate"/></li>
+                        <li class="board-image-container" id="Uvas"><img class="board-image" src="/design/images/icons/board/grapes.png" alt="Icono de Uvas"/></li>
+                        <li class="board-image-container" id="Blusón"><img class="board-image" src="/design/images/icons/board/dressShirt.png" alt="Icono de Blusón"/></li>
+                        <li class="board-image-container" id="Tacones"><img class="board-image" src="/design/images/icons/board/heels.png" alt="Icono de Tacones"/></li>
+                        <li class="board-image-container" id="Overoles"><img class="board-image" src="/design/images/icons/board/overall.png" alt="Icono de Overoles"/></li>
+                        <li class="board-image-container" id="Sandalias"><img class="board-image" src="/design/images/icons/board/sandals.png" alt="Icono de Sandalias"/></li>
+                        <li class="board-image-container" id="Pantalones"><img class="board-image" src="/design/images/icons/board/pants.png" alt="Icono de Pantalones"/></li>
+                        <li class="board-image-container" id="Blusa"><img class="board-image" src="/design/images/icons/board/shirt.png" alt="Icono de Blusa"/></li>
+                        <li class="board-image-container" id="Camiseta"><img class="board-image" src="/design/images/icons/board/jersey.png" alt="Icono de Camiseta"/></li>
+                        <li class="board-image-container" id="Anteojos"><img class="board-image" src="/design/images/icons/board/glasses.png" alt="Icono de Anteojos"/></li>
+                        <li class="board-image-container" id="Traje"><img class="board-image" src="/design/images/icons/board/suit.png" alt="Icono de Traje"/></li>
+                        <li class="board-image-container" id="Medias"><img class="board-image" src="/design/images/icons/board/socks.png" alt="Icono de Medias"/></li>
+                        <li class="board-image-container" id="Gorro"><img class="board-image" src="/design/images/icons/board/beanie.png" alt="Icono de Gorro"/></li>
+                        <li class="board-image-container" id="Sombrero"><img class="board-image" src="/design/images/icons/board/hat.png" alt="Icono de Sombrero"/></li>
+                        <li class="board-image-container" id="Tenis"><img class="board-image" src="/design/images/icons/board/sneakers.png" alt="Icono de Tenis"/></li>
+                        <li class="board-image-container" id="Vestido"><img class="board-image" src="/design/images/icons/board/dress.png" alt="Icono de Vestido"/></li>
+                        <li class="board-image-container" id="Enterizo"><img class="board-image" src="/design/images/icons/board/onesie.png" alt="Icono de Enterizo"/></li>
+                        <li class="board-image-container" id="Enagua"><img class="board-image" src="/design/images/icons/board/skirt.png" alt="Icono de Enagua"/></li>
+                        <li class="board-image-container" id="Camisa"><img class="board-image" src="/design/images/icons/board/tshirt.png" alt="Icono de Camisa"/></li>
+                        <li class="board-image-container" id="Bufanda"><img class="board-image" src="/design/images/icons/board/scarf.png" alt="Icono de Bufanda"/></li>
+                        <li class="board-image-container" id="Guantes"><img class="board-image" src="/design/images/icons/board/gloves.png" alt="Icono de Guantes"/></li>
+                        <li class="board-image-container" id="Lazo"><img class="board-image" src="/design/images/icons/board/hairBow.png" alt="Icono de Lazo"/></li>
+                        <li class="board-image-container" id="Prensa"><img class="board-image" src="/design/images/icons/board/hairClip.png" alt="Icono de Prensa"/></li>
+                        <li class="board-image-container" id="Leggings"><img class="board-image" src="/design/images/icons/board/legging.png" alt="Icono de Leggings"/></li>
+                        <li class="board-image-container" id="Reloj"><img class="board-image" src="/design/images/icons/board/watch.png" alt="Icono de Reloj"/></li>
                     </ul>
                 </section>
                 <section class="game-info">
@@ -162,11 +164,11 @@
                     <article class="player-inventory">
                         <h3 class="section-subtitle">Mis fíchas</h3>
                         <ul class="player-cards">
-                            <li class="my-image-container">
+                            <li class="my-image-container" id="Zanahoria">
                                 <img class="my-image" src="/design/images/icons/board/carrot.png" alt="Icono de Zanahoria"/>
                                 <p class ="word">Zanahoria</p>
                             </li>
-                            <li class="my-image-container">
+                            <li class="my-image-container" id="Avión">
                                 <img class="my-image" src="/design/images/icons/board/airplane.png" alt="Icono de Avión"/>
                                 <p class ="word">Avion</p>
                             </li>
@@ -175,7 +177,7 @@
                     <article class="game-state">
                         <h3 class="section-subtitle">Estado del juego</h3>
                         <p class="section-subtitle" id="current-time"></p>
-                        <p class="section-subtitle" id="player-score">Puntaje: 0</p>
+                        <p class="section-subtitle" id="player-score"></p>
                         <table class="player-table">
                             <tbody class="player-table-body" id="game-ranking">
                                 <tr class="table-row">
