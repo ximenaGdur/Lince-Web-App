@@ -4,7 +4,6 @@
 
 import {
   continueSession,
-  returnToMainPage,
 // eslint-disable-next-line import/extensions
 } from './finishedPopUp.js';
 
@@ -76,6 +75,9 @@ const word = document.getElementsByClassName('word');
 // Current time in game
 let time = 0;
 
+// Current player score
+let score = 0;
+
 const correctMatchSound = document.getElementById('correctoMatchSound');
 
 /** ******************* Functions used on script ******************* */
@@ -87,6 +89,8 @@ function loadPage() {
   if (roomCode) {
     const timeString = `Tiempo: ${time} segundos`;
     document.getElementById('current-time').innerHTML = timeString;
+    const scoreString = `Puntaje: ${score}`;
+    document.getElementById('player-score').innerHTML = scoreString;
   } else {
     const main = document.getElementsByClassName('main-content');
     main[0].innerHTML = `<h2 class="page-title" id="waiting-room-title">La sala ${roomCode} no existe</h2>`;
@@ -151,7 +155,19 @@ function handleGameRoom(message) {
 }
 
 /**
- * When player chooses a card .
+ * When player chooses a card in hand.
+ */
+function storeFirstMatch(card) {
+  for (let index = 0; index < myImages.length; index += 1) {
+    const otherCard = myImages[index];
+    otherCard.style.background = '';
+  }
+  card.style.background = '#E6CCD7';
+  firstCard = card;
+}
+
+/**
+ * When player chooses a card in board.
  */
 function match(secondCard) {
   if (firstCard) {
@@ -166,19 +182,21 @@ function match(secondCard) {
       boardCard: secondCard.getAttribute('id'),
     };
     socket.send(JSON.stringify(message));
-    console.log(sessionStorage.getItem('playerNickname'));
-    console.log(sessionStorage.getItem('roomCode'));
-    console.log(firstCard.getAttribute('id'));
-    console.log(secondCard.getAttribute('id'));
   } else {
     console.log('Escoga ficha de su mano primero.');
   }
+  firstCard.style.background = '';
+  secondCard.style.background = '';
+  firstCard = null;
 }
 
 /**
  * Handles response from server to player match.
  */
 function handleMatchResponse(receivedMessage) {
+  score = receivedMessage.newScore;
+  const scoreString = `Puntaje: ${score}`;
+  document.getElementById('player-score').innerHTML = scoreString;
   if (receivedMessage.match === true) {
     console.log('El match es correcto');
     correctMatchSound.play();
@@ -227,10 +245,6 @@ function changeImageColors() {
   for (let index = 0; index < boardImages.length; index += 1) {
     boardImages[index].style.borderColor = randomBorderColor();
   }
-}
-
-function storeFirstMatch(card) {
-  firstCard = card;
 }
 
 /**
@@ -285,7 +299,7 @@ function identifyMessage(receivedMessage) {
       handleMatchResponse(receivedMessage);
       break;
     case 'handleNewScores':
-      handlePlayerList(receivedMessage, playerTable);
+      handlePlayerList(receivedMessage, gamePlayerTable);
       break;
     case 'handleTimesUp':
       handleTimesUp(receivedMessage);
@@ -349,7 +363,7 @@ continueButton.addEventListener('click', continueSession);
 exitButton.addEventListener('click', showExitPopup);
 
 // Adding event listener to homeButton
-homeButton.addEventListener('click', returnToMainPage);
+homeButton.addEventListener('click', returnToMain);
 
 for (let index = 0; index < myImages.length; index += 1) {
   const card = myImages[index];
@@ -360,8 +374,8 @@ for (let index = 0; index < myImages.length; index += 1) {
 
 for (let index = 0; index < boardImages.length; index += 1) {
   const boardCard = boardImages[index];
-  //const imageCard = boardImages[index].getElementsByClassName('board-image');
   boardCard.addEventListener('click', () => {
+    boardCard.style.background = '#E6CCD7';
     match(boardCard);
   });
 }
