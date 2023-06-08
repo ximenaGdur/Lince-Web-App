@@ -969,6 +969,7 @@ function checkMatch(socket, message) {
       isCorrectMatch: true,
       newScore: playerPoints,
     };
+    console.log('Match CORRECTO');
     // Sending player a message indicating if match is not correct.
     socket.send(JSON.stringify(newMessage));
   } else {
@@ -981,6 +982,7 @@ function checkMatch(socket, message) {
       isCorrectMatch: false,
       newScore: playerPoints,
     };
+    console.log('Match INCORRECTO');
     // Sending player a message indicating if match is not correct.
     socket.send(JSON.stringify(newMessage));
   }

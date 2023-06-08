@@ -80,6 +80,8 @@ let score = 0;
 
 const correctMatchSound = document.getElementById('correctoMatchSound');
 
+const incorrectoMatchSound = document.getElementById('incorrectoMatchSound');
+
 /** ******************* Functions used on script ******************* */
 
 /**
@@ -197,11 +199,12 @@ function handleMatchResponse(receivedMessage) {
   score = receivedMessage.newScore;
   const scoreString = `Puntaje: ${score}`;
   document.getElementById('player-score').innerHTML = scoreString;
-  if (receivedMessage.match === true) {
+  if (receivedMessage.isCorrectMatch === true) {
     console.log('El match es correcto');
     correctMatchSound.play();
   } else {
     console.log('El match es incorrecto');
+    incorrectoMatchSound.play();
   }
 }
 
