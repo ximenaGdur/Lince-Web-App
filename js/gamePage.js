@@ -76,6 +76,8 @@ const word = document.getElementsByClassName('word');
 // Current time in game
 let time = 0;
 
+const correctMatchSound = document.getElementById('correctoMatchSound');
+
 /** ******************* Functions used on script ******************* */
 
 /**
@@ -179,6 +181,7 @@ function match(secondCard) {
 function handleMatchResponse(receivedMessage) {
   if (receivedMessage.match === true) {
     console.log('El match es correcto');
+    correctMatchSound.play();
   } else {
     console.log('El match es incorrecto');
   }
