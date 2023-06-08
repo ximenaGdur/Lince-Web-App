@@ -50,16 +50,22 @@ const myImage = document.getElementsByClassName('my-image');
 const myImages = document.getElementsByClassName('my-image-container');
 
 // Pop Up that is shown when game is finished.
-const popUpFinished = document.getElementById('popUpFinished');
+const popUpFinished = document.getElementById('popup-finished');
 
 // Player table with ranking during game.
-const playerTable = document.getElementById('mainPageRanking');
+const gamePlayerTable = document.getElementById('game-ranking');
+
+// Player table with ranking in popup
+const popUpPlayerTable = document.getElementById('popup-ranking');
 
 // Player nickname
 const playerNickname = sessionStorage.getItem('playerNickname');
 
 // Room Code
 const roomCode = sessionStorage.getItem('roomCode');
+
+// Interval that changes time each second.
+let secondInterval = null;
 
 // Socket that connects to server
 const socket = new WebSocket('ws://localhost:8009');
@@ -106,15 +112,18 @@ function handlePlayerCards(message) {
  * Lets server know time is up or player hand is empty.
  */
 function stopGame() {
-  const message = {
-    type: 'timesUp',
-    from: 'client',
-    to: 'server',
-    when: 'when a host client lets server know time is up',
-    nickname: playerNickname,
-    sessionCode: roomCode,
-  };
-  socket.send(JSON.stringify(message));
+  if (secondInterval) {
+    clearInterval(secondInterval);
+    const message = {
+      type: 'finishGame',
+      from: 'client',
+      to: 'server',
+      when: 'when a host client lets server know time is up',
+      nickname: playerNickname,
+      sessionCode: roomCode,
+    };
+    socket.send(JSON.stringify(message));
+  }
 }
 
 /**
@@ -132,11 +141,11 @@ function updateTime() {
 function handleGameRoom(message) {
   const matchDuration = message.maxTime * 1000;
   setTimeout(stopGame, matchDuration);
-  setInterval(updateTime, 1000);
+  secondInterval = setInterval(updateTime, 1000);
 
   handleBoardCards(message);
   handlePlayerCards(message);
-  handlePlayerList(message, playerTable);
+  handlePlayerList(message, gamePlayerTable);
 }
 
 /**
@@ -180,11 +189,8 @@ function handleMatchResponse(receivedMessage) {
  * @param {Map} message Message sent by server.
  */
 function handleTimesUp(message) {
-  const timeLeft = time;
-  let timer = 'Tiempo';
-  timer += 'time'; // hay que acomodar el dato para mostrarlo en la vista ( 0:00 )
-  document.getElementById('isValid').innerHTML = timer;
-  if (time === 0) {
+  if (popUpFinished) {
+    handlePlayerList(message, popUpPlayerTable);
     popUpFinished.style.display = 'flex';
   }
 }
@@ -267,10 +273,10 @@ function identifyMessage(receivedMessage) {
       handleGameRoom(receivedMessage);
       break;
     case 'handlePlayerList':
-      handlePlayerList(receivedMessage, playerTable);
+      handlePlayerList(receivedMessage, gamePlayerTable);
       break;
     case 'handleRemovePlayer':
-      handlePlayerList(receivedMessage, playerTable);
+      handlePlayerList(receivedMessage, gamePlayerTable);
       break;
     case 'handleMatchResponse':
       handleMatchResponse(receivedMessage);

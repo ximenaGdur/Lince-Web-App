@@ -56,26 +56,8 @@ This is it's structure:
   }
 */
 
-function printRooms() {
-  availableRooms.forEach((roomData, roomCode) => {
-    console.log(`${roomCode}: `);
-
-    const configMap = roomData.get('config');
-    console.log(`config: ${JSON.stringify(Array.from(configMap))}`);
-
-    console.log('players:');
-    const playerMap = roomData.get('players');
-    playerMap.forEach((playerData, playerName) => {
-      console.log(`
-      ---- ${playerName} ----
-      `);
-      console.log(`playerSocket: ${playerData.get('playerSocket')}`);
-      console.log(`avatar: ${JSON.stringify(playerData.get('playerInfo').get('avatar'))}`);
-      console.log(`points: ${playerData.get('playerInfo').get('points')}`);
-      console.log(`host: ${playerData.get('playerInfo').get('host')}`);
-    });
-  });
-}
+// Percentage of time when special event happens
+const blurPorcentage = 95;
 
 // Dictionary with possible colors
 const cardColors = {
@@ -221,6 +203,27 @@ const maximumClientAmount = 20;
 const server = new WebSocket.Server({ port: 8009 });
 
 /** ******************** Functions used on script ********************* */
+
+function printRooms() {
+  availableRooms.forEach((roomData, roomCode) => {
+    console.log(`${roomCode}: `);
+
+    const configMap = roomData.get('config');
+    console.log(`config: ${JSON.stringify(Array.from(configMap))}`);
+
+    console.log('players:');
+    const playerMap = roomData.get('players');
+    playerMap.forEach((playerData, playerName) => {
+      console.log(`
+      ---- ${playerName} ----
+      `);
+      console.log(`playerSocket: ${playerData.get('playerSocket')}`);
+      console.log(`avatar: ${JSON.stringify(playerData.get('playerInfo').get('avatar'))}`);
+      console.log(`points: ${playerData.get('playerInfo').get('points')}`);
+      console.log(`host: ${playerData.get('playerInfo').get('host')}`);
+    });
+  });
+}
 
 /**
  * Checks if room with given code exists.
@@ -833,6 +836,72 @@ function startGame(message) {
 }
 
 /**
+ * Assigns random card to player.
+ */
+function selectNewCard() {
+  // TODO: revisar si la carta esta asignada a alguien
+  // TODO: seleccionar carta segun las reglas
+  const randomNumber = getRandomNumber(1, Object.keys(cardRoutes).length);
+  const card = cardRoutes[randomNumber];
+  return card;
+}
+
+/**
+ * Applies extra cards to guests in room.
+ */
+function applyExtraCards(roomCode, playerNickname) {
+  const roomInfo = availableRooms.get(roomCode);
+  const playersMap = roomInfo.get('players');
+  const playerMap = playersMap.get(playerNickname);
+
+  playerMap.forEach((playerData) => {
+    const newCards = {
+      1: selectNewCard(),
+      2: selectNewCard(),
+      3: selectNewCard(),
+      4: selectNewCard(),
+    };
+
+    // Sends to other players in room.
+    const message = {
+      type: 'handleExtraCards',
+      from: 'server',
+      to: 'client',
+      when: 'When the server lets players know to apply extra cards',
+      extraCards: JSON.stringify(newCards),
+    };
+    const socket = playerData.get('playerSocket');
+    socket.send(JSON.stringify(message));
+  });
+}
+
+/**
+ * Applies blur to guests in room.
+ */
+function applyBlur(roomCode, playerNickname) {
+  // Sends to other players in room.
+  const newMessage = {
+    type: 'handleBlur',
+    from: 'server',
+    to: 'client',
+    when: 'When the server lets players know to activate blur',
+  };
+  broadcastToOthers(newMessage, roomCode, playerNickname);
+}
+
+function setSpecialEvents(playerNickname, roomCode) {
+  const roomInfo = availableRooms.get(roomCode);
+  const configMap = roomInfo.get('config');
+  const specialEventTime = (configMap.get('maxTime') * 100) / blurPorcentage;
+
+  if (configMap.adaptation3a === true) {
+    setTimeout(() => applyExtraCards(roomCode, playerNickname), specialEventTime);
+  } else if (configMap.adaptation3b === true) {
+    setTimeout(() => applyBlur(roomCode, playerNickname), specialEventTime);
+  }
+}
+
+/**
  * Sets amount of card per round to guests in room.
  */
 function getGameRoom(socket, message) {
@@ -847,6 +916,8 @@ function getGameRoom(socket, message) {
 
     playerMap.set('playerSocket', socket);
     sendUpdatedPlayers(playerNickname, roomCode, 'handleNewScores');
+
+    setSpecialEvents(playerNickname, roomCode);
 
     // Sending player personalized waiting room.
     const newMessage = {
@@ -930,8 +1001,10 @@ function checkMatch(socket, message) {
 /**
  * Finishes game for all players in room.
  */
-function finishGame(playerNickname, roomCode) {
-  const roomInfo = availableRooms.get(roomCode);
+function finishGame(socket, message) {
+  const code = message.sessionCode;
+  console.log('code: ' + code);
+  const roomInfo = availableRooms.get(code);
   const playersMap = roomInfo.get('players');
 
   // Sending player a message indicating if match is correct or not.
@@ -940,64 +1013,10 @@ function finishGame(playerNickname, roomCode) {
     from: 'server',
     to: 'player',
     when: 'When the server lets players know times up',
-    ranking: createPlayerStringMap(playersMap),
+    players: createPlayerStringMap(playersMap),
   };
-  broadcastToAll(newMessage, roomCode);
-}
-
-/**
- * Assigns random card to player.
- */
-function selectNewCard() {
-  // TODO: revisar si la carta esta asignada a alguien
-  // TODO: seleccionar carta segun las reglas
-  const randomNumber = getRandomNumber(1, Object.keys(cardRoutes).length);
-  const card = cardRoutes[randomNumber];
-  return card;
-}
-
-/**
- * Applies extra cards to guests in room.
- */
-function applyExtraCards(message) {
-  const roomCode = message.sessionCode;
-  const playerNickname = message.nickname;
-
-  const newCards = {
-    1: selectNewCard(),
-    2: selectNewCard(),
-    3: selectNewCard(),
-    4: selectNewCard(),
-  };
-
-  // Sends to other players in room.
-  const newMessage = {
-    type: 'handleExtraCards',
-    from: 'server',
-    to: 'client',
-    when: 'When the server lets players know to apply extra cards',
-    extraCards: JSON.stringify(newCards),
-  };
-
-  // TODO: arreglar funciona diferente
-  // broadcastToOthers(newMessage, roomCode, playerNickname);
-}
-
-/**
- * Applies blur to guests in room.
- */
-function applyBlur(message) {
-  const roomCode = message.sessionCode;
-  const playerNickname = message.nickname;
-
-  // Sends to other players in room.
-  const newMessage = {
-    type: 'handleBlur',
-    from: 'server',
-    to: 'client',
-    when: 'When the server lets players know to activate blur',
-  };
-  broadcastToOthers(newMessage, roomCode, playerNickname);
+  socket.send(JSON.stringify(newMessage));
+  //broadcastToAll
 }
 
 /**
@@ -1067,6 +1086,9 @@ function identifyMessage(socket, receivedMessage) {
     case 'removePlayer':
       removePlayer(code, playerNickname);
       break;
+    case 'finishGame':
+      finishGame(socket, receivedMessage);
+      break;
     default:
       console.error('No se reconoce ese mensaje.');
   }
@@ -1076,7 +1098,6 @@ function identifyMessage(socket, receivedMessage) {
  * Closes connection with client.
  */
 function closeConnection(playerNickname, roomCode) {
-  printRooms();
   if (playerNickname && roomCode) {
     if (availableRooms.has(roomCode)) {
       const roomMap = availableRooms.get(roomCode);
