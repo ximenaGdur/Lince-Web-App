@@ -82,7 +82,7 @@ function match(secondCard) {
       to: 'server',
       when: 'when a player makes a match',
       nickname: sessionStorage.getItem('playerNickname'),
-      roomcode: sessionStorage.getItem('roomCode'),
+      roomCode: sessionStorage.getItem('roomCode'),
       playerCard: firstCard.getAttribute('id'),
       boardCard: secondCard.getAttribute('id'),
     };

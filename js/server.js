@@ -764,35 +764,48 @@ function startGame(socket, message) {
   broadcastToOthers(newMessage, roomCode, playerNickname);
 }
 
+function increasePlayerPoint(playerNickname, roomCode) {
+  const room = availableRooms.get(roomCode);
+  const players = room.get('players');
+  const player = players.get(playerNickname);
+  const playerInfo = player.get('playerInfo');
+  let playerPoints = playerInfo.get('points');
+  playerPoints += 10;
+  playerInfo.set('points', playerPoints);
+}
+
 /**
  * Checks if match is correct.
  */
 function checkMatch(socket, message) {
   const pCardid = message.playerCard;
   const bCardid = message.boardCard;
-  console.log(pCardid);
-  console.log(bCardid);
+  const sessionCode = message.roomCode;
+  const playerNickname = message.nickname;
 
   if (pCardid === bCardid) {
+    increasePlayerPoint(playerNickname, sessionCode);
     const newMessage = {
       type: 'handleMatchResponse',
       from: 'server',
       to: 'player',
-      when: 'when a checks a match',
+      when: 'when server checks a match',
       match: true,
     };
-    socket.send(JSON.stringify(newMessage));
+    // socket.send(JSON.stringify(newMessage));
+    // broadcastToOthers(newMessage, sessionCode, playerNickname);
+    // availableRooms.get(sessionCode).get('players');
   } else {
     const newMessage = {
       type: 'handleMatchResponse',
       from: 'server',
       to: 'player',
-      when: 'when a checks a match',
+      when: 'when server checks a match',
       match: false,
     };
     socket.send(JSON.stringify(newMessage));
   }
-  console.log('Checking Match');
+  console.log('Match cheked');
 }
 
 /**
