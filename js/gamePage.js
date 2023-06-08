@@ -1,4 +1,5 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable no-unused-vars */
 
 /** ******************* Imports ******************* */
 
@@ -78,8 +79,10 @@ let time = 0;
 // Current player score
 let score = 0;
 
+// Correct match sound
 const correctMatchSound = document.getElementById('correctoMatchSound');
 
+// Incorrect match sound
 const incorrectoMatchSound = document.getElementById('incorrectoMatchSound');
 
 /** ******************* Functions used on script ******************* */
@@ -368,6 +371,7 @@ exitButton.addEventListener('click', showExitPopup);
 // Adding event listener to homeButton
 homeButton.addEventListener('click', returnToMain);
 
+// Add an event listener to each of the cards player
 for (let index = 0; index < myImages.length; index += 1) {
   const card = myImages[index];
   card.addEventListener('click', () => {
@@ -375,6 +379,7 @@ for (let index = 0; index < myImages.length; index += 1) {
   });
 }
 
+// Add an event listener to each of the cards on the game board
 for (let index = 0; index < boardImages.length; index += 1) {
   const boardCard = boardImages[index];
   boardCard.addEventListener('click', () => {
