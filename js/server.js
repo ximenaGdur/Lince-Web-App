@@ -337,7 +337,7 @@ function createConfigStringMap(roomConfig) {
 
 /**
  * Broadcasts message to everyone but one player.
- * @param {String} message Message to be broadcasted.
+ * @param {Map} message Message to be broadcasted.
  * @param {Number} roomCode Room that contains players to which message will be sent.
  * @param {String} excludedPlayerNickname Nickname of player that will be excluded.
  */
@@ -354,7 +354,7 @@ function broadcastToOthers(message, roomCode, excludedPlayerNickname) {
 
 /**
  * Broadcasts message to everyone in a room.
- * @param {String} message Message to be broadcasted.
+ * @param {Map} message Message to be broadcasted.
  * @param {Number} roomCode Room that contains players to which message will be sent.
  */
 function broadcastToAll(message, roomCode) {
@@ -370,17 +370,17 @@ function broadcastToAll(message, roomCode) {
 
 /**
  * Adds player to list for other players in room.
- * @param {String} playerName Nombre del jugador
- * @param {Number} roomCode 
+ * @param {String} playerName Player name
+ * @param {Number} roomCode Room code
  */
-function sendUpdatedPlayers(playerName, roomCode) {
+function sendUpdatedPlayers(playerName, roomCode, messageType) {
   const roomInfo = availableRooms.get(roomCode);
   const playersMap = roomInfo.get('players');
   const newMessage = {
-    type: 'handlePlayerList',
+    type: messageType,
     from: 'server',
     to: 'player',
-    when: 'When the server lets clients know a new player has been added',
+    when: 'When the server lets clients know player list has changed',
     players: createPlayerStringMap(playersMap),
   };
   broadcastToOthers(newMessage, roomCode, playerName);
@@ -474,6 +474,8 @@ function createRoom(socket, message) {
 
 /**
  * Assigns avatar and stores guest in room.
+ * @param {WebSocket} socket Socket of player that wants to join room.
+ * @param {Map} message Message sent by client.
  */
 function addToRoom(socket, message) {
   const playerNickname = message.nickname;
@@ -485,14 +487,35 @@ function addToRoom(socket, message) {
   const newPlayer = createPlayer(playerPosition, false);
 
   if (availableRooms.has(roomCode) === true) {
-    const playerMap = new Map([
-      ['playerSocket', socket],
-      ['playerInfo', newPlayer],
-    ]);
-    playersMap.set(playerNickname, playerMap);
+    if (playersMap.keys.length <= maximumClientAmount) {
+      const playerMap = new Map([
+        ['playerSocket', socket],
+        ['playerInfo', newPlayer],
+      ]);
+      playersMap.set(playerNickname, playerMap);
+      sendRoomCode(socket, roomCode);
+    }
   }
+}
 
-  sendRoomCode(socket, roomCode);
+/**
+ * Figures out if player exists in room.
+ * @param {Number} code Code of room.
+ * @param {String} nickname Nickname of player.
+ * @returns Boolean value indicating if player exists.
+ */
+function playerExists(code, nickname) {
+  let exists = false;
+  if (code && nickname && availableRooms.has(code)) {
+    const roomInfo = availableRooms.get(code);
+    if (roomInfo.has('players')) {
+      const playersMap = roomInfo.get('players');
+      if (playersMap.has(nickname)) {
+        exists = true;
+      }
+    }
+  }
+  return exists;
 }
 
 /**
@@ -502,37 +525,27 @@ function getWaitingRoom(socket, message) {
   const playerNickname = message.nickname;
   const roomCode = message.sessionCode;
 
-  if (roomCode && playerNickname && availableRooms.has(roomCode)) {
+  if (playerExists(roomCode, playerNickname) === true) {
     const roomInfo = availableRooms.get(roomCode);
-    if (roomInfo.has('players') && roomInfo.has('players')) {
-      const playersMap = roomInfo.get('players');
-      const roomConfig = roomInfo.get('config');
-      if (playersMap.has(playerNickname)) {
-        const playerMap = playersMap.get(playerNickname);
-        const playerInfo = playerMap.get('playerInfo');
+    const roomConfig = roomInfo.get('config');
+    const playersMap = roomInfo.get('players');
+    const playerMap = playersMap.get(playerNickname);
+    const playerInfo = playerMap.get('playerInfo');
 
-        if (playersMap.keys.length <= maximumClientAmount) {
-          playerMap.set('playerSocket', socket);
-          // Sending messages to other players to let them know a new player has entered
-          sendUpdatedPlayers(playerNickname, roomCode);
+    playerMap.set('playerSocket', socket);
+    sendUpdatedPlayers(playerNickname, roomCode, 'handlePlayerList');
 
-          // Sending player personalized waiting room.
-          const newMessage = {
-            type: 'handleWaitingRoom',
-            from: 'server',
-            to: 'player',
-            when: 'When the server send personalized waiting room',
-            isHost: playerInfo.get('host'),
-            players: createPlayerStringMap(playersMap),
-            config: createConfigStringMap(roomConfig),
-          };
-
-          // TODO: Send configuration too, in case of non host
-
-          socket.send(JSON.stringify(newMessage));
-        }
-      }
-    }
+    // Sending player personalized waiting room.
+    const newMessage = {
+      type: 'handleWaitingRoom',
+      from: 'server',
+      to: 'player',
+      when: 'When the server send personalized waiting room',
+      isHost: playerInfo.get('host'),
+      players: createPlayerStringMap(playersMap),
+      config: createConfigStringMap(roomConfig),
+    };
+    socket.send(JSON.stringify(newMessage));
   }
 }
 
@@ -798,7 +811,7 @@ function removePlayer(roomCode, playerNickname) {
     assignNewHost(playersMap);
 
     // Sending messages to other players to let them know a player has left.
-    sendUpdatedPlayers(playerNickname, roomCode);
+    sendUpdatedPlayers(playerNickname, roomCode, 'handleRemovePlayer');
   }
 }
 
@@ -817,6 +830,36 @@ function startGame(message) {
     when: 'When the server lets players know game has started',
   };
   broadcastToOthers(newMessage, roomCode, playerNickname);
+}
+
+/**
+ * Sets amount of card per round to guests in room.
+ */
+function getGameRoom(socket, message) {
+  const playerNickname = message.nickname;
+  const roomCode = message.sessionCode;
+
+  if (playerExists(roomCode, playerNickname) === true) {
+    const roomInfo = availableRooms.get(roomCode);
+    const playersMap = roomInfo.get('players');
+    const configMap = roomInfo.get('config');
+    const playerMap = playersMap.get(playerNickname);
+    const playerInfo = playerMap.get('playerInfo');
+
+    playerMap.set('playerSocket', socket);
+    sendUpdatedPlayers(playerNickname, roomCode, 'handlePlayerList');
+
+    // Sending player personalized waiting room.
+    const newMessage = {
+      type: 'handleGameRoom',
+      from: 'server',
+      to: 'player',
+      when: 'When the server send personalized game room',
+      maxTime: configMap.get();
+      players: createPlayerStringMap(playersMap),
+    };
+    socket.send(JSON.stringify(newMessage));
+  }
 }
 
 /**
@@ -852,7 +895,7 @@ function checkMatch(message) {
 
   // Sending messages to other players to let them know a player has updated their score.
   if (isCorrectMatch === true) {
-    sendUpdatedPlayers(playerNickname, roomCode);
+    sendUpdatedPlayers(playerNickname, roomCode, 'handlePlayerList');
   }
 }
 
@@ -980,6 +1023,9 @@ function identifyMessage(socket, receivedMessage) {
       break;
     case 'startGame':
       startGame(receivedMessage);
+      break;
+    case 'getGameRoom':
+      getGameRoom(socket, receivedMessage);
       break;
     case 'checkMatch':
       checkMatch(receivedMessage);
