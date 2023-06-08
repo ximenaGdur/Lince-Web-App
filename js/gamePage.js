@@ -150,7 +150,7 @@ function match(secondCard) {
       to: 'server',
       when: 'when a player makes a match',
       nickname: sessionStorage.getItem('playerNickname'),
-      roomCode: sessionStorage.getItem('roomCode'),
+      sessionCode: sessionStorage.getItem('roomCode'),
       playerCard: firstCard.getAttribute('id'),
       boardCard: secondCard.getAttribute('id'),
     };
@@ -274,6 +274,9 @@ function identifyMessage(receivedMessage) {
       break;
     case 'handleMatchResponse':
       handleMatchResponse(receivedMessage);
+      break;
+    case 'handleNewScores':
+      handlePlayerList(receivedMessage, playerTable);
       break;
     case 'handleTimesUp':
       handleTimesUp(receivedMessage);

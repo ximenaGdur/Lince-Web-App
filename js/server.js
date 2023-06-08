@@ -846,7 +846,7 @@ function getGameRoom(socket, message) {
     const playerMap = playersMap.get(playerNickname);
 
     playerMap.set('playerSocket', socket);
-    sendUpdatedPlayers(playerNickname, roomCode, 'handlePlayerList');
+    sendUpdatedPlayers(playerNickname, roomCode, 'handleNewScores');
 
     // Sending player personalized waiting room.
     const newMessage = {
@@ -874,16 +874,11 @@ function increasePlayerPoint(playerNickname, roomCode) {
 /**
  * Checks if match is correct.
  */
-function checkMatch(message) {
-  const pCardid = message.playerCard;
-  const bCardid = message.boardCard;
-  const sessionCode = message.roomCode;
+function checkMatch(socket, message) {
+  const playerCardId = message.playerCard;
+  const boardCardId = message.boardCard;
+  const roomCode = message.sessionCode;
   const playerNickname = message.nickname;
-
-  // const roomInfo = availableRooms.get(roomCode);
-  // const playersMap = roomInfo.get('players');
-  // const playerMap = playersMap.get(playerNickname);
-  // const socket = playerMap.get('playerSocket');
 
   // const isCorrectMatch = false;
   // const newScore = 0;
@@ -892,29 +887,25 @@ function checkMatch(message) {
   // finishGame(playerNickname, roomCode);
 
   // Checks if match is correct and updates score
-
-  // Sending player a message indicating if match is correct or not.
-
-  if (pCardid === bCardid) {
-    increasePlayerPoint(playerNickname, sessionCode);
+  if (playerCardId === boardCardId) {
+    increasePlayerPoint(playerNickname, roomCode);
     const newMessage = {
       type: 'handleMatchResponse',
       from: 'server',
       to: 'player',
       when: 'when server checks a match',
-      match: true,
+      isCorrectMatch: true,
     };
-    // socket.send(JSON.stringify(newMessage));
-    // broadcastToOthers(newMessage, sessionCode, playerNickname);
-    // availableRooms.get(sessionCode).get('players');
+    sendUpdatedPlayers(playerNickname, roomCode, 'handlePlayerList');
   } else {
     const newMessage = {
       type: 'handleMatchResponse',
       from: 'server',
       to: 'player',
       when: 'when server checks a match',
-      match: false,
+      isCorrectMatch: false,
     };
+    // Sending player a message indicating if match is not correct.
     socket.send(JSON.stringify(newMessage));
   }
 
@@ -1065,7 +1056,7 @@ function identifyMessage(socket, receivedMessage) {
       getGameRoom(socket, receivedMessage);
       break;
     case 'checkMatch':
-      checkMatch(receivedMessage);
+      checkMatch(socket, receivedMessage);
       break;
     case 'applyExtraCards':
       applyExtraCards(receivedMessage);
