@@ -94,6 +94,12 @@ const option3b = document.getElementById('Adp3b');
 // Container for all player table's rows.
 const playerTable = document.getElementById('waiting-room-ranking');
 
+// Player nickname
+const playerNickname  = sessionStorage.getItem('playerNickname');
+
+// Room Code
+const roomCode = sessionStorage.getItem('roomCode');
+
 // Socket that connects to server
 const socket = new WebSocket('ws://localhost:8009');
 
@@ -115,14 +121,12 @@ const title = document.getElementById('waiting-room-title');
  * When page is loaded...
  */
 function loadPage() {
-  const roomCode = sessionStorage.getItem('roomCode');
   if (roomCode) {
     title.innerHTML += roomCode;
   } else {
     const main = document.getElementsByClassName('main-content');
     main[0].innerHTML = `<h2 class="page-title" id="waiting-room-title">La sala ${roomCode} no existe</h2>`;
-    main[0].innerHTML += `<img class="information-icon" src="/design/images/Icons/informationIcon.png"
-    alt="información"></img>`;
+    main[0].innerHTML += '<img class="information-icon" src="/design/images/Icons/informationIcon.png" alt="información"></img>';
   }
 }
 
@@ -157,27 +161,14 @@ function createNewPlayer(nickname, playerInfo) {
 }
 
 /**
- * Adds new player to player list.
- */
-function handleNewPlayer(message) {
-  // Order by points
-  if (playerTable) {
-    const playerArray = JSON.parse(message.players);
-    if (playerArray) {
-      playerTable.innerHTML = '';
-      Object.keys(playerArray).forEach((nickname) => {
-        if (Object.hasOwn(playerArray, nickname)) {
-          playerTable.innerHTML += createNewPlayer(nickname, playerArray[nickname]);
-        }
-      });
-    }
-  }
-}
-
-/**
  * Sets ranges and radio buttons to read only.
  */
 function setToReadOnly() {
+  console.log('DISABLING BUTTON');
+  startButton.disabled = true;
+  startButton.style.cursor = 'default';
+
+  console.log('DISABLING RANGES');
   maxTimeRange.disabled = true;
   maxTimeRange.style.cursor = 'default';
 
@@ -187,6 +178,7 @@ function setToReadOnly() {
   cardsPerRoundRange.disabled = true;
   cardsPerRoundRange.style.cursor = 'default';
 
+  console.log('DISABLING RADIO BUTTONS');
   option1a.disabled = true;
   option1b.disabled = true;
   option2a.disabled = true;
@@ -196,14 +188,90 @@ function setToReadOnly() {
 }
 
 /**
+ * Sets ranges and radio buttons to edit.
+ */
+function setToEdit() {
+  startButton.disabled = false;
+  maxTimeRange.style.cursor = 'pointer';
+
+  maxTimeRange.disabled = false;
+  maxTimeRange.style.cursor = 'grab';
+
+  cardsPerPlayerRange.disabled = false;
+  cardsPerPlayerRange.style.cursor = 'grab';
+
+  cardsPerRoundRange.disabled = false;
+  cardsPerRoundRange.style.cursor = 'grab';
+
+  option1a.disabled = false;
+  option1b.disabled = false;
+  option2a.disabled = false;
+  option2b.disabled = false;
+  option3a.disabled = false;
+  option3b.disabled = false;
+}
+
+/**
+ * Adds new player to player list.
+ */
+function handlePlayerList(message) {
+  // Order by points
+  if (playerTable) {
+    const playerArray = JSON.parse(message.players);
+    if (playerArray) {
+      playerTable.innerHTML = '';
+      Object.keys(playerArray).forEach((nickname) => {
+        if (Object.hasOwn(playerArray, nickname)) {
+          const playerInfo = playerArray[nickname];
+          playerTable.innerHTML += createNewPlayer(nickname, playerInfo);
+          if (nickname === playerNickname && playerInfo.host === true) {
+            setToEdit();
+          }
+        }
+      });
+    }
+  }
+}
+
+/**
+ * Interprets current configuration and reflects it on screen
+ * @param {*} message Message received from server.
+ */
+function handleConfiguration(message) {
+  if (message.config) {
+    const configMap = JSON.parse(message.config);
+    option1a.checked = configMap.adaptation1a;
+    option1b.checked = configMap.adaptation1b;
+    option2a.checked = configMap.adaptation2a;
+    option2b.checked = configMap.adaptation2b;
+    option3a.checked = configMap.adaptation3a;
+    option3b.checked = configMap.adaptation3b;
+
+    maxTimeRange.value = configMap.maxTime;
+    maxTimeValue.innerHTML = `${configMap.maxTime} s`;
+
+    cardsPerPlayerRange.value = configMap.cardsPerPlayer;
+    cardsPerPlayerValue.innerHTML = configMap.cardsPerPlayer;
+
+    cardsPerRoundRange.value = configMap.cardsPerRound;
+    cardsPerRoundValue.innerHTML = configMap.cardsPerRound;
+  }
+}
+
+/**
  * When server sends a message with personalized waiting room.
  */
 function handleWaitingRoom(message) {
-  // const playerMap = new Map(playerArray.map((player) => [player.nickname, player]));
+  console.log('message.isHost: ' + message.isHost);
   if (message.isHost === false) {
+    console.log('GUESTTTTT');
     setToReadOnly();
+  } else {
+    console.log('HOOOOOOOOST');
+    setToEdit();
   }
-  handleNewPlayer(message);
+  handlePlayerList(message);
+  handleConfiguration(message);
 }
 
 /**
@@ -218,8 +286,8 @@ function chooseCardsPerRound() {
       from: 'client',
       to: 'server',
       when: 'when a host client change the amount of card per round',
-      nickname: sessionStorage.getItem('playerNickname'),
-      sessionCode: sessionStorage.getItem('roomCode'),
+      nickname: playerNickname,
+      sessionCode: roomCode,
       cardsPerRound: cardsRound,
     };
     socket.send(JSON.stringify(message));
@@ -238,8 +306,8 @@ function chooseMaxTime() {
       from: 'client',
       to: 'server',
       when: 'when a host client change the max time',
-      nickname: sessionStorage.getItem('playerNickname'),
-      sessionCode: sessionStorage.getItem('roomCode'),
+      nickname: playerNickname,
+      sessionCode: roomCode,
       maxTime: time,
     };
     socket.send(JSON.stringify(message));
@@ -258,8 +326,8 @@ function chooseCardsPerPlayer() {
       from: 'client',
       to: 'server',
       when: 'when a host client change the cards per player',
-      nickname: sessionStorage.getItem('playerNickname'),
-      sessionCode: sessionStorage.getItem('roomCode'),
+      nickname: playerNickname,
+      sessionCode: roomCode,
       cardsPerPlayer: cardsPlayer,
     };
     socket.send(JSON.stringify(message));
@@ -276,8 +344,8 @@ function chooseAdp1a() {
     from: 'client',
     to: 'server',
     when: 'when a host client selects the adaptation 1a',
-    nickname: sessionStorage.getItem('playerNickname'),
-    sessionCode: sessionStorage.getItem('roomCode'),
+    nickname: playerNickname,
+    sessionCode: roomCode,
   };
   socket.send(JSON.stringify(message));
 }
@@ -292,8 +360,8 @@ function chooseAdp1b() {
     from: 'client',
     to: 'server',
     when: 'when a host client selects the adaptation 1b',
-    nickname: sessionStorage.getItem('playerNickname'),
-    sessionCode: sessionStorage.getItem('roomCode'),
+    nickname: playerNickname,
+    sessionCode: roomCode,
   };
   socket.send(JSON.stringify(message));
 }
@@ -308,8 +376,8 @@ function chooseAdp2a() {
     from: 'client',
     to: 'server',
     when: 'when a host client selects the adaptation 2a',
-    nickname: sessionStorage.getItem('playerNickname'),
-    sessionCode: sessionStorage.getItem('roomCode'),
+    nickname: playerNickname,
+    sessionCode: roomCode,
   };
   socket.send(JSON.stringify(message));
 }
@@ -324,8 +392,8 @@ function chooseAdp2b() {
     from: 'client',
     to: 'server',
     when: 'when a host client selects the adaptation 2b',
-    nickname: sessionStorage.getItem('playerNickname'),
-    sessionCode: sessionStorage.getItem('roomCode'),
+    nickname: playerNickname,
+    sessionCode: roomCode,
   };
   socket.send(JSON.stringify(message));
 }
@@ -340,8 +408,8 @@ function chooseAdp3a() {
     from: 'client',
     to: 'server',
     when: 'when a host client selects the adaptation 3a',
-    nickname: sessionStorage.getItem('playerNickname'),
-    sessionCode: sessionStorage.getItem('roomCode'),
+    nickname: playerNickname,
+    sessionCode: roomCode,
   };
   socket.send(JSON.stringify(message));
 }
@@ -356,8 +424,8 @@ function chooseAdp3b() {
     from: 'client',
     to: 'server',
     when: 'when a host client selects the adaptation 3b',
-    nickname: sessionStorage.getItem('playerNickname'),
-    sessionCode: sessionStorage.getItem('roomCode'),
+    nickname: playerNickname,
+    sessionCode: roomCode,
   };
   socket.send(JSON.stringify(message));
 }
@@ -371,8 +439,8 @@ function startGame() {
     from: 'client',
     to: 'server',
     when: 'when a host client selects the start game botton',
-    nickname: sessionStorage.getItem('playerNickname'),
-    sessionCode: sessionStorage.getItem('roomCode'),
+    nickname: playerNickname,
+    sessionCode: roomCode,
   };
   socket.send(JSON.stringify(message));
   window.location.href = './game.xhtml';
@@ -471,36 +539,6 @@ function handleCardsPerPlayer(message) {
  */
 function handleStartGame() {
   window.location.href = './game.xhtml';
-}
-
-/**
- * Sends a message to the server to remove a player from a specific room at the
- * time the host client selects a player to be removed.
- */
-function handleRemovePlayer() {
-  if (playerTable) {
-    const firstColumn = '<tr class="table-row">'
-                        + '<td class="table-row">#</td>'
-                        + '<td class="table-row">Imgen</td>'
-                        + '<td class="table-row">Apodo</td>'
-                        + '<td class="table-row">Puntaje</td>'
-                    + '</tr>';
-    const player1 = '<tr class="table-row">'
-                        + '<td class="table-col">1</td>'
-                        + '<td class="table-col">avatar</td>'
-                        + '<td class="table-col">mariaPerez</td>'
-                        + '<td class="table-col">250puntos </td>'
-                    + '</tr>';
-
-    const player2 = '<tr class="table-row">'
-                        + '<td class="table-col">2</td>'
-                        + '<td class="table-col">avatar</td>'
-                        + '<td class="table-col">juanPerez</td>'
-                        + '<td class="table-col">100 puntos </td>'
-                    + '</tr>';
-
-    playerTable.innerHTML = firstColumn + player1 + player2;
-  }
 }
 
 /*
@@ -603,11 +641,8 @@ function identifyMessage(receivedMessage) {
     case 'handleCardsPerRound':
       handleCardsPerRound(receivedMessage);
       break;
-    case 'handleRemovePlayer':
-      handleRemovePlayer(receivedMessage);
-      break;
-    case 'handleNewPlayer':
-      handleNewPlayer(receivedMessage);
+    case 'handlePlayerList':
+      handlePlayerList(receivedMessage);
       break;
     case 'handleStartGame':
       handleStartGame(receivedMessage);
@@ -632,8 +667,8 @@ socket.addEventListener('open', () => {
     from: 'client',
     to: 'server',
     when: 'when a client asks for a personalized waiting room',
-    nickname: sessionStorage.getItem('playerNickname'),
-    sessionCode: sessionStorage.getItem('roomCode'),
+    nickname: playerNickname,
+    sessionCode: roomCode,
   };
   socket.send(JSON.stringify(message));
   console.log('Message sent to server');

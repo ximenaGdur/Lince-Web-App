@@ -37,6 +37,8 @@ export function createRemovePlayerMessage() {
     from: 'client',
     to: 'server',
     when: 'when a client leaves the room',
+    nickname: sessionStorage.getItem('playerNickname'),
+    sessionCode: sessionStorage.getItem('roomCode'),
   };
   return JSON.stringify(message);
 }
