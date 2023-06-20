@@ -98,7 +98,7 @@ function loadPage() {
     document.getElementById('player-score').innerHTML = scoreString;
   } else {
     const main = document.getElementsByClassName('main-content');
-    main[0].innerHTML = `<h2 class="page-title" id="waiting-room-title">La sala ${roomCode} no existe</h2>`;
+    main[0].innerHTML = '<h2 class="page-title" id="waiting-room-title">La sala no existe</h2>';
     main[0].innerHTML += '<img class="information-icon" src="/design/images/Icons/informationIcon.png" alt="información"></img>';
   }
 }
@@ -245,7 +245,7 @@ function randomBorderColor() {
 }
 
 /**
- * If image adaption is chosen, it asigns a random border color.
+ * If image adaptation is chosen, it asigns a random border color.
  */
 function changeImageColors() {
   for (let index = 0; index < boardImages.length; index += 1) {

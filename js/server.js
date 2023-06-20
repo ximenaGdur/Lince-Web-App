@@ -676,7 +676,7 @@ function setCardsPerPlayer(message) {
 }
 
 /**
- * Sets adaption 1a to guests in room.
+ * Sets adaptation 1a to guests in room.
  */
 function toggleAdp1a(message) {
   const roomCode = message.sessionCode;
@@ -702,7 +702,7 @@ function toggleAdp1a(message) {
 }
 
 /**
- * Sets adaption 1b to guests in room.
+ * Sets adaptation 1b to guests in room.
  */
 function toggleAdp1b(message) {
   const roomCode = message.sessionCode;
@@ -728,7 +728,7 @@ function toggleAdp1b(message) {
 }
 
 /**
- * Sets adaption 2a to guests in room.
+ * Sets adaptation 2a to guests in room.
  */
 function toggleAdp2a(message) {
   const roomCode = message.sessionCode;
@@ -754,7 +754,7 @@ function toggleAdp2a(message) {
 }
 
 /**
- * Sets adaption 2b to guests in room.
+ * Sets adaptation 2b to guests in room.
  */
 function toggleAdp2b(message) {
   const roomCode = message.sessionCode;
@@ -780,7 +780,7 @@ function toggleAdp2b(message) {
 }
 
 /**
- * Sets adaption 3a to guests in room.
+ * Sets adaptation 3a to guests in room.
  */
 function toggleAdp3a(message) {
   const roomCode = message.sessionCode;
@@ -806,7 +806,7 @@ function toggleAdp3a(message) {
 }
 
 /**
- * Sets adaption 3b to guests in room.
+ * Sets adaptation 3b to guests in room.
  */
 function toggleAdp3b(message) {
   const roomCode = message.sessionCode;

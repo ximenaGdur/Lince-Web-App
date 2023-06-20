@@ -10,10 +10,19 @@
  * Style for section configuration
  */
 .configuration {
+    align-items: center;
     display: flex;
     flex-flow: column nowrap;
-    align-items: stretch;
-    min-width: 95%;
+    min-width: 100%;
+    padding: 2%;
+}
+
+.options-container {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1%;
+    min-width: 80%;
 }
 
 /**
@@ -23,39 +32,40 @@
     align-items: center;
     display: flex;
     flex-direction: row;
-    list-style: none;
-    padding: 0.5%;
-    margin: 1% 0%;
-    min-width: 90%;
     justify-content: center;
+    list-style: none;
+    margin: 0%;
+    min-width: 80%;
+    padding: 0%;
 }
 
 /**
  * Style for each configuration option value
  */
-.input-range-container {
+.option-container {
+    align-items: center;
     border-style: solid;
     background: var(--plum);
     border-color: var(--plum);
-    border-radius: 0.9vw;
+    border-radius: 0.3vw;
     border-width: 0.2vw;
     display: flex;
-    min-width: 90%;
-    padding: 0.5%;
     flex-direction: row;
-    align-items: center;
     justify-content: space-evenly;
-    margin-left: 0.3%;
+    margin-bottom: 1%;
+    min-width: 80%;
+    padding: 0.5%;
 }
 
 /**
  * Style for each configuration option title
  */
- .option-title {
+.configurations-title {
     color: var(--isabelline);
     margin: 1%;
     font-size: 1rem;
-    min-width: 15%;
+    font-weight: bold;
+    width: 15%;
 }
 
 /**
@@ -87,134 +97,128 @@
 /**
  * 
  */
-.configuration-description {
-    background: var(--plum);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 30%;
-    border-radius: 6px;
-}
-
-/**
- * 
- */
-.option-subtitle {
+ .range-value {
     font-size: 1.5rem;
     color: var(--violet);
     margin: 0%;
-    min-width: 5%;
+    min-width: 6%;
+}
+
+.config-description {
+    display: none;
 }
 
 /**
- * Adaption explanation text
+ * Style for each adaptation option title
  */
-.option-description {
+ .adaptation-title {
+    color: var(--isabelline);
+    margin: 1%;
     font-size: 1rem;
+}
+
+/**
+ * .
+ */
+.adaptation-container {
+    align-items: center;
+    background: var(--plum);
+    border-radius: 6px;
     display: flex;
-    text-align: center;
-    visibility: hidden;
-    max-width: 80%;
-    font-weight: bold;
-    color: var(--mimi-pink);
+    flex-direction: column;
+    margin: 1% 0%;
+    max-width: 60%;
+}
+
+.adaptation-option-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 70%;
+    padding: 0%;
 }
 
 /**
  * Style for each adaptation option
  */
-.adaptation-option {
-    flex-grow: 1;
-    border-style: solid;
+ .adaptation-option {
+    background: var(--isabelline);
     border-color: var(--plum);
-    border-radius: 6px;
-    max-width: 35%;
+    border-radius: 0.5rem;
+    border-style: solid;
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    max-height: 70%;
-    justify-content: center;
-}
-
-/** Style for container of buttons. **/
-.buttons {
-    min-width: 100%;
-}
-
-/**
- * 
- */
-.adaption-icon {
-    width: 10rem;
-}
-
-/**
- * 
- */
-.players {
-    color: var(--sky-magenta);
-    display: flex;
-    min-width: 100%;
-    align-content: center;
     flex-direction: column;
     align-items: center;
+    margin: 2%;
+    padding: 2% 0%;
+    height: 50%;
+    width: 30%;
 }
 
-.info-pop-up,
-.adaptation1-info {
-    display: none;
-    width: 18rem;
-    background-color: var(--mimi-pink);
-    border-style: solid;
-    border-color: var(--finn);
-    border-radius: 0.9vw;
-    position: absolute;
+.adaptation-icon {
+    max-width: 70%;
 }
 
-/* .adaptation1-info {
-
-} */
-
-/* .information-icon:hover span {
+/**
+ * adaptation explanation text
+ */
+.option-description {
+    color: var(--mimi-pink);
     display: flex;
-} */
-
-/* .info {
-    content: '?';
-} */
-
-/* .info:hover span {
-    display: flex;
-} */
-
-.common-text {
-    margin: 0.3rem 0.7rem;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    margin: 1%;
+    max-width: 50%;
 }
+
 
 /******************* MEDIA QUERIES *******************/
 
 /**
  * Styles for header on screens smaller than 933px
  */
- @media screen and (1px <= width <= 933px) {
+@media screen and (1px <= width <= 933px) {
     /**
      * Style for each configuration option value
      */
-    .input-range-container {
+    .option-container {
+        flex-direction: column;
         min-width: 90%;
+        margin: 1%;
+        padding: 3%;
+    }
+
+    .adaptation-container {
+        min-width: 87%;
     }
 
     /**
      * Style for each configuration option value
      */
     .input-range {
-        min-width: 40%;
+        min-width: 90%;
     }
 
     /**
      * Style for each configuration option title
      */
     .option-title {
+        display: flex;
+        justify-content: center;
         margin: 2%;
+        min-width: 90%;
+    }
+
+    /**
+     * Style for each configuration option title
+     */
+    .configurations-title {
+        width: auto;
+    }
+
+    .adaptation-option-container {
+        flex-direction: column;
     }
 
     /**
@@ -222,7 +226,7 @@
      */
     .configuration-option {
         flex-direction: column;
-        padding: 1%;
+        min-width: 90%;
     }
 
     /**
@@ -230,5 +234,12 @@
      */
     .adaptation-configuration {
         flex-direction: column;
+    }
+    
+    /**
+     * Configuration description.
+     */
+    .configuration-description {
+        min-width: 90%;
     }
 }

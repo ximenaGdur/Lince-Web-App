@@ -51,13 +51,13 @@ const exitButton = document.getElementById('exit-button');
 // Information icons that display information
 const informationIcons = document.getElementsByClassName('information-icon');
 
-// Popup with information about adaption 1
+// Popup with information about adaptation 1
 const infoAdapt1 = document.getElementById('adaptation1-info');
 
-// Popup with information about adaption 2
+// Popup with information about adaptation 2
 const infoAdapt2 = document.getElementById('adaptation2-info');
 
-// Popup with information about adaption 3
+// Popup with information about adaptation 3
 const infoAdapt3 = document.getElementById('adaptation3-info');
 
 // Cards per Round information popUp
@@ -130,7 +130,7 @@ function loadPage() {
     title.innerHTML += roomCode;
   } else {
     const main = document.getElementsByClassName('main-content');
-    main[0].innerHTML = `<h2 class="page-title" id="waiting-room-title">La sala ${roomCode} no existe</h2>`;
+    main[0].innerHTML = '<h2 class="page-title" id="waiting-room-title">La sala no existe</h2>';
     main[0].innerHTML += '<img class="information-icon" src="/design/images/Icons/informationIcon.png" alt="información"></img>';
   }
 }
@@ -562,10 +562,10 @@ function cardsPerRound() {
 */
 function infoAdapPopUp(adaptation) {
   if (infoIconClicked) {
-    document.getElementById(adaptation.srcElement.nextElementSibling.id).style.visibility = 'visible';
+    document.getElementById(adaptation.srcElement.nextElementSibling.id).style.display = 'flex';
     infoIconClicked = false;
   } else {
-    document.getElementById(adaptation.srcElement.nextElementSibling.id).style.visibility = 'hidden';
+    document.getElementById(adaptation.srcElement.nextElementSibling.id).style.display = 'none';
     infoIconClicked = true;
   }
 }

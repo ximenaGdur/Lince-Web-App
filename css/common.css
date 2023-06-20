@@ -87,11 +87,12 @@ main {
 }
 
 /** Style for page's main subtitle. **/
-.sub-title {
+.subtitle {
     color: var(--finn);
+    display: flex;
     font-size: 1.5rem;
     font-weight: bold;
-    margin: 2% 0%;
+    margin: 1.5% 0%;
 }
 
 /** Style for input. **/
@@ -196,6 +197,17 @@ button:hover {
     padding: 0.5%;
 }
 
+/**
+ * 
+ */
+ .players {
+    color: var(--sky-magenta);
+    display: flex;
+    min-width: 100%;
+    align-content: center;
+    flex-direction: column;
+    align-items: center;
+}
 
 /* border of the table */
 .player-table {
@@ -207,7 +219,7 @@ button:hover {
 .table-row {
     display: table-row;
     text-align: center;
-    min-width: 100%;
+    width: 100%;
 }
 
 /** Style for ranking col. **/

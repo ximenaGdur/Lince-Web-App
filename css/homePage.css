@@ -106,7 +106,7 @@ video {
     }
 
     /** Shows all contents. **/
-    #ranking, #credits {
-        display: flex;
+    .tab-content {
+        display: flex!important;
     }
 }
