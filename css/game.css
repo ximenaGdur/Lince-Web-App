@@ -95,7 +95,7 @@
 
 /****************** styles to fit screen sizes ******************/
 
-@media screen and (max-width: 933px) {
+@media screen and (1px <= width <= 933px) {
     .game-sections {
         flex-direction: column-reverse;
     }

@@ -89,7 +89,7 @@ video {
 }
 
 /* Styles for header on screens smaller than 933px */
-@media screen and (max-width: 933px) {
+@media screen and (1px <= width <= 933px) {
     /** Style for container for input and buttons. **/
     .input-buttons { 
         margin-bottom: 4%;

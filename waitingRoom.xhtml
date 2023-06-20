@@ -21,27 +21,26 @@
             <section class="configuration">
                 <h2 class="page-title" id="waiting-room-title">Configuración - Sala de Espera #</h2>
                 <ul class="configuration-option" id="max-time">
-                    <li class="label-icon">
-                        <h3 class="option-title">Tiempo máximo</h3>
+                    <li class="input-range-container">
                         <img class="information-icon" src="/design/images/Icons/informationIcon.png"
                             alt="información"></img>
+                        <label for="max-time-range" class="option-title">Tiempo máximo</label>
+                        <input type="range" class="input-range" id="max-time-range" value="20" min="20" max="120" step="1"/>
+                        <p class="option-subtitle" id="max-time-value">20 s</p>
                     </li>
                     <li class="info-pop-up" id="infoMaxTime">
                         <span class="common-text">
                             Tiempo máximo de una partida en segundos.
                         </span>
                     </li>
-                    <li class="input-range-container">
-                        <label for="max-time-range" class="option-title">Tiempo definido</label>
-                        <input type="range" class="input-range" id="max-time-range" value="20" min="20" max="120" step="1"/>
-                        <p class="option-subtitle" id="max-time-value">20 s</p>
-                    </li>
                 </ul>
                 <ul class="configuration-option" id="cards-per-player">
-                    <li class="label-icon">
-                        <h3 class="option-title">Fichas por jugador</h3>
+                    <li class="input-range-container">
                         <img class="information-icon" src="/design/images/Icons/informationIcon.png"
                             alt="información"></img>
+                        <label for="cards-per-player-range" class="option-title">Fichas por jugador</label>
+                        <input type="range" class="input-range" id="cards-per-player-range" value="5" min="5" max="20" step="1"/>
+                        <p class="option-subtitle" id="cards-per-player-value">5</p>
                     </li>
                     <li class="info-pop-up" id="infoCardsPlayers">
                         <span class="common-text">
@@ -50,28 +49,20 @@
                             Máximo 20 - Mínimo 5.
                         </span>
                     </li>
-                    <li class="input-range-container">
-                        <label for="cards-per-player-range" class="option-title">Número de fichas</label>
-                        <input type="range" class="input-range" id="cards-per-player-range" value="5" min="5" max="20" step="1"/>
-                        <p class="option-subtitle" id="cards-per-player-value">5</p>
-                    </li>
                 </ul>
                 <ul class="configuration-option" id="cards-per-round">
-                    <li class="label-icon">
-                        <h3 class="option-title">Fichas por ronda</h3>
+                    <li class="input-range-container">
                         <img class="information-icon" src="/design/images/Icons/informationIcon.png"
                             alt="información"></img>
+                        <label for="cards-per-round-range" class="option-title">Fichas por ronda</label>
+                        <input type="range" class="input-range" id="cards-per-round-range" value="100" min="100" max="400" step="1"/>
+                        <p class="option-subtitle" id="cards-per-round-value">100</p>
                     </li>
                     <li class="info-pop-up" id="infoCardsPerRound">
                         <span class="common-text">
                             Número de fichas en la manta del juego.<br />
                             Máximo 400 - mínimo 100.
                         </span>
-                    </li>
-                    <li class="input-range-container">
-                        <label for="cards-per-round-range" class="option-title">Número de fichas</label>
-                        <input type="range" class="input-range" id="cards-per-round-range" value="100" min="100" max="400" step="1"/>
-                        <p class="option-subtitle" id="cards-per-round-value">100</p>
                     </li>
                 </ul>
                 <ul class="configuration-option" id="adaptation1">

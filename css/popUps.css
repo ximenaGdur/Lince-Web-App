@@ -78,7 +78,7 @@
 }
 
 /* Styles for header on screens smaller than 933px */
-@media screen and (max-width: 933px) {
+@media screen and (1px <= width <= 933px) {
     /** Transforms . **/
     #ranking, #credits {
         display: flex;

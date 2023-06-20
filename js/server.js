@@ -1103,10 +1103,6 @@ function checkMatch(socket, message) {
  */
 function finishGame(socket, message) {
   const code = message.sessionCode;
-<<<<<<< HEAD
-=======
-  console.log(`code: ${code}`);
->>>>>>> main
   const roomInfo = availableRooms.get(code);
   const playersMap = roomInfo.get('players');
 
@@ -1119,10 +1115,6 @@ function finishGame(socket, message) {
     players: createPlayerStringMap(playersMap),
   };
   socket.send(JSON.stringify(newMessage));
-<<<<<<< HEAD
-=======
-  // broadcastToAll
->>>>>>> main
 }
 
 /**
