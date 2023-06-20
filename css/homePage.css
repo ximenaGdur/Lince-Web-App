@@ -17,6 +17,14 @@
     min-width: 20%;
 }
 
+#join-button-container {
+    margin-left: 3%;
+}
+
+#cancel-button-container {
+    margin-right: 3%;
+}
+
 /** Style for container for input and buttons. **/
 .input-buttons { 
     align-items: center;
