@@ -1,6 +1,7 @@
+/* eslint-disable linebreak-style */
+/* eslint-disable no-unused-vars */
 /** ****************** Imports ******************* */
 
-/* eslint-disable linebreak-style */
 // import { ip , port } from 'config.js';
 // const configuration = require('./config.js');
 
@@ -412,8 +413,6 @@ function broadcastToAll(message, roomCode) {
     socket.send(JSON.stringify(message));
   });
 }
-
-// TODO: esta funcion siempre debe exluir a alguien?
 
 /**
  * Adds player to list for other players in room.
@@ -1038,6 +1037,13 @@ function getGameRoom(socket, message) {
   }
 }
 
+/**
+ * Change a player's score in a specific room.
+ * @param {} playerNickname Player nickname.
+ * @param {*} roomCode Unique room code.
+ * @param {*} points Points to be added to the player.
+ * @returns The new value of the player's points.
+ */
 function changePlayerScore(playerNickname, roomCode, points) {
   const room = availableRooms.get(roomCode);
   const players = room.get('players');
@@ -1058,9 +1064,6 @@ function checkMatch(socket, message) {
   const roomCode = message.sessionCode;
   const playerNickname = message.nickname;
 
-  // const isCorrectMatch = false;
-  // const newScore = 0;
-
   // if time is up or player has no more cards:
   // finishGame(playerNickname, roomCode);
 
@@ -1076,7 +1079,7 @@ function checkMatch(socket, message) {
       newScore: playerPoints,
     };
     console.log('Match CORRECTO');
-    // Sending player a message indicating if match is not correct.
+    // Sending player a message indicating if match is correct.
     socket.send(JSON.stringify(newMessage));
   } else {
     const playerPoints = changePlayerScore(playerNickname, roomCode, -10);
@@ -1092,7 +1095,6 @@ function checkMatch(socket, message) {
     // Sending player a message indicating if match is not correct.
     socket.send(JSON.stringify(newMessage));
   }
-
   sendUpdatedPlayers('', roomCode, 'handlePlayerList');
 }
 
@@ -1101,6 +1103,10 @@ function checkMatch(socket, message) {
  */
 function finishGame(socket, message) {
   const code = message.sessionCode;
+<<<<<<< HEAD
+=======
+  console.log(`code: ${code}`);
+>>>>>>> main
   const roomInfo = availableRooms.get(code);
   const playersMap = roomInfo.get('players');
 
@@ -1113,6 +1119,10 @@ function finishGame(socket, message) {
     players: createPlayerStringMap(playersMap),
   };
   socket.send(JSON.stringify(newMessage));
+<<<<<<< HEAD
+=======
+  // broadcastToAll
+>>>>>>> main
 }
 
 /**

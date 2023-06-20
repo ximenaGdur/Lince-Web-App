@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /** ****************** Creating constants for script ******************* */
 
 // Pop Up that is shown when player decides to join session.
