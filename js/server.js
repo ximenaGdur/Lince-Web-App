@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /** ****************** Imports ******************* */
 
 // import { ip , port } from 'config.js';
