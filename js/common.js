@@ -12,7 +12,7 @@ export function createNewPlayer(nickname, playerInfo) {
 
   if (playerInfo.host === true) {
     playerHTML += '  <td class="table-col ranking-column">';
-    playerHTML += `    <img class="profile-image" src="${crownRoute}" alt="Icono de Anfitrión"/>`;
+    playerHTML += `    <img class="crown-image" src="${crownRoute}" alt="Icono de Anfitrión"/>`;
     playerHTML += `    ${playerInfo.position}`;
     playerHTML += '  </td>';
   } else {

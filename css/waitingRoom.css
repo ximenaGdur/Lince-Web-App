@@ -1,6 +1,6 @@
 /**
-  * CSS used for the home page.
-  * Created by Cristian Ortega Hurtado.
+  * CSS used for the waiting room.
+  * Created by Cristian Ortega Hurtado and Jimena Gdur.
   */
 
 @import url("common.css");
@@ -10,19 +10,23 @@
  * Style for section configuration
  */
 .configuration {
-    align-items: center;
     display: flex;
     flex-flow: column nowrap;
     min-width: 100%;
-    padding: 2%;
+    max-width: 100%;
+    align-items: center;
 }
 
+/**
+ * Container for options
+ */
 .options-container {
-    align-items: center;
     display: flex;
     flex-direction: column;
     margin-bottom: 1%;
-    min-width: 80%;
+    min-width: 90%;
+    max-width: 80%;
+    align-items: center;
 }
 
 /**
@@ -54,18 +58,17 @@
     justify-content: space-evenly;
     margin-bottom: 1%;
     min-width: 80%;
-    padding: 0.5%;
+    padding: 0.5% 1%;
 }
 
 /**
  * Style for each configuration option title
  */
 .configurations-title {
+    align-self: auto;
     color: var(--isabelline);
-    margin: 1%;
-    font-size: 1rem;
-    font-weight: bold;
-    width: 15%;
+    display: flex;
+    flex: 1 1 7%;
 }
 
 /**
@@ -73,12 +76,16 @@
  */
 .input-range {
     appearance: none;
+    align-self: auto;
     background: var(--violet);
     border-color: var(--violet);
     border-radius: 0.5rem;
     border-style: solid;
     cursor: grab;
-    min-width: 60%;
+    display: flex;
+    flex: 6 1 auto;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 /**
@@ -95,30 +102,29 @@
 }
 
 /**
- * 
+ * Style for text that contains range value.
  */
- .range-value {
-    font-size: 1.5rem;
+.range-value {
+    align-self: auto;
     color: var(--violet);
+    display: flex;
+    flex: 1 1 auto;
+    font-size: 1.5rem;
     margin: 0%;
-    min-width: 6%;
+    max-width: 5%;
+    min-width: 7%;
+    justify-content: center;
 }
 
+/**
+ * Style for configuration description.
+ */
 .config-description {
     display: none;
 }
 
 /**
- * Style for each adaptation option title
- */
- .adaptation-title {
-    color: var(--isabelline);
-    margin: 1%;
-    font-size: 1rem;
-}
-
-/**
- * .
+ * Container for adaption
  */
 .adaptation-container {
     align-items: center;
@@ -126,10 +132,33 @@
     border-radius: 6px;
     display: flex;
     flex-direction: column;
-    margin: 1% 0%;
+    margin: 1%;
+    max-width: 66%;
+    min-width: 66%;
+}
+
+/**
+ * Style for each adaptation option title
+ */
+.adaptation-title {
+    color: var(--isabelline);
+}
+
+/**
+ * adaptation explanation text
+ */
+ .option-description {
+    color: var(--mimi-pink);
+    display: none;
+    font-weight: bold;
+    text-align: center;
+    margin: 1%;
     max-width: 60%;
 }
 
+/**
+ * Container for adaption option
+ */
 .adaptation-option-container {
     display: flex;
     flex-direction: row;
@@ -141,7 +170,7 @@
 /**
  * Style for each adaptation option
  */
- .adaptation-option {
+.adaptation-option {
     background: var(--isabelline);
     border-color: var(--plum);
     border-radius: 0.5rem;
@@ -151,27 +180,27 @@
     align-items: center;
     margin: 2%;
     padding: 2% 0%;
-    height: 50%;
-    width: 30%;
-}
-
-.adaptation-icon {
-    max-width: 70%;
+    max-height: 50%;
+    max-width: 50%;
+    min-width: 50%;
 }
 
 /**
- * adaptation explanation text
+ * Style for adaptation subtitle
  */
-.option-description {
-    color: var(--mimi-pink);
+.adaptation-subtitle {
+    color: var(--plum);
     display: flex;
-    font-size: 1rem;
-    font-weight: bold;
-    text-align: center;
-    margin: 1%;
-    max-width: 50%;
+    flex-direction: column;
+    align-items: center;
 }
 
+/**
+ * Style for adaption image
+ */
+.adaptation-icon {
+    max-width: 70%;
+}
 
 /******************* MEDIA QUERIES *******************/
 
@@ -180,6 +209,14 @@
  */
 @media screen and (1px <= width <= 933px) {
     /**
+     * Changing direction.
+     */
+    .configuration-option {
+        flex-direction: column;
+        min-width: 90%;
+    }
+
+    /**
      * Style for each configuration option value
      */
     .option-container {
@@ -187,10 +224,6 @@
         min-width: 90%;
         margin: 1%;
         padding: 3%;
-    }
-
-    .adaptation-container {
-        min-width: 87%;
     }
 
     /**
@@ -203,43 +236,29 @@
     /**
      * Style for each configuration option title
      */
-    .option-title {
-        display: flex;
-        justify-content: center;
-        margin: 2%;
+    .range-value {
+        max-width: 100%;
+        min-width: 100%;
+    }
+
+    /**
+     * Container for adaption
+     */
+    .adaptation-container {
         min-width: 90%;
     }
 
     /**
-     * Style for each configuration option title
+     * Container for adaption option
      */
-    .configurations-title {
-        width: auto;
-    }
-
     .adaptation-option-container {
         flex-direction: column;
     }
 
     /**
-     * Changing direction.
+     * Style for adaption option
      */
-    .configuration-option {
-        flex-direction: column;
-        min-width: 90%;
-    }
-
-    /**
-     * Changing direction.
-     */
-    .adaptation-configuration {
-        flex-direction: column;
-    }
-    
-    /**
-     * Configuration description.
-     */
-    .configuration-description {
-        min-width: 90%;
+    .adaptation-option {
+        min-width: 100%;
     }
 }

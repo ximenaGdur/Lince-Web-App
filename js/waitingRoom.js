@@ -131,7 +131,6 @@ function loadPage() {
   } else {
     const main = document.getElementsByClassName('main-content');
     main[0].innerHTML = '<h2 class="page-title" id="waiting-room-title">La sala no existe</h2>';
-    main[0].innerHTML += '<img class="information-icon" src="/design/images/Icons/informationIcon.png" alt="información"></img>';
   }
 }
 

@@ -1,4 +1,3 @@
-/* eslint-disable linebreak-style */
 /* eslint-disable no-unused-vars */
 /** ****************** Imports ******************* */
 
@@ -367,16 +366,18 @@ function createPlayerCardsStringMap(playersMap) {
     playersMap.forEach((playerData, playerNickname) => {
       const playerCards = playerData.get('cards');
       const playerMap = {};
-      playerCards.forEach((cardData, cardId) => {
-        if (cardData) {
-          const playerCardMap = {
-            description: cardData.get('description'),
-            route: cardData.get('route'),
-            border: cardData.get('border'),
-          };
-          playerMap[cardId] = playerCardMap;
-        }
-      });
+      if (playerCards) {
+        playerCards.forEach((cardData, cardId) => {
+          if (cardData) {
+            const playerCardMap = {
+              description: cardData.get('description'),
+              route: cardData.get('route'),
+              border: cardData.get('border'),
+            };
+            playerMap[cardId] = playerCardMap;
+          }
+        });
+      }
       playerCardsStringMap[playerNickname] = playerMap;
     });
   }
