@@ -31,6 +31,14 @@
     cursor: default;
 }
 
+#code-title {
+    margin: 0% 0% 0.2rem 0%
+}
+
+#cancel-button-container {
+    margin-right: 0.2rem
+}
+
 /****************** TAB SECTION ******************/
 
 /** Style for container of buttons for tabs. **/

@@ -77,6 +77,10 @@
     right: 50%;
 }
 
+#cancel-button {
+    margin-right: 0.2rem
+}
+
 /* Styles for header on screens smaller than 933px */
 @media screen and (1px <= width <= 933px) {
     /** Transforms . **/
