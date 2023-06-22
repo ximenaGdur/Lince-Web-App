@@ -350,6 +350,20 @@ function handleTimesUp(message) {
   }
 }
 
+function handlePlayerWon(message) {
+  // Player table with ranking in popup
+  const popUpPlayerTable = document.getElementById('popup-ranking');
+  // Pop Up that is shown when game is finished.
+  const popUpFinished = document.getElementById('popup-finished');
+  if (popUpFinished) {
+    handlePlayerList(message, popUpPlayerTable);
+    popUpFinished.style.display = 'flex';
+  }
+}
+
+/**
+ * Applies blur to player.
+ */
 function changeBlurImages(blurString) {
   // Contains all game board cards
   const boardImages = document.getElementsByClassName('board-image-container');
@@ -376,7 +390,6 @@ function handleBlur() {
  * @param {Object} receivedMessage Message sent by server.
  */
 function handleExtraCards(receivedMessage) {
-  console.log(`receivedMessage: ${receivedMessage}`);
 }
 
 /**
@@ -402,7 +415,6 @@ function addEventListeners() {
      * When a connection is made with server.
      */
     socket.addEventListener('open', () => {
-      console.log('Conectado al servidor desde Game Page.');
       const message = {
         type: 'getGameRoom',
         from: 'client',
@@ -422,6 +434,7 @@ function addEventListeners() {
       handleTimesUp,
       handleBlur,
       handleExtraCards,
+      handlePlayerWon,
     ];
     /**
      * Event that occurs every time a message is received.
