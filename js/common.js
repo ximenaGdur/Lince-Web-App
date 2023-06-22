@@ -1,7 +1,7 @@
 /**
  * Creates new player row in ranking table.
  */
-export function createNewPlayer(nickname, playerInfo) {
+function createNewPlayer(nickname, playerInfo) {
   const iconsRoute = '/design/images/icons/';
   const avatarRoute = `${iconsRoute}profile/${playerInfo.avatar.route}`;
   const crownRoute = `${iconsRoute}hostCrown.png`;
@@ -31,10 +31,10 @@ export function createNewPlayer(nickname, playerInfo) {
 /**
  * Adds new player to player list.
  */
-export function handlePlayerList(message, playerTable) {
+export function addToTable(players, playerTable) {
   // Order by points
   if (playerTable) {
-    const playerArray = JSON.parse(message.players);
+    const playerArray = JSON.parse(players);
     if (playerArray) {
       playerTable.innerHTML = '';
       Object.keys(playerArray).forEach((nickname) => {
@@ -45,4 +45,24 @@ export function handlePlayerList(message, playerTable) {
       });
     }
   }
+}
+
+/**
+ * Identifying message type in order to call appropiate function.
+ * @param {*} functions Array with all functions.
+ * @param {*} socket Socket with connection to server.
+ * @param {*} receivedMessage Message received from server.
+ * @returns Boolean value that indicates if message was identified or not.
+ */
+export function identifyMessage(functions, socket, receivedMessage) {
+  const messageType = receivedMessage.type;
+  let messageIdentified = false;
+  for (let functionIndex = 0; functionIndex < functions.length; functionIndex += 1) {
+    if (messageType === functions[functionIndex].name) {
+      functions[functionIndex](receivedMessage, socket);
+      messageIdentified = true;
+      break;
+    }
+  }
+  return messageIdentified;
 }

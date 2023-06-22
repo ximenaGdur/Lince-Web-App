@@ -718,6 +718,53 @@ Estas se representan con un color morado.
 
 ![Máquina de estado Cliente](images/automata/automataClient.svg)
 
+# Estructura del diccionario utilizado por el servidor
+
+~~~ js
+availableRooms =
+{
+    12345: {
+        config: {
+            adaptation1a: 'true',
+            adaptation1b: 'false',
+            adaptation2a: 'true',
+            adaptation2b: 'false',
+            adaptation3a: 'true',
+            adaptation3b: 'false',
+            maxTime: 20,
+            cardsPerPlayer: 5,
+            cardsPerRound: 100,
+        },
+        board: {
+            1: {
+                description: 'Sueter',
+                route: 'hoodie.png',
+                border: 'yellow',
+            }
+        }
+        players: {
+            'Ximena': {
+                playerSocket: socket,
+                playerInfo: {
+                    position: '1',
+                    avatar: { description: 'Oso', route: 'bear.png' },
+                    points: 23,
+                    host: isHost,
+                    cards: {
+                        1: {
+                            description: 'Sueter',
+                            route: 'hoodie.png',
+                            border: 'yellow',
+                        }
+                    }
+                },
+            },
+        },
+    },
+}
+~~~
+
+
 # Algoritmos de las transiciones de las máquinas de estados
 
 ## Del Cliente

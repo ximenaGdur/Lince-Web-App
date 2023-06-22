@@ -6,62 +6,10 @@
 // Including ws module.
 const WebSocket = require('ws');
 
-// eslint-disable-next-line import/extensions
-
 /** ****************** Creating constants for script ******************* */
 
 // Dictionary that stores all rooms and their information.
 const availableRooms = new Map();
-/*
-This is it's structure:
-  availableRooms =
-  {
-    12345: {
-      config: {
-        adaptation1a: 'true',
-        adaptation1b: 'false',
-        adaptation2a: 'true',
-        adaptation2b: 'false',
-        adaptation3a: 'true',
-        adaptation3b: 'false',
-        maxTime: 20,
-        cardsPerPlayer: 5,
-        cardsPerRound: 100,
-      },
-      board: {
-        1: {
-          description: 'Sueter',
-          route: 'hoodie.png',
-          border: 'yellow',
-        }
-      }
-      players: {
-        'Ximena': {
-          playerSocket: socket,
-          playerInfo: {
-              position: '1',
-              avatar: { description: 'Oso', route: 'bear.png' },
-              points: 23,
-              host: isHost,
-              cards: {
-                1: {
-                  description: 'Sueter',
-                  route: 'hoodie.png',
-                  border: 'yellow',
-                }
-              }
-          },
-        },
-      },
-    },
-  }
-*/
-
-// Percentage of time when special event happens
-const blurPorcentage = 95;
-
-// Dictionary with possible colors
-const cardColors = ['#FCFFAD', '#C2FFAD', '#ADF7FF', '#C7ADFF', '#EBADFF'];
 
 // Dictionary with all available avatar options.
 const avatarRoutes = {
@@ -86,6 +34,12 @@ const avatarRoutes = {
   19: { description: 'Tortuga', route: 'turtle.png' },
   20: { description: 'Comadreja', route: 'weasel.png' },
 };
+
+// Percentage of time when special event happens
+const blurPorcentage = 95;
+
+// Dictionary with possible colors
+const cardColors = ['#FCFFAD', '#C2FFAD', '#ADF7FF', '#C7ADFF', '#EBADFF'];
 
 // Dictionary with all available card options.
 const cardRoutes = {
@@ -199,33 +153,12 @@ const server = new WebSocket.Server({ port: 8009 });
 
 /** ******************** Functions used on script ********************* */
 
-function printRooms() {
-  availableRooms.forEach((roomData, roomCode) => {
-    console.log(`${roomCode}: `);
-
-    const configMap = roomData.get('config');
-    console.log(`config: ${JSON.stringify(Array.from(configMap))}`);
-
-    console.log('players:');
-    const playerMap = roomData.get('players');
-    playerMap.forEach((playerData, playerName) => {
-      console.log(`
-      ---- ${playerName} ----
-      `);
-      console.log(`playerSocket: ${playerData.get('playerSocket')}`);
-      console.log(`avatar: ${JSON.stringify(playerData.get('playerInfo').get('avatar'))}`);
-      console.log(`points: ${playerData.get('playerInfo').get('points')}`);
-      console.log(`host: ${playerData.get('playerInfo').get('host')}`);
-    });
-  });
-}
-
 /**
  * Checks if room with given code exists.
+ * @param {Object} messageReceived Message player sent.
  * @param {WebSocket} socket Player socket.
- * @param {String} messageReceived Message player sent.
  */
-function validateCode(socket, messageReceived) {
+function validateCode(messageReceived, socket) {
   const code = messageReceived.sessionCode;
   let newMessage = {};
   if (availableRooms.has(code)) {
@@ -250,7 +183,6 @@ function validateCode(socket, messageReceived) {
 
 /**
  * Calculates a random number in a range.
- * TODO: Move to common js.
  * @param {Number} min Minimum number in range.
  * @param {Number} max Maximum number in range.
  * @returns A random number.
@@ -272,7 +204,7 @@ function selectAvatar() {
 /**
  * Creates new player and adds it to the room.
  * @param {Number} playerPosition Player's position in ranking.
- * @param {Boolean} isHost Whether player is host or not.
+ * @param Boolean isHost Whether player is host or not.
  * @returns New player Map with relevant information.
  */
 function createPlayer(playerPosition, isHost) {
@@ -385,7 +317,7 @@ function createPlayerCardsStringMap(playersMap) {
 
 /**
  * Broadcasts message to everyone but one player.
- * @param {Map} message Message to be broadcasted.
+ * @param {Object} message Message to be broadcasted.
  * @param {Number} roomCode Room that contains players to which message will be sent.
  * @param {String} excludedPlayerNickname Nickname of player that will be excluded.
  */
@@ -401,29 +333,16 @@ function broadcastToOthers(message, roomCode, excludedPlayerNickname) {
 }
 
 /**
- * Broadcasts message to everyone in a room.
- * @param {Map} message Message to be broadcasted.
- * @param {Number} roomCode Room that contains players to which message will be sent.
- */
-function broadcastToAll(message, roomCode) {
-  const roomInfo = availableRooms.get(roomCode);
-  const playersMap = roomInfo.get('players');
-  playersMap.forEach((playerData) => {
-    const socket = playerData.get('playerSocket');
-    socket.send(JSON.stringify(message));
-  });
-}
-
-/**
  * Adds player to list for other players in room.
- * @param {String} playerName Player name
- * @param {Number} roomCode Room code
+ * @param {String} playerName Player name.
+ * @param {Number} roomCode Room code.
+ * @param {String} messageType Tipo de mensaje.
  */
-function sendUpdatedPlayers(playerName, roomCode, messageType) {
+function sendUpdatedPlayers(playerName, roomCode) {
   const roomInfo = availableRooms.get(roomCode);
   const playersMap = roomInfo.get('players');
   const newMessage = {
-    type: messageType,
+    type: 'handlePlayerList',
     from: 'server',
     to: 'player',
     when: 'When the server lets clients know player list has changed',
@@ -459,7 +378,6 @@ function generateCode() {
 
 /**
  * Set default game configuration every time a game is created.
- * @param {*} roomCode room code to add the default configuration.
  */
 function setDefaultGameConfiguration() {
   const configurations = new Map();
@@ -476,7 +394,9 @@ function setDefaultGameConfiguration() {
 }
 
 /**
- * Sends the room code to the client who created a game
+ * Sends the room code to the client who created a game.
+ * @param {WebSocket} socket Client socket.
+ * @param {String} roomCode Created room's code.
  */
 function sendRoomCode(socket, roomCode) {
   const newMessage = {
@@ -491,11 +411,14 @@ function sendRoomCode(socket, roomCode) {
 
 /**
  * Creates new room for host.
+ * @param {Object} message Message received from client.
+ * @param {WebSocket} socket Socket to specific client.
  */
-function createRoom(socket, message) {
+function createRoom(message, socket) {
   const playerNickname = message.nickname;
   const newPlayer = createPlayer(1, true);
 
+  // TODO: fix code to sequential
   let roomCode = 0;
   do {
     roomCode = generateCode();
@@ -520,10 +443,10 @@ function createRoom(socket, message) {
 
 /**
  * Assigns avatar and stores guest in room.
+ * @param {Object} message Message sent by client.
  * @param {WebSocket} socket Socket of player that wants to join room.
- * @param {Map} message Message sent by client.
  */
-function addToRoom(socket, message) {
+function addToRoom(message, socket) {
   const playerNickname = message.nickname;
   const roomCode = message.sessionCode;
   const roomInfo = availableRooms.get(roomCode);
@@ -566,8 +489,10 @@ function playerExists(code, nickname) {
 
 /**
  * Sets amount of card per round to guests in room.
+ * @param {Object} message Message sent by client.
+ * @param {WebSocket} socket Socket of player requesting waiting room.
  */
-function getWaitingRoom(socket, message) {
+function getWaitingRoom(message, socket) {
   const playerNickname = message.nickname;
   const roomCode = message.sessionCode;
 
@@ -597,6 +522,8 @@ function getWaitingRoom(socket, message) {
 
 /**
  * Sets amount of card per round to guests in room.
+ * @param {Object} message Message sent by client.
+ * @param {WebSocket} socket Is not used, but added for consistency.
  */
 function setCardsPerRound(message) {
   const roomCode = message.sessionCode;
@@ -623,6 +550,8 @@ function setCardsPerRound(message) {
 
 /**
  * Sets maximum time per round to guests in room.
+ * @param {Object} message Message sent by client.
+ * @param {WebSocket} socket Socket of host requesting change on server.
  */
 function setMaxTime(message) {
   const roomCode = message.sessionCode;
@@ -650,6 +579,8 @@ function setMaxTime(message) {
 
 /**
  * Sets amount of card per player to guests in room.
+ * @param {Object} message Message sent by client.
+ * @param {WebSocket} socket Socket of host requesting change on server.
  */
 function setCardsPerPlayer(message) {
   const roomCode = message.sessionCode;
@@ -677,6 +608,8 @@ function setCardsPerPlayer(message) {
 
 /**
  * Sets adaptation 1a to guests in room.
+ * @param {Object} message Message sent by client.
+ * @param {WebSocket} socket Socket of host requesting change on server.
  */
 function toggleAdp1a(message) {
   const roomCode = message.sessionCode;
@@ -703,6 +636,8 @@ function toggleAdp1a(message) {
 
 /**
  * Sets adaptation 1b to guests in room.
+ * @param {Object} message Message sent by client.
+ * @param {WebSocket} socket Socket of host requesting change on server.
  */
 function toggleAdp1b(message) {
   const roomCode = message.sessionCode;
@@ -729,6 +664,8 @@ function toggleAdp1b(message) {
 
 /**
  * Sets adaptation 2a to guests in room.
+ * @param {Object} message Message sent by client.
+ * @param {WebSocket} socket Socket of host requesting change on server.
  */
 function toggleAdp2a(message) {
   const roomCode = message.sessionCode;
@@ -755,6 +692,8 @@ function toggleAdp2a(message) {
 
 /**
  * Sets adaptation 2b to guests in room.
+ * @param {Object} message Message sent by client.
+ * @param {WebSocket} socket Socket of host requesting change on server.
  */
 function toggleAdp2b(message) {
   const roomCode = message.sessionCode;
@@ -781,6 +720,8 @@ function toggleAdp2b(message) {
 
 /**
  * Sets adaptation 3a to guests in room.
+ * @param {Object} message Message sent by client.
+ * @param {WebSocket} socket Socket of host requesting change on server.
  */
 function toggleAdp3a(message) {
   const roomCode = message.sessionCode;
@@ -807,6 +748,8 @@ function toggleAdp3a(message) {
 
 /**
  * Sets adaptation 3b to guests in room.
+ * @param {Object} message Message sent by client.
+ * @param {WebSocket} socket Socket of host requesting change on server.
  */
 function toggleAdp3b(message) {
   const roomCode = message.sessionCode;
@@ -833,6 +776,7 @@ function toggleAdp3b(message) {
 
 /**
  * Assigns a random player the host title.
+ * @param {Map} playersMap Map with players in a certain room.
  */
 function assignNewHost(playersMap) {
   const playerNicknames = Array.from(playersMap.keys());
@@ -847,8 +791,12 @@ function assignNewHost(playersMap) {
 
 /**
  * Removes player in list for other players in room.
+ * @param {Object} message Message sent by client.
+ * @param {WebSocket} socket Socket of host requesting change on server.
  */
-function removePlayer(roomCode, playerNickname) {
+function removePlayer(message) {
+  const roomCode = message.sessionCode;
+  const playerNickname = message.nickname;
   if (roomCode && playerNickname && availableRooms.has(roomCode)) {
     const roomInfo = availableRooms.get(roomCode);
     const playersMap = roomInfo.get('players');
@@ -857,7 +805,7 @@ function removePlayer(roomCode, playerNickname) {
     assignNewHost(playersMap);
 
     // Sending messages to other players to let them know a player has left.
-    sendUpdatedPlayers(playerNickname, roomCode, 'handleRemovePlayer');
+    sendUpdatedPlayers(playerNickname, roomCode);
   }
 }
 
@@ -880,7 +828,14 @@ function selectNewCard() {
   return cardMap;
 }
 
+/**
+ * Checks if card exists in room.
+ * @param {*} card
+ * @param {*} roomCode
+ * @returns
+ */
 function checkForCard(card, roomCode) {
+  // TODO: complete
   let cardExists = false;
 
   cardExists = true;
@@ -888,7 +843,12 @@ function checkForCard(card, roomCode) {
   return cardExists;
 }
 
+/**
+ *
+ * @param {*} roomCode
+ */
 function selectGameCards(roomCode) {
+  // TODO: fix
   if (availableRooms.has(roomCode)) {
     const roomInfo = availableRooms.get(roomCode);
     const roomConfig = roomInfo.get('config');
@@ -905,7 +865,14 @@ function selectGameCards(roomCode) {
   }
 }
 
+/**
+ *
+ * @param {*} playerInfo
+ * @param {*} cardAmount
+ * @param {*} boardCards
+ */
 function selectPlayerCards(playerInfo, cardAmount, boardCards) {
+  // TODO: fix
   const playerCardsMap = new Map();
   for (let cardIndex = 0; cardIndex < cardAmount; cardIndex += 1) {
     const randomNumber = getRandomNumber(1, boardCards.keys().length);
@@ -918,13 +885,139 @@ function selectPlayerCards(playerInfo, cardAmount, boardCards) {
 }
 
 /**
+ * Retrieves player score from map.
+ * @param {*} nickname Player Nickname.
+ * @param {*} players Players map.
+ * @returns Player's score.
+ */
+function getPlayerScore(nickname, players) {
+  let playerScore = null;
+  if (players.has(nickname)) {
+    const playerMap = players.get(nickname);
+    if (playerMap) {
+      const playerInfo = playerMap.get('playerInfo');
+      if (playerInfo) {
+        playerScore = playerInfo.get('points');
+      }
+    }
+  }
+  return playerScore;
+}
+
+/**
+ * Identifies which player has the lowest score.
+ * @param {Map} playersMap Map of players to check.
+ */
+function identifyCurrentLoser(playersMap) {
+  // Empty map with lowest score info.
+  let lowestScore = null;
+  // Player nicknames.
+  const playerNicknames = Array.from(playersMap.keys());
+  // First player nickname.
+  let playerNickname = playerNicknames[0];
+  // First player map.
+  let playerScore = getPlayerScore(playerNickname, playersMap);
+  if (playerScore) {
+    // Setting first player's score as lowest.
+    lowestScore = new Map([
+      ['nickname', playerNickname],
+      ['score', playerScore],
+    ]);
+
+    // Finding lowest score and asigning it to lowestScore map.
+    for (let playerIndex = 1; playerIndex < playerNicknames.length; playerIndex += 1) {
+      playerNickname = playerNicknames[playerIndex];
+      playerScore = getPlayerScore(playerNickname, playersMap);
+      // If current player has a lower score than the lowest score recorded, store it.
+      if ((playerScore && lowestScore) && lowestScore.get('score') > playerScore) {
+        lowestScore.set('nickname', playerNickname);
+        lowestScore.set('score', playerScore);
+      }
+    }
+  }
+  // Returns a map with information about player with lowest score.
+  return lowestScore;
+}
+
+/**
+ * Applies extra cards to guests in room.
+ * @param {String} roomCode Room code.
+ */
+function applyExtraCards(roomCode) {
+  const roomInfo = availableRooms.get(roomCode);
+  const playersMap = roomInfo.get('players');
+  const playerNickname = identifyCurrentLoser(playersMap);
+
+  // TODO: try if it works
+
+  playersMap.forEach((playerData, otherPlayerNickname) => {
+    if (otherPlayerNickname !== playerNickname) {
+      const newCards = {
+        1: selectNewCard(),
+        2: selectNewCard(),
+        3: selectNewCard(),
+        4: selectNewCard(),
+      };
+      // TODO: add to player
+      // Sends to player.
+      const message = {
+        type: 'handleExtraCards',
+        from: 'server',
+        to: 'client',
+        when: 'When the server lets players know to apply extra cards',
+        extraCards: JSON.stringify(newCards),
+      };
+      const socket = playerData.get('playerSocket');
+      socket.send(JSON.stringify(message));
+    }
+  });
+}
+
+/**
+ * Applies blur to guests in room.
+ * @param {String} roomCode Code of room where blur will be applied
+ */
+function applyBlur(roomCode) {
+  const roomInfo = availableRooms.get(roomCode);
+  const playersMap = roomInfo.get('players');
+  const playerNickname = identifyCurrentLoser(playersMap);
+  // Sends to other players in room.
+  const newMessage = {
+    type: 'handleBlur',
+    from: 'server',
+    to: 'client',
+    when: 'When the server lets players know to activate blur',
+  };
+  broadcastToOthers(newMessage, roomCode, playerNickname);
+}
+
+/**
+ * Sets a timeout at a specific time that iniciates a special event to players.
+ * @param {*} roomCode
+ */
+function setSpecialEvents(roomCode) {
+  const roomInfo = availableRooms.get(roomCode);
+  const configMap = roomInfo.get('config');
+  const specialEventTime = (configMap.get('maxTime') * 100) / blurPorcentage;
+
+  if (configMap.adaptation3a === true) {
+    setTimeout(() => applyExtraCards(roomCode), specialEventTime);
+  } else if (configMap.adaptation3b === true) {
+    setTimeout(() => applyBlur(roomCode), specialEventTime);
+  }
+}
+
+/**
  * Starts game for all players in room.
+ * @param {Object} message Message sent by client.
+ * @param {WebSocket} socket Socket of host requesting start of game.
  */
 function startGame(message) {
   const roomCode = message.sessionCode;
   const playerNickname = message.nickname;
 
   selectGameCards(roomCode);
+  setSpecialEvents(roomCode);
 
   if (availableRooms.has(roomCode)) {
     const roomInfo = availableRooms.get(roomCode);
@@ -950,64 +1043,11 @@ function startGame(message) {
 }
 
 /**
- * Applies extra cards to guests in room.
- */
-function applyExtraCards(roomCode, playerNickname) {
-  const roomInfo = availableRooms.get(roomCode);
-  const playersMap = roomInfo.get('players');
-  const playerMap = playersMap.get(playerNickname);
-
-  playerMap.forEach((playerData) => {
-    const newCards = {
-      1: selectNewCard(),
-      2: selectNewCard(),
-      3: selectNewCard(),
-      4: selectNewCard(),
-    };
-
-    // Sends to other players in room.
-    const message = {
-      type: 'handleExtraCards',
-      from: 'server',
-      to: 'client',
-      when: 'When the server lets players know to apply extra cards',
-      extraCards: JSON.stringify(newCards),
-    };
-    const socket = playerData.get('playerSocket');
-    socket.send(JSON.stringify(message));
-  });
-}
-
-/**
- * Applies blur to guests in room.
- */
-function applyBlur(roomCode, playerNickname) {
-  // Sends to other players in room.
-  const newMessage = {
-    type: 'handleBlur',
-    from: 'server',
-    to: 'client',
-    when: 'When the server lets players know to activate blur',
-  };
-  broadcastToOthers(newMessage, roomCode, playerNickname);
-}
-
-function setSpecialEvents(playerNickname, roomCode) {
-  const roomInfo = availableRooms.get(roomCode);
-  const configMap = roomInfo.get('config');
-  const specialEventTime = (configMap.get('maxTime') * 100) / blurPorcentage;
-
-  if (configMap.adaptation3a === true) {
-    setTimeout(() => applyExtraCards(roomCode, playerNickname), specialEventTime);
-  } else if (configMap.adaptation3b === true) {
-    setTimeout(() => applyBlur(roomCode, playerNickname), specialEventTime);
-  }
-}
-
-/**
  * Sets amount of card per round to guests in room.
+ * @param {*} message
+ * @param {*} socket
  */
-function getGameRoom(socket, message) {
+function getGameRoom(message, socket) {
   const playerNickname = message.nickname;
   const roomCode = message.sessionCode;
 
@@ -1018,9 +1058,7 @@ function getGameRoom(socket, message) {
     const playerMap = playersMap.get(playerNickname);
 
     playerMap.set('playerSocket', socket);
-    sendUpdatedPlayers(playerNickname, roomCode, 'handleNewScores');
-
-    setSpecialEvents(playerNickname, roomCode);
+    sendUpdatedPlayers(playerNickname, roomCode);
 
     // Sending player personalized waiting room.
     const newMessage = {
@@ -1058,7 +1096,7 @@ function changePlayerScore(playerNickname, roomCode, points) {
 /**
  * Checks if match is correct.
  */
-function checkMatch(socket, message) {
+function checkMatch(message, socket) {
   const playerCardId = message.playerCard;
   const boardCardId = message.boardCard;
   const roomCode = message.sessionCode;
@@ -1101,7 +1139,7 @@ function checkMatch(socket, message) {
 /**
  * Finishes game for all players in room.
  */
-function finishGame(socket, message) {
+function finishGame(message, socket) {
   const code = message.sessionCode;
   const roomInfo = availableRooms.get(code);
   const playersMap = roomInfo.get('players');
@@ -1120,91 +1158,58 @@ function finishGame(socket, message) {
 /**
  * Closes connection with client.
  */
-function closeConnection(playerNickname, roomCode) {
-  if (playerNickname && roomCode) {
-    if (availableRooms.has(roomCode)) {
-      const roomMap = availableRooms.get(roomCode);
-      const roomPlayers = roomMap.get('players');
-      if (roomPlayers.has(playerNickname)) {
-        removePlayer(roomCode, playerNickname);
-      }
+function closeConnection(socket) {
+  console.log('TODO: call removePlayer');
+  /*
+  if (availableRooms.has(roomCode)) {
+    const roomMap = availableRooms.get(roomCode);
+    const roomPlayers = roomMap.get('players');
+    if (roomPlayers.has(playerNickname)) {
+      removePlayer(message);
     }
-  }
+  } */
 }
+
+// Contains all above functions that are called when message is received.
+const functions = [
+  validateCode,
+  addToRoom,
+  createRoom,
+  getWaitingRoom,
+  setCardsPerRound,
+  setMaxTime,
+  setCardsPerPlayer,
+  toggleAdp1a,
+  toggleAdp1b,
+  toggleAdp2a,
+  toggleAdp2b,
+  toggleAdp3a,
+  toggleAdp3b,
+  startGame,
+  getGameRoom,
+  checkMatch,
+  removePlayer,
+  finishGame,
+];
 
 /**
  * Identifying message type in order to call appropiate function.
+ * @param {*} functions Array with all functions.
+ * @param {*} socket Socket with connection to server.
+ * @param {*} receivedMessage Message received from server.
+ * @returns Boolean value that indicates if message was identified or not.
  */
 function identifyMessage(socket, receivedMessage) {
-  const playerNickname = receivedMessage.nickname;
-  const code = receivedMessage.sessionCode;
-  switch (receivedMessage.type) {
-    case 'closeConnection':
-      closeConnection(socket, receivedMessage);
+  const messageType = receivedMessage.type;
+  let messageIdentified = false;
+  for (let functionIndex = 0; functionIndex < functions.length; functionIndex += 1) {
+    if (messageType === functions[functionIndex].name) {
+      functions[functionIndex](receivedMessage, socket);
+      messageIdentified = true;
       break;
-    case 'validateCode':
-      validateCode(socket, receivedMessage);
-      break;
-    case 'addToRoom':
-      addToRoom(socket, receivedMessage);
-      break;
-    case 'createRoom':
-      createRoom(socket, receivedMessage);
-      break;
-    case 'getWaitingRoom':
-      getWaitingRoom(socket, receivedMessage);
-      break;
-    case 'setCardsPerRound':
-      setCardsPerRound(receivedMessage);
-      break;
-    case 'setMaxTime':
-      setMaxTime(receivedMessage);
-      break;
-    case 'setCardsPerPlayer':
-      setCardsPerPlayer(receivedMessage);
-      break;
-    case 'toggleAdp1a':
-      toggleAdp1a(receivedMessage);
-      break;
-    case 'toggleAdp1b':
-      toggleAdp1b(receivedMessage);
-      break;
-    case 'toggleAdp2a':
-      toggleAdp2a(receivedMessage);
-      break;
-    case 'toggleAdp2b':
-      toggleAdp2b(receivedMessage);
-      break;
-    case 'toggleAdp3a':
-      toggleAdp3a(receivedMessage);
-      break;
-    case 'toggleAdp3b':
-      toggleAdp3b(receivedMessage);
-      break;
-    case 'startGame':
-      startGame(receivedMessage);
-      break;
-    case 'getGameRoom':
-      getGameRoom(socket, receivedMessage);
-      break;
-    case 'checkMatch':
-      checkMatch(socket, receivedMessage);
-      break;
-    case 'applyExtraCards':
-      applyExtraCards(receivedMessage);
-      break;
-    case 'applyBlur':
-      applyBlur(receivedMessage);
-      break;
-    case 'removePlayer':
-      removePlayer(code, playerNickname);
-      break;
-    case 'finishGame':
-      finishGame(socket, receivedMessage);
-      break;
-    default:
-      console.error('No se reconoce ese mensaje.');
+    }
   }
+  return messageIdentified;
 }
 
 /**
@@ -1213,21 +1218,26 @@ function identifyMessage(socket, receivedMessage) {
 server.on('connection', (clientSocket) => {
   console.log('Estableciendo de conexión con cliente...');
 
+  /**
+   * When message is received on socket...
+   */
   clientSocket.on('message', (message) => {
     console.log(`Recibi mensaje del cliente: ${message}`);
     const parsedMessage = JSON.parse(message);
 
-    /* if (parsedMessage.nickname && parsedMessage.sessionCode) {
-      nickname = parsedMessage.nickname;
-      code = parsedMessage.sessionCode;
-    } */
-
-    identifyMessage(clientSocket, parsedMessage);
+    if (identifyMessage(clientSocket, parsedMessage) === true) {
+      console.log('Message identified');
+    } else {
+      console.log('Cannot identify message');
+    }
   });
 
+  /**
+   * When socket with client is closed
+   */
   clientSocket.on('close', () => {
     console.log('Cerrando conexión con cliente...');
-    // closeConnection(nickname, code);
+    closeConnection(clientSocket);
     // TODO: arreglar esto, actualmente no se como detectar de que pagina es el socket
   });
 });
