@@ -41,11 +41,37 @@ let score = 0;
 /** ******************* Functions used on script ******************* */
 
 /**
+ * Updates time on screen.
+ * @param {Number} currentTime Current time to show on screen.
+ */
+function updateTime(currentTime) {
+  const timeString = `Tiempo: ${currentTime} segundos`;
+  document.getElementById('current-time').innerHTML = timeString;
+}
+
+/**
+ * Disables board images.
+ * TODO: fix, still detecting click.
+ */
+function disableBoard() {
+  // Contains all player cards
+  const myImages = document.getElementsByClassName('my-image-container');
+  // Add an event listener to each of the cards player
+  for (let index = 0; index < myImages.length; index += 1) {
+    const card = myImages[index];
+    card.disabled = true;
+  }
+}
+
+/**
  * Lets server know time is up or player hand is empty.
+ * @param {WebSocket} socket Socket that connects to server.
  */
 function stopGame(socket) {
   if (secondInterval) {
     clearInterval(secondInterval);
+    updateTime(0);
+    disableBoard();
     const message = {
       type: 'finishGame',
       from: 'client',
@@ -56,15 +82,6 @@ function stopGame(socket) {
     };
     socket.send(JSON.stringify(message));
   }
-}
-
-/**
- * Updates time on screen.
- */
-function updateTime() {
-  time -= 1;
-  const timeString = `Tiempo: ${time} segundos`;
-  document.getElementById('current-time').innerHTML = timeString;
 }
 
 /**
@@ -95,36 +112,43 @@ function handlePlayerList(receivedMessage) {
 
 /**
  * When server sends a message with personalized waiting room.
+ * @param {Object} message Message received from server.
+ * @param {WebSocket} socket Socket that connects to server.
  */
 function handleGameRoom(message, socket) {
-  // Player table with ranking during game.
-  const gamePlayerTable = document.getElementById('game-ranking');
   time = message.maxTime;
   const matchDuration = time * 1000;
   setTimeout(() => stopGame(socket), matchDuration);
-  secondInterval = setInterval(updateTime, 1000);
+  secondInterval = setInterval(() => {
+    time -= 1;
+    updateTime(time);
+  }, 1000);
 
   handleBoardCards(message);
   handlePlayerCards(message);
-  handlePlayerList(message, gamePlayerTable);
+  handlePlayerList(message);
 }
 
 /**
  * When player chooses a card in hand.
+ * @param {HTMLElement} card First card player chooses.
  */
 function storeFirstMatch(card) {
-  // Contains all player cards
+  // Restores board to unclicked state.
   const myImages = document.getElementsByClassName('my-image-container');
   for (let index = 0; index < myImages.length; index += 1) {
     const otherCard = myImages[index];
     otherCard.style.background = '';
   }
+  // Indicates to user, the card was clicked.
   card.style.background = '#E6CCD7';
   firstCard = card;
 }
 
 /**
  * When player chooses a card in board.
+ * @param {WebSocket} socket Socket that connects to server.
+ * @param {HTMLElement} secondCard Second card player has clicked.
  */
 function match(socket, secondCard) {
   if (firstCard) {
@@ -149,6 +173,7 @@ function match(socket, secondCard) {
 
 /**
  * Handles response from server to player match.
+ * @param {Object} receivedMessage Message sent by server.
  */
 function handleMatchResponse(receivedMessage) {
   // Correct match sound
@@ -168,6 +193,53 @@ function handleMatchResponse(receivedMessage) {
 }
 
 /**
+ * Checks in list who is winner.
+ * @param {Object} message Message sent by server.
+ * @returns Map with highest score.
+ */
+function checkWinner(message) {
+  const playerArray = JSON.parse(message.players);
+  const playerNicknames = Object.keys(playerArray);
+  let highestScore = null;
+  if (playerArray && playerNicknames) {
+    let nickname = playerNicknames[0];
+    let playerInfo = playerArray[nickname];
+    if (playerInfo) {
+      let playerPoints = playerInfo.points;
+      highestScore = new Map([
+        ['nickname', nickname],
+        ['score', playerPoints],
+      ]);
+      for (let playerIndex = 1; playerIndex < playerNicknames.length; playerIndex += 1) {
+        nickname = playerNicknames[playerIndex];
+        playerInfo = playerArray[nickname];
+        playerPoints = playerInfo.points;
+        if ((playerPoints && highestScore) && highestScore.get('score') < playerPoints) {
+          highestScore.set('nickname', nickname);
+          highestScore.set('score', playerPoints);
+        }
+      }
+    }
+  }
+  return highestScore;
+}
+
+/**
+ * Shows correct title if player is winner or loser.
+ * @param {Object} message Message sent by server.
+ */
+function showCorrectTitle(message) {
+  const highestScore = checkWinner(message);
+  let hiddenTitle = null;
+  if (highestScore.get('nickname') === playerNickname) {
+    hiddenTitle = document.getElementById('loser-title');
+  } else {
+    hiddenTitle = document.getElementById('winner-title');
+  }
+  hiddenTitle.style.display = 'none';
+}
+
+/**
  * When timer runs out or player has finished their cards...
  * @param {Map} message Message sent by server.
  */
@@ -177,7 +249,8 @@ function handleTimesUp(message) {
   // Pop Up that is shown when game is finished.
   const popUpFinished = document.getElementById('popup-finished');
   if (popUpFinished) {
-    handlePlayerList(message, popUpPlayerTable);
+    addToTable(message.players, popUpPlayerTable);
+    showCorrectTitle(message);
     popUpFinished.style.display = 'flex';
   }
 }
@@ -236,8 +309,8 @@ function changeImagesToWords() {
 }
 
 /**
- *
- * @param {*} receivedMessage
+ * Handles extra cards sent by server.
+ * @param {Object} receivedMessage Message sent by server.
  */
 function handleExtraCards(receivedMessage) {
   console.log(`receivedMessage: ${receivedMessage}`);
@@ -246,6 +319,7 @@ function handleExtraCards(receivedMessage) {
 /**
  * Returns user to home page when button is clicked.
  * Sends server a message to indicate player is leaving.
+ * @param {WebSocket} socket Socket that connects to server.
  */
 function returnToMain(socket) {
   // send message to server letting them know player is leaving.

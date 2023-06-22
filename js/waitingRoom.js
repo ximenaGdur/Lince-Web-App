@@ -253,16 +253,18 @@ function chooseCardsPerRound(socket) {
   const cardsRound = cardsPerRoundRange.value;
   if (cardsPerRoundValue) {
     cardsPerRoundValue.innerHTML = cardsRound;
-    const message = {
-      type: 'setCardsPerRound',
-      from: 'client',
-      to: 'server',
-      when: 'when a host client change the amount of card per round',
-      nickname: playerNickname,
-      sessionCode: roomCode,
-      cardsPerRound: cardsRound,
-    };
-    socket.send(JSON.stringify(message));
+    if (socket) {
+      const message = {
+        type: 'setCardsPerRound',
+        from: 'client',
+        to: 'server',
+        when: 'when a host client change the amount of card per round',
+        nickname: playerNickname,
+        sessionCode: roomCode,
+        cardsPerRound: cardsRound,
+      };
+      socket.send(JSON.stringify(message));
+    }
   }
 }
 
@@ -278,16 +280,18 @@ function chooseMaxTime(socket) {
   const time = maxTimeRange.value;
   if (maxTimeValue) {
     maxTimeValue.innerHTML = `${time} s`;
-    const message = {
-      type: 'setMaxTime',
-      from: 'client',
-      to: 'server',
-      when: 'when a host client change the max time',
-      nickname: playerNickname,
-      sessionCode: roomCode,
-      maxTime: time,
-    };
-    socket.send(JSON.stringify(message));
+    if (socket) {
+      const message = {
+        type: 'setMaxTime',
+        from: 'client',
+        to: 'server',
+        when: 'when a host client change the max time',
+        nickname: playerNickname,
+        sessionCode: roomCode,
+        maxTime: time,
+      };
+      socket.send(JSON.stringify(message));
+    }
   }
 }
 
@@ -304,16 +308,18 @@ function chooseCardsPerPlayer(socket) {
 
   if (cardsPerPlayerRange && cardsPerPlayerValue) {
     cardsPerPlayerValue.innerHTML = cardsPlayer;
-    const message = {
-      type: 'setCardsPerPlayer',
-      from: 'client',
-      to: 'server',
-      when: 'when a host client change the cards per player',
-      nickname: playerNickname,
-      sessionCode: roomCode,
-      cardsPerPlayer: cardsPlayer,
-    };
-    socket.send(JSON.stringify(message));
+    if (socket) {
+      const message = {
+        type: 'setCardsPerPlayer',
+        from: 'client',
+        to: 'server',
+        when: 'when a host client change the cards per player',
+        nickname: playerNickname,
+        sessionCode: roomCode,
+        cardsPerPlayer: cardsPlayer,
+      };
+      socket.send(JSON.stringify(message));
+    }
   }
 }
 
@@ -323,15 +329,17 @@ function chooseCardsPerPlayer(socket) {
  * @param {WebSocket} socket Socket that connects to server.
  */
 function chooseAdp1a(socket) {
-  const message = {
-    type: 'toggleAdp1a',
-    from: 'client',
-    to: 'server',
-    when: 'when a host client selects the adaptation 1a',
-    nickname: playerNickname,
-    sessionCode: roomCode,
-  };
-  socket.send(JSON.stringify(message));
+  if (socket) {
+    const message = {
+      type: 'toggleAdp1a',
+      from: 'client',
+      to: 'server',
+      when: 'when a host client selects the adaptation 1a',
+      nickname: playerNickname,
+      sessionCode: roomCode,
+    };
+    socket.send(JSON.stringify(message));
+  }
 }
 
 /**
@@ -340,15 +348,17 @@ function chooseAdp1a(socket) {
  * @param {WebSocket} socket Socket that connects to server.
  */
 function chooseAdp1b(socket) {
-  const message = {
-    type: 'toggleAdp1b',
-    from: 'client',
-    to: 'server',
-    when: 'when a host client selects the adaptation 1b',
-    nickname: playerNickname,
-    sessionCode: roomCode,
-  };
-  socket.send(JSON.stringify(message));
+  if (socket) {
+    const message = {
+      type: 'toggleAdp1b',
+      from: 'client',
+      to: 'server',
+      when: 'when a host client selects the adaptation 1b',
+      nickname: playerNickname,
+      sessionCode: roomCode,
+    };
+    socket.send(JSON.stringify(message));
+  }
 }
 
 /**
@@ -357,15 +367,17 @@ function chooseAdp1b(socket) {
  * @param {WebSocket} socket Socket that connects to server.
  */
 function chooseAdp2a(socket) {
-  const message = {
-    type: 'toggleAdp2a',
-    from: 'client',
-    to: 'server',
-    when: 'when a host client selects the adaptation 2a',
-    nickname: playerNickname,
-    sessionCode: roomCode,
-  };
-  socket.send(JSON.stringify(message));
+  if (socket) {
+    const message = {
+      type: 'toggleAdp2a',
+      from: 'client',
+      to: 'server',
+      when: 'when a host client selects the adaptation 2a',
+      nickname: playerNickname,
+      sessionCode: roomCode,
+    };
+    socket.send(JSON.stringify(message));
+  }
 }
 
 /**
@@ -374,15 +386,17 @@ function chooseAdp2a(socket) {
  * @param {WebSocket} socket Socket that connects to server.
  */
 function chooseAdp2b(socket) {
-  const message = {
-    type: 'toggleAdp2b',
-    from: 'client',
-    to: 'server',
-    when: 'when a host client selects the adaptation 2b',
-    nickname: playerNickname,
-    sessionCode: roomCode,
-  };
-  socket.send(JSON.stringify(message));
+  if (socket) {
+    const message = {
+      type: 'toggleAdp2b',
+      from: 'client',
+      to: 'server',
+      when: 'when a host client selects the adaptation 2b',
+      nickname: playerNickname,
+      sessionCode: roomCode,
+    };
+    socket.send(JSON.stringify(message));
+  }
 }
 
 /**
@@ -391,15 +405,17 @@ function chooseAdp2b(socket) {
  * @param {WebSocket} socket Socket that connects to server.
  */
 function chooseAdp3a(socket) {
-  const message = {
-    type: 'toggleAdp3a',
-    from: 'client',
-    to: 'server',
-    when: 'when a host client selects the adaptation 3a',
-    nickname: playerNickname,
-    sessionCode: roomCode,
-  };
-  socket.send(JSON.stringify(message));
+  if (socket) {
+    const message = {
+      type: 'toggleAdp3a',
+      from: 'client',
+      to: 'server',
+      when: 'when a host client selects the adaptation 3a',
+      nickname: playerNickname,
+      sessionCode: roomCode,
+    };
+    socket.send(JSON.stringify(message));
+  }
 }
 
 /**
@@ -408,15 +424,17 @@ function chooseAdp3a(socket) {
  * @param {WebSocket} socket Socket that connects to server.
  */
 function chooseAdp3b(socket) {
-  const message = {
-    type: 'toggleAdp3b',
-    from: 'client',
-    to: 'server',
-    when: 'when a host client selects the adaptation 3b',
-    nickname: playerNickname,
-    sessionCode: roomCode,
-  };
-  socket.send(JSON.stringify(message));
+  if (socket) {
+    const message = {
+      type: 'toggleAdp3b',
+      from: 'client',
+      to: 'server',
+      when: 'when a host client selects the adaptation 3b',
+      nickname: playerNickname,
+      sessionCode: roomCode,
+    };
+    socket.send(JSON.stringify(message));
+  }
 }
 
 /**
@@ -424,16 +442,18 @@ function chooseAdp3b(socket) {
  * @param {WebSocket} socket Socket that connects to server.
  */
 function startGame(socket) {
-  const message = {
-    type: 'startGame',
-    from: 'client',
-    to: 'server',
-    when: 'when a host client selects the start game botton',
-    nickname: playerNickname,
-    sessionCode: roomCode,
-  };
-  socket.send(JSON.stringify(message));
-  window.location.href = './game.xhtml';
+  if (socket) {
+    const message = {
+      type: 'startGame',
+      from: 'client',
+      to: 'server',
+      when: 'when a host client selects the start game botton',
+      nickname: playerNickname,
+      sessionCode: roomCode,
+    };
+    socket.send(JSON.stringify(message));
+    window.location.href = './game.xhtml';
+  }
 }
 
 /**
@@ -739,7 +759,9 @@ function addEventListeners() {
 
   // Option 1a radio button.
   const option1a = document.getElementById('Adp1a');
-  option1a.addEventListener('click', chooseAdp1a);
+  option1a.addEventListener('click', () => {
+    chooseAdp1a(socket);
+  });
 
   // Option 1b radio button.
   const option1b = document.getElementById('Adp1b');

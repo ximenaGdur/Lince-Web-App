@@ -957,6 +957,7 @@ function identifyCurrentLoser(playersMap) {
  * @param {String} roomCode Room code.
  */
 function applyExtraCards(roomCode) {
+  console.log(`TIMEOUT FOR ROOM: ${roomCode}`);
   const roomInfo = availableRooms.get(roomCode);
   const playersMap = roomInfo.get('players');
   const playerNickname = identifyCurrentLoser(playersMap);
@@ -991,6 +992,7 @@ function applyExtraCards(roomCode) {
  * @param {String} roomCode Code of room where blur will be applied
  */
 function applyBlur(roomCode) {
+  console.log(`TIMEOUT FOR ROOM: ${roomCode}`);
   const roomInfo = availableRooms.get(roomCode);
   const playersMap = roomInfo.get('players');
   const playerNickname = identifyCurrentLoser(playersMap);
