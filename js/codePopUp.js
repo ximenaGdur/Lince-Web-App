@@ -20,8 +20,12 @@ export function showCodePopUp() {
  * Checks server response to whether code is valid or not.
  */
 export function handleCodeValidation(receivedMessage) {
-  if (receivedMessage.isValid === 'false') {
-    feedbackMessage.innerHTML = 'Sala no existe';
+  if (receivedMessage.isValid === false && receivedMessage.isStarted === false) {
+    feedbackMessage.innerHTML = '¡Sala no existe!';
+    joinButton.style.cursor = 'pointer';
+    joinButton.disabled = true;
+  } else if (receivedMessage.isValid === true && receivedMessage.isStarted === true) {
+    feedbackMessage.innerHTML = '¡El juego en la sala ha comenzado!';
     joinButton.style.cursor = 'pointer';
     joinButton.disabled = true;
   } else {

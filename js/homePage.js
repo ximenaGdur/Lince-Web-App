@@ -185,73 +185,77 @@ function identifyMessage(receivedMessage) {
   }
 }
 
+function loadAddEventListeners() {
+  /**
+  * When a connection is made with server.
+  */
+  socket.addEventListener('open', () => {
+    console.log('Conectado al servidor desde Home Page.');
+  });
+
+  /**
+  * Event that occurs every time a message is received.
+  */
+  socket.addEventListener('message', (event) => {
+    const receivedMessage = JSON.parse(event.data);
+    console.log(`Recibi del servidor: ${receivedMessage}`);
+    identifyMessage(receivedMessage);
+  });
+
+  /**
+  * Adding event listener when cancelButton is clicked
+  */
+  cancelButton.addEventListener('click', cancelPopUp);
+
+  /**
+  * Adding event listener when createRoomBtn is clicked
+  */
+  createRoomBtn.addEventListener('click', createSession);
+
+  /**
+  * Adding event listener when creditsButton is clicked
+  */
+  creditsButton.addEventListener('click', showCredits);
+
+  /**
+  * Adding event listener when instructionsButton is clicked
+  */
+  instructionsButton.addEventListener('click', showInstructions);
+
+  /**
+  * Adding event listener when joinButton is clicked
+  */
+  joinButton.addEventListener('click', joinSession);
+
+  /**
+  * Adding event listener when nicknameField is changed
+  */
+  nicknameField.addEventListener('input', enterNickname);
+
+  /**
+  * Adding event listener when popupInput is changed
+  */
+  popupInput.addEventListener('input', verifyCode);
+
+  /**
+  * Adding event listener when rankingButton is clicked
+  */
+  rankingButton.addEventListener('click', showRanking);
+
+  /**
+  * Adding event listener when showPopUpButton is clicked
+  */
+  showPopUpButton.addEventListener('click', showCodePopUp);
+}
+
 /** ********************** Listeners for home page *********************** */
 
-/**
- * When a connection is made with server.
- */
-socket.addEventListener('open', () => {
-  console.log('Conectado al servidor desde Home Page.');
-});
+window.addEventListener('load', loadAddEventListeners);
 
 /**
  * When a connection is closed.
  */
 // socket.addEventListener('close', closeTab());
-
-/**
- * Event that occurs every time a message is received.
- */
-socket.addEventListener('message', (event) => {
-  const receivedMessage = JSON.parse(event.data);
-  console.log(`Recibi del servidor: ${receivedMessage}`);
-  identifyMessage(receivedMessage);
-});
-
-/**
- * Adding event listener when cancelButton is clicked
- */
-cancelButton.addEventListener('click', cancelPopUp);
-
-/**
- * Adding event listener when createRoomBtn is clicked
- */
-createRoomBtn.addEventListener('click', createSession);
-
-/**
- * Adding event listener when creditsButton is clicked
- */
-creditsButton.addEventListener('click', showCredits);
-
-/**
- * Adding event listener when instructionsButton is clicked
- */
-instructionsButton.addEventListener('click', showInstructions);
-
-/**
- * Adding event listener when joinButton is clicked
- */
-joinButton.addEventListener('click', joinSession);
-
-/**
- * Adding event listener when nicknameField is changed
- */
-nicknameField.addEventListener('input', enterNickname);
-
-/**
- * Adding event listener when popupInput is changed
- */
-popupInput.addEventListener('input', verifyCode);
-
-/**
- * Adding event listener when rankingButton is clicked
- */
-rankingButton.addEventListener('click', showRanking);
-
-/**
- * Adding event listener when showPopUpButton is clicked
- */
-showPopUpButton.addEventListener('click', showCodePopUp);
 
 /**
  * Adding event listener when window is closed
