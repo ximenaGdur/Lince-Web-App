@@ -1,6 +1,6 @@
 /**
   * CSS used for the home page.
-  * Created by Jimena Gdur Vargas.
+  * Created by Cristian Ortega Hurtado and Jimena Gdur.
   */
 
 @import url("common.css");
@@ -8,30 +8,13 @@
 
 /****************** INPUT AND BUTTONS ******************/
 
-.buttons {
-    max-width: 50%;
-    min-width: 0%;
-}
-
-.small-button {
-    min-width: 20%;
-}
-
-#join-button-container {
-    margin-left: 3%;
-}
-
-#cancel-button-container {
-    margin-right: 3%;
-}
-
 /** Style for container for input and buttons. **/
-.input-buttons { 
+.input-buttons {
     align-items: center;
     display: flex;
     flex-direction: column;
     margin-bottom: 2%;
-    min-width: 20%;
+    min-width: 100%;
 }
 
 /** Animations for buttons **/
@@ -54,9 +37,10 @@
 .tab-links {
     display: flex;
     justify-content: center;
-    min-width: 100%;
+    min-width: 94%;
+    max-width: 94%;
     padding: 0%;
-    margin: 0.1%;
+    margin: 0%;
 }
 
 /** Style for container of content options. **/
@@ -65,7 +49,7 @@
     display: flex;
     flex-direction: column;
     padding: 0%;
-    margin: 0.1%;
+    margin: 0%;
     min-width: 100%;
     text-align: center;
 }
@@ -78,9 +62,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 0.1%;
+    margin-top: 0.1%;
+    margin-bottom: 1%;
     padding: 2%;
     min-width: 90%;
+    max-width: 90%;
 }
 
 /** Style for video. **/
@@ -97,7 +83,7 @@ video {
 }
 
 /* Styles for header on screens smaller than 933px */
-@media screen and (max-width: 933px) {
+@media screen and (1px <= width <= 933px) {
     /** Style for container for input and buttons. **/
     .input-buttons { 
         margin-bottom: 4%;
@@ -114,7 +100,7 @@ video {
     }
 
     /** Shows all contents. **/
-    #ranking, #credits {
-        display: flex;
+    .tab-content {
+        display: flex!important;
     }
 }

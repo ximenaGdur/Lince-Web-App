@@ -1,6 +1,6 @@
 /**
-  * CSS used for the home page.
-  * Created by Cristian Ortega Hurtado.
+  * CSS used for the waiting room.
+  * Created by Cristian Ortega Hurtado and Jimena Gdur.
   */
 
 @import url("common.css");
@@ -12,8 +12,21 @@
 .configuration {
     display: flex;
     flex-flow: column nowrap;
-    align-items: stretch;
-    max-width: 95%;
+    min-width: 100%;
+    max-width: 100%;
+    align-items: center;
+}
+
+/**
+ * Container for options
+ */
+.options-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1%;
+    min-width: 90%;
+    max-width: 80%;
+    align-items: center;
 }
 
 /**
@@ -23,47 +36,39 @@
     align-items: center;
     display: flex;
     flex-direction: row;
-    list-style: none;
-    padding: 0%;
-    margin: 1% 0%;
-    max-width: 100%;
     justify-content: center;
-
-}
-
-/**
- * Style for each configuration option title
- */
-.label-icon {
+    list-style: none;
     margin: 0%;
-    min-width: 40%;
-}
-
-/**
- * Style for each configuration option title
- */
-.option-title {
-    color: var(--isabelline);
-    margin: 2%;
-    font-size: 1rem;
+    min-width: 80%;
+    padding: 0%;
 }
 
 /**
  * Style for each configuration option value
  */
-.input-range-container {
+.option-container {
+    align-items: center;
     border-style: solid;
     background: var(--plum);
     border-color: var(--plum);
-    border-radius: 0.9vw;
+    border-radius: 0.3vw;
     border-width: 0.2vw;
     display: flex;
-    min-width: 40%;
-    padding: 0.5%;
     flex-direction: row;
-    align-items: center;
     justify-content: space-evenly;
-    margin-left: 0.3%;
+    margin-bottom: 1%;
+    min-width: 80%;
+    padding: 0.5% 1%;
+}
+
+/**
+ * Style for each configuration option title
+ */
+.configurations-title {
+    align-self: auto;
+    color: var(--isabelline);
+    display: flex;
+    flex: 1 1 7%;
 }
 
 /**
@@ -71,12 +76,16 @@
  */
 .input-range {
     appearance: none;
+    align-self: auto;
     background: var(--violet);
     border-color: var(--violet);
     border-radius: 0.5rem;
     border-style: solid;
     cursor: grab;
-    min-width: 70%;
+    display: flex;
+    flex: 6 1 auto;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 /**
@@ -93,108 +102,104 @@
 }
 
 /**
- * 
+ * Style for text that contains range value.
  */
-.configuration-description {
+.range-value {
+    align-self: auto;
+    color: var(--violet);
+    display: flex;
+    flex: 1 1 auto;
+    font-size: 1.5rem;
+    margin: 0%;
+    max-width: 5%;
+    min-width: 7%;
+    justify-content: center;
+}
+
+/**
+ * Style for configuration description.
+ */
+.config-description {
+    display: none;
+}
+
+/**
+ * Container for adaption
+ */
+.adaptation-container {
+    align-items: center;
     background: var(--plum);
+    border-radius: 6px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    max-width: 30%;
-    border-radius: 6px;
+    margin: 1%;
+    max-width: 66%;
+    min-width: 66%;
 }
 
 /**
- * 
+ * Style for each adaptation option title
  */
-.option-subtitle {
-    font-size: 1.5rem;
-    color: var(--violet);
-    margin: 0%;
+.adaptation-title {
+    color: var(--isabelline);
 }
 
 /**
- * Adaption explanation text
+ * adaptation explanation text
  */
-.option-description {
-    font-size: 1rem;
-    display: flex;
-    text-align: center;
-    visibility: hidden;
-    max-width: 80%;
-    font-weight: bold;
+ .option-description {
     color: var(--mimi-pink);
+    display: none;
+    font-weight: bold;
+    text-align: center;
+    margin: 1%;
+    max-width: 60%;
+}
+
+/**
+ * Container for adaption option
+ */
+.adaptation-option-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 70%;
+    padding: 0%;
 }
 
 /**
  * Style for each adaptation option
  */
 .adaptation-option {
-    flex-grow: 1;
-    border-style: solid;
+    background: var(--isabelline);
     border-color: var(--plum);
-    border-radius: 6px;
-    max-width: 35%;
+    border-radius: 0.5rem;
+    border-style: solid;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    max-height: 70%;
-    justify-content: center;
-}
-
-/** Style for container of buttons. **/
-.buttons {
-    min-width: 100%;
-}
-
-/**
- * 
- */
-.adaption-icon {
-    width: 10rem;
+    margin: 2%;
+    padding: 2% 0%;
+    max-height: 50%;
+    max-width: 50%;
+    min-width: 50%;
 }
 
 /**
- * 
+ * Style for adaptation subtitle
  */
-.players {
-    color: var(--sky-magenta);
+.adaptation-subtitle {
+    color: var(--plum);
     display: flex;
-    min-width: 100%;
-    align-content: center;
     flex-direction: column;
     align-items: center;
 }
 
-.info-pop-up,
-.adaptation1-info {
-    display: none;
-    width: 18rem;
-    background-color: var(--mimi-pink);
-    border-style: solid;
-    border-color: var(--finn);
-    border-radius: 0.9vw;
-    position: absolute;
-}
-
-/* .adaptation1-info {
-
-} */
-
-/* .information-icon:hover span {
-    display: flex;
-} */
-
-/* .info {
-    content: '?';
-} */
-
-/* .info:hover span {
-    display: flex;
-} */
-
-.common-text {
-    margin: 0.3rem 0.7rem;
+/**
+ * Style for adaption image
+ */
+.adaptation-icon {
+    max-width: 70%;
 }
 
 /******************* MEDIA QUERIES *******************/
@@ -202,26 +207,58 @@
 /**
  * Styles for header on screens smaller than 933px
  */
-@media screen and (max-width: 933px) {
-    /**
-     * Style for each configuration option title
-     */
-    .label-icon {
-        width: 29vw;
-        height: 8vw;
-    }
-
+@media screen and (1px <= width <= 933px) {
     /**
      * Changing direction.
      */
     .configuration-option {
         flex-direction: column;
+        min-width: 90%;
     }
 
     /**
-     * Changing direction.
+     * Style for each configuration option value
      */
-    .adaptation-configuration {
+    .option-container {
         flex-direction: column;
+        min-width: 90%;
+        margin: 1%;
+        padding: 3%;
+    }
+
+    /**
+     * Style for each configuration option value
+     */
+    .input-range {
+        min-width: 90%;
+    }
+
+    /**
+     * Style for each configuration option title
+     */
+    .range-value {
+        max-width: 100%;
+        min-width: 100%;
+    }
+
+    /**
+     * Container for adaption
+     */
+    .adaptation-container {
+        min-width: 90%;
+    }
+
+    /**
+     * Container for adaption option
+     */
+    .adaptation-option-container {
+        flex-direction: column;
+    }
+
+    /**
+     * Style for adaption option
+     */
+    .adaptation-option {
+        min-width: 100%;
     }
 }

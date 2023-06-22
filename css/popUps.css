@@ -1,6 +1,6 @@
 /**
-  * CSS used for the home page.
-  * Created by Derrick Allen Smith.
+  * CSS used for the pop ups.
+  * Created by Cristian Ortega Hurtado and Jimena Gdur.
   */
 
   @import url("common.css");
@@ -78,7 +78,7 @@
 }
 
 /* Styles for header on screens smaller than 933px */
-@media screen and (max-width: 933px) {
+@media screen and (1px <= width <= 933px) {
     /** Transforms . **/
     #ranking, #credits {
         display: flex;

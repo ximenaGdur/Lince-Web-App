@@ -1,5 +1,3 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable no-unused-vars */
 /** ****************** Imports ******************* */
 
 // import { ip , port } from 'config.js';
@@ -32,7 +30,8 @@ This is it's structure:
       },
       board: {
         1: {
-          card: { description: 'Sueter', route: 'hoodie.png' },
+          description: 'Sueter',
+          route: 'hoodie.png',
           border: 'yellow',
         }
       }
@@ -46,7 +45,8 @@ This is it's structure:
               host: isHost,
               cards: {
                 1: {
-                  card: { description: 'Sueter', route: 'hoodie.png' },
+                  description: 'Sueter',
+                  route: 'hoodie.png',
                   border: 'yellow',
                 }
               }
@@ -61,13 +61,7 @@ This is it's structure:
 const blurPorcentage = 95;
 
 // Dictionary with possible colors
-const cardColors = {
-  yellow: '#FCFFAD',
-  green: '#C2FFAD',
-  blue: '#ADF7FF',
-  purple: '#C7ADFF',
-  pink: '#EBADFF',
-};
+const cardColors = ['#FCFFAD', '#C2FFAD', '#ADF7FF', '#C7ADFF', '#EBADFF'];
 
 // Dictionary with all available avatar options.
 const avatarRoutes = {
@@ -337,6 +331,56 @@ function createConfigStringMap(roomConfig) {
     configStringMap.cardsPerRound = roomConfig.get('cardsPerRound');
   }
   return JSON.stringify(configStringMap);
+}
+
+/**
+ * Converts Map object into a string in order to send it.
+ * @param {Map} board Map object with room's board cards.
+ * @returns String with all board's cards.
+ */
+function createBoardStringMap(board) {
+  const boardStringMap = {};
+  if (board) {
+    board.forEach((cardData, cardId) => {
+      if (cardData) {
+        boardStringMap[cardId] = {
+          description: cardData.get('description'),
+          route: cardData.get('route'),
+          border: cardData.get('border'),
+        };
+      }
+    });
+  }
+  return JSON.stringify(boardStringMap);
+}
+
+/**
+ * Converts Map object into a string in order to send it.
+ * @param {Map} board Map object with player cards.
+ * @returns String with all player's cards.
+ */
+function createPlayerCardsStringMap(playersMap) {
+  const playerCardsStringMap = {};
+  if (playersMap) {
+    playersMap.forEach((playerData, playerNickname) => {
+      const playerCards = playerData.get('cards');
+      const playerMap = {};
+      if (playerCards) {
+        playerCards.forEach((cardData, cardId) => {
+          if (cardData) {
+            const playerCardMap = {
+              description: cardData.get('description'),
+              route: cardData.get('route'),
+              border: cardData.get('border'),
+            };
+            playerMap[cardId] = playerCardMap;
+          }
+        });
+      }
+      playerCardsStringMap[playerNickname] = playerMap;
+    });
+  }
+  return JSON.stringify(playerCardsStringMap);
 }
 
 /**
@@ -632,7 +676,7 @@ function setCardsPerPlayer(message) {
 }
 
 /**
- * Sets adaption 1a to guests in room.
+ * Sets adaptation 1a to guests in room.
  */
 function toggleAdp1a(message) {
   const roomCode = message.sessionCode;
@@ -658,7 +702,7 @@ function toggleAdp1a(message) {
 }
 
 /**
- * Sets adaption 1b to guests in room.
+ * Sets adaptation 1b to guests in room.
  */
 function toggleAdp1b(message) {
   const roomCode = message.sessionCode;
@@ -684,7 +728,7 @@ function toggleAdp1b(message) {
 }
 
 /**
- * Sets adaption 2a to guests in room.
+ * Sets adaptation 2a to guests in room.
  */
 function toggleAdp2a(message) {
   const roomCode = message.sessionCode;
@@ -710,7 +754,7 @@ function toggleAdp2a(message) {
 }
 
 /**
- * Sets adaption 2b to guests in room.
+ * Sets adaptation 2b to guests in room.
  */
 function toggleAdp2b(message) {
   const roomCode = message.sessionCode;
@@ -736,7 +780,7 @@ function toggleAdp2b(message) {
 }
 
 /**
- * Sets adaption 3a to guests in room.
+ * Sets adaptation 3a to guests in room.
  */
 function toggleAdp3a(message) {
   const roomCode = message.sessionCode;
@@ -762,7 +806,7 @@ function toggleAdp3a(message) {
 }
 
 /**
- * Sets adaption 3b to guests in room.
+ * Sets adaptation 3b to guests in room.
  */
 function toggleAdp3b(message) {
   const roomCode = message.sessionCode;
@@ -818,31 +862,91 @@ function removePlayer(roomCode, playerNickname) {
 }
 
 /**
+ * Assigns random card to player.
+ */
+function selectNewCard() {
+  const randomNumber = getRandomNumber(1, Object.keys(cardRoutes).length);
+  const card = cardRoutes[randomNumber];
+
+  const randomColor = getRandomNumber(1, Object.keys(cardColors).length);
+  const color = cardColors[randomColor];
+
+  const cardMap = new Map([
+    ['description', card.description],
+    ['route', card.route],
+    ['border', color],
+  ]);
+
+  return cardMap;
+}
+
+function checkForCard(card, roomCode) {
+  let cardExists = false;
+
+  cardExists = true;
+
+  return cardExists;
+}
+
+function selectGameCards(roomCode) {
+  if (availableRooms.has(roomCode)) {
+    const roomInfo = availableRooms.get(roomCode);
+    const roomConfig = roomInfo.get('config');
+    const cardsBoard = roomConfig.get('cardsPerRound');
+
+    const boardCardsMap = new Map();
+    for (let cardIndex = 0; cardIndex < cardsBoard; cardIndex += 1) {
+      const newCard = selectNewCard();
+      if (checkForCard(newCard, boardCardsMap)) {
+        boardCardsMap.set(cardIndex, newCard);
+      }
+    }
+    roomInfo.set('board', boardCardsMap);
+  }
+}
+
+function selectPlayerCards(playerInfo, cardAmount, boardCards) {
+  const playerCardsMap = new Map();
+  for (let cardIndex = 0; cardIndex < cardAmount; cardIndex += 1) {
+    const randomNumber = getRandomNumber(1, boardCards.keys().length);
+    const newCard = boardCards.get(randomNumber);
+    if (checkForCard(newCard, playerCardsMap)) {
+      playerCardsMap.set(cardIndex, newCard);
+    }
+  }
+  playerInfo.set('cards', playerCardsMap);
+}
+
+/**
  * Starts game for all players in room.
  */
 function startGame(message) {
   const roomCode = message.sessionCode;
   const playerNickname = message.nickname;
 
-  // Prepare cards?
-  const newMessage = {
-    type: 'handleStartGame',
-    from: 'server',
-    to: 'player',
-    when: 'When the server lets players know game has started',
-  };
-  broadcastToOthers(newMessage, roomCode, playerNickname);
-}
+  selectGameCards(roomCode);
 
-/**
- * Assigns random card to player.
- */
-function selectNewCard() {
-  // TODO: revisar si la carta esta asignada a alguien
-  // TODO: seleccionar carta segun las reglas
-  const randomNumber = getRandomNumber(1, Object.keys(cardRoutes).length);
-  const card = cardRoutes[randomNumber];
-  return card;
+  if (availableRooms.has(roomCode)) {
+    const roomInfo = availableRooms.get(roomCode);
+    const roomConfig = roomInfo.get('config');
+    const cardAmount = roomConfig.get('cardsPerPlayer');
+    const boardCards = roomInfo.get('board');
+    const playersMap = roomInfo.get('players');
+
+    playersMap.forEach((playerData) => {
+      const playerInfo = playerData.get('playerInfo');
+      selectPlayerCards(playerInfo, cardAmount, boardCards);
+    });
+
+    // Prepare cards?
+    const newMessage = {
+      type: 'handleStartGame',
+      from: 'server',
+      to: 'player',
+      when: 'When the server lets players know game has started',
+    };
+    broadcastToOthers(newMessage, roomCode, playerNickname);
+  }
 }
 
 /**
@@ -926,6 +1030,8 @@ function getGameRoom(socket, message) {
       when: 'When the server send personalized game room',
       maxTime: configMap.get('maxTime'),
       players: createPlayerStringMap(playersMap),
+      boardCards: createBoardStringMap(roomInfo.get('board')),
+      playerCards: createPlayerCardsStringMap(playersMap),
     };
     socket.send(JSON.stringify(newMessage));
   }
@@ -997,7 +1103,6 @@ function checkMatch(socket, message) {
  */
 function finishGame(socket, message) {
   const code = message.sessionCode;
-  console.log(`code: ${code}`);
   const roomInfo = availableRooms.get(code);
   const playersMap = roomInfo.get('players');
 
@@ -1010,7 +1115,6 @@ function finishGame(socket, message) {
     players: createPlayerStringMap(playersMap),
   };
   socket.send(JSON.stringify(newMessage));
-  // broadcastToAll
 }
 
 /**

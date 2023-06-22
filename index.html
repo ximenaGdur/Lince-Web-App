@@ -21,7 +21,7 @@
 		<!-- Contains main content of page -->
 		<section class="main-content">
 			<article class="input-buttons">
-				<h3 class="sub-title" id="nicknameTitle">Apodo para el juego</h3>
+				<h3 class="subtitle" id="nicknameTitle">Apodo para el juego</h3>
 				<!-- Allows user to add a nickname for the game -->
 				<input class="text-input" id="nickname" type="text" placeholder="Ingrese su apodo">
 				<!-- Contains buttons -->
@@ -47,7 +47,7 @@
 				<section class="code-section">
 					<h2 class="popup-subtitle">Codigo</h2>
 					<input class="code-input" id="popup-input" type="number" min="0000" max="9999">
-					<p class="common-text" id="room-validation-text"></p>
+					<p class="common-text small-text" id="room-validation-text"></p>
 				</section>
 				<ul class="buttons">
 					<li class="small-button-container" id="cancel-button-container">
@@ -60,15 +60,15 @@
 			</dialog>
 			<!-- Contains tab links -->
 			<ul class="tab-links">
-				<li class="large-button-container">
+				<li class="tab-container">
 					<button class="large-button" id="instructions-link" type="button">¿Cómo Jugar?</button>
 				</li>
-				<li class="large-button-container">
+				<li class="tab-container">
 					<button class="large-button" id="ranking-link" type="button">
 						Clasificación
 					</button>
 				</li>
-				<li class="large-button-container" >
+				<li class="tab-container" >
 					<button class="large-button" id="credits-link" type="button">
 						Créditos
 					</button>
@@ -94,21 +94,27 @@
 						<tbody class="player-table-body" id="top3-ranking">
 								<tr class="table-row">
 										<td class="table-col ranking-column">1</td>
-										<td class="table-col avatar-column"></td>
-										<td class="table-col name-column"></td>
-										<td class="table-col score-column" ></td>
+										<td class="table-col avatar-column">
+											<img class="profile-image" src="/design/images/icons/profile/blank.png" alt="Avatar en negro"/>
+										</td>
+										<td class="table-col name-column">---</td>
+										<td class="table-col score-column">---</td>
 								</tr>
 								<tr class="table-row">
 										<td class="table-col ranking-column">2</td>
-										<td class="table-col avatar-column"></td>
-										<td class="table-col name-column"></td>
-										<td class="table-col score-column"></td>
+										<td class="table-col avatar-column">
+											<img class="profile-image" src="/design/images/icons/profile/blank.png" alt="Avatar en negro"/>
+										</td>
+										<td class="table-col name-column">---</td>
+										<td class="table-col score-column">---</td>
 								</tr>
 								<tr class="table-row">
 										<td class="table-col ranking-column">3</td>
-										<td class="table-col avatar-column"></td>
-										<td class="table-col name-column"></td>
-										<td class="table-col score-column" ></td>
+										<td class="table-col avatar-column">
+											<img class="profile-image" src="/design/images/icons/profile/blank.png" alt="Avatar en negro"/>
+										</td>
+										<td class="table-col name-column">---</td>
+										<td class="table-col score-column" >---</td>
 								</tr>
 						</tbody>
 					</table>
@@ -119,11 +125,11 @@
 						<h2 class="section-title">
 							Sobre los desarrolladores
 						</h2>
-						<p class="common-text">
+						<p class="common-text small-text">
 							Desarrollado para el curso de Desarrollo de Aplicaciones Web en el primer semestre del 2023.
 						</p>
 						<article id="developers">
-							<h3 class="section-subtitle">Desarrolladores</h3>
+							<h3 class="section-subtitle small-text">Desarrolladores</h3>
 							<ul class="list">
 								<li class="list-item">
 									<p class="item-text">Jimena Gdur Vargas</p>
@@ -136,7 +142,7 @@
 					</article>
 					<article class="section-container">
 						<h2 class="section-title">Recursos de terceros</h2>
-						<p class="common-text">Imagenes obtenidas de los siguientes autores:</p>
+						<p class="common-text small-text">Imagenes obtenidas de los siguientes autores:</p>
 						<ul class="list">
 							<li class="list-item">
 								<a href="https://www.flaticon.com/authors/freepik" target="_blank" class="item-text">Freepik</a>
