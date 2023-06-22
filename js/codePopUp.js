@@ -22,15 +22,15 @@ export function showCodePopUp() {
 export function handleCodeValidation(receivedMessage) {
   if (receivedMessage.isValid === false && receivedMessage.isStarted === false) {
     feedbackMessage.innerHTML = '¡Sala no existe!';
-    joinButton.style.cursor = 'pointer';
+    joinButton.style.cursor = 'default';
     joinButton.disabled = true;
   } else if (receivedMessage.isValid === true && receivedMessage.isStarted === true) {
     feedbackMessage.innerHTML = '¡El juego en la sala ha comenzado!';
-    joinButton.style.cursor = 'pointer';
+    joinButton.style.cursor = 'default';
     joinButton.disabled = true;
   } else {
     feedbackMessage.innerHTML = 'Sala encontrada';
-    joinButton.style.cursor = 'default';
+    joinButton.style.cursor = 'pointer';
     joinButton.disabled = false;
   }
 }
