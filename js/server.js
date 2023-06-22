@@ -36,7 +36,7 @@ const avatarRoutes = {
 };
 
 // Dictionary with possible colors
-const cardColors = ['#FCFFAD', '#C2FFAD', '#ADF7FF', '#C7ADFF', '#EBADFF'];
+const cardColors = ['#E6C700', '#2EB600', '#006DE2', '#DA0012'];
 
 // Dictionary with all available card options.
 const cardRoutes = {
@@ -925,10 +925,8 @@ function identifyCurrentLoser(playersMap) {
   const playerNicknames = Array.from(playersMap.keys());
   // First player nickname.
   let playerNickname = playerNicknames[0];
-  console.log(`playerNickname: ${playerNickname}`);
   // First player map.
   let playerScore = getPlayerScore(playerNickname, playersMap);
-  console.log(`playerScore: ${playerScore}`);
   // Setting first player's score as lowest.
   lowestScore = new Map([
     ['nickname', playerNickname],
@@ -954,7 +952,6 @@ function identifyCurrentLoser(playersMap) {
  * @param {String} roomCode Room code.
  */
 function applyExtraCards(roomCode) {
-  console.log(`TIMEOUT FOR ROOM: ${roomCode}`);
   const roomInfo = availableRooms.get(roomCode);
   const playersMap = roomInfo.get('players');
   const playerNickname = identifyCurrentLoser(playersMap);
@@ -989,14 +986,11 @@ function applyExtraCards(roomCode) {
  * @param {String} roomCode Code of room where blur will be applied
  */
 function applyBlur(roomCode) {
-  console.log('IN BLUR');
-  console.log(`TIMEOUT FOR ROOM: ${roomCode}`);
   const roomInfo = availableRooms.get(roomCode);
   const playersMap = roomInfo.get('players');
   const loserPlayer = identifyCurrentLoser(playersMap);
   if (loserPlayer) {
     const loserNickname = loserPlayer.get('nickname');
-    console.log(`excluding: ${loserNickname}`);
     // Sends to other players in room.
     const newMessage = {
       type: 'handleBlur',
@@ -1017,9 +1011,6 @@ function setSpecialEvents(roomCode) {
   const configMap = roomInfo.get('config');
   const maxTime = configMap.get('maxTime');
   const specialEventTime = (maxTime / 2) * 1000;
-
-  console.log(`maxTime ${maxTime}`);
-  console.log(`specialEventTime ${specialEventTime}`);
 
   if (configMap.get('adaptation3a') === true) {
     setTimeout(() => applyExtraCards(roomCode), specialEventTime);
@@ -1088,7 +1079,7 @@ function getGameRoom(message, socket) {
       from: 'server',
       to: 'player',
       when: 'When the server send personalized game room',
-      maxTime: configMap.get('maxTime'),
+      config: createConfigStringMap(configMap),
       players: createPlayerStringMap(playersMap),
       boardCards: createBoardStringMap(roomInfo.get('board')),
       playerCards: createPlayerCardsStringMap(playersMap),
@@ -1138,7 +1129,6 @@ function checkMatch(message, socket) {
       isCorrectMatch: true,
       newScore: playerPoints,
     };
-    console.log('Match CORRECTO');
     // Sending player a message indicating if match is correct.
     socket.send(JSON.stringify(newMessage));
   } else {
@@ -1151,7 +1141,6 @@ function checkMatch(message, socket) {
       isCorrectMatch: false,
       newScore: playerPoints,
     };
-    console.log('Match INCORRECTO');
     // Sending player a message indicating if match is not correct.
     socket.send(JSON.stringify(newMessage));
   }

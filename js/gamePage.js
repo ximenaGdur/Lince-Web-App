@@ -20,14 +20,11 @@ import {
 
 /** ******************* Creating constants for script ******************* */
 
+// Contains room configuration
+let configMap = null;
+
 // Contains information of player card to match
 let firstCard = null;
-
-// Interval that changes time each second.
-let secondInterval = null;
-
-// Current time in game
-let time = 0;
 
 // Player nickname
 const playerNickname = sessionStorage.getItem('playerNickname');
@@ -37,6 +34,12 @@ const roomCode = sessionStorage.getItem('roomCode');
 
 // Current player score
 let score = 0;
+
+// Interval that changes time each second.
+let secondInterval = null;
+
+// Current time in game
+let time = 0;
 
 /** ******************* Functions used on script ******************* */
 
@@ -84,12 +87,58 @@ function stopGame(socket) {
   }
 }
 
+function createContentElement(imageText, route) {
+  let contentElement = null;
+  const imageRoute = `/design/images/icons/board/${route}`;
+
+  // If player has selected words
+  if (configMap.adaptation1a === true || configMap.adaptation1b) {
+    contentElement = document.createElement('p');
+    contentElement.classList.add('word');
+    contentElement.textContent = imageText;
+  // If player has selected images
+  } else {
+    contentElement = document.createElement('img');
+    contentElement.classList.add('board-image');
+    contentElement.src = imageRoute;
+    contentElement.alt = `Icono de ${imageText}`;
+  }
+  return contentElement;
+}
+
 /**
  * Updates board with corresponding cards.
  * @param {Map} message Message from server.
  */
 function handleBoardCards(message) {
-  console.log(`handleBoardCards: ${message}`);
+  const boardCards = JSON.parse(message.boardCards);
+  const gameBoard = document.getElementById('game-board');
+  if (gameBoard) {
+    Object.keys(boardCards).forEach((cardId) => {
+      const cardData = boardCards[cardId];
+      if (cardData) {
+        const imageText = cardData.description;
+        if (configMap) {
+          const cardElement = document.createElement('li');
+          cardElement.classList.add('board-image-container');
+          cardElement.setAttribute('id', imageText);
+
+          const contentElement = createContentElement(imageText, cardData.route);
+          if (contentElement) {
+            // If player has selected colored border
+            if (configMap.adaptation2a === true || configMap.adaptation2b === true) {
+              console.log('COLOOOOR: ' + cardData.border);
+              cardElement.style.borderColor = cardData.border;
+            }
+            // Adding content element to card element
+            cardElement.appendChild(contentElement);
+            // Adding card element to game board
+            gameBoard.appendChild(cardElement);
+          }
+        }
+      }
+    });
+  }
 }
 
 /**
@@ -111,19 +160,31 @@ function handlePlayerList(receivedMessage) {
 }
 
 /**
+ * Handles configuration of game.
+ * @param {Object} message Message received from server.
+ */
+function handleConfig(message, socket) {
+  // Setting configuration up
+  configMap = JSON.parse(message.config);
+  if (configMap) {
+    // Setting time configuration
+    time = configMap.maxTime;
+    const matchDuration = time * 1000;
+    setTimeout(() => stopGame(socket), matchDuration);
+    secondInterval = setInterval(() => {
+      time -= 1;
+      updateTime(time);
+    }, 1000);
+  }
+}
+
+/**
  * When server sends a message with personalized waiting room.
  * @param {Object} message Message received from server.
  * @param {WebSocket} socket Socket that connects to server.
  */
 function handleGameRoom(message, socket) {
-  time = message.maxTime;
-  const matchDuration = time * 1000;
-  setTimeout(() => stopGame(socket), matchDuration);
-  secondInterval = setInterval(() => {
-    time -= 1;
-    updateTime(time);
-  }, 1000);
-
+  handleConfig(message, socket);
   handleBoardCards(message);
   handlePlayerCards(message);
   handlePlayerList(message);
@@ -184,10 +245,8 @@ function handleMatchResponse(receivedMessage) {
   const scoreString = `Puntaje: ${score}`;
   document.getElementById('player-score').innerHTML = scoreString;
   if (receivedMessage.isCorrectMatch === true) {
-    console.log('El match es correcto');
     correctMatchSound.play();
   } else {
-    console.log('El match es incorrecto');
     incorrectoMatchSound.play();
   }
 }
@@ -269,50 +328,11 @@ function changeBlurImages(blurString) {
  * Applies blur to player.
  */
 function handleBlur() {
+  const blurDuration = (time / 8) * 1000;
   changeBlurImages('blur(2.5px)');
   setTimeout(() => {
     changeBlurImages('blur(0px)');
-  }, 5000);
-}
-
-/**
- * Generates a random color for image border.
- */
-function randomBorderColor() {
-  // Código tomado de: https://www.delftstack.com/es/howto/javascript/javascript-pick-random-from-array/
-  const colorsArray = ['#E6C700', '#2EB600', '#006DE2', '#DA0012'];
-  const randomIndex = Math.floor(Math.random() * colorsArray.length);
-  const randomColor = colorsArray[randomIndex];
-  return randomColor;
-}
-
-/**
- * If image adaptation is chosen, it asigns a random border color.
- */
-function changeImageColors() {
-  const boardImages = document.getElementsByClassName('board-image-container');
-  for (let index = 0; index < boardImages.length; index += 1) {
-    boardImages[index].style.borderColor = randomBorderColor();
-  }
-}
-
-/**
- * Change the pictures on the player's cards to the corresponding words.
- */
-function changeImagesToWords() {
-  // Contains all cards
-  const myImage = document.getElementsByClassName('my-image');
-  // Contains all player cards
-  const myImages = document.getElementsByClassName('my-image-container');
-  // Contains all word cards
-  const word = document.getElementsByClassName('word');
-  // Iterate through each image and replace its content with the attribute "alt"
-  for (let index = 0; index < myImage.length; index += 1) {
-    myImage[index].style.display = 'none';
-    word[index].style.display = 'flex';
-    // Changes box to fit words.
-    myImages[index].style.maxWidth = 'max-content';
-  }
+  }, blurDuration);
 }
 
 /**
