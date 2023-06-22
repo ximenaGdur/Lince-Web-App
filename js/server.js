@@ -298,30 +298,39 @@ function createBoardStringMap(board) {
 
 /**
  * Converts Map object into a string in order to send it.
- * @param {Map} board Map object with player cards.
+ * @param {Map} playerMap Map object with player infor.
  * @returns String with all player's cards.
  */
-function createPlayerCardsStringMap(playersMap) {
+function createPlayerCardsStringMap(playerMap) {
+  console.log('CREATING PLAYER CARD STRING');
   const playerCardsStringMap = {};
-  if (playersMap) {
-    playersMap.forEach((playerData, playerNickname) => {
-      const playerCards = playerData.get('cards');
-      const playerMap = {};
+  if (playerMap) {
+    console.log('playerMap');
+    const playerInfo = playerMap.get('playerInfo');
+    if (playerInfo) {
+      console.log('playerMap.get(playerInfo)');
+      const playerCards = playerInfo.get('cards');
       if (playerCards) {
+        console.log('playerInfo.get(cards)');
         playerCards.forEach((cardData, cardId) => {
           if (cardData) {
+            console.log(`cardId: ${cardId}`);
+            //Array.from(
+            console.log('description: ' + cardData.get('description'));
+            console.log('route: ' + cardData.get('route'));
+            console.log('border: ' + cardData.get('border'));
             const playerCardMap = {
               description: cardData.get('description'),
               route: cardData.get('route'),
               border: cardData.get('border'),
             };
-            playerMap[cardId] = playerCardMap;
+            playerCardsStringMap[cardId] = playerCardMap;
           }
         });
       }
-      playerCardsStringMap[playerNickname] = playerMap;
-    });
+    }
   }
+  console.log(`playerCardsStringMap: ${JSON.stringify(playerCardsStringMap)}`);
   return JSON.stringify(playerCardsStringMap);
 }
 
@@ -826,7 +835,7 @@ function selectNewCard() {
   const randomNumber = getRandomNumber(1, Object.keys(cardRoutes).length);
   const card = cardRoutes[randomNumber];
 
-  const randomColor = getRandomNumber(1, Object.keys(cardColors).length);
+  const randomColor = getRandomNumber(0, cardColors.length - 1);
   const color = cardColors[randomColor];
 
   const cardMap = new Map([
@@ -854,11 +863,10 @@ function checkForCard(card, roomCode) {
 }
 
 /**
- *
+ * Selects board cards for room.
  * @param {*} roomCode
  */
 function selectGameCards(roomCode) {
-  // TODO: fix
   if (availableRooms.has(roomCode)) {
     const roomInfo = availableRooms.get(roomCode);
     const roomConfig = roomInfo.get('config');
@@ -867,7 +875,7 @@ function selectGameCards(roomCode) {
     const boardCardsMap = new Map();
     for (let cardIndex = 0; cardIndex < cardsBoard; cardIndex += 1) {
       const newCard = selectNewCard();
-      if (checkForCard(newCard, boardCardsMap)) {
+      if (checkForCard(newCard, boardCardsMap) === true) {
         boardCardsMap.set(cardIndex, newCard);
       }
     }
@@ -876,19 +884,21 @@ function selectGameCards(roomCode) {
 }
 
 /**
- *
+ * Selects random player cards.
  * @param {*} playerInfo
  * @param {*} cardAmount
  * @param {*} boardCards
  */
 function selectPlayerCards(playerInfo, cardAmount, boardCards) {
-  // TODO: fix
+  const boardKeys = Array.from(boardCards.keys());
   const playerCardsMap = new Map();
   for (let cardIndex = 0; cardIndex < cardAmount; cardIndex += 1) {
-    const randomNumber = getRandomNumber(1, boardCards.keys().length);
+    const randomNumber = getRandomNumber(0, boardKeys.length - 1);
     const newCard = boardCards.get(randomNumber);
-    if (checkForCard(newCard, playerCardsMap)) {
-      playerCardsMap.set(cardIndex, newCard);
+    if (newCard) {
+      if (checkForCard(newCard, playerCardsMap)) {
+        playerCardsMap.set(cardIndex, newCard);
+      }
     }
   }
   playerInfo.set('cards', playerCardsMap);
@@ -1034,24 +1044,26 @@ function startGame(message) {
   if (availableRooms.has(roomCode)) {
     const roomInfo = availableRooms.get(roomCode);
     const roomConfig = roomInfo.get('config');
-    const cardAmount = roomConfig.get('cardsPerPlayer');
     const boardCards = roomInfo.get('board');
     const playersMap = roomInfo.get('players');
 
-    playersMap.forEach((playerData) => {
-      const playerInfo = playerData.get('playerInfo');
-      selectPlayerCards(playerInfo, cardAmount, boardCards);
-    });
-    availableRooms.get(roomCode).set('isStarted', true);
+    if (roomConfig && boardCards && playersMap) {
+      const cardAmount = roomConfig.get('cardsPerPlayer');
+      playersMap.forEach((playerData) => {
+        const playerInfo = playerData.get('playerInfo');
+        selectPlayerCards(playerInfo, cardAmount, boardCards);
+      });
+      availableRooms.get(roomCode).set('isStarted', true);
 
-    // Prepare cards?
-    const newMessage = {
-      type: 'handleStartGame',
-      from: 'server',
-      to: 'player',
-      when: 'When the server lets players know game has started',
-    };
-    broadcastToOthers(newMessage, roomCode, playerNickname);
+      // Prepare cards?
+      const newMessage = {
+        type: 'handleStartGame',
+        from: 'server',
+        to: 'player',
+        when: 'When the server lets players know game has started',
+      };
+      broadcastToOthers(newMessage, roomCode, playerNickname);
+    }
   }
 }
 
@@ -1082,7 +1094,7 @@ function getGameRoom(message, socket) {
       config: createConfigStringMap(configMap),
       players: createPlayerStringMap(playersMap),
       boardCards: createBoardStringMap(roomInfo.get('board')),
-      playerCards: createPlayerCardsStringMap(playersMap),
+      playerCards: createPlayerCardsStringMap(playerMap),
     };
     socket.send(JSON.stringify(newMessage));
   }

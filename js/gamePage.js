@@ -127,7 +127,6 @@ function handleBoardCards(message) {
           if (contentElement) {
             // If player has selected colored border
             if (configMap.adaptation2a === true || configMap.adaptation2b === true) {
-              console.log('COLOOOOR: ' + cardData.border);
               cardElement.style.borderColor = cardData.border;
             }
             // Adding content element to card element
@@ -146,7 +145,33 @@ function handleBoardCards(message) {
  * @param {Map} message Message from server.
  */
 function handlePlayerCards(message) {
-  console.log(`handlePlayerCards: ${message}`);
+  const cardsReceived = JSON.parse(message.playerCards);
+  const playerCards = document.getElementById('player-cards');
+  if (cardsReceived && playerCards) {
+    Object.keys(cardsReceived).forEach((cardId) => {
+      const cardData = cardsReceived[cardId];
+      if (cardData) {
+        const imageText = cardData.description;
+        if (configMap) {
+          const cardElement = document.createElement('li');
+          cardElement.classList.add('my-image-container');
+          cardElement.setAttribute('id', imageText);
+
+          const contentElement = createContentElement(imageText, cardData.route);
+          if (contentElement) {
+            // If player has selected colored border
+            if (configMap.adaptation2a === true || configMap.adaptation2b === true) {
+              cardElement.style.borderColor = cardData.border;
+            }
+            // Adding content element to card element
+            cardElement.appendChild(contentElement);
+            // Adding card element to game board
+            playerCards.appendChild(cardElement);
+          }
+        }
+      }
+    });
+  }
 }
 
 /**

@@ -62,7 +62,7 @@
     flex-direction: column;
 }
 
-.player-cards {
+#player-cards {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
