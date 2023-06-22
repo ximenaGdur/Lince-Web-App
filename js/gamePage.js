@@ -87,7 +87,7 @@ function stopGame(socket) {
   }
 }
 
-function createContentElement(imageText, route) {
+function createContentElement(imageText, route, className) {
   let contentElement = null;
   const imageRoute = `/design/images/icons/board/${route}`;
 
@@ -99,7 +99,7 @@ function createContentElement(imageText, route) {
   // If player has selected images
   } else {
     contentElement = document.createElement('img');
-    contentElement.classList.add('board-image');
+    contentElement.classList.add(className);
     contentElement.src = imageRoute;
     contentElement.alt = `Icono de ${imageText}`;
   }
@@ -123,7 +123,7 @@ function handleBoardCards(message) {
           cardElement.classList.add('board-image-container');
           cardElement.setAttribute('id', imageText);
 
-          const contentElement = createContentElement(imageText, cardData.route);
+          const contentElement = createContentElement(imageText, cardData.route, 'board-image');
           if (contentElement) {
             // If player has selected colored border
             if (configMap.adaptation2a === true || configMap.adaptation2b === true) {
@@ -157,7 +157,7 @@ function handlePlayerCards(message) {
           cardElement.classList.add('my-image-container');
           cardElement.setAttribute('id', imageText);
 
-          const contentElement = createContentElement(imageText, cardData.route);
+          const contentElement = createContentElement(imageText, cardData.route, 'my-image');
           if (contentElement) {
             // If player has selected colored border
             if (configMap.adaptation2a === true || configMap.adaptation2b === true) {
