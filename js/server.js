@@ -35,11 +35,8 @@ const avatarRoutes = {
   20: { description: 'Comadreja', route: 'weasel.png' },
 };
 
-// Percentage of time when special event happens
-const blurPorcentage = 95;
-
 // Dictionary with possible colors
-const cardColors = ['#FCFFAD', '#C2FFAD', '#ADF7FF', '#C7ADFF', '#EBADFF'];
+const cardColors = ['#E6C700', '#2EB600', '#006DE2', '#DA0012'];
 
 // Dictionary with all available card options.
 const cardRoutes = {
@@ -301,30 +298,39 @@ function createBoardStringMap(board) {
 
 /**
  * Converts Map object into a string in order to send it.
- * @param {Map} board Map object with player cards.
+ * @param {Map} playerMap Map object with player infor.
  * @returns String with all player's cards.
  */
-function createPlayerCardsStringMap(playersMap) {
+function createPlayerCardsStringMap(playerMap) {
+  console.log('CREATING PLAYER CARD STRING');
   const playerCardsStringMap = {};
-  if (playersMap) {
-    playersMap.forEach((playerData, playerNickname) => {
-      const playerCards = playerData.get('cards');
-      const playerMap = {};
+  if (playerMap) {
+    console.log('playerMap');
+    const playerInfo = playerMap.get('playerInfo');
+    if (playerInfo) {
+      console.log('playerMap.get(playerInfo)');
+      const playerCards = playerInfo.get('cards');
       if (playerCards) {
+        console.log('playerInfo.get(cards)');
         playerCards.forEach((cardData, cardId) => {
           if (cardData) {
+            console.log(`cardId: ${cardId}`);
+            //Array.from(
+            console.log('description: ' + cardData.get('description'));
+            console.log('route: ' + cardData.get('route'));
+            console.log('border: ' + cardData.get('border'));
             const playerCardMap = {
               description: cardData.get('description'),
               route: cardData.get('route'),
               border: cardData.get('border'),
             };
-            playerMap[cardId] = playerCardMap;
+            playerCardsStringMap[cardId] = playerCardMap;
           }
         });
       }
-      playerCardsStringMap[playerNickname] = playerMap;
-    });
+    }
   }
+  console.log(`playerCardsStringMap: ${JSON.stringify(playerCardsStringMap)}`);
   return JSON.stringify(playerCardsStringMap);
 }
 
@@ -829,7 +835,7 @@ function selectNewCard() {
   const randomNumber = getRandomNumber(1, Object.keys(cardRoutes).length);
   const card = cardRoutes[randomNumber];
 
-  const randomColor = getRandomNumber(1, Object.keys(cardColors).length);
+  const randomColor = getRandomNumber(0, cardColors.length - 1);
   const color = cardColors[randomColor];
 
   const cardMap = new Map([
@@ -857,11 +863,10 @@ function checkForCard(card, roomCode) {
 }
 
 /**
- *
+ * Selects board cards for room.
  * @param {*} roomCode
  */
 function selectGameCards(roomCode) {
-  // TODO: fix
   if (availableRooms.has(roomCode)) {
     const roomInfo = availableRooms.get(roomCode);
     const roomConfig = roomInfo.get('config');
@@ -870,7 +875,7 @@ function selectGameCards(roomCode) {
     const boardCardsMap = new Map();
     for (let cardIndex = 0; cardIndex < cardsBoard; cardIndex += 1) {
       const newCard = selectNewCard();
-      if (checkForCard(newCard, boardCardsMap)) {
+      if (checkForCard(newCard, boardCardsMap) === true) {
         boardCardsMap.set(cardIndex, newCard);
       }
     }
@@ -879,19 +884,21 @@ function selectGameCards(roomCode) {
 }
 
 /**
- *
+ * Selects random player cards.
  * @param {*} playerInfo
  * @param {*} cardAmount
  * @param {*} boardCards
  */
 function selectPlayerCards(playerInfo, cardAmount, boardCards) {
-  // TODO: fix
+  const boardKeys = Array.from(boardCards.keys());
   const playerCardsMap = new Map();
   for (let cardIndex = 0; cardIndex < cardAmount; cardIndex += 1) {
-    const randomNumber = getRandomNumber(1, boardCards.keys().length);
+    const randomNumber = getRandomNumber(0, boardKeys.length - 1);
     const newCard = boardCards.get(randomNumber);
-    if (checkForCard(newCard, playerCardsMap)) {
-      playerCardsMap.set(cardIndex, newCard);
+    if (newCard) {
+      if (checkForCard(newCard, playerCardsMap)) {
+        playerCardsMap.set(cardIndex, newCard);
+      }
     }
   }
   playerInfo.set('cards', playerCardsMap);
@@ -930,22 +937,20 @@ function identifyCurrentLoser(playersMap) {
   let playerNickname = playerNicknames[0];
   // First player map.
   let playerScore = getPlayerScore(playerNickname, playersMap);
-  if (playerScore) {
-    // Setting first player's score as lowest.
-    lowestScore = new Map([
-      ['nickname', playerNickname],
-      ['score', playerScore],
-    ]);
+  // Setting first player's score as lowest.
+  lowestScore = new Map([
+    ['nickname', playerNickname],
+    ['score', playerScore],
+  ]);
 
-    // Finding lowest score and asigning it to lowestScore map.
-    for (let playerIndex = 1; playerIndex < playerNicknames.length; playerIndex += 1) {
-      playerNickname = playerNicknames[playerIndex];
-      playerScore = getPlayerScore(playerNickname, playersMap);
-      // If current player has a lower score than the lowest score recorded, store it.
-      if ((playerScore && lowestScore) && lowestScore.get('score') > playerScore) {
-        lowestScore.set('nickname', playerNickname);
-        lowestScore.set('score', playerScore);
-      }
+  // Finding lowest score and asigning it to lowestScore map.
+  for (let playerIndex = 1; playerIndex < playerNicknames.length; playerIndex += 1) {
+    playerNickname = playerNicknames[playerIndex];
+    playerScore = getPlayerScore(playerNickname, playersMap);
+    // If current player has a lower score than the lowest score recorded, store it.
+    if ((playerScore && lowestScore) && lowestScore.get('score') > playerScore) {
+      lowestScore.set('nickname', playerNickname);
+      lowestScore.set('score', playerScore);
     }
   }
   // Returns a map with information about player with lowest score.
@@ -993,15 +998,18 @@ function applyExtraCards(roomCode) {
 function applyBlur(roomCode) {
   const roomInfo = availableRooms.get(roomCode);
   const playersMap = roomInfo.get('players');
-  const playerNickname = identifyCurrentLoser(playersMap);
-  // Sends to other players in room.
-  const newMessage = {
-    type: 'handleBlur',
-    from: 'server',
-    to: 'client',
-    when: 'When the server lets players know to activate blur',
-  };
-  broadcastToOthers(newMessage, roomCode, playerNickname);
+  const loserPlayer = identifyCurrentLoser(playersMap);
+  if (loserPlayer) {
+    const loserNickname = loserPlayer.get('nickname');
+    // Sends to other players in room.
+    const newMessage = {
+      type: 'handleBlur',
+      from: 'server',
+      to: 'client',
+      when: 'When the server lets players know to activate blur',
+    };
+    broadcastToOthers(newMessage, roomCode, loserNickname);
+  }
 }
 
 /**
@@ -1011,11 +1019,12 @@ function applyBlur(roomCode) {
 function setSpecialEvents(roomCode) {
   const roomInfo = availableRooms.get(roomCode);
   const configMap = roomInfo.get('config');
-  const specialEventTime = (configMap.get('maxTime') * 100) / blurPorcentage;
+  const maxTime = configMap.get('maxTime');
+  const specialEventTime = (maxTime / 2) * 1000;
 
-  if (configMap.adaptation3a === true) {
+  if (configMap.get('adaptation3a') === true) {
     setTimeout(() => applyExtraCards(roomCode), specialEventTime);
-  } else if (configMap.adaptation3b === true) {
+  } else if (configMap.get('adaptation3b') === true) {
     setTimeout(() => applyBlur(roomCode), specialEventTime);
   }
 }
@@ -1035,24 +1044,26 @@ function startGame(message) {
   if (availableRooms.has(roomCode)) {
     const roomInfo = availableRooms.get(roomCode);
     const roomConfig = roomInfo.get('config');
-    const cardAmount = roomConfig.get('cardsPerPlayer');
     const boardCards = roomInfo.get('board');
     const playersMap = roomInfo.get('players');
 
-    playersMap.forEach((playerData) => {
-      const playerInfo = playerData.get('playerInfo');
-      selectPlayerCards(playerInfo, cardAmount, boardCards);
-    });
-    availableRooms.get(roomCode).set('isStarted', true);
+    if (roomConfig && boardCards && playersMap) {
+      const cardAmount = roomConfig.get('cardsPerPlayer');
+      playersMap.forEach((playerData) => {
+        const playerInfo = playerData.get('playerInfo');
+        selectPlayerCards(playerInfo, cardAmount, boardCards);
+      });
+      availableRooms.get(roomCode).set('isStarted', true);
 
-    // Prepare cards?
-    const newMessage = {
-      type: 'handleStartGame',
-      from: 'server',
-      to: 'player',
-      when: 'When the server lets players know game has started',
-    };
-    broadcastToOthers(newMessage, roomCode, playerNickname);
+      // Prepare cards?
+      const newMessage = {
+        type: 'handleStartGame',
+        from: 'server',
+        to: 'player',
+        when: 'When the server lets players know game has started',
+      };
+      broadcastToOthers(newMessage, roomCode, playerNickname);
+    }
   }
 }
 
@@ -1080,10 +1091,10 @@ function getGameRoom(message, socket) {
       from: 'server',
       to: 'player',
       when: 'When the server send personalized game room',
-      maxTime: configMap.get('maxTime'),
+      config: createConfigStringMap(configMap),
       players: createPlayerStringMap(playersMap),
       boardCards: createBoardStringMap(roomInfo.get('board')),
-      playerCards: createPlayerCardsStringMap(playersMap),
+      playerCards: createPlayerCardsStringMap(playerMap),
     };
     socket.send(JSON.stringify(newMessage));
   }
@@ -1130,7 +1141,6 @@ function checkMatch(message, socket) {
       isCorrectMatch: true,
       newScore: playerPoints,
     };
-    console.log('Match CORRECTO');
     // Sending player a message indicating if match is correct.
     socket.send(JSON.stringify(newMessage));
   } else {
@@ -1143,7 +1153,6 @@ function checkMatch(message, socket) {
       isCorrectMatch: false,
       newScore: playerPoints,
     };
-    console.log('Match INCORRECTO');
     // Sending player a message indicating if match is not correct.
     socket.send(JSON.stringify(newMessage));
   }
@@ -1239,10 +1248,8 @@ server.on('connection', (clientSocket) => {
     console.log(`Recibi mensaje del cliente: ${message}`);
     const parsedMessage = JSON.parse(message);
 
-    if (identifyMessage(clientSocket, parsedMessage) === true) {
-      console.log('Message identified');
-    } else {
-      console.log('Cannot identify message');
+    if (identifyMessage(clientSocket, parsedMessage) === false) {
+      console.log('No se pudo identificar el mensaje');
     }
   });
 

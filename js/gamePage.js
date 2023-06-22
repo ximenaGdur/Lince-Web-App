@@ -20,14 +20,11 @@ import {
 
 /** ******************* Creating constants for script ******************* */
 
+// Contains room configuration
+let configMap = null;
+
 // Contains information of player card to match
 let firstCard = null;
-
-// Interval that changes time each second.
-let secondInterval = null;
-
-// Current time in game
-let time = 0;
 
 // Player nickname
 const playerNickname = sessionStorage.getItem('playerNickname');
@@ -38,14 +35,46 @@ const roomCode = sessionStorage.getItem('roomCode');
 // Current player score
 let score = 0;
 
+// Interval that changes time each second.
+let secondInterval = null;
+
+// Current time in game
+let time = 0;
+
 /** ******************* Functions used on script ******************* */
 
 /**
+ * Updates time on screen.
+ * @param {Number} currentTime Current time to show on screen.
+ */
+function updateTime(currentTime) {
+  const timeString = `Tiempo: ${currentTime} segundos`;
+  document.getElementById('current-time').innerHTML = timeString;
+}
+
+/**
+ * Disables board images.
+ * TODO: fix, still detecting click.
+ */
+function disableBoard() {
+  // Contains all player cards
+  const myImages = document.getElementsByClassName('my-image-container');
+  // Add an event listener to each of the cards player
+  for (let index = 0; index < myImages.length; index += 1) {
+    const card = myImages[index];
+    card.disabled = true;
+  }
+}
+
+/**
  * Lets server know time is up or player hand is empty.
+ * @param {WebSocket} socket Socket that connects to server.
  */
 function stopGame(socket) {
   if (secondInterval) {
     clearInterval(secondInterval);
+    updateTime(0);
+    disableBoard();
     const message = {
       type: 'finishGame',
       from: 'client',
@@ -58,13 +87,23 @@ function stopGame(socket) {
   }
 }
 
-/**
- * Updates time on screen.
- */
-function updateTime() {
-  time -= 1;
-  const timeString = `Tiempo: ${time} segundos`;
-  document.getElementById('current-time').innerHTML = timeString;
+function createContentElement(imageText, route, className) {
+  let contentElement = null;
+  const imageRoute = `/design/images/icons/board/${route}`;
+
+  // If player has selected words
+  if (configMap.adaptation1a === true || configMap.adaptation1b) {
+    contentElement = document.createElement('p');
+    contentElement.classList.add('word');
+    contentElement.textContent = imageText;
+  // If player has selected images
+  } else {
+    contentElement = document.createElement('img');
+    contentElement.classList.add(className);
+    contentElement.src = imageRoute;
+    contentElement.alt = `Icono de ${imageText}`;
+  }
+  return contentElement;
 }
 
 /**
@@ -72,7 +111,33 @@ function updateTime() {
  * @param {Map} message Message from server.
  */
 function handleBoardCards(message) {
-  console.log(`handleBoardCards: ${message}`);
+  const boardCards = JSON.parse(message.boardCards);
+  const gameBoard = document.getElementById('game-board');
+  if (gameBoard) {
+    Object.keys(boardCards).forEach((cardId) => {
+      const cardData = boardCards[cardId];
+      if (cardData) {
+        const imageText = cardData.description;
+        if (configMap) {
+          const cardElement = document.createElement('li');
+          cardElement.classList.add('board-image-container');
+          cardElement.setAttribute('id', imageText);
+
+          const contentElement = createContentElement(imageText, cardData.route, 'board-image');
+          if (contentElement) {
+            // If player has selected colored border
+            if (configMap.adaptation2a === true || configMap.adaptation2b === true) {
+              cardElement.style.borderColor = cardData.border;
+            }
+            // Adding content element to card element
+            cardElement.appendChild(contentElement);
+            // Adding card element to game board
+            gameBoard.appendChild(cardElement);
+          }
+        }
+      }
+    });
+  }
 }
 
 /**
@@ -80,7 +145,33 @@ function handleBoardCards(message) {
  * @param {Map} message Message from server.
  */
 function handlePlayerCards(message) {
-  console.log(`handlePlayerCards: ${message}`);
+  const cardsReceived = JSON.parse(message.playerCards);
+  const playerCards = document.getElementById('player-cards');
+  if (cardsReceived && playerCards) {
+    Object.keys(cardsReceived).forEach((cardId) => {
+      const cardData = cardsReceived[cardId];
+      if (cardData) {
+        const imageText = cardData.description;
+        if (configMap) {
+          const cardElement = document.createElement('li');
+          cardElement.classList.add('my-image-container');
+          cardElement.setAttribute('id', imageText);
+
+          const contentElement = createContentElement(imageText, cardData.route, 'my-image');
+          if (contentElement) {
+            // If player has selected colored border
+            if (configMap.adaptation2a === true || configMap.adaptation2b === true) {
+              cardElement.style.borderColor = cardData.border;
+            }
+            // Adding content element to card element
+            cardElement.appendChild(contentElement);
+            // Adding card element to game board
+            playerCards.appendChild(cardElement);
+          }
+        }
+      }
+    });
+  }
 }
 
 /**
@@ -94,37 +185,56 @@ function handlePlayerList(receivedMessage) {
 }
 
 /**
+ * Handles configuration of game.
+ * @param {Object} message Message received from server.
+ */
+function handleConfig(message, socket) {
+  // Setting configuration up
+  configMap = JSON.parse(message.config);
+  if (configMap) {
+    // Setting time configuration
+    time = configMap.maxTime;
+    const matchDuration = time * 1000;
+    setTimeout(() => stopGame(socket), matchDuration);
+    secondInterval = setInterval(() => {
+      time -= 1;
+      updateTime(time);
+    }, 1000);
+  }
+}
+
+/**
  * When server sends a message with personalized waiting room.
+ * @param {Object} message Message received from server.
+ * @param {WebSocket} socket Socket that connects to server.
  */
 function handleGameRoom(message, socket) {
-  // Player table with ranking during game.
-  const gamePlayerTable = document.getElementById('game-ranking');
-  time = message.maxTime;
-  const matchDuration = time * 1000;
-  setTimeout(() => stopGame(socket), matchDuration);
-  secondInterval = setInterval(updateTime, 1000);
-
+  handleConfig(message, socket);
   handleBoardCards(message);
   handlePlayerCards(message);
-  handlePlayerList(message, gamePlayerTable);
+  handlePlayerList(message);
 }
 
 /**
  * When player chooses a card in hand.
+ * @param {HTMLElement} card First card player chooses.
  */
 function storeFirstMatch(card) {
-  // Contains all player cards
+  // Restores board to unclicked state.
   const myImages = document.getElementsByClassName('my-image-container');
   for (let index = 0; index < myImages.length; index += 1) {
     const otherCard = myImages[index];
     otherCard.style.background = '';
   }
+  // Indicates to user, the card was clicked.
   card.style.background = '#E6CCD7';
   firstCard = card;
 }
 
 /**
  * When player chooses a card in board.
+ * @param {WebSocket} socket Socket that connects to server.
+ * @param {HTMLElement} secondCard Second card player has clicked.
  */
 function match(socket, secondCard) {
   if (firstCard) {
@@ -139,16 +249,17 @@ function match(socket, secondCard) {
       boardCard: secondCard.getAttribute('id'),
     };
     socket.send(JSON.stringify(message));
+    firstCard.style.background = '';
+    secondCard.style.background = '';
+    firstCard = null;
   } else {
     console.log('Escoga ficha de su mano primero.');
   }
-  firstCard.style.background = '';
-  secondCard.style.background = '';
-  firstCard = null;
 }
 
 /**
  * Handles response from server to player match.
+ * @param {Object} receivedMessage Message sent by server.
  */
 function handleMatchResponse(receivedMessage) {
   // Correct match sound
@@ -159,12 +270,57 @@ function handleMatchResponse(receivedMessage) {
   const scoreString = `Puntaje: ${score}`;
   document.getElementById('player-score').innerHTML = scoreString;
   if (receivedMessage.isCorrectMatch === true) {
-    console.log('El match es correcto');
     correctMatchSound.play();
   } else {
-    console.log('El match es incorrecto');
     incorrectoMatchSound.play();
   }
+}
+
+/**
+ * Checks in list who is winner.
+ * @param {Object} message Message sent by server.
+ * @returns Map with highest score.
+ */
+function checkWinner(message) {
+  const playerArray = JSON.parse(message.players);
+  const playerNicknames = Object.keys(playerArray);
+  let highestScore = null;
+  if (playerArray && playerNicknames) {
+    let nickname = playerNicknames[0];
+    let playerInfo = playerArray[nickname];
+    if (playerInfo) {
+      let playerPoints = playerInfo.points;
+      highestScore = new Map([
+        ['nickname', nickname],
+        ['score', playerPoints],
+      ]);
+      for (let playerIndex = 1; playerIndex < playerNicknames.length; playerIndex += 1) {
+        nickname = playerNicknames[playerIndex];
+        playerInfo = playerArray[nickname];
+        playerPoints = playerInfo.points;
+        if ((playerPoints && highestScore) && highestScore.get('score') < playerPoints) {
+          highestScore.set('nickname', nickname);
+          highestScore.set('score', playerPoints);
+        }
+      }
+    }
+  }
+  return highestScore;
+}
+
+/**
+ * Shows correct title if player is winner or loser.
+ * @param {Object} message Message sent by server.
+ */
+function showCorrectTitle(message) {
+  const highestScore = checkWinner(message);
+  let hiddenTitle = null;
+  if (highestScore.get('nickname') === playerNickname) {
+    hiddenTitle = document.getElementById('loser-title');
+  } else {
+    hiddenTitle = document.getElementById('winner-title');
+  }
+  hiddenTitle.style.display = 'none';
 }
 
 /**
@@ -177,8 +333,19 @@ function handleTimesUp(message) {
   // Pop Up that is shown when game is finished.
   const popUpFinished = document.getElementById('popup-finished');
   if (popUpFinished) {
-    handlePlayerList(message, popUpPlayerTable);
+    addToTable(message.players, popUpPlayerTable);
+    showCorrectTitle(message);
     popUpFinished.style.display = 'flex';
+  }
+}
+
+function changeBlurImages(blurString) {
+  // Contains all game board cards
+  const boardImages = document.getElementsByClassName('board-image-container');
+  if (boardImages) {
+    for (let imageIndex = 0; imageIndex < boardImages.length; imageIndex += 1) {
+      boardImages[imageIndex].style.filter = blurString;
+    }
   }
 }
 
@@ -186,58 +353,16 @@ function handleTimesUp(message) {
  * Applies blur to player.
  */
 function handleBlur() {
-  // Contains all game board cards
-  const boardImages = document.getElementsByClassName('board-image-container');
-  if (boardImages) {
-    for (let imageIndex = 0; imageIndex < boardImages.length; imageIndex += 1) {
-      boardImages[imageIndex].style.filter = 'blur(2.5px)';
-    }
-  }
+  const blurDuration = (time / 8) * 1000;
+  changeBlurImages('blur(2.5px)');
+  setTimeout(() => {
+    changeBlurImages('blur(0px)');
+  }, blurDuration);
 }
 
 /**
- * Generates a random color for image border.
- */
-function randomBorderColor() {
-  // Código tomado de: https://www.delftstack.com/es/howto/javascript/javascript-pick-random-from-array/
-  const colorsArray = ['#E6C700', '#2EB600', '#006DE2', '#DA0012'];
-  const randomIndex = Math.floor(Math.random() * colorsArray.length);
-  const randomColor = colorsArray[randomIndex];
-  return randomColor;
-}
-
-/**
- * If image adaptation is chosen, it asigns a random border color.
- */
-function changeImageColors() {
-  const boardImages = document.getElementsByClassName('board-image-container');
-  for (let index = 0; index < boardImages.length; index += 1) {
-    boardImages[index].style.borderColor = randomBorderColor();
-  }
-}
-
-/**
- * Change the pictures on the player's cards to the corresponding words.
- */
-function changeImagesToWords() {
-  // Contains all cards
-  const myImage = document.getElementsByClassName('my-image');
-  // Contains all player cards
-  const myImages = document.getElementsByClassName('my-image-container');
-  // Contains all word cards
-  const word = document.getElementsByClassName('word');
-  // Iterate through each image and replace its content with the attribute "alt"
-  for (let index = 0; index < myImage.length; index += 1) {
-    myImage[index].style.display = 'none';
-    word[index].style.display = 'flex';
-    // Changes box to fit words.
-    myImages[index].style.maxWidth = 'max-content';
-  }
-}
-
-/**
- *
- * @param {*} receivedMessage
+ * Handles extra cards sent by server.
+ * @param {Object} receivedMessage Message sent by server.
  */
 function handleExtraCards(receivedMessage) {
   console.log(`receivedMessage: ${receivedMessage}`);
@@ -246,6 +371,7 @@ function handleExtraCards(receivedMessage) {
 /**
  * Returns user to home page when button is clicked.
  * Sends server a message to indicate player is leaving.
+ * @param {WebSocket} socket Socket that connects to server.
  */
 function returnToMain(socket) {
   // send message to server letting them know player is leaving.
