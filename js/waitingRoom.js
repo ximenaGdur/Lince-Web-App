@@ -31,10 +31,10 @@ const cardsRoundMax = 400;
 let infoIconClicked = true;
 
 // Player nickname
-const playerNickname = sessionStorage.getItem('playerNickname');
+const playerNickname = localStorage.getItem('playerNickname');
 
 // Room Code
-const roomCode = sessionStorage.getItem('roomCode');
+const roomCode = localStorage.getItem('roomCode');
 
 // Minimum amount of time permitted
 const timeMin = 20;

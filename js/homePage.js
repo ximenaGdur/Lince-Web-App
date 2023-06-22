@@ -40,8 +40,8 @@ const showPopUpButton = document.getElementById('show-popup-button');
 const socket = new WebSocket('ws://localhost:8009');
 
 // Global variable with room code
-sessionStorage.setItem('roomCode', '');
-sessionStorage.setItem('roomCode', '');
+localStorage.setItem('roomCode', '');
+localStorage.setItem('roomCode', '');
 
 /** ******************** Functions used on script ********************* */
 
@@ -61,7 +61,7 @@ function enterNickname() {
     createRoomBtn.style.cursor = 'default';
     joinRoomBtn.style.cursor = 'default';
   }
-  sessionStorage.setItem('playerNickname', playerNickname);
+  localStorage.setItem('playerNickname', playerNickname);
 }
 
 /**
@@ -103,7 +103,7 @@ function joinSession() {
     };
     socket.send(JSON.stringify(message));
 
-    sessionStorage.setItem('roomCode', popupInput.value);
+    localStorage.setItem('roomCode', popupInput.value);
     window.location.href = './waitingRoom.xhtml';
   }
 }
@@ -164,7 +164,7 @@ function showInstructions() {
  * @param {*} receivedMessage Message sent by the server containing the room code to save.
  */
 function handleRoomCode(message) {
-  sessionStorage.setItem('roomCode', message.sessionCode);
+  localStorage.setItem('roomCode', message.sessionCode);
   window.location.href = './waitingRoom.xhtml';
 }
 

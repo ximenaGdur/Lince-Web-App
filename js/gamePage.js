@@ -27,10 +27,10 @@ let configMap = null;
 let firstCard = null;
 
 // Player nickname
-const playerNickname = sessionStorage.getItem('playerNickname');
+const playerNickname = localStorage.getItem('playerNickname');
 
 // Room Code
-const roomCode = sessionStorage.getItem('roomCode');
+const roomCode = localStorage.getItem('roomCode');
 
 // Current player score
 let score = 0;
@@ -118,8 +118,8 @@ function match(socket, secondCard) {
       from: 'player',
       to: 'server',
       when: 'when a player makes a match',
-      nickname: sessionStorage.getItem('playerNickname'),
-      sessionCode: sessionStorage.getItem('roomCode'),
+      nickname: localStorage.getItem('playerNickname'),
+      sessionCode: localStorage.getItem('roomCode'),
       playerCard: firstCard.getAttribute('id'),
       boardCard: secondCard.getAttribute('id'),
     };
