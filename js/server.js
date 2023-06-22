@@ -229,20 +229,33 @@ function validateCode(socket, messageReceived) {
   const code = messageReceived.sessionCode;
   let newMessage = {};
   if (availableRooms.has(code)) {
-    newMessage = {
-      type: 'handleCodeValidation',
-      from: 'server',
-      to: 'client',
-      when: 'When the server validates room',
-      isValid: 'true',
-    };
+    if (availableRooms.get(code).get('isStarted') === false) {
+      newMessage = {
+        type: 'handleCodeValidation',
+        from: 'server',
+        to: 'client',
+        when: 'When the server validates room',
+        isValid: true,
+        isStarted: false,
+      };
+    } else {
+      newMessage = {
+        type: 'handleCodeValidation',
+        from: 'server',
+        to: 'client',
+        when: 'When the server validates room',
+        isValid: true,
+        isStarted: true,
+      };
+    }
   } else {
     newMessage = {
       type: 'handleCodeValidation',
       from: 'server',
       to: 'client',
       when: 'When the server validates room',
-      isValid: 'false',
+      isValid: false,
+      isStarted: false,
     };
   }
   socket.send(JSON.stringify(newMessage));
@@ -509,12 +522,12 @@ function createRoom(socket, message) {
     [playerNickname, playerMap],
   ]);
   const roomMap = new Map([
+    ['isStarted', false],
     ['config', setDefaultGameConfiguration()],
     ['players', playersMap],
   ]);
 
   availableRooms.set(roomCode, roomMap);
-
   sendRoomCode(socket, roomCode);
 }
 
@@ -937,6 +950,7 @@ function startGame(message) {
       const playerInfo = playerData.get('playerInfo');
       selectPlayerCards(playerInfo, cardAmount, boardCards);
     });
+    availableRooms.get(roomCode).set('isStarted', true);
 
     // Prepare cards?
     const newMessage = {
