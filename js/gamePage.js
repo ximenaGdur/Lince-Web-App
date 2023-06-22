@@ -195,6 +195,7 @@ function storeFirstMatch(card) {
 function handlePlayerCards(message) {
   const cardsReceived = JSON.parse(message.playerCards);
   const playerCards = document.getElementById('player-cards');
+  playerCards.innerHTML = '';
   if (cardsReceived && playerCards) {
     Object.keys(cardsReceived).forEach((cardId) => {
       const cardData = cardsReceived[cardId];
@@ -282,6 +283,7 @@ function handleMatchResponse(receivedMessage) {
   document.getElementById('player-score').innerHTML = scoreString;
   if (receivedMessage.isCorrectMatch === true) {
     correctMatchSound.play();
+    handlePlayerCards(receivedMessage);
   } else {
     incorrectoMatchSound.play();
   }

@@ -1147,6 +1147,7 @@ function checkMatch(message, socket) {
       when: 'when server checks a match',
       isCorrectMatch: true,
       newScore: playerPoints,
+      playerCards: createPlayerCardsStringMap(player),
     };
     // Sending player a message indicating if match is correct.
     socket.send(JSON.stringify(newMessage));
