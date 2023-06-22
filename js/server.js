@@ -35,9 +35,6 @@ const avatarRoutes = {
   20: { description: 'Comadreja', route: 'weasel.png' },
 };
 
-// Percentage of time when special event happens
-const blurPorcentage = 95;
-
 // Dictionary with possible colors
 const cardColors = ['#FCFFAD', '#C2FFAD', '#ADF7FF', '#C7ADFF', '#EBADFF'];
 
@@ -928,24 +925,24 @@ function identifyCurrentLoser(playersMap) {
   const playerNicknames = Array.from(playersMap.keys());
   // First player nickname.
   let playerNickname = playerNicknames[0];
+  console.log(`playerNickname: ${playerNickname}`);
   // First player map.
   let playerScore = getPlayerScore(playerNickname, playersMap);
-  if (playerScore) {
-    // Setting first player's score as lowest.
-    lowestScore = new Map([
-      ['nickname', playerNickname],
-      ['score', playerScore],
-    ]);
+  console.log(`playerScore: ${playerScore}`);
+  // Setting first player's score as lowest.
+  lowestScore = new Map([
+    ['nickname', playerNickname],
+    ['score', playerScore],
+  ]);
 
-    // Finding lowest score and asigning it to lowestScore map.
-    for (let playerIndex = 1; playerIndex < playerNicknames.length; playerIndex += 1) {
-      playerNickname = playerNicknames[playerIndex];
-      playerScore = getPlayerScore(playerNickname, playersMap);
-      // If current player has a lower score than the lowest score recorded, store it.
-      if ((playerScore && lowestScore) && lowestScore.get('score') > playerScore) {
-        lowestScore.set('nickname', playerNickname);
-        lowestScore.set('score', playerScore);
-      }
+  // Finding lowest score and asigning it to lowestScore map.
+  for (let playerIndex = 1; playerIndex < playerNicknames.length; playerIndex += 1) {
+    playerNickname = playerNicknames[playerIndex];
+    playerScore = getPlayerScore(playerNickname, playersMap);
+    // If current player has a lower score than the lowest score recorded, store it.
+    if ((playerScore && lowestScore) && lowestScore.get('score') > playerScore) {
+      lowestScore.set('nickname', playerNickname);
+      lowestScore.set('score', playerScore);
     }
   }
   // Returns a map with information about player with lowest score.
@@ -992,18 +989,23 @@ function applyExtraCards(roomCode) {
  * @param {String} roomCode Code of room where blur will be applied
  */
 function applyBlur(roomCode) {
+  console.log('IN BLUR');
   console.log(`TIMEOUT FOR ROOM: ${roomCode}`);
   const roomInfo = availableRooms.get(roomCode);
   const playersMap = roomInfo.get('players');
-  const playerNickname = identifyCurrentLoser(playersMap);
-  // Sends to other players in room.
-  const newMessage = {
-    type: 'handleBlur',
-    from: 'server',
-    to: 'client',
-    when: 'When the server lets players know to activate blur',
-  };
-  broadcastToOthers(newMessage, roomCode, playerNickname);
+  const loserPlayer = identifyCurrentLoser(playersMap);
+  if (loserPlayer) {
+    const loserNickname = loserPlayer.get('nickname');
+    console.log(`excluding: ${loserNickname}`);
+    // Sends to other players in room.
+    const newMessage = {
+      type: 'handleBlur',
+      from: 'server',
+      to: 'client',
+      when: 'When the server lets players know to activate blur',
+    };
+    broadcastToOthers(newMessage, roomCode, loserNickname);
+  }
 }
 
 /**
@@ -1013,11 +1015,15 @@ function applyBlur(roomCode) {
 function setSpecialEvents(roomCode) {
   const roomInfo = availableRooms.get(roomCode);
   const configMap = roomInfo.get('config');
-  const specialEventTime = (configMap.get('maxTime') * 100) / blurPorcentage;
+  const maxTime = configMap.get('maxTime');
+  const specialEventTime = (maxTime / 2) * 1000;
 
-  if (configMap.adaptation3a === true) {
+  console.log(`maxTime ${maxTime}`);
+  console.log(`specialEventTime ${specialEventTime}`);
+
+  if (configMap.get('adaptation3a') === true) {
     setTimeout(() => applyExtraCards(roomCode), specialEventTime);
-  } else if (configMap.adaptation3b === true) {
+  } else if (configMap.get('adaptation3b') === true) {
     setTimeout(() => applyBlur(roomCode), specialEventTime);
   }
 }
@@ -1241,10 +1247,8 @@ server.on('connection', (clientSocket) => {
     console.log(`Recibi mensaje del cliente: ${message}`);
     const parsedMessage = JSON.parse(message);
 
-    if (identifyMessage(clientSocket, parsedMessage) === true) {
-      console.log('Message identified');
-    } else {
-      console.log('Cannot identify message');
+    if (identifyMessage(clientSocket, parsedMessage) === false) {
+      console.log('No se pudo identificar el mensaje');
     }
   });
 

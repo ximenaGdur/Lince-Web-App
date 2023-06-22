@@ -163,12 +163,12 @@ function match(socket, secondCard) {
       boardCard: secondCard.getAttribute('id'),
     };
     socket.send(JSON.stringify(message));
+    firstCard.style.background = '';
+    secondCard.style.background = '';
+    firstCard = null;
   } else {
     console.log('Escoga ficha de su mano primero.');
   }
-  firstCard.style.background = '';
-  secondCard.style.background = '';
-  firstCard = null;
 }
 
 /**
@@ -255,17 +255,24 @@ function handleTimesUp(message) {
   }
 }
 
-/**
- * Applies blur to player.
- */
-function handleBlur() {
+function changeBlurImages(blurString) {
   // Contains all game board cards
   const boardImages = document.getElementsByClassName('board-image-container');
   if (boardImages) {
     for (let imageIndex = 0; imageIndex < boardImages.length; imageIndex += 1) {
-      boardImages[imageIndex].style.filter = 'blur(2.5px)';
+      boardImages[imageIndex].style.filter = blurString;
     }
   }
+}
+
+/**
+ * Applies blur to player.
+ */
+function handleBlur() {
+  changeBlurImages('blur(2.5px)');
+  setTimeout(() => {
+    changeBlurImages('blur(0px)');
+  }, 5000);
 }
 
 /**
