@@ -302,23 +302,14 @@ function createBoardStringMap(board) {
  * @returns String with all player's cards.
  */
 function createPlayerCardsStringMap(playerMap) {
-  console.log('CREATING PLAYER CARD STRING');
   const playerCardsStringMap = {};
   if (playerMap) {
-    console.log('playerMap');
     const playerInfo = playerMap.get('playerInfo');
     if (playerInfo) {
-      console.log('playerMap.get(playerInfo)');
       const playerCards = playerInfo.get('cards');
       if (playerCards) {
-        console.log('playerInfo.get(cards)');
         playerCards.forEach((cardData, cardId) => {
           if (cardData) {
-            console.log(`cardId: ${cardId}`);
-            //Array.from(
-            console.log('description: ' + cardData.get('description'));
-            console.log('route: ' + cardData.get('route'));
-            console.log('border: ' + cardData.get('border'));
             const playerCardMap = {
               description: cardData.get('description'),
               route: cardData.get('route'),
@@ -330,7 +321,6 @@ function createPlayerCardsStringMap(playerMap) {
       }
     }
   }
-  console.log(`playerCardsStringMap: ${JSON.stringify(playerCardsStringMap)}`);
   return JSON.stringify(playerCardsStringMap);
 }
 
@@ -386,11 +376,8 @@ function generateCode() {
 
 //   const orderedValues = sortedEntries.map((entry) => entry[1]);
 
-//   console.log(orderedValues);
-
 //   let iter = players.values();
 //   iter.sort();
-//   console.log(iter);
 
 //   const i = [1, 2, 3];
 // }
@@ -1182,7 +1169,6 @@ function finishGame(message, socket) {
  * Closes connection with client.
  */
 function closeConnection(socket) {
-  console.log('TODO: call removePlayer');
   /*
   if (availableRooms.has(roomCode)) {
     const roomMap = availableRooms.get(roomCode);
@@ -1239,13 +1225,10 @@ function identifyMessage(socket, receivedMessage) {
  * When a connection is made with a client.
  */
 server.on('connection', (clientSocket) => {
-  console.log('Estableciendo de conexión con cliente...');
-
   /**
    * When message is received on socket...
    */
   clientSocket.on('message', (message) => {
-    console.log(`Recibi mensaje del cliente: ${message}`);
     const parsedMessage = JSON.parse(message);
 
     if (identifyMessage(clientSocket, parsedMessage) === false) {
@@ -1257,7 +1240,6 @@ server.on('connection', (clientSocket) => {
    * When socket with client is closed
    */
   clientSocket.on('close', () => {
-    console.log('Cerrando conexión con cliente...');
     closeConnection(clientSocket);
     // TODO: arreglar esto, actualmente no se como detectar de que pagina es el socket
   });

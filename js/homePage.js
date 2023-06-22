@@ -69,7 +69,6 @@ function enterNickname() {
  * Should be included in common.js
  */
 /* function closeTab() {
-  console.log('Cerrando conexión con server.');
 } */
 
 /**
@@ -190,7 +189,6 @@ function loadAddEventListeners() {
   * When a connection is made with server.
   */
   socket.addEventListener('open', () => {
-    console.log('Conectado al servidor desde Home Page.');
   });
 
   /**
@@ -198,7 +196,6 @@ function loadAddEventListeners() {
   */
   socket.addEventListener('message', (event) => {
     const receivedMessage = JSON.parse(event.data);
-    console.log(`Recibi del servidor: ${receivedMessage}`);
     identifyMessage(receivedMessage);
   });
 
@@ -251,13 +248,3 @@ function loadAddEventListeners() {
 /** ********************** Listeners for home page *********************** */
 
 window.addEventListener('load', loadAddEventListeners);
-
-/**
- * When a connection is closed.
- */
-// socket.addEventListener('close', closeTab());
-
-/**
- * Adding event listener when window is closed
- */
-// window.addEventListener('close', closeTab);

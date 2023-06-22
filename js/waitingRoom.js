@@ -666,7 +666,6 @@ function addEventListeners() {
      * When a connection is made with server.
      */
     socket.addEventListener('open', () => {
-      console.log('Conectado al servidor desde Waiting Room.');
       const message = {
         type: 'getWaitingRoom',
         from: 'client',
@@ -699,7 +698,6 @@ function addEventListeners() {
      */
     socket.addEventListener('message', (event) => {
       const receivedMessage = JSON.parse(event.data);
-      console.log(`Recibi del servidor: ${JSON.stringify(receivedMessage)}`);
       identifyMessage(functions, socket, receivedMessage);
     });
   }

@@ -107,10 +107,36 @@ function createContentElement(imageText, route, className) {
 }
 
 /**
+ * When player chooses a card in board.
+ * @param {WebSocket} socket Socket that connects to server.
+ * @param {HTMLElement} secondCard Second card player has clicked.
+ */
+function match(socket, secondCard) {
+  if (firstCard) {
+    const message = {
+      type: 'checkMatch',
+      from: 'player',
+      to: 'server',
+      when: 'when a player makes a match',
+      nickname: sessionStorage.getItem('playerNickname'),
+      sessionCode: sessionStorage.getItem('roomCode'),
+      playerCard: firstCard.getAttribute('id'),
+      boardCard: secondCard.getAttribute('id'),
+    };
+    socket.send(JSON.stringify(message));
+    firstCard.style.background = '';
+    secondCard.style.background = '';
+    firstCard = null;
+  } else {
+    console.log('Escoga ficha de su mano primero.');
+  }
+}
+
+/**
  * Updates board with corresponding cards.
  * @param {Map} message Message from server.
  */
-function handleBoardCards(message) {
+function handleBoardCards(message, socket) {
   const boardCards = JSON.parse(message.boardCards);
   const gameBoard = document.getElementById('game-board');
   if (gameBoard) {
@@ -133,11 +159,33 @@ function handleBoardCards(message) {
             cardElement.appendChild(contentElement);
             // Adding card element to game board
             gameBoard.appendChild(cardElement);
+
+            // Add an event listener to each of the cards on the game board
+            cardElement.addEventListener('click', () => {
+              cardElement.style.background = '#E6CCD7';
+              match(socket, cardElement);
+            });
           }
         }
       }
     });
   }
+}
+
+/**
+ * When player chooses a card in hand.
+ * @param {HTMLElement} card First card player chooses.
+ */
+function storeFirstMatch(card) {
+  // Restores board to unclicked state.
+  const myImages = document.getElementsByClassName('my-image-container');
+  for (let index = 0; index < myImages.length; index += 1) {
+    const otherCard = myImages[index];
+    otherCard.style.background = '';
+  }
+  // Indicates to user, the card was clicked.
+  card.style.background = '#E6CCD7';
+  firstCard = card;
 }
 
 /**
@@ -167,6 +215,11 @@ function handlePlayerCards(message) {
             cardElement.appendChild(contentElement);
             // Adding card element to game board
             playerCards.appendChild(cardElement);
+
+            // Add an event listener to each of the cards player
+            cardElement.addEventListener('click', () => {
+              storeFirstMatch(cardElement);
+            });
           }
         }
       }
@@ -210,51 +263,9 @@ function handleConfig(message, socket) {
  */
 function handleGameRoom(message, socket) {
   handleConfig(message, socket);
-  handleBoardCards(message);
+  handleBoardCards(message, socket);
   handlePlayerCards(message);
   handlePlayerList(message);
-}
-
-/**
- * When player chooses a card in hand.
- * @param {HTMLElement} card First card player chooses.
- */
-function storeFirstMatch(card) {
-  // Restores board to unclicked state.
-  const myImages = document.getElementsByClassName('my-image-container');
-  for (let index = 0; index < myImages.length; index += 1) {
-    const otherCard = myImages[index];
-    otherCard.style.background = '';
-  }
-  // Indicates to user, the card was clicked.
-  card.style.background = '#E6CCD7';
-  firstCard = card;
-}
-
-/**
- * When player chooses a card in board.
- * @param {WebSocket} socket Socket that connects to server.
- * @param {HTMLElement} secondCard Second card player has clicked.
- */
-function match(socket, secondCard) {
-  if (firstCard) {
-    const message = {
-      type: 'checkMatch',
-      from: 'player',
-      to: 'server',
-      when: 'when a player makes a match',
-      nickname: sessionStorage.getItem('playerNickname'),
-      sessionCode: sessionStorage.getItem('roomCode'),
-      playerCard: firstCard.getAttribute('id'),
-      boardCard: secondCard.getAttribute('id'),
-    };
-    socket.send(JSON.stringify(message));
-    firstCard.style.background = '';
-    secondCard.style.background = '';
-    firstCard = null;
-  } else {
-    console.log('Escoga ficha de su mano primero.');
-  }
 }
 
 /**
@@ -445,27 +456,6 @@ function addEventListeners() {
   homeButton.addEventListener('click', () => {
     returnToMain(socket);
   });
-
-  // Contains all player cards
-  const myImages = document.getElementsByClassName('my-image-container');
-  // Add an event listener to each of the cards player
-  for (let index = 0; index < myImages.length; index += 1) {
-    const card = myImages[index];
-    card.addEventListener('click', () => {
-      storeFirstMatch(card);
-    });
-  }
-
-  // Contains all game board cards
-  const boardImages = document.getElementsByClassName('board-image-container');
-  // Add an event listener to each of the cards on the game board
-  for (let index = 0; index < boardImages.length; index += 1) {
-    const boardCard = boardImages[index];
-    boardCard.addEventListener('click', () => {
-      boardCard.style.background = '#E6CCD7';
-      match(socket, boardCard);
-    });
-  }
 }
 
 /**
