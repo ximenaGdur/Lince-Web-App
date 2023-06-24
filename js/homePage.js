@@ -6,50 +6,19 @@ import {
 // eslint-disable-next-line import/extensions
 } from './codePopUp.js';
 
-/** ****************** Creating constants for script ******************* */
-
-// Button that allows player to close pop up.
-const cancelButton = document.getElementById('cancel-button');
-// Button that changes tab to credits.
-const creditsButton = document.getElementById('credits-link');
-// Credits tab content.
-const creditsContent = document.getElementById('credits');
-// Button to create a room after entering a nickname.
-const createRoomBtn = document.getElementById('create-room-button');
-// Feedback given by server about given room code.
-const feedbackMessage = document.getElementById('room-validation-text');
-// Text field to enter player nickname.
-const nicknameField = document.getElementById('nickname');
-// Button that changes tab to instructions.
-const instructionsButton = document.getElementById('instructions-link');
-// Instructions tab content.
-const instructionsContent = document.getElementById('instructions');
-// Button in codePopUp to join into a room
-const joinButton = document.getElementById('join-button');
-// Button to join a room after entering a nickname.
-const joinRoomBtn = document.getElementById('show-popup-button');
-// Input box inside popup
-const popupInput = document.getElementById('popup-input');
-// Button that changes tab to ranking.
-const rankingButton = document.getElementById('ranking-link');
-// Ranking tab content.
-const rankingContent = document.getElementById('ranking');
-// Button to show the codePopUp
-const showPopUpButton = document.getElementById('show-popup-button');
-// Socket that connects to server
-const socket = new WebSocket('ws://localhost:8009');
-
-// Global variable with room code
-localStorage.setItem('roomCode', '');
-localStorage.setItem('roomCode', '');
-
 /** ******************** Functions used on script ********************* */
 
 /**
  * Lock or enable create room and join room buttons after entering a nickname.
  */
 function enterNickname() {
+  // Text field to enter player nickname.
+  const nicknameField = document.getElementById('nickname');
   const playerNickname = nicknameField.value;
+  // Button to create a room after entering a nickname.
+  const createRoomBtn = document.getElementById('create-room-button');
+  // Button to join a room after entering a nickname.
+  const joinRoomBtn = document.getElementById('show-popup-button');
   if (playerNickname.length > 0 && playerNickname.trim() !== '') {
     createRoomBtn.disabled = false;
     createRoomBtn.style.cursor = 'pointer';
@@ -75,7 +44,7 @@ function enterNickname() {
 * Send a message to the server to create a new room with the host as the client
 * that pressed the create room button and with the nickname entered.
 */
-function createSession() {
+function createSession(socket) {
   const playerNickname = document.getElementById('nickname').value;
   const message = {
     type: 'createRoom',
@@ -90,8 +59,12 @@ function createSession() {
 /**
  * Joins given room when button is clicked.
  */
-function joinSession() {
+function joinSession(socket) {
+  // Button in codePopUp to join into a room
+  const joinButton = document.getElementById('join-button');
   const playerNickname = document.getElementById('nickname').value;
+  // Input box inside popup
+  const popupInput = document.getElementById('popup-input');
   if (joinButton) {
     const message = {
       type: 'addToRoom',
@@ -111,7 +84,9 @@ function joinSession() {
 /**
  * Asks the server if room code is valid.
  */
-function verifyCode() {
+function verifyCode(socket) {
+  // Input box inside popup
+  const popupInput = document.getElementById('popup-input');
   if (popupInput.value.length === 5 && popupInput.value.trim() !== '') {
     const message = {
       type: 'validateCode',
@@ -122,6 +97,8 @@ function verifyCode() {
     };
     socket.send(JSON.stringify(message));
   } else {
+    // Feedback given by server about given room code.
+    const feedbackMessage = document.getElementById('room-validation-text');
     feedbackMessage.innerHTML = '';
   }
 }
@@ -130,6 +107,14 @@ function verifyCode() {
  * Shows credits tab.
  */
 function showCredits() {
+  // Button that changes tab to credits.
+  const creditsButton = document.getElementById('credits-link');
+  // Credits tab content.
+  const creditsContent = document.getElementById('credits');
+  // Ranking tab content.
+  const rankingContent = document.getElementById('ranking');
+  // Instructions tab content.
+  const instructionsContent = document.getElementById('instructions');
   if (creditsButton) {
     creditsContent.style.display = 'flex';
     rankingContent.style.display = 'none';
@@ -141,6 +126,14 @@ function showCredits() {
  * Shows ranking tab.
  */
 function showRanking() {
+  // Button that changes tab to ranking.
+  const rankingButton = document.getElementById('ranking-link');
+  // Credits tab content.
+  const creditsContent = document.getElementById('credits');
+  // Ranking tab content.
+  const rankingContent = document.getElementById('ranking');
+  // Instructions tab content.
+  const instructionsContent = document.getElementById('instructions');
   if (rankingButton) {
     creditsContent.style.display = 'none';
     rankingContent.style.display = 'flex';
@@ -152,6 +145,14 @@ function showRanking() {
  * Shows instructions tab.
  */
 function showInstructions() {
+  // Button that changes tab to instructions.
+  const instructionsButton = document.getElementById('instructions-link');
+  // Credits tab content.
+  const creditsContent = document.getElementById('credits');
+  // Ranking tab content.
+  const rankingContent = document.getElementById('ranking');
+  // Instructions tab content.
+  const instructionsContent = document.getElementById('instructions');
   if (instructionsButton) {
     creditsContent.style.display = 'none';
     rankingContent.style.display = 'none';
@@ -185,6 +186,9 @@ function identifyMessage(receivedMessage) {
 }
 
 function loadAddEventListeners() {
+  // Socket that connects to server
+  const socket = new WebSocket('ws://localhost:8009');
+
   /**
   * When a connection is made with server.
   */
@@ -199,46 +203,70 @@ function loadAddEventListeners() {
     identifyMessage(receivedMessage);
   });
 
+  // Button that allows player to close pop up.
+  const cancelButton = document.getElementById('cancel-button');
   /**
   * Adding event listener when cancelButton is clicked
   */
   cancelButton.addEventListener('click', cancelPopUp);
 
+  // Button to create a room after entering a nickname.
+  const createRoomBtn = document.getElementById('create-room-button');
   /**
   * Adding event listener when createRoomBtn is clicked
   */
-  createRoomBtn.addEventListener('click', createSession);
+  createRoomBtn.addEventListener('click', () => {
+    createSession(socket);
+  });
 
+  // Button that changes tab to credits.
+  const creditsButton = document.getElementById('credits-link');
   /**
   * Adding event listener when creditsButton is clicked
   */
   creditsButton.addEventListener('click', showCredits);
 
+  // Button that changes tab to instructions.
+  const instructionsButton = document.getElementById('instructions-link');
   /**
   * Adding event listener when instructionsButton is clicked
   */
   instructionsButton.addEventListener('click', showInstructions);
 
+  // Button in codePopUp to join into a room
+  const joinButton = document.getElementById('join-button');
   /**
   * Adding event listener when joinButton is clicked
   */
-  joinButton.addEventListener('click', joinSession);
+  joinButton.addEventListener('click', () => {
+    joinSession(socket);
+  });
 
+  // Text field to enter player nickname.
+  const nicknameField = document.getElementById('nickname');
   /**
   * Adding event listener when nicknameField is changed
   */
   nicknameField.addEventListener('input', enterNickname);
 
+  // Input box inside popup
+  const popupInput = document.getElementById('popup-input');
   /**
   * Adding event listener when popupInput is changed
   */
-  popupInput.addEventListener('input', verifyCode);
+  popupInput.addEventListener('input', () => {
+    verifyCode(socket);
+  });
 
+  // Button that changes tab to ranking.
+  const rankingButton = document.getElementById('ranking-link');
   /**
   * Adding event listener when rankingButton is clicked
   */
   rankingButton.addEventListener('click', showRanking);
 
+  // Button to show the codePopUp
+  const showPopUpButton = document.getElementById('show-popup-button');
   /**
   * Adding event listener when showPopUpButton is clicked
   */
