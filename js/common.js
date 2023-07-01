@@ -54,15 +54,11 @@ export function addToTable(players, playerTable) {
  * @param {*} receivedMessage Message received from server.
  * @returns Boolean value that indicates if message was identified or not.
  */
-export function identifyMessage(functions, socket, receivedMessage) {
+export function identifyMessage(pageClass, socket, receivedMessage) {
   const messageType = receivedMessage.type;
-  let messageIdentified = false;
-  for (let functionIndex = 0; functionIndex < functions.length; functionIndex += 1) {
-    if (messageType === functions[functionIndex].name) {
-      functions[functionIndex](receivedMessage, socket);
-      messageIdentified = true;
-      break;
-    }
+  if (pageClass[messageType]) {
+    pageClass[messageType](receivedMessage, socket);
+  } else {
+    console.log('Mensaje no reconocido');
   }
-  return messageIdentified;
 }

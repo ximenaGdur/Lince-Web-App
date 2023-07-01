@@ -966,7 +966,7 @@ function applyExtraCards(roomCode) {
       // TODO: add to player
       // Sends to player.
       const message = {
-        type: 'handleExtraCards',
+        type: 'handlePlayerCards',
         from: 'server',
         to: 'client',
         when: 'When the server lets players know to apply extra cards',
