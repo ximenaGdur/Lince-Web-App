@@ -58,13 +58,19 @@ function updateTime(currentTime) {
  */
 function disableBoard() {
   // Contains all player cards
-  const myImages = document.getElementsByClassName('my-image-container');
+  const boardImage = document.getElementsByClassName('board-image-container');
+  // const myImages = document.getElementsByClassName('my-image-container');
   // Add an event listener to each of the cards player
-  for (let index = 0; index < myImages.length; index += 1) {
-    const card = myImages[index];
-    card.disabled = true;
+  for (let index = 0; index < boardImage.length; index += 1) {
+    const card = boardImage[index];
+    console.log(card);
+    card.removeEventListener('click', () => {});
   }
+  const exitButton = document.getElementById('exit-button');
+  exitButton.disabled = true;
 }
+
+// BLOQUEAR EL EVENTO CLICK EN TODAS LAS CARTAS AL TERMINAR UNA PARTIDA
 
 /**
  * Lets server know time is up or player hand is empty.
@@ -341,6 +347,7 @@ function showCorrectTitle(message) {
  * @param {Map} message Message sent by server.
  */
 function handleTimesUp(message) {
+  // disableBoard();
   // Player table with ranking in popup
   const popUpPlayerTable = document.getElementById('popup-ranking');
   // Pop Up that is shown when game is finished.
@@ -352,16 +359,16 @@ function handleTimesUp(message) {
   }
 }
 
-function handlePlayerWon(message) {
-  // Player table with ranking in popup
-  const popUpPlayerTable = document.getElementById('popup-ranking');
-  // Pop Up that is shown when game is finished.
-  const popUpFinished = document.getElementById('popup-finished');
-  if (popUpFinished) {
-    handlePlayerList(message, popUpPlayerTable);
-    popUpFinished.style.display = 'flex';
-  }
-}
+// function handlePlayerWon(message) {
+//   // Player table with ranking in popup
+//   const popUpPlayerTable = document.getElementById('popup-ranking');
+//   // Pop Up that is shown when game is finished.
+//   const popUpFinished = document.getElementById('popup-finished');
+//   if (popUpFinished) {
+//     handlePlayerList(message, popUpPlayerTable);
+//     popUpFinished.style.display = 'flex';
+//   }
+// }
 
 /**
  * Applies blur to player.
@@ -436,7 +443,7 @@ function addEventListeners() {
       handleTimesUp,
       handleBlur,
       handleExtraCards,
-      handlePlayerWon,
+      // handlePlayerWon,
     ];
     /**
      * Event that occurs every time a message is received.
