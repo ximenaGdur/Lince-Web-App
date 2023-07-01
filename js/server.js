@@ -1108,9 +1108,9 @@ function changePlayerScore(playerNickname, roomCode, points, playerInfo) {
 
 function playerWon(playersMap, roomCode) {
   const NewMessage = {
-    type: 'handlePlayerWon',
+    type: 'handleTimesUp',
     from: 'server',
-    to: 'client',
+    to: 'player',
     when: 'when player won',
     players: createPlayerStringMap(playersMap),
   };
