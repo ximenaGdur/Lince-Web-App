@@ -500,6 +500,10 @@ function loadPage() {
 function main() {
   addEventListeners();
   loadPage();
+  const correctMatchSound = document.getElementById('correctoMatchSound');
+  correctMatchSound.volume = 0.1;
+  const incorrectoMatchSound = document.getElementById('incorrectoMatchSound');
+  incorrectoMatchSound.volume = 0.1;
 }
 
 /** ******************* Listeners for game page ******************* */
