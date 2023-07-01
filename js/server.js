@@ -884,11 +884,16 @@ function selectPlayerCards(playerInfo, cardAmount, boardCards) {
     const newCard = boardCards.get(randomNumber);
     if (newCard) {
       if (checkForCard(newCard, playerCardsMap)) {
-        playerCardsMap.set(cardIndex, newCard);
+        playerCardsMap.set(newCard.get('description'), newCard);
       }
     }
   }
+  const key = playerCardsMap.keys();
+  for (let index = 0; index < playerCardsMap.size; index += 1) {
+    console.log(key.next().value);
+  }
   playerInfo.set('cards', playerCardsMap);
+  console.log(playerInfo.get('cards'));
 }
 
 /**
@@ -1094,11 +1099,7 @@ function getGameRoom(message, socket) {
  * @param {*} points Points to be added to the player.
  * @returns The new value of the player's points.
  */
-function changePlayerScore(playerNickname, roomCode, points) {
-  const room = availableRooms.get(roomCode);
-  const players = room.get('players');
-  const player = players.get(playerNickname);
-  const playerInfo = player.get('playerInfo');
+function changePlayerScore(playerNickname, roomCode, points, playerInfo) {
   let playerPoints = playerInfo.get('points');
   playerPoints += points;
   playerInfo.set('points', playerPoints);
@@ -1124,22 +1125,19 @@ function checkMatch(message, socket) {
   const boardCardId = message.boardCard;
   const roomCode = message.sessionCode;
   const playerNickname = message.nickname;
+
+  const room = availableRooms.get(roomCode);
+  const players = room.get('players');
+  const player = players.get(playerNickname);
+  const playerInfo = player.get('playerInfo');
+  const cards = playerInfo.get('cards');
   // Checks if match is correct and updates score
   if (playerCardId === boardCardId) {
-    const room = availableRooms.get(roomCode);
-    const players = room.get('players');
-    const player = players.get(playerNickname);
-    const playerInfo = player.get('playerInfo');
-    const cards = playerInfo.get('cards');
-
     // Eliminar la carta de la mano del jugador luego de corroborar que el match si fue correcto.
-    for (let index = 0; index < cards.size; index += 1) {
-      if (cards.get(index).get('description') === playerCardId) {
-        cards.delete(index);
-      }
+    if (cards.has(playerCardId)) {
+      cards.delete(playerCardId);
     }
-
-    const playerPoints = changePlayerScore(playerNickname, roomCode, 100);
+    const playerPoints = changePlayerScore(playerNickname, roomCode, 100, playerInfo);
     const newMessage = {
       type: 'handleMatchResponse',
       from: 'server',
@@ -1156,7 +1154,7 @@ function checkMatch(message, socket) {
       playerWon(players, roomCode);
     }
   } else {
-    const playerPoints = changePlayerScore(playerNickname, roomCode, -10);
+    const playerPoints = changePlayerScore(playerNickname, roomCode, -10, playerInfo);
     const newMessage = {
       type: 'handleMatchResponse',
       from: 'server',
