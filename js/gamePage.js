@@ -93,12 +93,12 @@ function stopGame(socket) {
   }
 }
 
-function createContentElement(imageText, route, className) {
+function createContentElement(imageText, route, className, type) {
   let contentElement = null;
   const imageRoute = `/design/images/icons/board/${route}`;
 
   // If player has selected words
-  if (configMap.adaptation1a === true || configMap.adaptation1b) {
+  if ((configMap.adaptation1a === true && type === 'player') || (configMap.adaptation1b && type === 'player')) {
     contentElement = document.createElement('p');
     contentElement.classList.add('word');
     contentElement.textContent = imageText;
@@ -155,7 +155,7 @@ function handleBoardCards(message, socket) {
           cardElement.classList.add('board-image-container');
           cardElement.setAttribute('id', imageText);
 
-          const contentElement = createContentElement(imageText, cardData.route, 'board-image');
+          const contentElement = createContentElement(imageText, cardData.route, 'board-image', 'board');
           if (contentElement) {
             // If player has selected colored border
             if (configMap.adaptation2a === true || configMap.adaptation2b === true) {
@@ -212,7 +212,7 @@ function handlePlayerCards(message) {
           cardElement.classList.add('my-image-container');
           cardElement.setAttribute('id', imageText);
 
-          const contentElement = createContentElement(imageText, cardData.route, 'my-image');
+          const contentElement = createContentElement(imageText, cardData.route, 'my-image', 'player');
           if (contentElement) {
             // If player has selected colored border
             if (configMap.adaptation2a === true || configMap.adaptation2b === true) {
