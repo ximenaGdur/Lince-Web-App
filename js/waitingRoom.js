@@ -16,7 +16,7 @@ import {
 /** ******************* Creating constants for script ******************* */
 
 // Minimum amount of cards per player permitted
-const cardsPlayerMin = 5;
+const cardsPlayerMin = 1;
 
 // Maximum amount of cards per player permitted
 const cardsPlayerMax = 20;
