@@ -243,6 +243,8 @@ button:hover {
 
 /* border of the table */
 .player-table {
+    border-style: solid;
+    border-color: var(--plum);
     border-collapse: collapse;
     min-width: 80%;
     max-width: 80%;
@@ -264,8 +266,6 @@ button:hover {
 /** Style for ranking col. **/
 .table-col {
     align-items: center;
-    border-color: var(--plum);
-    border-style: solid;
     color: var(--violet);
     display: flex;
     font-size: 1.3rem;

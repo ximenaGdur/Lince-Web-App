@@ -22,7 +22,7 @@ function createNewPlayer(nickname, playerInfo) {
   playerHTML += '  </td>';
 
   playerHTML += `  <td class="table-col name-column">${nickname}</td>`;
-  playerHTML += `  <td class="table-col score-column">${playerInfo.points} puntos</td>`;
+  playerHTML += `  <td class="table-col score-column">${playerInfo.points} pts</td>`;
   playerHTML += '</tr>';
 
   return playerHTML;
