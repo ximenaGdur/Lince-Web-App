@@ -1,19 +1,12 @@
-/** ****************** Creating constants for script ******************* */
-
-// Pop Up that is shown when player decides to join session.
-const exitPopUp = document.getElementById('exit-popup');
-// Button that allows player to close pop up.
-const cancelButton = document.getElementById('cancel-button');
-// Button that allows the user to see the exit popup.
-const exitButton = document.getElementById('exit-button');
-
 /** ******************** Functions used on script ********************* */
 
 /**
  * Closes Pop Up.
  */
 export function closePopUp() {
-  if (exitPopUp && cancelButton) {
+  // Pop Up that is shown when player decides to join session.
+  const exitPopUp = document.getElementById('exit-popup');
+  if (exitPopUp) {
     exitPopUp.style.display = 'none';
   }
 }
@@ -22,6 +15,10 @@ export function closePopUp() {
  * Shows Pop Up.
  */
 export function showExitPopup() {
+  // Pop Up that is shown when player decides to join session.
+  const exitPopUp = document.getElementById('exit-popup');
+  // Button that allows the user to see the exit popup.
+  const exitButton = document.getElementById('exit-button');
   if (exitPopUp && exitButton) {
     exitPopUp.style.display = 'flex';
   }
@@ -32,13 +29,18 @@ export function showExitPopup() {
  */
 export function createRemovePlayerMessage() {
   console.log('Cerrando conexión con server.');
-  const message = {
-    type: 'removePlayer',
-    from: 'client',
-    to: 'server',
-    when: 'when a client leaves the room',
-    nickname: localStorage.getItem('playerNickname'),
-    sessionCode: localStorage.getItem('roomCode'),
-  };
-  return JSON.stringify(message);
+  const playerNickname = localStorage.getItem('playerNickname');
+  const roomCode = localStorage.getItem('roomCode');
+  if (playerNickname && roomCode) {
+    const message = {
+      type: 'removePlayer',
+      from: 'client',
+      to: 'server',
+      when: 'when a client leaves the room',
+      nickname: playerNickname,
+      sessionCode: roomCode,
+    };
+    return JSON.stringify(message);
+  }
+  return null;
 }

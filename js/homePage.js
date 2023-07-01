@@ -2,249 +2,264 @@
 import {
   showCodePopUp,
   cancelPopUp,
-  handleCodeValidation,
 // eslint-disable-next-line import/extensions
 } from './codePopUp.js';
 
+import {
+  identifyMessage,
+  addingEventById,
+// eslint-disable-next-line import/extensions
+} from './common.js';
+
 /** ****************** Creating constants for script ******************* */
 
-// Button that allows player to close pop up.
-const cancelButton = document.getElementById('cancel-button');
-// Button that changes tab to credits.
-const creditsButton = document.getElementById('credits-link');
-// Credits tab content.
-const creditsContent = document.getElementById('credits');
-// Button to create a room after entering a nickname.
-const createRoomBtn = document.getElementById('create-room-button');
-// Feedback given by server about given room code.
-const feedbackMessage = document.getElementById('room-validation-text');
-// Text field to enter player nickname.
-const nicknameField = document.getElementById('nickname');
-// Button that changes tab to instructions.
-const instructionsButton = document.getElementById('instructions-link');
-// Instructions tab content.
-const instructionsContent = document.getElementById('instructions');
-// Button in codePopUp to join into a room
-const joinButton = document.getElementById('join-button');
-// Button to join a room after entering a nickname.
-const joinRoomBtn = document.getElementById('show-popup-button');
-// Input box inside popup
-const popupInput = document.getElementById('popup-input');
-// Button that changes tab to ranking.
-const rankingButton = document.getElementById('ranking-link');
-// Ranking tab content.
-const rankingContent = document.getElementById('ranking');
-// Button to show the codePopUp
-const showPopUpButton = document.getElementById('show-popup-button');
-// Socket that connects to server
-const socket = new WebSocket('ws://localhost:8009');
+class HomePage {
+  // Credits tab content.
+  creditsContent = document.getElementById('credits');
 
-// Global variable with room code
-localStorage.setItem('roomCode', '');
-localStorage.setItem('roomCode', '');
+  // Button to create a room after entering a nickname.
+  createRoomBtn = document.getElementById('create-room-button');
 
-/** ******************** Functions used on script ********************* */
+  // Text field to enter player nickname.
+  nicknameField = document.getElementById('nickname');
 
-/**
- * Lock or enable create room and join room buttons after entering a nickname.
- */
-function enterNickname() {
-  const playerNickname = nicknameField.value;
-  if (playerNickname.length > 0 && playerNickname.trim() !== '') {
-    createRoomBtn.disabled = false;
-    createRoomBtn.style.cursor = 'pointer';
-    joinRoomBtn.style.cursor = 'pointer';
-    joinRoomBtn.disabled = false;
-  } else {
-    createRoomBtn.disabled = true;
-    joinRoomBtn.disabled = true;
-    createRoomBtn.style.cursor = 'default';
-    joinRoomBtn.style.cursor = 'default';
+  // Instructions tab content.
+  instructionsContent = document.getElementById('instructions');
+
+  // Button to join a room after entering a nickname.
+  joinRoomBtn = document.getElementById('show-popup-button');
+
+  // Input box inside popup
+  popupInput = document.getElementById('popup-input');
+
+  // Ranking tab content.
+  rankingContent = document.getElementById('ranking');
+
+  /** ******************** Functions used on script ********************* */
+
+  /**
+   * Lock or enable create room and join room buttons after entering a nickname.
+   */
+  enterNickname() {
+    if (this.nicknameField) {
+      const nickname = this.nicknameField.value;
+      if (nickname.length > 0 && nickname.trim() !== '') {
+        this.createRoomBtn.disabled = false;
+        this.createRoomBtn.style.cursor = 'pointer';
+        this.joinRoomBtn.style.cursor = 'pointer';
+        this.joinRoomBtn.disabled = false;
+        sessionStorage.setItem('playerNickname', nickname);
+      } else {
+        this.createRoomBtn.disabled = true;
+        this.joinRoomBtn.disabled = true;
+        this.createRoomBtn.style.cursor = 'default';
+        this.joinRoomBtn.style.cursor = 'default';
+      }
+    }
   }
-  localStorage.setItem('playerNickname', playerNickname);
-}
+  /**
+   * Sends a message to the server to close a client's connection.
+   * Should be included in common.js
+   */
+  /* function closeTab() {
+  } */
 
-/**
- * Sends a message to the server to close a client's connection.
- * Should be included in common.js
- */
-/* function closeTab() {
-} */
+  /**
+  * Send a message to the server to create a new room with the host as the client
+  * that pressed the create room button and with the nickname entered.
+  */
+  createSession(socket) {
+    if (this.nicknameField) {
+      const enteredNickname = this.nicknameField.value;
+      const message = {
+        type: 'createRoom',
+        from: 'client',
+        to: 'server',
+        when: 'when a client presses the create room button with a valid nickname',
+        nickname: enteredNickname,
+      };
+      socket.send(JSON.stringify(message));
+    }
+  }
 
-/**
-* Send a message to the server to create a new room with the host as the client
-* that pressed the create room button and with the nickname entered.
-*/
-function createSession() {
-  const playerNickname = document.getElementById('nickname').value;
-  const message = {
-    type: 'createRoom',
-    from: 'client',
-    to: 'server',
-    when: 'when a client presses the create room button with a valid nickname',
-    nickname: playerNickname,
-  };
-  socket.send(JSON.stringify(message));
-}
+  /**
+   * Joins given room when button is clicked.
+   */
+  joinSession(socket) {
+    if (this.nicknameField && this.popupInput) {
+      const givenNickname = this.nicknameField.value;
+      const givenCode = this.popupInput.value;
 
-/**
- * Joins given room when button is clicked.
- */
-function joinSession() {
-  const playerNickname = document.getElementById('nickname').value;
-  if (joinButton) {
-    const message = {
-      type: 'addToRoom',
-      from: 'client',
-      to: 'server',
-      when: 'when a client presses the join session button',
-      nickname: playerNickname,
-      sessionCode: popupInput.value,
-    };
-    socket.send(JSON.stringify(message));
+      const message = {
+        type: 'addToRoom',
+        from: 'client',
+        to: 'server',
+        when: 'when a client presses the join session button',
+        nickname: givenNickname,
+        sessionCode: givenCode,
+      };
+      socket.send(JSON.stringify(message));
 
-    localStorage.setItem('roomCode', popupInput.value);
+      sessionStorage.setItem('roomCode', givenCode);
+      window.location.href = './waitingRoom.xhtml';
+    }
+  }
+
+  /**
+   * Asks the server if room code is valid.
+   */
+  verifyCode(socket) {
+    // Feedback given by server about given room code.
+    const feedbackMessage = document.getElementById('room-validation-text');
+    if (feedbackMessage && this.popupInput) {
+      const givenCode = this.popupInput.value;
+      if (givenCode.length === 5 && givenCode.trim() !== '') {
+        const message = {
+          type: 'validateCode',
+          from: 'client',
+          to: 'server',
+          when: 'when a client types a room code',
+          sessionCode: givenCode,
+        };
+        socket.send(JSON.stringify(message));
+      } else {
+        feedbackMessage.innerHTML = '';
+      }
+    }
+  }
+
+  /**
+   * Shows credits tab.
+   */
+  showCredits() {
+    if (this.creditsContent && this.rankingContent && this.instructionsContent) {
+      this.creditsContent.style.display = 'flex';
+      this.rankingContent.style.display = 'none';
+      this.instructionsContent.style.display = 'none';
+    }
+  }
+
+  /**
+   * Shows ranking tab.
+   */
+  showRanking() {
+    if (this.creditsContent && this.rankingContent && this.instructionsContent) {
+      this.creditsContent.style.display = 'none';
+      this.rankingContent.style.display = 'flex';
+      this.instructionsContent.style.display = 'none';
+    }
+  }
+
+  /**
+   * Shows instructions tab.
+   */
+  showInstructions() {
+    if (this.creditsContent && this.rankingContent && this.instructionsContent) {
+      this.creditsContent.style.display = 'none';
+      this.rankingContent.style.display = 'none';
+      this.instructionsContent.style.display = 'flex';
+    }
+  }
+
+  /**
+   * Checks server response to whether code is valid or not.
+   */
+  static handleCodeValidation(socket, receivedMessage) {
+    // Feedback given by server about given room code.
+    const feedbackMessage = document.getElementById('room-validation-text');
+    // Button in codePopUp to join into a room
+    const joinButton = document.getElementById('join-button');
+    if (feedbackMessage && joinButton) {
+      if (receivedMessage.isValid === false && receivedMessage.isStarted === false) {
+        feedbackMessage.innerHTML = '¡Sala no existe!';
+        joinButton.style.cursor = 'default';
+        joinButton.disabled = true;
+      } else if (receivedMessage.isValid === true && receivedMessage.isStarted === true) {
+        feedbackMessage.innerHTML = '¡El juego en la sala ha comenzado!';
+        joinButton.style.cursor = 'default';
+        joinButton.disabled = true;
+      } else {
+        feedbackMessage.innerHTML = 'Sala encontrada';
+        joinButton.style.cursor = 'pointer';
+        joinButton.disabled = false;
+      }
+    }
+  }
+
+  /**
+   * Indicates client room code.
+   * @param {Object} message Message sent by the server.
+   */
+  static handleRoomCode(socket, message) {
+    sessionStorage.setItem('roomCode', message.sessionCode);
     window.location.href = './waitingRoom.xhtml';
   }
 }
 
-/**
- * Asks the server if room code is valid.
- */
-function verifyCode() {
-  if (popupInput.value.length === 5 && popupInput.value.trim() !== '') {
-    const message = {
-      type: 'validateCode',
-      from: 'client',
-      to: 'server',
-      when: 'when a client types a room code',
-      sessionCode: popupInput.value,
-    };
-    socket.send(JSON.stringify(message));
-  } else {
-    feedbackMessage.innerHTML = '';
+function addEventListeners() {
+  // Socket that connects to server
+  const socket = new WebSocket('ws://localhost:8009');
+  // Creating instance of Home Page class.
+  const page = new HomePage();
+
+  if (socket && page) {
+    /**
+    * When a connection is made with server.
+    */
+    socket.addEventListener('open', () => {
+      console.log('Conexión con Servidor');
+    });
+
+    /**
+    * Event that occurs every time a message is received.
+    */
+    socket.addEventListener('message', (event) => {
+      const receivedMessage = JSON.parse(event.data);
+      identifyMessage(page, socket, receivedMessage);
+    });
+
+    // Adding event for button that closes pop up.
+    addingEventById('cancel-button', 'click', cancelPopUp);
+
+    // Adding event for button that tells server to create room.
+    addingEventById('create-room-button', 'click', page.createSession);
+
+    // Adding event for button that changes tab to Credits.
+    addingEventById('credits-link', 'click', page.showCredits);
+
+    // Adding event for button that changes tab to Instructions.
+    addingEventById('instructions-link', 'click', page.showInstructions);
+
+    // Adding event for button that changes tab to Ranking.
+    addingEventById('ranking-link', 'click', page.showRanking);
+
+    // Adding event for button that tells server to join to room.
+    addingEventById('join-button', 'click', page.joinSession);
+
+    // Adding event for nickname field that detects when it is changed.
+    addingEventById('nickname', 'input', page.enterNickname);
+
+    // Adding event for code field that detects when it is changed.
+    addingEventById('popup-input', 'input', page.verifyCode);
+
+    // Adding event for button that shows pop up.
+    addingEventById('show-popup-button', 'click', showCodePopUp);
   }
-}
-
-/**
- * Shows credits tab.
- */
-function showCredits() {
-  if (creditsButton) {
-    creditsContent.style.display = 'flex';
-    rankingContent.style.display = 'none';
-    instructionsContent.style.display = 'none';
-  }
-}
-
-/**
- * Shows ranking tab.
- */
-function showRanking() {
-  if (rankingButton) {
-    creditsContent.style.display = 'none';
-    rankingContent.style.display = 'flex';
-    instructionsContent.style.display = 'none';
-  }
-}
-
-/**
- * Shows instructions tab.
- */
-function showInstructions() {
-  if (instructionsButton) {
-    creditsContent.style.display = 'none';
-    rankingContent.style.display = 'none';
-    instructionsContent.style.display = 'flex';
-  }
-}
-
-/**
- * Indicates client room code.
- * @param {*} receivedMessage Message sent by the server containing the room code to save.
- */
-function handleRoomCode(message) {
-  localStorage.setItem('roomCode', message.sessionCode);
-  window.location.href = './waitingRoom.xhtml';
-}
-
-/**
- * Identifying message type in order to call appropiate function.
- */
-function identifyMessage(receivedMessage) {
-  switch (receivedMessage.type) {
-    case 'handleCodeValidation':
-      handleCodeValidation(receivedMessage);
-      break;
-    case 'handleRoomCode':
-      handleRoomCode(receivedMessage);
-      break;
-    default:
-      console.error('No se reconoce ese mensaje.');
-  }
-}
-
-function loadAddEventListeners() {
-  /**
-  * When a connection is made with server.
-  */
-  socket.addEventListener('open', () => {
-  });
-
-  /**
-  * Event that occurs every time a message is received.
-  */
-  socket.addEventListener('message', (event) => {
-    const receivedMessage = JSON.parse(event.data);
-    identifyMessage(receivedMessage);
-  });
-
-  /**
-  * Adding event listener when cancelButton is clicked
-  */
-  cancelButton.addEventListener('click', cancelPopUp);
-
-  /**
-  * Adding event listener when createRoomBtn is clicked
-  */
-  createRoomBtn.addEventListener('click', createSession);
-
-  /**
-  * Adding event listener when creditsButton is clicked
-  */
-  creditsButton.addEventListener('click', showCredits);
-
-  /**
-  * Adding event listener when instructionsButton is clicked
-  */
-  instructionsButton.addEventListener('click', showInstructions);
-
-  /**
-  * Adding event listener when joinButton is clicked
-  */
-  joinButton.addEventListener('click', joinSession);
-
-  /**
-  * Adding event listener when nicknameField is changed
-  */
-  nicknameField.addEventListener('input', enterNickname);
-
-  /**
-  * Adding event listener when popupInput is changed
-  */
-  popupInput.addEventListener('input', verifyCode);
-
-  /**
-  * Adding event listener when rankingButton is clicked
-  */
-  rankingButton.addEventListener('click', showRanking);
-
-  /**
-  * Adding event listener when showPopUpButton is clicked
-  */
-  showPopUpButton.addEventListener('click', showCodePopUp);
 }
 
 /** ********************** Listeners for home page *********************** */
 
-window.addEventListener('load', loadAddEventListeners);
+function loadPage() {
+  sessionStorage.setItem('roomCode', '');
+  sessionStorage.setItem('roomCode', '');
+}
+
+/**
+ * When page is loaded, event listeners and page is set up
+ */
+function main() {
+  addEventListeners();
+  loadPage();
+}
+
+window.addEventListener('load', main);

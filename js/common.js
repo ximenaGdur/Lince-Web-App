@@ -49,9 +49,9 @@ export function addToTable(players, playerTable) {
 
 /**
  * Identifying message type in order to call appropiate function.
- * @param {*} functions Array with all functions.
- * @param {*} socket Socket with connection to server.
- * @param {*} receivedMessage Message received from server.
+ * @param {class} pageClass Class with all functions.
+ * @param {WebSocket} socket Socket with connection to server.
+ * @param {Object} receivedMessage Message received from server.
  * @returns Boolean value that indicates if message was identified or not.
  */
 export function identifyMessage(pageClass, socket, receivedMessage) {
@@ -59,6 +59,37 @@ export function identifyMessage(pageClass, socket, receivedMessage) {
   if (pageClass[messageType]) {
     pageClass[messageType](receivedMessage, socket);
   } else {
-    console.log('Mensaje no reconocido');
+    console.log('No se reconoce ese mensaje.');
+  }
+}
+
+/**
+   * Determines if session storage elements are initialized.
+   * @returns Whether elements are initialized.
+   */
+export function sessionStorageInitialized() {
+  const playerNickname = sessionStorage.getItem('playerNickname');
+  const roomCode = sessionStorage.getItem('roomCode');
+  let isInitialized = false;
+  if (playerNickname && playerNickname !== '' && roomCode && roomCode !== '') {
+    isInitialized = true;
+  }
+  return isInitialized;
+}
+
+/**
+ * Adding event to element identified by given id.
+ * @param {String} elementId Id given to element.
+ * @param {String} eventString Event that triggers function.
+ * @param {function} eventResponse Response to event on element.
+ * @param {*} parameter Parameter to send to function.
+ */
+export function addingEventById(elementId, eventString, eventResponse, parameter) {
+  // Button that allows player to return to main page.
+  const element = document.getElementById(elementId);
+  if (element) {
+    element.addEventListener(eventString, () => {
+      eventResponse(parameter);
+    });
   }
 }
