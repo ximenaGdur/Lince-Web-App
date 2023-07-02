@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 /** ****************** Imports ******************* */
 import {
   showCodePopUp,
@@ -11,31 +12,37 @@ import {
 // eslint-disable-next-line import/extensions
 } from './common.js';
 
-/** ****************** Creating constants for script ******************* */
+/** ****************** Class for home page functions ******************* */
 
 class HomePage {
-  // Credits tab content.
-  creditsContent = document.getElementById('credits');
+  /**
+   * Initializing all class atributes.
+   */
+  constructor() {
+    // Button to create a room after entering a nickname.
+    this.createRoomBtn = document.getElementById('create-room-button');
+    // Credits tab content.
+    this.creditsContent = document.getElementById('credits');
+    // Instructions tab content.
+    this.instructionsContent = document.getElementById('instructions');
+    // Button to join a room after entering a nickname.
+    this.joinRoomBtn = document.getElementById('show-popup-button');
+    // Text field to enter player nickname.
+    this.nicknameField = document.getElementById('nickname');
+    // Input box inside popup
+    this.popupInput = document.getElementById('popup-input');
+    // Ranking tab content.
+    this.rankingContent = document.getElementById('ranking');
 
-  // Button to create a room after entering a nickname.
-  createRoomBtn = document.getElementById('create-room-button');
-
-  // Text field to enter player nickname.
-  nicknameField = document.getElementById('nickname');
-
-  // Instructions tab content.
-  instructionsContent = document.getElementById('instructions');
-
-  // Button to join a room after entering a nickname.
-  joinRoomBtn = document.getElementById('show-popup-button');
-
-  // Input box inside popup
-  popupInput = document.getElementById('popup-input');
-
-  // Ranking tab content.
-  rankingContent = document.getElementById('ranking');
-
-  /** ******************** Functions used on script ********************* */
+    // Binding methods to the class instance
+    this.enterNickname = this.enterNickname.bind(this);
+    this.createSession = this.createSession.bind(this);
+    this.joinSession = this.joinSession.bind(this);
+    this.verifyCode = this.verifyCode.bind(this);
+    this.showCredits = this.showCredits.bind(this);
+    this.showRanking = this.showRanking.bind(this);
+    this.showInstructions = this.showInstructions.bind(this);
+  }
 
   /**
    * Lock or enable create room and join room buttons after entering a nickname.
@@ -57,6 +64,7 @@ class HomePage {
       }
     }
   }
+
   /**
    * Sends a message to the server to close a client's connection.
    * Should be included in common.js
@@ -164,7 +172,7 @@ class HomePage {
   /**
    * Checks server response to whether code is valid or not.
    */
-  static handleCodeValidation(socket, receivedMessage) {
+  handleCodeValidation(socket, receivedMessage) {
     // Feedback given by server about given room code.
     const feedbackMessage = document.getElementById('room-validation-text');
     // Button in codePopUp to join into a room
@@ -190,7 +198,7 @@ class HomePage {
    * Indicates client room code.
    * @param {Object} message Message sent by the server.
    */
-  static handleRoomCode(socket, message) {
+  handleRoomCode(socket, message) {
     sessionStorage.setItem('roomCode', message.sessionCode);
     window.location.href = './waitingRoom.xhtml';
   }
@@ -215,35 +223,36 @@ function addEventListeners() {
     */
     socket.addEventListener('message', (event) => {
       const receivedMessage = JSON.parse(event.data);
+      console.log(`Recibi del servidor: ${JSON.stringify(receivedMessage)}`);
       identifyMessage(page, socket, receivedMessage);
     });
 
     // Adding event for button that closes pop up.
-    addingEventById('cancel-button', 'click', cancelPopUp);
+    addingEventById('cancel-button', 'click', cancelPopUp, null);
 
     // Adding event for button that tells server to create room.
-    addingEventById('create-room-button', 'click', page.createSession);
+    addingEventById('create-room-button', 'click', page.createSession, socket);
 
     // Adding event for button that changes tab to Credits.
-    addingEventById('credits-link', 'click', page.showCredits);
+    addingEventById('credits-link', 'click', page.showCredits, null);
 
     // Adding event for button that changes tab to Instructions.
-    addingEventById('instructions-link', 'click', page.showInstructions);
+    addingEventById('instructions-link', 'click', page.showInstructions, null);
 
     // Adding event for button that changes tab to Ranking.
-    addingEventById('ranking-link', 'click', page.showRanking);
+    addingEventById('ranking-link', 'click', page.showRanking, null);
 
     // Adding event for button that tells server to join to room.
-    addingEventById('join-button', 'click', page.joinSession);
+    addingEventById('join-button', 'click', page.joinSession, socket);
 
     // Adding event for nickname field that detects when it is changed.
-    addingEventById('nickname', 'input', page.enterNickname);
+    addingEventById('nickname', 'input', page.enterNickname, null);
 
     // Adding event for code field that detects when it is changed.
-    addingEventById('popup-input', 'input', page.verifyCode);
+    addingEventById('popup-input', 'input', page.verifyCode, socket);
 
     // Adding event for button that shows pop up.
-    addingEventById('show-popup-button', 'click', showCodePopUp);
+    addingEventById('show-popup-button', 'click', showCodePopUp, null);
   }
 }
 

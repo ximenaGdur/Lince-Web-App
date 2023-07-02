@@ -22,51 +22,39 @@
                 <h2 class="page-title" id="waiting-room-title">Configuración - Sala de Espera #</h2>
                 <article class="options-container">
                     <center><h3 class="subtitle">Configuraciones generales</h3></center>
-                    <ul class="configuration-option" id="max-time">
-                        <li class="option-container">
-                            <img class="information-icon" src="/design/images/Icons/informationIcon.png"
-                                alt="información"></img>
-                            <label for="max-time-range" class="configurations-title small-text">Tiempo máximo</label>
-                            <input type="range" class="input-range" id="max-time-range" value="20" min="20" max="120" step="1"/>
-                            <p class="range-value" id="max-time-value">20 s</p>
-                        </li>
-                        <li class="info-pop-up" id="infoMaxTime">
-                            <span class="config-description">
-                                Tiempo máximo de una partida en segundos.
-                            </span>
-                        </li>
-                    </ul>
-                    <ul class="configuration-option" id="cards-per-player">
-                        <li class="option-container">
-                            <img class="information-icon" src="/design/images/Icons/informationIcon.png"
-                                alt="información"></img>
-                            <label for="cards-per-player-range" class="configurations-title small-text">Fichas por jugador</label>
-                            <input type="range" class="input-range" id="cards-per-player-range" value="5" min="5" max="20" step="1"/>
-                            <p class="range-value" id="cards-per-player-value">5</p>
-                        </li>
-                        <li class="info-pop-up" id="infoCardsPlayers">
-                            <span class="config-description">
-                                Número de fichas en la mano de que cada jugador.
-                                <br/>
-                                Máximo 20 - Mínimo 5.
-                            </span>
-                        </li>
-                    </ul>
-                    <ul class="configuration-option" id="cards-per-round">
-                        <li class="option-container">
-                            <img class="information-icon" src="/design/images/Icons/informationIcon.png"
-                                alt="información"></img>
-                            <label for="cards-per-round-range" class="configurations-title small-text">Fichas por ronda</label>
-                            <input type="range" class="input-range" id="cards-per-round-range" value="100" min="100" max="400" step="1"/>
-                            <p class="range-value" id="cards-per-round-value">100</p>
-                        </li>
-                        <li class="info-pop-up" id="infoCardsPerRound">
-                            <span class="config-description">
-                                Número de fichas en la manta del juego.<br />
-                                Máximo 400 - mínimo 100.
-                            </span>
-                        </li>
-                    </ul>
+                    <section class="configuration-option option-container" id="max-time">
+                        <img class="information-icon" src="/design/images/Icons/informationIcon.png"
+                            alt="información"></img>
+                        <label for="max-time-range" class="configurations-title small-text">Tiempo máximo</label>
+                        <input type="range" class="input-range" id="max-time-range" value="20" min="20" max="120" step="1"/>
+                        <p class="range-value" id="max-time-value">20 s</p>
+                        <span class="option-description small-text" id="infoMaxTime">
+                            Tiempo máximo de una partida en segundos.
+                        </span>
+                    </section>
+                    <section class="configuration-option option-container" id="cards-per-player">
+                        <img class="information-icon" src="/design/images/Icons/informationIcon.png"
+                            alt="información"></img>
+                        <label for="cards-per-player-range" class="configurations-title small-text">Fichas por jugador</label>
+                        <input type="range" class="input-range" id="cards-per-player-range" value="5" min="5" max="20" step="1"/>
+                        <p class="range-value" id="cards-per-player-value">5</p>
+                        <span class="option-description small-text" id="infoCardsPlayers">
+                            Número de fichas en la mano de que cada jugador.
+                            <br/>
+                            Máximo 20 - Mínimo 5.
+                        </span>
+                    </section>
+                    <section class="configuration-option option-container" id="cards-per-round">
+                        <img class="information-icon" src="/design/images/Icons/informationIcon.png"
+                            alt="información"></img>
+                        <label for="cards-per-round-range" class="configurations-title small-text">Fichas por ronda</label>
+                        <input type="range" class="input-range" id="cards-per-round-range" value="100" min="100" max="400" step="1"/>
+                        <p class="range-value" id="cards-per-round-value">100</p>
+                        <span class="option-description small-text" id="infoCardsPerRound">
+                            Número de fichas en la manta del juego.<br />
+                            Máximo 400 - mínimo 100.
+                        </span>
+                    </section>
                 </article>
                 <article class="options-container">
                     <h3 class="subtitle">Adaptaciones opcionales</h3>

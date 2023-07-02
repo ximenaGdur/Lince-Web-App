@@ -6,6 +6,9 @@
 // Including ws module.
 const WebSocket = require('ws');
 
+// Including fs module.
+const fs = require('fs');
+
 /** ****************** Creating constants for script ******************* */
 
 // Dictionary that stores all rooms and their information.
@@ -155,7 +158,7 @@ const server = new WebSocket.Server({ port: 8009 });
  * @param {Object} messageReceived Message player sent.
  * @param {WebSocket} socket Player socket.
  */
-function validateCode(messageReceived, socket) {
+function validateCode(socket, messageReceived) {
   const code = messageReceived.sessionCode;
   let newMessage = {};
   if (availableRooms.has(code)) {
@@ -420,7 +423,7 @@ function sendRoomCode(socket, roomCode) {
  * @param {Object} message Message received from client.
  * @param {WebSocket} socket Socket to specific client.
  */
-function createRoom(message, socket) {
+function createRoom(socket, message) {
   const playerNickname = message.nickname;
   const newPlayer = createPlayer(1, true);
 
@@ -452,7 +455,7 @@ function createRoom(message, socket) {
  * @param {Object} message Message sent by client.
  * @param {WebSocket} socket Socket of player that wants to join room.
  */
-function addToRoom(message, socket) {
+function addToRoom(socket, message) {
   const playerNickname = message.nickname;
   const roomCode = message.sessionCode;
   const roomInfo = availableRooms.get(roomCode);
@@ -498,7 +501,7 @@ function playerExists(code, nickname) {
  * @param {Object} message Message sent by client.
  * @param {WebSocket} socket Socket of player requesting waiting room.
  */
-function getWaitingRoom(message, socket) {
+function getWaitingRoom(socket, message) {
   const playerNickname = message.nickname;
   const roomCode = message.sessionCode;
 
@@ -531,7 +534,7 @@ function getWaitingRoom(message, socket) {
  * @param {Object} message Message sent by client.
  * @param {WebSocket} socket Is not used, but added for consistency.
  */
-function setCardsPerRound(message) {
+function setCardsPerRound(socket, message) {
   const roomCode = message.sessionCode;
   const playerNickname = message.nickname;
   if (availableRooms.has(roomCode)) {
@@ -559,7 +562,7 @@ function setCardsPerRound(message) {
  * @param {Object} message Message sent by client.
  * @param {WebSocket} socket Socket of host requesting change on server.
  */
-function setMaxTime(message) {
+function setMaxTime(socket, message) {
   const roomCode = message.sessionCode;
   const playerNickname = message.nickname;
 
@@ -567,7 +570,6 @@ function setMaxTime(message) {
     const time = message.maxTime;
     const roomMap = availableRooms.get(roomCode);
     const roomConfig = roomMap.get('config');
-
     // Storing configuration
     roomConfig.set('maxTime', time);
 
@@ -588,7 +590,7 @@ function setMaxTime(message) {
  * @param {Object} message Message sent by client.
  * @param {WebSocket} socket Socket of host requesting change on server.
  */
-function setCardsPerPlayer(message) {
+function setCardsPerPlayer(socket, message) {
   const roomCode = message.sessionCode;
   const playerNickname = message.nickname;
 
@@ -617,7 +619,7 @@ function setCardsPerPlayer(message) {
  * @param {Object} message Message sent by client.
  * @param {WebSocket} socket Socket of host requesting change on server.
  */
-function toggleAdp1a(message) {
+function toggleAdp1a(socket, message) {
   const roomCode = message.sessionCode;
   const playerNickname = message.nickname;
 
@@ -645,7 +647,7 @@ function toggleAdp1a(message) {
  * @param {Object} message Message sent by client.
  * @param {WebSocket} socket Socket of host requesting change on server.
  */
-function toggleAdp1b(message) {
+function toggleAdp1b(socket, message) {
   const roomCode = message.sessionCode;
   const playerNickname = message.nickname;
 
@@ -673,7 +675,7 @@ function toggleAdp1b(message) {
  * @param {Object} message Message sent by client.
  * @param {WebSocket} socket Socket of host requesting change on server.
  */
-function toggleAdp2a(message) {
+function toggleAdp2a(socket, message) {
   const roomCode = message.sessionCode;
   const playerNickname = message.nickname;
 
@@ -701,7 +703,7 @@ function toggleAdp2a(message) {
  * @param {Object} message Message sent by client.
  * @param {WebSocket} socket Socket of host requesting change on server.
  */
-function toggleAdp2b(message) {
+function toggleAdp2b(socket, message) {
   const roomCode = message.sessionCode;
   const playerNickname = message.nickname;
 
@@ -729,7 +731,7 @@ function toggleAdp2b(message) {
  * @param {Object} message Message sent by client.
  * @param {WebSocket} socket Socket of host requesting change on server.
  */
-function toggleAdp3a(message) {
+function toggleAdp3a(socket, message) {
   const roomCode = message.sessionCode;
   const playerNickname = message.nickname;
 
@@ -757,7 +759,7 @@ function toggleAdp3a(message) {
  * @param {Object} message Message sent by client.
  * @param {WebSocket} socket Socket of host requesting change on server.
  */
-function toggleAdp3b(message) {
+function toggleAdp3b(socket, message) {
   const roomCode = message.sessionCode;
   const playerNickname = message.nickname;
 
@@ -800,7 +802,7 @@ function assignNewHost(playersMap) {
  * @param {Object} message Message sent by client.
  * @param {WebSocket} socket Socket of host requesting change on server.
  */
-function removePlayer(message) {
+function removePlayer(socket, message) {
   const roomCode = message.sessionCode;
   const playerNickname = message.nickname;
   if (roomCode && playerNickname && availableRooms.has(roomCode)) {
@@ -915,33 +917,38 @@ function getPlayerScore(nickname, players) {
  * Identifies which player has the lowest score.
  * @param {Map} playersMap Map of players to check.
  */
-function identifyCurrentLoser(playersMap) {
+function identifyPlayerPosition(playersMap, isFirst) {
   // Empty map with lowest score info.
-  let lowestScore = null;
+  let pickedPlayer = null;
   // Player nicknames.
-  const playerNicknames = Array.from(playersMap.keys());
+  const playerNicknames = playersMap.keys();
   // First player nickname.
   let playerNickname = playerNicknames[0];
   // First player map.
   let playerScore = getPlayerScore(playerNickname, playersMap);
   // Setting first player's score as lowest.
-  lowestScore = new Map([
+  pickedPlayer = new Map([
     ['nickname', playerNickname],
     ['score', playerScore],
   ]);
 
-  // Finding lowest score and asigning it to lowestScore map.
-  for (let playerIndex = 1; playerIndex < playerNicknames.length; playerIndex += 1) {
-    playerNickname = playerNicknames[playerIndex];
-    playerScore = getPlayerScore(playerNickname, playersMap);
-    // If current player has a lower score than the lowest score recorded, store it.
-    if ((playerScore && lowestScore) && lowestScore.get('score') > playerScore) {
-      lowestScore.set('nickname', playerNickname);
-      lowestScore.set('score', playerScore);
+  if (playerScore && pickedPlayer) {
+    // Finding lowest score and asigning it to score map.
+    for (let playerIndex = 1; playerIndex < playerNicknames.length; playerIndex += 1) {
+      playerNickname = playerNicknames[playerIndex];
+      playerScore = getPlayerScore(playerNickname, playersMap);
+      // If current player has a lower score than the lowest score recorded, store it.
+      if (playerScore) {
+        if ((isFirst === false && pickedPlayer.get('score') > playerScore)
+          || (isFirst === true && pickedPlayer.get('score') < playerScore)) {
+          pickedPlayer.set('nickname', playerNickname);
+          pickedPlayer.set('score', playerScore);
+        }
+      }
     }
   }
   // Returns a map with information about player with lowest score.
-  return lowestScore;
+  return playerScore;
 }
 
 /**
@@ -951,7 +958,7 @@ function identifyCurrentLoser(playersMap) {
 function applyExtraCards(roomCode) {
   const roomInfo = availableRooms.get(roomCode);
   const playersMap = roomInfo.get('players');
-  const playerNickname = identifyCurrentLoser(playersMap);
+  const playerNickname = identifyPlayerPosition(playersMap, false);
 
   // TODO: try if it works
 
@@ -985,7 +992,7 @@ function applyExtraCards(roomCode) {
 function applyBlur(roomCode) {
   const roomInfo = availableRooms.get(roomCode);
   const playersMap = roomInfo.get('players');
-  const loserPlayer = identifyCurrentLoser(playersMap);
+  const loserPlayer = identifyPlayerPosition(playersMap, false);
   if (loserPlayer) {
     const loserNickname = loserPlayer.get('nickname');
     // Sends to other players in room.
@@ -1001,7 +1008,7 @@ function applyBlur(roomCode) {
 
 /**
  * Sets a timeout at a specific time that iniciates a special event to players.
- * @param {*} roomCode
+ * @param {Integer} roomCode Code of room in which to apply special event.
  */
 function setSpecialEvents(roomCode) {
   const roomInfo = availableRooms.get(roomCode);
@@ -1021,7 +1028,7 @@ function setSpecialEvents(roomCode) {
  * @param {Object} message Message sent by client.
  * @param {WebSocket} socket Socket of host requesting start of game.
  */
-function startGame(message) {
+function startGame(socket, message) {
   const roomCode = message.sessionCode;
   const playerNickname = message.nickname;
 
@@ -1056,10 +1063,10 @@ function startGame(message) {
 
 /**
  * Sets amount of card per round to guests in room.
- * @param {*} message
- * @param {*} socket
+ * @param {WebSocket} socket Socket of host requesting start of game.
+ * @param {Object} message Message sent by client.
  */
-function getGameRoom(message, socket) {
+function getGameRoom(socket, message) {
   const playerNickname = message.nickname;
   const roomCode = message.sessionCode;
 
@@ -1089,9 +1096,9 @@ function getGameRoom(message, socket) {
 
 /**
  * Change a player's score in a specific room.
- * @param {} playerNickname Player nickname.
- * @param {*} roomCode Unique room code.
- * @param {*} points Points to be added to the player.
+ * @param {String} playerNickname Player nickname.
+ * @param {Number} roomCode Unique room code.
+ * @param {Number} points Points to be added to the player.
  * @returns The new value of the player's points.
  */
 function changePlayerScore(playerNickname, roomCode, points) {
@@ -1105,21 +1112,69 @@ function changePlayerScore(playerNickname, roomCode, points) {
   return playerPoints;
 }
 
-function playerWon(playersMap, roomCode) {
-  const NewMessage = {
-    type: 'handlePlayerWon',
+function orderPlayersByPoints(players) {
+  console.log(`players: ${players} ${JSON.stringify(Array.from(players))}`);
+  const sortedPlayers = Object.entries(players).sort(
+    ([, playerA], [, playerB]) => playerB.playerInfo.points - playerA.playerInfo.points,
+  );
+  return sortedPlayers;
+}
+
+/**
+ * Saves winners if they have the highest score.
+ * @param {Map} playersMap Player Map with specific room's players.
+ */
+function saveToTop3(playersMap) {
+  const orderedMap = orderPlayersByPoints(playersMap);
+  console.log(`orderedMap: ${orderedMap} ${JSON.stringify(Array.from(orderedMap))}`);
+  console.log(`orderedMap[0]: ${orderedMap[0]}`);
+
+  const winnerPlayer = identifyPlayerPosition(playersMap, true);
+  fs.readFile('top3.txt', 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+    } else {
+      const top3Array = data.split(/\r?\n/);
+      const topScorePlayer = new Map([
+        ['nickname', ''],
+        ['score', ''],
+      ]);
+      /* for (let arrayIndex = 0; arrayIndex < top3Array.length; arrayIndex += 1) {
+        const splitLine = top3Array[arrayIndex].split(',');
+        if (winnerPlayer.score < splitLine[1]) {
+
+        }
+      } */
+    }
+  });
+}
+
+/**
+ * Finishes game for all players in room.
+ * @param {WebSocket} socket Socket of host requesting start of game.
+ * @param {Object} message Message sent by client.
+ */
+function finishGame(socket, message) {
+  const code = message.sessionCode;
+  const roomInfo = availableRooms.get(code);
+  const playersMap = roomInfo.get('players');
+
+  const newMessage = {
+    type: 'handleTimesUp',
     from: 'server',
-    to: 'client',
-    when: 'when player won',
+    to: 'player',
+    when: 'When the server lets players know times up',
     players: createPlayerStringMap(playersMap),
   };
-  broadcastToOthers(NewMessage, roomCode, '');
+
+  saveToTop3(playersMap);
+  socket.send(JSON.stringify(newMessage));
 }
 
 /**
  * Checks if match is correct.
  */
-function checkMatch(message, socket) {
+function checkMatch(socket, message) {
   const playerCardId = message.playerCard;
   const boardCardId = message.boardCard;
   const roomCode = message.sessionCode;
@@ -1134,7 +1189,8 @@ function checkMatch(message, socket) {
 
     // Eliminar la carta de la mano del jugador luego de corroborar que el match si fue correcto.
     for (let index = 0; index < cards.size; index += 1) {
-      if (cards.get(index).get('description') === playerCardId) {
+      const card = cards.get(index);
+      if (card && card.get('description') === playerCardId) {
         cards.delete(index);
       }
     }
@@ -1153,7 +1209,7 @@ function checkMatch(message, socket) {
     socket.send(JSON.stringify(newMessage));
     // Si el jugador tiene 0 cartas en su mano luego de un match correcto, terminar el juego.
     if (cards.size === 0) {
-      playerWon(players, roomCode);
+      finishGame(socket, message);
     }
   } else {
     const playerPoints = changePlayerScore(playerNickname, roomCode, -10);
@@ -1169,24 +1225,6 @@ function checkMatch(message, socket) {
     socket.send(JSON.stringify(newMessage));
   }
   sendUpdatedPlayers('', roomCode, 'handlePlayerList');
-}
-
-/**
- * Finishes game for all players in room.
- */
-function finishGame(message, socket) {
-  const code = message.sessionCode;
-  const roomInfo = availableRooms.get(code);
-  const playersMap = roomInfo.get('players');
-
-  const newMessage = {
-    type: 'handleTimesUp',
-    from: 'server',
-    to: 'player',
-    when: 'When the server lets players know times up',
-    players: createPlayerStringMap(playersMap),
-  };
-  socket.send(JSON.stringify(newMessage));
 }
 
 /**
@@ -1233,13 +1271,15 @@ const functions = [
  * @returns Boolean value that indicates if message was identified or not.
  */
 function identifyMessage(socket, receivedMessage) {
-  const messageType = receivedMessage.type;
   let messageIdentified = false;
-  for (let functionIndex = 0; functionIndex < functions.length; functionIndex += 1) {
-    if (messageType === functions[functionIndex].name) {
-      functions[functionIndex](receivedMessage, socket);
-      messageIdentified = true;
-      break;
+  if (receivedMessage && socket) {
+    const messageType = receivedMessage.type;
+    for (let functionIndex = 0; functionIndex < functions.length; functionIndex += 1) {
+      if (messageType === functions[functionIndex].name) {
+        functions[functionIndex](socket, receivedMessage);
+        messageIdentified = true;
+        break;
+      }
     }
   }
   return messageIdentified;
@@ -1254,6 +1294,7 @@ server.on('connection', (clientSocket) => {
    */
   clientSocket.on('message', (message) => {
     const parsedMessage = JSON.parse(message);
+    console.log(`Mensaje recibido: ${message}`);
 
     if (identifyMessage(clientSocket, parsedMessage) === false) {
       console.log('No se pudo identificar el mensaje');

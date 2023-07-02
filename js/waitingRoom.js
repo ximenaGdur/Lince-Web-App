@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 /** ******************* Imports ******************* */
 
 import {
@@ -30,56 +31,65 @@ const roomConfig = localStorage.getItem('roomConfig');
 const timeInformationText = 10 * 1000;
 
 class WaitingRoomPage {
-  // Minimum amount of cards per player permitted
-  cardsPlayerMin = 5;
+  /**
+   * Initializing all class atributes.
+   */
+  constructor() {
+    // Minimum amount of cards per player permitted
+    this.cardsPlayerMin = 5;
+    // Maximum amount of cards per player permitted
+    this.cardsPlayerMax = 20;
+    // Minimum amount of cards per round permitted
+    this.cardsRoundMin = 5;
+    // Maximum amount of cards per round permitted
+    this.cardsRoundMax = 400;
+    // Boolean for information Icon event listener
+    this.infoIconClicked = true;
+    // Minimum amount of time permitted
+    this.timeMin = 20;
+    // Maximum amount of time permitted
+    this.timeMax = 120;
 
-  // Maximum amount of cards per player permitted
-  cardsPlayerMax = 20;
+    // Option 1a radio button.
+    this.option1a = document.getElementById('Adp1a');
+    // Option 1b radio button.
+    this.option1b = document.getElementById('Adp1b');
+    // Option 2a radio button.
+    this.option2a = document.getElementById('Adp2a');
+    // Option 2b radio button.
+    this.option2b = document.getElementById('Adp2b');
+    // Option 3a radio button.
+    this.option3a = document.getElementById('Adp3a');
+    // Option 3b radio button.
+    this.option3b = document.getElementById('Adp3b');
+    // Max time bar.
+    this.maxTimeRange = document.getElementById('max-time-range');
+    // Value for max time bar.
+    this.maxTimeValue = document.getElementById('max-time-value');
+    // Cards per player bar.
+    this.cardsPerPlayerRange = document.getElementById('cards-per-player-range');
+    // Value for cards per player bar.
+    this.cardsPerPlayerValue = document.getElementById('cards-per-player-value');
+    // Cards per round bar.
+    this.cardsPerRoundRange = document.getElementById('cards-per-round-range');
+    // Value for cards per round bar.
+    this.cardsPerRoundValue = document.getElementById('cards-per-round-value');
+    // Start game button
+    this.startButton = document.getElementById('start-button');
 
-  // Minimum amount of cards per round permitted
-  cardsRoundMin = 5;
-
-  // Maximum amount of cards per round permitted
-  cardsRoundMax = 400;
-
-  // Boolean for information Icon event listener
-  infoIconClicked = true;
-
-  // Minimum amount of time permitted
-  timeMin = 20;
-
-  // Maximum amount of time permitted
-  timeMax = 120;
-
-  // Option 1a radio button.
-  option1a = document.getElementById('Adp1a');
-
-  // Option 1b radio button.
-  option1b = document.getElementById('Adp1b');
-
-  // Option 2a radio button.
-  option2a = document.getElementById('Adp2a');
-
-  // Option 2b radio button.
-  option2b = document.getElementById('Adp2b');
-
-  // Option 3a radio button.
-  option3a = document.getElementById('Adp3a');
-
-  // Option 3b radio button.
-  option3b = document.getElementById('Adp3b');
-
-  // Max time bar.
-  maxTimeRange = document.getElementById('max-time-range');
-
-  // Cards per player bar.
-  cardsPerPlayerRange = document.getElementById('cards-per-player-range');
-
-  // Cards per round bar.
-  cardsPerRoundRange = document.getElementById('cards-per-round-range');
-
-  // Start game button
-  startButton = document.getElementById('start-button');
+    // Binding methods to the class instance
+    this.returnToMain = this.returnToMain.bind(this);
+    this.chooseCardsPerPlayer = this.chooseCardsPerPlayer.bind(this);
+    this.chooseCardsPerRound = this.chooseCardsPerRound.bind(this);
+    this.chooseMaxTime = this.chooseMaxTime.bind(this);
+    this.chooseAdp1a = this.chooseAdp1a.bind(this);
+    this.chooseAdp1b = this.chooseAdp1b.bind(this);
+    this.chooseAdp2a = this.chooseAdp2a.bind(this);
+    this.chooseAdp2b = this.chooseAdp2b.bind(this);
+    this.chooseAdp3a = this.chooseAdp3a.bind(this);
+    this.chooseAdp3a = this.chooseAdp3a.bind(this);
+    this.startGame = this.startGame.bind(this);
+  }
 
   /** ******************** Functions used on script ********************* */
 
@@ -89,9 +99,12 @@ class WaitingRoomPage {
    */
   elementsInitialized() {
     let isInitialized = false;
-    if (this.startButton && this.maxTimeRange && this.cardsPerPlayerRange
-      && this.cardsPerRoundRange && this.option1a && this.option1b
-      && this.option2a && this.option2b && this.option3a && this.option3b
+    if (this.startButton && this.maxTimeRange && this.maxTimeValue
+      && this.cardsPerPlayerRange && this.cardsPerPlayerValue
+      && this.cardsPerRoundRange && this.cardsPerRoundValue
+      && this.option1a && this.option1b
+      && this.option2a && this.option2b
+      && this.option3a && this.option3b
     ) {
       isInitialized = true;
     }
@@ -221,7 +234,7 @@ class WaitingRoomPage {
    * Handles player list received from server.
    * @param {Object} receivedMessage Message received from server.
    */
-  handlePlayerList(receivedMessage) {
+  handlePlayerList(socket, receivedMessage) {
     // Container for all player table's rows.
     const playerTable = document.getElementById('waiting-room-ranking');
     // Player table in waiting room.
@@ -232,15 +245,13 @@ class WaitingRoomPage {
   /**
    * When server sends a message with personalized waiting room.
    */
-  handleWaitingRoom(message) {
-    // Container for all player table's rows.
-    const playerTable = document.getElementById('waiting-room-ranking');
+  handleWaitingRoom(socket, message) {
     if (message.isHost === false) {
       this.setToReadOnly();
     } else {
       this.setToEdit();
     }
-    this.handlePlayerList(message, playerTable);
+    this.handlePlayerList(null, message);
     this.handleConfiguration(message);
   }
 
@@ -255,9 +266,6 @@ class WaitingRoomPage {
       && this.elementsInitialized() === true) {
       const message = {
         type: 'setCardsPerRound',
-        from: 'client',
-        to: 'server',
-        when: 'when a host client change the amount of card per round',
         nickname: playerNickname,
         sessionCode: roomCode,
         cardsPerRound: cardsRound,
@@ -277,9 +285,6 @@ class WaitingRoomPage {
       this.maxTimeValue.innerHTML = `${time} s`;
       const message = {
         type: 'setMaxTime',
-        from: 'client',
-        to: 'server',
-        when: 'when a host client change the max time',
         nickname: playerNickname,
         sessionCode: roomCode,
         maxTime: time,
@@ -299,9 +304,6 @@ class WaitingRoomPage {
       this.cardsPerPlayerValue.innerHTML = cardsPlayer;
       const message = {
         type: 'setCardsPerPlayer',
-        from: 'client',
-        to: 'server',
-        when: 'when a host client change the cards per player',
         nickname: playerNickname,
         sessionCode: roomCode,
         cardsPerPlayer: cardsPlayer,
@@ -315,13 +317,10 @@ class WaitingRoomPage {
    * adaptation as 1a when the host client selects that option.
    * @param {WebSocket} socket Socket that connects to server.
    */
-  static chooseAdp1a(socket) {
+  chooseAdp1a(socket) {
     if (socket && sessionStorageInitialized() === true) {
       const message = {
         type: 'toggleAdp1a',
-        from: 'client',
-        to: 'server',
-        when: 'when a host client selects the adaptation 1a',
         nickname: playerNickname,
         sessionCode: roomCode,
       };
@@ -334,13 +333,10 @@ class WaitingRoomPage {
    * adaptation as 1b when the host client selects that option.
    * @param {WebSocket} socket Socket that connects to server.
    */
-  static chooseAdp1b(socket) {
+  chooseAdp1b(socket) {
     if (socket && sessionStorageInitialized() === true) {
       const message = {
         type: 'toggleAdp1b',
-        from: 'client',
-        to: 'server',
-        when: 'when a host client selects the adaptation 1b',
         nickname: playerNickname,
         sessionCode: roomCode,
       };
@@ -353,13 +349,10 @@ class WaitingRoomPage {
    * adaptation as 2a when the host client selects that option.
    * @param {WebSocket} socket Socket that connects to server.
    */
-  static chooseAdp2a(socket) {
+  chooseAdp2a(socket) {
     if (socket && sessionStorageInitialized() === true) {
       const message = {
         type: 'toggleAdp2a',
-        from: 'client',
-        to: 'server',
-        when: 'when a host client selects the adaptation 2a',
         nickname: playerNickname,
         sessionCode: roomCode,
       };
@@ -372,13 +365,10 @@ class WaitingRoomPage {
    * adaptation as 2b when the host client selects that option.
    * @param {WebSocket} socket Socket that connects to server.
    */
-  static chooseAdp2b(socket) {
+  chooseAdp2b(socket) {
     if (socket && sessionStorageInitialized() === true) {
       const message = {
         type: 'toggleAdp2b',
-        from: 'client',
-        to: 'server',
-        when: 'when a host client selects the adaptation 2b',
         nickname: playerNickname,
         sessionCode: roomCode,
       };
@@ -391,13 +381,10 @@ class WaitingRoomPage {
    * adaptation as 3a when the host client selects that option.
    * @param {WebSocket} socket Socket that connects to server.
    */
-  static chooseAdp3a(socket) {
+  chooseAdp3a(socket) {
     if (socket && sessionStorageInitialized() === true) {
       const message = {
         type: 'toggleAdp3a',
-        from: 'client',
-        to: 'server',
-        when: 'when a host client selects the adaptation 3a',
         nickname: playerNickname,
         sessionCode: roomCode,
       };
@@ -410,13 +397,10 @@ class WaitingRoomPage {
    * adaptation as 3b when the host client selects that option.
    * @param {WebSocket} socket Socket that connects to server.
    */
-  static chooseAdp3b(socket) {
+  chooseAdp3b(socket) {
     if (socket && sessionStorageInitialized() === true) {
       const message = {
         type: 'toggleAdp3b',
-        from: 'client',
-        to: 'server',
-        when: 'when a host client selects the adaptation 3b',
         nickname: playerNickname,
         sessionCode: roomCode,
       };
@@ -428,13 +412,10 @@ class WaitingRoomPage {
    * Starts game for all players.
    * @param {WebSocket} socket Socket that connects to server.
    */
-  static startGame(socket) {
+  startGame(socket) {
     if (socket && sessionStorageInitialized() === true) {
       const message = {
         type: 'startGame',
-        from: 'client',
-        to: 'server',
-        when: 'when a host client selects the start game botton',
         nickname: playerNickname,
         sessionCode: roomCode,
       };
@@ -501,7 +482,7 @@ class WaitingRoomPage {
    * When server sends a message indicating max time has to be updated
    * @param {Object} message Message received from server.
    */
-  handleMaxTime(message) {
+  handleMaxTime(socket, message) {
     if (this.maxTimeRange && this.maxTimeValue) {
       const time = message.maxTime;
       if (time >= this.timeMin && time < this.timeMax) {
@@ -515,7 +496,7 @@ class WaitingRoomPage {
    * When server sends a message indicating cards per round has to be updated
    * @param {Object} message Message received from server.
    */
-  handleCardsPerRound(message) {
+  handleCardsPerRound(socket, message) {
     if (this.cardsPerRoundValue && this.cardsPerRoundRange) {
       const amount = message.cardsPerRound;
       if (amount >= this.cardsRoundMin && amount < this.cardsRoundMax) {
@@ -530,7 +511,7 @@ class WaitingRoomPage {
    * moment in which a message from the server informing the new value is entered.
    * @param {Object} message Message received from server.
    */
-  handleCardsPerPlayer(message) {
+  handleCardsPerPlayer(socket, message) {
     if (this.cardsPerPlayerValue && this.cardsPerPlayerRange) {
       const amount = message.cardsPerPlayer;
       if (amount >= this.cardsPlayerMin && amount < this.cardsPlayerMax) {
@@ -543,7 +524,7 @@ class WaitingRoomPage {
   /**
    * Starts game for a player.
    */
-  static handleStartGame() {
+  handleStartGame() {
     window.location.href = './game.xhtml';
   }
 
@@ -552,7 +533,7 @@ class WaitingRoomPage {
    * Sends server a message to indicate player is leaving.
    * @param {WebSocket} socket Socket that connects to server
    */
-  static returnToMain(socket) {
+  returnToMain(socket) {
     // send message to server letting them know player is leaving.
     socket.send(createRemovePlayerMessage());
     // Aqui se manda el msj de eliminar el jugador de la lista.
@@ -566,30 +547,21 @@ class WaitingRoomPage {
  * Adding event listeners to information icons.
  */
 function addingInfoEvents() {
-  const eventList = [
-    document.getElementById('infoMaxTime'),
-    document.getElementById('infoCardsPlayers'),
-    document.getElementById('infoCardsPerRound'),
-    document.getElementById('adaptation1-info'),
-    document.getElementById('adaptation2-info'),
-    document.getElementById('adaptation3-info'),
-  ];
-  if (eventList) {
-    // Information icons that display information
-    const informationIcons = document.getElementsByClassName('information-icon');
-    if (informationIcons) {
-      // Adding event listener to informationIcons
-      for (let infoIndex = 0; infoIndex < informationIcons.length; infoIndex += 1) {
-        const infoIcon = informationIcons[infoIndex];
-        const infoText = eventList[infoIndex];
-        if (infoIcon && infoText) {
-          infoIcon.addEventListener('click', () => {
-            infoText.style.display = 'flex';
-          });
+  // Information icons that display information
+  const informationIcons = document.getElementsByClassName('information-icon');
+  const informationText = document.getElementsByClassName('option-description');
+  if (informationIcons.length === informationText.length) {
+    // Adding event listener to informationIcons
+    for (let infoIndex = 0; infoIndex < informationIcons.length; infoIndex += 1) {
+      const infoIcon = informationIcons[infoIndex];
+      const infoText = informationText[infoIndex];
+      if (infoIcon && infoText) {
+        infoIcon.addEventListener('click', () => {
+          infoText.style.display = 'flex';
           setTimeout(() => {
             infoText.style.display = 'none';
           }, timeInformationText);
-        }
+        });
       }
     }
   }
@@ -612,9 +584,6 @@ function addEventListeners() {
       console.log('Conexión con Servidor');
       const message = {
         type: 'getWaitingRoom',
-        from: 'client',
-        to: 'server',
-        when: 'when a client asks for a personalized waiting room',
         nickname: playerNickname,
         sessionCode: roomCode,
       };
@@ -642,10 +611,10 @@ function addEventListeners() {
     addingEventById('cards-per-round-range', 'change', page.chooseCardsPerRound, socket);
 
     // Adding event for button that allows player to close pop up.
-    addingEventById('cancel-button', 'click', closePopUp);
+    addingEventById('cancel-button', 'click', closePopUp, null);
 
     // Adding event for button that allows the user to see the exit popup.
-    addingEventById('exit-button', 'click', showExitPopup);
+    addingEventById('exit-button', 'click', showExitPopup, null);
 
     // Adding event for informationIcons
     addingInfoEvents();

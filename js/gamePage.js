@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 /** ******************* Imports ******************* */
 
 import {
@@ -15,6 +16,7 @@ import {
 import {
   addToTable,
   identifyMessage,
+  addingEventById,
   sessionStorageInitialized,
 // eslint-disable-next-line import/extensions
 } from './common.js';
@@ -28,23 +30,182 @@ const playerNickname = sessionStorage.getItem('playerNickname');
 const roomCode = sessionStorage.getItem('roomCode');
 
 class GamePage {
-  // Contains room configuration
-  configMap = null;
+  /**
+   * Initializing all class atributes.
+   */
+  constructor() {
+    // Contains room configuration
+    this.configMap = null;
+    // Contains information of player card to match
+    this.firstCard = null;
+    // Current player score
+    this.score = 0;
+    // Interval that changes time each second.
+    this.secondInterval = null;
+    // Current time in game
+    this.time = 0;
 
-  // Contains information of player card to match
-  firstCard = null;
+    // Contains all player cards
+    this.myImages = document.getElementsByClassName('my-image-container');
+  }
 
-  // Current player score
-  score = 0;
+  /**
+   * Creates a container element with given id and class.
+   * @param {String} containerId Id of HTML element.
+   * @param {String} containerClass Class of HTML element.
+   * @returns Container HTML element.
+   */
+  createContainerElement(containerId, containerClass) {
+    let cardElement = null;
+    cardElement = document.createElement('li');
+    if (cardElement) {
+      cardElement.classList.add(containerClass);
+      cardElement.setAttribute('id', containerId);
+    }
+    return cardElement;
+  }
 
-  // Interval that changes time each second.
-  secondInterval = null;
+  /**
+   * Creates card element in HTML with given information.
+   * @param {String} imageText Alternative text for image.
+   * @param {String} route Image's route
+   * @param {Boolean} isPlayerCard Class name for CSS.
+   * @returns Card element in HTML.
+   */
+  createCardElement(imageText, route, isPlayerCard) {
+    let contentElement = null;
+    const imageRoute = `/design/images/icons/board/${route}`;
+    const cssClassName = (isPlayerCard === true) ? 'my-image' : 'board-image';
 
-  // Current time in game
-  time = 0;
+    contentElement = document.createElement('p');
+    if (contentElement) {
+      // If player has selected words
+      if (isPlayerCard === true
+        && (this.configMap.adaptation1a === true || this.configMap.adaptation1b)) {
+        contentElement.classList.add('word');
+        contentElement.textContent = imageText;
+      // If player has selected images
+      } else {
+        contentElement = document.createElement('img');
+        contentElement.classList.add(cssClassName);
+        contentElement.src = imageRoute;
+        contentElement.alt = `Icono de ${imageText}`;
+      }
+    }
+    return contentElement;
+  }
 
-  // Contains all player cards
-  myImages = document.getElementsByClassName('my-image-container');
+  /**
+   * Creates player card HTML element.
+   * @param {Object} cardData Card's details.
+   * @returns The created HTML element.
+   */
+  createBoardCard(cardData) {
+    let cardElement = null;
+    const imageText = cardData.description;
+    if (cardData) {
+      cardElement = this.createContainerElement(imageText, 'board-image-container');
+      if (cardElement) {
+        // Creating inner element
+        const contentElement = this.createCardElement(imageText, cardData.route, false);
+        if (contentElement) {
+          // If player has selected colored border
+          if (this.configMap.adaptation2a === true || this.configMap.adaptation2b === true) {
+            cardElement.style.borderColor = cardData.border;
+          }
+          // Adding content element to card element
+          cardElement.appendChild(contentElement);
+        }
+      }
+    }
+    return cardElement;
+  }
+
+  /**
+   * Updates board with corresponding cards.
+   * @param {Object} message Message from server.
+   */
+  handleBoardCards(socket, message) {
+    const boardCards = JSON.parse(message.boardCards);
+    const gameBoard = document.getElementById('game-board');
+    if (boardCards && gameBoard && this.configMap) {
+      Object.keys(boardCards).forEach((cardData, cardIndex) => {
+        const cardElement = this.createBoardCard(boardCards[cardIndex]);
+        if (cardElement) {
+          // Adding card element to game board
+          gameBoard.appendChild(cardElement);
+
+          // Add an event listener to each of the cards on the game board
+          cardElement.addEventListener('click', () => {
+            cardElement.style.background = '#E6CCD7';
+            this.match(socket, cardElement);
+          });
+        }
+      });
+    }
+  }
+
+  /**
+   * Creates player card HTML element.
+   * @param {*} cardData Card's details.
+   * @returns The created HTML element.
+   */
+  createPlayerCard(cardData) {
+    let cardElement = null;
+    if (cardData) {
+      const imageText = cardData.description;
+      cardElement = this.createContainerElement(imageText, 'my-image-container');
+      if (cardElement) {
+        // Creating inner element
+        const contentElement = this.createCardElement(imageText, cardData.route, true);
+        if (contentElement) {
+          // If player has selected colored border
+          if (this.configMap.adaptation2a === true || this.configMap.adaptation2b === true) {
+            cardElement.style.borderColor = cardData.border;
+          }
+          // Adding content element to card element
+          cardElement.appendChild(contentElement);
+        }
+      }
+    }
+    return cardElement;
+  }
+
+  /**
+   * Updates player hand with corresponding cards.
+   * @param {Object} message Message from server.
+   */
+  handlePlayerCards(socket, message) {
+    const cardsReceived = JSON.parse(message.playerCards);
+    const playerCards = document.getElementById('player-cards');
+    if (cardsReceived && playerCards && this.configMap) {
+      playerCards.innerHTML = '';
+      Object.keys(cardsReceived).forEach((cardData, cardIndex) => {
+        const cardElement = this.createPlayerCard(cardsReceived[cardIndex]);
+        if (cardElement) {
+          // Adding card element to game board
+          playerCards.appendChild(cardElement);
+
+          // Add an event listener to each of the cards player
+          cardElement.addEventListener('click', () => {
+            this.storeFirstMatch(cardElement);
+          });
+        }
+      });
+    }
+  }
+
+  /**
+   * Handles player list received from server.
+   * @param {Object} receivedMessage Message received from server.
+   */
+  handlePlayerList(socket, receivedMessage) {
+    // Player table with ranking during game.
+    const gamePlayerTable = document.getElementById('game-ranking');
+    if (gamePlayerTable) {
+      addToTable(receivedMessage.players, gamePlayerTable);
+    }
+  }
 
   /**
    * Updates time on screen.
@@ -52,7 +213,7 @@ class GamePage {
   updateTime() {
     const timeString = `Tiempo: ${this.time} segundos`;
     const timeHTML = document.getElementById('current-time');
-    if (timeHTML) {
+    if (timeString && timeHTML) {
       timeHTML.innerHTML = timeString;
     }
   }
@@ -61,7 +222,7 @@ class GamePage {
    * Disables board images.
    * TODO: fix, still detecting click.
    */
-  static disableBoard() {
+  disableBoard() {
     if (this.myImages) {
       // Add an event listener to each of the cards player
       for (let index = 0; index < this.myImages.length; index += 1) {
@@ -93,168 +254,11 @@ class GamePage {
   }
 
   /**
-   * Creates card element in HTML with given information.
-   * @param {String} imageText Alternative text for image.
-   * @param {*} route Image's route
-   * @param {*} cssClassName Class name for CSS.
-   * @returns Card element in HTML.
-   */
-  createCardElement(imageText, route, cssClassName) {
-    let contentElement = null;
-    const imageRoute = `/design/images/icons/board/${route}`;
-
-    // If player has selected words
-    if (this.configMap.adaptation1a === true || this.configMap.adaptation1b) {
-      contentElement = document.createElement('p');
-      contentElement.classList.add('word');
-      contentElement.textContent = imageText;
-    // If player has selected images
-    } else {
-      contentElement = document.createElement('img');
-      contentElement.classList.add(cssClassName);
-      contentElement.src = imageRoute;
-      contentElement.alt = `Icono de ${imageText}`;
-    }
-    return contentElement;
-  }
-
-  /**
-   * When player chooses a card in board.
-   * @param {WebSocket} socket Socket that connects to server.
-   * @param {HTMLElement} secondCard Second card player has clicked.
-   */
-  match(socket, secondCard) {
-    if (this.firstCard && sessionStorageInitialized() === true) {
-      const message = {
-        type: 'checkMatch',
-        from: 'player',
-        nickname: playerNickname,
-        sessionCode: roomCode,
-        playerCard: this.firstCard.getAttribute('id'),
-        boardCard: secondCard.getAttribute('id'),
-      };
-      socket.send(JSON.stringify(message));
-      this.firstCard.style.background = '';
-      secondCard.style.background = '';
-      this.firstCard = null;
-    } else {
-      console.log('Escoga ficha de su mano primero.');
-    }
-  }
-
-  /**
-   * Updates board with corresponding cards.
-   * @param {Map} message Message from server.
-   */
-  handleBoardCards(message, socket) {
-    const boardCards = JSON.parse(message.boardCards);
-    const gameBoard = document.getElementById('game-board');
-    if (gameBoard) {
-      Object.keys(boardCards).forEach((cardId) => {
-        const cardData = boardCards[cardId];
-        if (cardData) {
-          const imageText = cardData.description;
-          if (this.configMap) {
-            const cardElement = document.createElement('li');
-            cardElement.classList.add('board-image-container');
-            cardElement.setAttribute('id', imageText);
-
-            const contentElement = this.createCardElement(imageText, cardData.route, 'board-image');
-            if (contentElement) {
-              // If player has selected colored border
-              if (this.configMap.adaptation2a === true || this.configMap.adaptation2b === true) {
-                cardElement.style.borderColor = cardData.border;
-              }
-              // Adding content element to card element
-              cardElement.appendChild(contentElement);
-              // Adding card element to game board
-              gameBoard.appendChild(cardElement);
-
-              // Add an event listener to each of the cards on the game board
-              cardElement.addEventListener('click', () => {
-                cardElement.style.background = '#E6CCD7';
-                this.match(socket, cardElement);
-              });
-            }
-          }
-        }
-      });
-    }
-  }
-
-  /**
-   * When player chooses a card in hand.
-   * @param {HTMLElement} card First card player chooses.
-   */
-  storeFirstMatch(card) {
-    // Contains all player cards
-    const myImages = document.getElementsByClassName('my-image-container');
-    // Restores board to unclicked state.
-    for (let index = 0; index < myImages.length; index += 1) {
-      const otherCard = myImages[index];
-      otherCard.style.background = '';
-    }
-    // Indicates to user, the card was clicked.
-    card.style.background = '#E6CCD7';
-    this.firstCard = card;
-  }
-
-  /**
-   * Updates player hand with corresponding cards.
-   * @param {Map} message Message from server.
-   */
-  handlePlayerCards(message) {
-    const cardsReceived = JSON.parse(message.playerCards);
-    const playerCards = document.getElementById('player-cards');
-    playerCards.innerHTML = '';
-    if (cardsReceived && playerCards) {
-      Object.keys(cardsReceived).forEach((cardId) => {
-        const cardData = cardsReceived[cardId];
-        if (cardData) {
-          const imageText = cardData.description;
-          if (this.configMap) {
-            const cardElement = document.createElement('li');
-            cardElement.classList.add('my-image-container');
-            cardElement.setAttribute('id', imageText);
-
-            const contentElement = this.createCardElement(imageText, cardData.route, 'my-image');
-            if (contentElement) {
-              // If player has selected colored border
-              if (this.configMap.adaptation2a === true || this.configMap.adaptation2b === true) {
-                cardElement.style.borderColor = cardData.border;
-              }
-              // Adding content element to card element
-              cardElement.appendChild(contentElement);
-              // Adding card element to game board
-              playerCards.appendChild(cardElement);
-
-              // Add an event listener to each of the cards player
-              cardElement.addEventListener('click', () => {
-                this.storeFirstMatch(cardElement);
-              });
-            }
-          }
-        }
-      });
-    }
-  }
-
-  /**
-   * Handles player list received from server.
-   * @param {Object} receivedMessage Message received from server.
-   */
-  static handlePlayerList(receivedMessage) {
-    // Player table with ranking during game.
-    const gamePlayerTable = document.getElementById('game-ranking');
-    addToTable(receivedMessage.players, gamePlayerTable);
-  }
-
-  /**
    * Handles configuration of game.
    * @param {Object} message Message received from server.
    * @param {WebSocket} socket Socket that connects to server.
    */
-  handleConfig(message, socket) {
+  handleConfig(socket, message) {
     // Setting configuration up
     this.configMap = JSON.parse(message.config);
     if (this.configMap) {
@@ -274,30 +278,83 @@ class GamePage {
    * @param {Object} message Message received from server.
    * @param {WebSocket} socket Socket that connects to server.
    */
-  handleGameRoom(message, socket) {
-    this.handleConfig(message, socket);
-    this.handleBoardCards(message, socket);
-    this.handlePlayerCards(message);
-    this.handlePlayerList(message);
+  handleGameRoom(socket, message) {
+    const scoreString = 'Puntaje: 0';
+    // Contains player score
+    const playerScore = document.getElementById('player-score');
+    if (playerScore) {
+      playerScore.innerHTML = scoreString;
+    }
+    this.handleConfig(socket, message);
+    this.handleBoardCards(socket, message);
+    this.handlePlayerCards(socket, message);
+    this.handlePlayerList(socket, message);
+  }
+
+  /**
+   * When player chooses a card in hand.
+   * @param {HTMLElement} card First card player chooses.
+   */
+  storeFirstMatch(card) {
+    if (this.myImages) {
+      // Restores board to unclicked state.
+      for (let index = 0; index < this.myImages.length; index += 1) {
+        const otherCard = this.myImages[index];
+        otherCard.style.background = '';
+      }
+      // Indicates to user, the card was clicked.
+      card.style.background = '#E6CCD7';
+      this.firstCard = card;
+    }
+  }
+
+  /**
+   * When player chooses a card in board.
+   * TODO: fix when card is unselected
+   * @param {WebSocket} socket Socket that connects to server.
+   * @param {HTMLElement} secondCard Second card player has clicked.
+   */
+  match(socket, secondCard) {
+    if (this.firstCard && secondCard && sessionStorageInitialized() === true) {
+      const message = {
+        type: 'checkMatch',
+        nickname: playerNickname,
+        sessionCode: roomCode,
+        playerCard: this.firstCard.getAttribute('id'),
+        boardCard: secondCard.getAttribute('id'),
+      };
+      socket.send(JSON.stringify(message));
+      this.firstCard.style.background = '';
+      secondCard.style.background = '';
+      this.firstCard = null;
+    } else {
+      console.log('Escoga ficha de su mano primero.');
+    }
   }
 
   /**
    * Handles response from server to player match.
    * @param {Object} receivedMessage Message sent by server.
    */
-  handleMatchResponse(receivedMessage) {
+  handleMatchResponse(socket, receivedMessage) {
     // Correct match sound
     const correctMatchSound = document.getElementById('correctoMatchSound');
     // Incorrect match sound
     const incorrectoMatchSound = document.getElementById('incorrectoMatchSound');
-    this.score = receivedMessage.newScore;
-    const scoreString = `Puntaje: ${this.score}`;
-    document.getElementById('player-score').innerHTML = scoreString;
-    if (receivedMessage.isCorrectMatch === true) {
-      correctMatchSound.play();
-      this.handlePlayerCards(receivedMessage);
-    } else {
-      incorrectoMatchSound.play();
+    if (correctMatchSound && incorrectoMatchSound) {
+      this.score = receivedMessage.newScore;
+      const scoreString = `Puntaje: ${this.score}`;
+      // Contains player score
+      const playerScore = document.getElementById('player-score');
+      if (playerScore) {
+        playerScore.innerHTML = scoreString;
+        if (receivedMessage.isCorrectMatch === true) {
+          correctMatchSound.play();
+          this.handlePlayerCards(socket, receivedMessage);
+        } else {
+          incorrectoMatchSound.play();
+        }
+      }
     }
   }
 
@@ -306,26 +363,31 @@ class GamePage {
    * @param {Object} message Message sent by server.
    * @returns Map with highest score.
    */
-  static checkWinner(message) {
-    const playerArray = JSON.parse(message.players);
-    const playerNicknames = Object.keys(playerArray);
+  checkWinner(message) {
     let highestScore = null;
-    if (playerArray && playerNicknames) {
-      let nickname = playerNicknames[0];
-      let playerInfo = playerArray[nickname];
-      if (playerInfo) {
-        let playerPoints = playerInfo.points;
-        highestScore = new Map([
-          ['nickname', nickname],
-          ['score', playerPoints],
-        ]);
-        for (let playerIndex = 1; playerIndex < playerNicknames.length; playerIndex += 1) {
-          nickname = playerNicknames[playerIndex];
-          playerInfo = playerArray[nickname];
-          playerPoints = playerInfo.points;
-          if ((playerPoints && highestScore) && highestScore.get('score') < playerPoints) {
-            highestScore.set('nickname', nickname);
-            highestScore.set('score', playerPoints);
+    if (message) {
+      console.log(`message: ${message}`);
+      const playerArray = JSON.parse(message.players);
+      if (playerArray) {
+        const playerNicknames = Object.keys(playerArray);
+        if (playerNicknames) {
+          let nickname = playerNicknames[0];
+          let playerInfo = playerArray[nickname];
+          if (playerInfo) {
+            let playerPoints = playerInfo.points;
+            highestScore = new Map([
+              ['nickname', nickname],
+              ['score', playerPoints],
+            ]);
+            for (let playerIndex = 1; playerIndex < playerNicknames.length; playerIndex += 1) {
+              nickname = playerNicknames[playerIndex];
+              playerInfo = playerArray[nickname];
+              playerPoints = playerInfo.points;
+              if ((playerPoints && highestScore) && highestScore.get('score') < playerPoints) {
+                highestScore.set('nickname', nickname);
+                highestScore.set('score', playerPoints);
+              }
+            }
           }
         }
       }
@@ -338,39 +400,30 @@ class GamePage {
    * @param {Object} message Message sent by server.
    */
   showCorrectTitle(message) {
-    const highestScore = this.checkWinner(message);
     let hiddenTitle = null;
-    if (highestScore.get('nickname') === playerNickname) {
-      hiddenTitle = document.getElementById('loser-title');
-    } else {
-      hiddenTitle = document.getElementById('winner-title');
+    const highestScore = this.checkWinner(message);
+    if (highestScore) {
+      if (highestScore.get('nickname') === playerNickname) {
+        hiddenTitle = document.getElementById('loser-title');
+      } else {
+        hiddenTitle = document.getElementById('winner-title');
+      }
+      hiddenTitle.style.display = 'none';
     }
-    hiddenTitle.style.display = 'none';
   }
 
   /**
    * When timer runs out or player has finished their cards...
-   * @param {Map} message Message sent by server.
+   * @param {Object} message Message sent by server.
    */
-  handleTimesUp(message) {
-    // Player table with ranking in popup
-    const popUpPlayerTable = document.getElementById('popup-ranking');
+  handleTimesUp(socket, message) {
     // Pop Up that is shown when game is finished.
     const popUpFinished = document.getElementById('popup-finished');
-    if (popUpFinished) {
+    // Player table with ranking in popup
+    const popUpPlayerTable = document.getElementById('popup-ranking');
+    if (popUpFinished && popUpPlayerTable) {
       addToTable(message.players, popUpPlayerTable);
       this.showCorrectTitle(message);
-      popUpFinished.style.display = 'flex';
-    }
-  }
-
-  handlePlayerWon(message) {
-    // Player table with ranking in popup
-    const popUpPlayerTable = document.getElementById('popup-ranking');
-    // Pop Up that is shown when game is finished.
-    const popUpFinished = document.getElementById('popup-finished');
-    if (popUpFinished) {
-      this.handlePlayerList(message, popUpPlayerTable);
       popUpFinished.style.display = 'flex';
     }
   }
@@ -378,7 +431,7 @@ class GamePage {
   /**
    * Applies blur to player.
    */
-  static changeBlurImages(blurString) {
+  changeBlurImages(blurString) {
     // Contains all game board cards
     const boardImages = document.getElementsByClassName('board-image-container');
     if (boardImages) {
@@ -404,7 +457,7 @@ class GamePage {
    * Sends server a message to indicate player is leaving.
    * @param {WebSocket} socket Socket that connects to server.
    */
-  static returnToMain(socket) {
+  returnToMain(socket) {
     // send message to server letting them know player is leaving.
     socket.send(createRemovePlayerMessage());
     // Aqui se manda el msj de eliminar el jugador de la lista.
@@ -445,39 +498,27 @@ function addEventListeners() {
     });
   }
 
-  // Button that allows player to return to main page.
-  const acceptButton = document.getElementById('accept-button');
-  acceptButton.addEventListener('click', () => {
-    page.returnToMain(socket);
-  });
+  // Adding event for button that allows player to return to main page.
+  addingEventById('accept-button', 'click', page.returnToMain, socket);
 
-  // Button that allows player to close pop up.
-  const cancelButton = document.getElementById('cancel-button');
-  cancelButton.addEventListener('click', closePopUp);
+  // Adding event for button that allows player to close pop up.
+  addingEventById('cancel-button', 'click', closePopUp, null);
 
-  // Button that allows player to continue session.
-  const continueButton = document.getElementById('continue-button');
-  continueButton.addEventListener('click', continueSession);
+  // Adding event for button that allows player to continue session.
+  addingEventById('continue-button', 'click', continueSession, null);
 
-  // Button that allows the user to see the exit popup.
-  const exitButton = document.getElementById('exit-button');
-  exitButton.addEventListener('click', showExitPopup);
+  // Adding event for button that allows player to see the exit popup.
+  addingEventById('exit-button', 'click', showExitPopup, null);
 
-  // Button that allows player to exit session.
-  const homeButton = document.getElementById('home-button');
-  homeButton.addEventListener('click', () => {
-    page.returnToMain(socket);
-  });
+  // Adding event for button that allows player to exit session.
+  addingEventById('home-button', 'click', page.returnToMain, socket);
 }
 
 /**
  * Loads page elements with specific information.
  */
 function loadPage() {
-  if (roomCode) {
-    const scoreString = `Puntaje: ${this.score}`;
-    document.getElementById('player-score').innerHTML = scoreString;
-  } else {
+  if (!roomCode) {
     const mainContent = document.getElementsByClassName('main-content');
     mainContent[0].innerHTML = '<h2 class="page-title" id="waiting-room-title">La sala no existe</h2>';
     mainContent[0].innerHTML += '<img class="information-icon" src="/design/images/Icons/informationIcon.png" alt="información"></img>';

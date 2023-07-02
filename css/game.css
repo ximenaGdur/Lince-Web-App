@@ -50,7 +50,7 @@
 .game-info {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: stretch;
     max-width: 30%;
     padding: 2%;
@@ -64,10 +64,11 @@
 
 #player-cards {
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    flex-flow: row wrap;
     justify-content: center;
     padding: 0%;
+    min-width: 100%;
+    max-width: 100%;
 }
 
 .game-state {

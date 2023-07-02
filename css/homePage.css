@@ -32,11 +32,11 @@
 }
 
 #code-title {
-    margin: 0% 0% 0.2rem 0%
+    margin-bottom: 0.2rem;
 }
 
 #cancel-button-container {
-    margin-right: 0.2rem
+    margin-right: 0.2rem;
 }
 
 /****************** TAB SECTION ******************/

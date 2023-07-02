@@ -33,7 +33,7 @@ function createNewPlayer(nickname, playerInfo) {
  */
 export function addToTable(players, playerTable) {
   // Order by points
-  if (playerTable) {
+  if (players && playerTable) {
     const playerArray = JSON.parse(players);
     if (playerArray) {
       playerTable.innerHTML = '';
@@ -49,7 +49,7 @@ export function addToTable(players, playerTable) {
 
 /**
  * Identifying message type in order to call appropiate function.
- * @param {class} pageClass Class with all functions.
+ * @param {Class} pageClass Class with all functions.
  * @param {WebSocket} socket Socket with connection to server.
  * @param {Object} receivedMessage Message received from server.
  * @returns Boolean value that indicates if message was identified or not.
@@ -57,7 +57,7 @@ export function addToTable(players, playerTable) {
 export function identifyMessage(pageClass, socket, receivedMessage) {
   const messageType = receivedMessage.type;
   if (pageClass[messageType]) {
-    pageClass[messageType](receivedMessage, socket);
+    pageClass[messageType](socket, receivedMessage);
   } else {
     console.log('No se reconoce ese mensaje.');
   }
@@ -89,7 +89,11 @@ export function addingEventById(elementId, eventString, eventResponse, parameter
   const element = document.getElementById(elementId);
   if (element) {
     element.addEventListener(eventString, () => {
-      eventResponse(parameter);
+      if (parameter === null) {
+        eventResponse();
+      } else {
+        eventResponse(parameter);
+      }
     });
   }
 }
