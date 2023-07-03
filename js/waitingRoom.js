@@ -12,7 +12,7 @@ import {
   addToTable,
   identifyMessage,
   addingEventById,
-  sessionStorageInitialized,
+  storageInitialized,
 // eslint-disable-next-line import/extensions
 } from './common.js';
 
@@ -262,7 +262,7 @@ class WaitingRoomPage {
   chooseCardsPerRound(socket) {
     const cardsRound = this.cardsPerRoundRange.value;
     this.cardsPerRoundValue.innerHTML = cardsRound;
-    if (socket && sessionStorageInitialized() === true
+    if (socket && storageInitialized() === true
       && this.elementsInitialized() === true) {
       const message = {
         type: 'setCardsPerRound',
@@ -279,7 +279,7 @@ class WaitingRoomPage {
    * @param {WebSocket} socket Socket that connects to server.
    */
   chooseMaxTime(socket) {
-    if (socket && sessionStorageInitialized() === true
+    if (socket && storageInitialized() === true
       && this.elementsInitialized() === true) {
       const time = this.maxTimeRange.value;
       this.maxTimeValue.innerHTML = `${time} s`;
@@ -298,7 +298,7 @@ class WaitingRoomPage {
    * @param {WebSocket} socket Socket that connects to server.
    */
   chooseCardsPerPlayer(socket) {
-    if (socket && sessionStorageInitialized() === true
+    if (socket && storageInitialized() === true
       && this.elementsInitialized() === true) {
       const cardsPlayer = this.cardsPerPlayerRange.value;
       this.cardsPerPlayerValue.innerHTML = cardsPlayer;
@@ -318,7 +318,7 @@ class WaitingRoomPage {
    * @param {WebSocket} socket Socket that connects to server.
    */
   chooseAdp1a(socket) {
-    if (socket && sessionStorageInitialized() === true) {
+    if (socket && storageInitialized() === true) {
       const message = {
         type: 'toggleAdp1a',
         nickname: playerNickname,
@@ -334,7 +334,7 @@ class WaitingRoomPage {
    * @param {WebSocket} socket Socket that connects to server.
    */
   chooseAdp1b(socket) {
-    if (socket && sessionStorageInitialized() === true) {
+    if (socket && storageInitialized() === true) {
       const message = {
         type: 'toggleAdp1b',
         nickname: playerNickname,
@@ -350,7 +350,7 @@ class WaitingRoomPage {
    * @param {WebSocket} socket Socket that connects to server.
    */
   chooseAdp2a(socket) {
-    if (socket && sessionStorageInitialized() === true) {
+    if (socket && storageInitialized() === true) {
       const message = {
         type: 'toggleAdp2a',
         nickname: playerNickname,
@@ -366,7 +366,7 @@ class WaitingRoomPage {
    * @param {WebSocket} socket Socket that connects to server.
    */
   chooseAdp2b(socket) {
-    if (socket && sessionStorageInitialized() === true) {
+    if (socket && storageInitialized() === true) {
       const message = {
         type: 'toggleAdp2b',
         nickname: playerNickname,
@@ -382,7 +382,7 @@ class WaitingRoomPage {
    * @param {WebSocket} socket Socket that connects to server.
    */
   chooseAdp3a(socket) {
-    if (socket && sessionStorageInitialized() === true) {
+    if (socket && storageInitialized() === true) {
       const message = {
         type: 'toggleAdp3a',
         nickname: playerNickname,
@@ -398,7 +398,7 @@ class WaitingRoomPage {
    * @param {WebSocket} socket Socket that connects to server.
    */
   chooseAdp3b(socket) {
-    if (socket && sessionStorageInitialized() === true) {
+    if (socket && storageInitialized() === true) {
       const message = {
         type: 'toggleAdp3b',
         nickname: playerNickname,
@@ -413,7 +413,7 @@ class WaitingRoomPage {
    * @param {WebSocket} socket Socket that connects to server.
    */
   startGame(socket) {
-    if (socket && sessionStorageInitialized() === true) {
+    if (socket && storageInitialized() === true) {
       const message = {
         type: 'startGame',
         nickname: playerNickname,

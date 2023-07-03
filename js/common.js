@@ -67,7 +67,7 @@ export function identifyMessage(pageClass, socket, receivedMessage) {
    * Determines if session storage elements are initialized.
    * @returns Whether elements are initialized.
    */
-export function sessionStorageInitialized() {
+export function storageInitialized() {
   const playerNickname = sessionStorage.getItem('playerNickname');
   const roomCode = sessionStorage.getItem('roomCode');
   let isInitialized = false;

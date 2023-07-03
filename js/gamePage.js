@@ -17,7 +17,7 @@ import {
   addToTable,
   identifyMessage,
   addingEventById,
-  sessionStorageInitialized,
+  storageInitialized,
 // eslint-disable-next-line import/extensions
 } from './common.js';
 
@@ -239,7 +239,7 @@ class GamePage {
    * @param {WebSocket} socket Socket that connects to server.
    */
   stopGame(socket) {
-    if (this.secondInterval && sessionStorageInitialized() === true) {
+    if (this.secondInterval && storageInitialized() === true) {
       clearInterval(this.secondInterval);
       this.time = 0;
       this.updateTime();
@@ -315,7 +315,7 @@ class GamePage {
    * @param {HTMLElement} secondCard Second card player has clicked.
    */
   match(socket, secondCard) {
-    if (this.firstCard && secondCard && sessionStorageInitialized() === true) {
+    if (this.firstCard && secondCard && storageInitialized() === true) {
       const message = {
         type: 'checkMatch',
         nickname: playerNickname,
@@ -473,7 +473,7 @@ function addEventListeners() {
   const socket = new WebSocket('ws://localhost:8009');
   // Creating instance of Game Page class.
   const page = new GamePage();
-  if (socket && page && sessionStorageInitialized() === true) {
+  if (socket && page && storageInitialized() === true) {
     /**
      * When a connection is made with server.
      */
