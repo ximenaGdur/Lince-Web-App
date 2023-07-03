@@ -179,11 +179,11 @@ class HomePage {
     const joinButton = document.getElementById('join-button');
     if (feedbackMessage && joinButton) {
       if (receivedMessage.isValid === false && receivedMessage.isStarted === false) {
-        feedbackMessage.innerHTML = '¡Sala no existe!';
+        feedbackMessage.innerHTML = '�Sala no existe!';
         joinButton.style.cursor = 'default';
         joinButton.disabled = true;
       } else if (receivedMessage.isValid === true && receivedMessage.isStarted === true) {
-        feedbackMessage.innerHTML = '¡El juego en la sala ha comenzado!';
+        feedbackMessage.innerHTML = '�El juego en la sala ha comenzado!';
         joinButton.style.cursor = 'default';
         joinButton.disabled = true;
       } else {

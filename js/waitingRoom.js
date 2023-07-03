@@ -581,7 +581,7 @@ function addEventListeners() {
      * When a connection is made with server.
      */
     socket.addEventListener('open', () => {
-      console.log('Conexión con Servidor');
+      console.log('Conexi�n con Servidor');
       const message = {
         type: 'getWaitingRoom',
         nickname: playerNickname,

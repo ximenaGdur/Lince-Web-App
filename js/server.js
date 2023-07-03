@@ -151,6 +151,106 @@ class Server {
       { description: 'Prensa', route: 'hairClip.png' },
       { description: 'Leggings', route: 'legging.png' },
       { description: 'Reloj', route: 'watch.png' },
+        101: { description: 'Dona', route: 'donut.png' },
+        102: { description: 'Ensalada', route: 'salad.png' },
+        103: { description: 'Kebab', route: 'kebab.png' },
+        104: { description: 'FriedChicken', route: 'friedChicken.png' },
+        105: { description: 'Taco', route: 'taco.png' },
+        106: { description: 'Langosta', route: 'lobster.png' },
+        107: { description: 'Fresa', route: 'strawberry.png' },
+        108: { description: 'Pitahaya', route: 'dragonFruit.png' },
+        109: { description: 'Naranja', route: 'orange.png' },
+        110: { description: 'Piña', route: 'pineapple.png' },
+        111: { description: 'Aguacate', route: 'avocado.png' },
+        112: { description: 'Kiwi', route: 'kiwi.png' },
+        113: { description: 'Coco', route: 'coconut.png' },
+        114: { description: 'Limon', route: 'lemon.png' },
+        115: { description: 'Calabaza', route: 'pumpkin.png' },
+        116: { description: 'Almendra', route: 'almond.png' },
+        117: { description: 'Repollo', route: 'cabbage.png' },
+        118: { description: 'Maiz', route: 'corn.png' },
+        119: { description: 'Ajo', route: 'garlic.png' },
+        120: { description: 'Coliflor', route: 'cauliflower.png' },
+        121: { description: 'Papa', route: 'potato.png' },
+        122: { description: 'Cebolla', route: 'onion.png' },
+        123: { description: 'Tamarindo', route: 'tamarind.png' },
+        124: { description: 'Mongostino', route: 'mangosteen.png' },
+        125: { description: 'Albaricoque', route: 'apricot.png' },
+        126: { description: 'Pulpo', route: 'octopus.png' },
+        127: { description: 'Rana', route: 'frog.png' },
+        128: { description: 'Búho', route: 'owl.png' },
+        129: { description: 'Rata', route: 'rat.png' },
+        130: { description: 'Caracol', route: 'snail.png' },
+        131: { description: 'Murcielago', route: 'bat.png' },
+        132: { description: 'Camello', route: 'camel.png' },
+        133: { description: 'Lora', route: 'parrot.png' },
+        134: { description: 'Grillo', route: 'cricket.png' },
+        135: { description: 'Pavo', route: 'turkey.png' },
+        136: { description: 'Flamenco', route: 'flamingo.png' },
+        137: { description: 'Hipopotamo', route: 'hippopotamus.png' },
+        138: { description: 'Pato', route: 'duck.png' },
+        139: { description: 'Panda', route: 'panda.png' },
+        140: { description: 'Vaca', route: 'cow.png' },
+        141: { description: 'Unicornio', route: 'unicorn.png' },
+        142: { description: 'Pez', route: 'fish.png' },
+        143: { description: 'Tigre', route: 'tiger.png' },
+        144: { description: 'Mariposa', route: 'butterfly.png' },
+        145: { description: 'Babuino', route: 'baboon.png' },
+        146: { description: 'Lobo', route: 'wolf.png' },
+        147: { description: 'EstrellaDeMar', route: 'starfish.png' },
+        148: { description: 'Perro', route: 'dog.png' },
+        149: { description: 'Foca', route: 'seal.png' },
+        150: { description: 'Pinguino', route: 'penguin.png' },
+        151: { description: 'Instagram', route: 'instagram.png' },
+        152: { description: 'Gmail', route: 'gmail.png' },
+        153: { description: 'YouTube', route: 'youtube.png' },
+        154: { description: 'Facebook', route: 'facebook.png' },
+        155: { description: 'Telegram', route: 'telegram.png' },
+        156: { description: 'Whatsapp', route: 'whatsapp.png' },
+        157: { description: 'TikTok', route: 'tiktok.png' },
+        158: { description: 'Google', route: 'google.png' },
+        159: { description: 'PlayStation', route: 'playstation.png' },
+        160: { description: 'Lego', route: 'lego.png' },
+        161: { description: 'Twitter', route: 'twitter.png' },
+        162: { description: 'Snapchat', route: 'snapchat.png' },
+        163: { description: 'Hp', route: 'hp.png' },
+        164: { description: 'Xiaomi', route: 'xiaomi.png' },
+        165: { description: 'Android', route: 'android.png' },
+        166: { description: 'GrandTheftAuto', route: 'grandTheftAuto.png' },
+        167: { description: 'Windows', route: 'windows.png' },
+        168: { description: 'AdobeIllustrator', route: 'adobeIllustrator.png' },
+        169: { description: 'Dropbox', route: 'dropbox.png' },
+        170: { description: 'Discord', route: 'discord.png' },
+        171: { description: 'Reddit', route: 'reddit.png' },
+        172: { description: 'Spotify', route: 'spotify.png' },
+        173: { description: 'LG', route: 'lg.png' },
+        174: { description: 'Konami', route: 'konami.png' },
+        175: { description: 'Dell', route: 'dell.png' },
+        176: { description: 'Linkedin', route: 'linkedin.png' },
+        177: { description: 'Motorola', route: 'motorola.png' },
+        178: { description: 'GoogleDrive', route: 'googleDrive.png' },
+        179: { description: 'Samsung', route: 'samsung.png' },
+        180: { description: 'Huawei', route: 'huawei.png' },
+        181: { description: 'EASports', route: 'EASports.png' },
+        182: { description: 'GoogleMaps', route: 'googleMaps.png' },
+        183: { description: 'Sega', route: 'sega.png' },
+        184: { description: 'AMD', route: 'amd.png' },
+        185: { description: 'Twitch', route: 'twitch.png' },
+        186: { description: 'Skype', route: 'skype.png' },
+        187: { description: 'GoogleTranslate', route: 'googleTranslate.png' },
+        188: { description: 'Wikipedia', route: 'wikipedia.png' },
+        189: { description: 'Paypal', route: 'paypal.png' },
+        190: { description: 'SONY', route: 'sony.png' },
+        191: { description: 'Ubisoft', route: 'ubisoft.png' },
+        192: { description: 'Pinterest', route: 'pinterest.png' },
+        193: { description: 'Tinder', route: 'tinder.png' },
+        194: { description: 'Nintendo', route: 'nintendo.png' },
+        195: { description: 'Philips', route: 'philips.png' },
+        196: { description: 'Cisco', route: 'cisco.png' },
+        197: { description: 'IBM', route: 'ibm.png' },
+        198: { description: 'NVIDIA', route: 'nvidia.png' },
+        199: { description: 'Logitech', route: 'logitech.png' },
+        200: { description: 'Intel', route: 'intel.png' },
     ];
 
     // Binding methods to the class instance
@@ -1044,7 +1144,7 @@ class Server {
       const newCard = boardCards.get(randomNumber);
       if (newCard) {
         if (this.checkForCard(newCard, playerCardsMap)) {
-          playerCardsMap.set(cardIndex, newCard);
+          playerCardsMap.set(newCard.get('description'), newCard);
         }
       }
     }
@@ -1219,12 +1319,9 @@ class Server {
                   isCorrect = true;
                   playerPoints = this.changePlayerScore(playerNickname, roomCode, 100);
                   // Deleting player's card.
-                  for (let index = 0; index < cards.size; index += 1) {
-                    const card = cards.get(index);
-                    if (card && card.get('description') === playerCardId) {
-                      cards.delete(index);
+                    if (cards.has(playerCardId)) {
+                        cards.delete(playerCardId);
                     }
-                  }
                 } else {
                   isCorrect = false;
                   playerPoints = this.changePlayerScore(playerNickname, roomCode, -10);

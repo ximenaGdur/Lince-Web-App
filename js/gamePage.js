@@ -224,13 +224,14 @@ class GamePage {
    */
   disableBoard() {
     if (this.myImages) {
-      // Add an event listener to each of the cards player
-      for (let index = 0; index < this.myImages.length; index += 1) {
-        const card = this.myImages[index];
-        if (card) {
-          card.disabled = true;
+        // Removing event listener to each of the cards player
+        for (let index = 0; index < boardImage.length; index += 1) {
+            const card = boardImage[index];
+            console.log(card);
+            card.removeEventListener('click', () => { });
         }
-      }
+        const exitButton = document.getElementById('exit-button');
+        exitButton.disabled = true;
     }
   }
 
@@ -522,6 +523,11 @@ function loadPage() {
     const mainContent = document.getElementsByClassName('main-content');
     mainContent[0].innerHTML = '<h2 class="page-title" id="waiting-room-title">La sala no existe</h2>';
     mainContent[0].innerHTML += '<img class="information-icon" src="/design/images/Icons/informationIcon.png" alt="información"></img>';
+
+    const correctMatchSound = document.getElementById('correctoMatchSound');
+    correctMatchSound.volume = 0.1;
+    const incorrectoMatchSound = document.getElementById('incorrectoMatchSound');
+    incorrectoMatchSound.volume = 0.1;
   }
 }
 
