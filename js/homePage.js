@@ -81,9 +81,6 @@ class HomePage {
       const enteredNickname = this.nicknameField.value;
       const message = {
         type: 'createRoom',
-        from: 'client',
-        to: 'server',
-        when: 'when a client presses the create room button with a valid nickname',
         nickname: enteredNickname,
       };
       socket.send(JSON.stringify(message));
@@ -100,9 +97,6 @@ class HomePage {
 
       const message = {
         type: 'addToRoom',
-        from: 'client',
-        to: 'server',
-        when: 'when a client presses the join session button',
         nickname: givenNickname,
         sessionCode: givenCode,
       };
@@ -124,9 +118,6 @@ class HomePage {
       if (givenCode.length === 5 && givenCode.trim() !== '') {
         const message = {
           type: 'validateCode',
-          from: 'client',
-          to: 'server',
-          when: 'when a client types a room code',
           sessionCode: givenCode,
         };
         socket.send(JSON.stringify(message));
@@ -179,15 +170,15 @@ class HomePage {
     const joinButton = document.getElementById('join-button');
     if (feedbackMessage && joinButton) {
       if (receivedMessage.isValid === false && receivedMessage.isStarted === false) {
-        feedbackMessage.innerHTML = '�Sala no existe!';
+        feedbackMessage.innerHTML = '¡Sala no existe!';
         joinButton.style.cursor = 'default';
         joinButton.disabled = true;
       } else if (receivedMessage.isValid === true && receivedMessage.isStarted === true) {
-        feedbackMessage.innerHTML = '�El juego en la sala ha comenzado!';
+        feedbackMessage.innerHTML = '¡El juego en la sala ha comenzado!';
         joinButton.style.cursor = 'default';
         joinButton.disabled = true;
       } else {
-        feedbackMessage.innerHTML = 'Sala encontrada';
+        feedbackMessage.innerHTML = '¡Sala encontrada!';
         joinButton.style.cursor = 'pointer';
         joinButton.disabled = false;
       }
