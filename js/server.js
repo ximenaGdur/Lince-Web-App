@@ -278,73 +278,16 @@ class Server {
 
   /**
    * Creates new player and adds it to the room.
-   * @param {Number} playerPosition Player's position in ranking.
    * @param Boolean isHost Whether player is host or not.
    * @returns New player Map with relevant information.
    */
-  createPlayer(playerPosition, isHost) {
+  createPlayer(isHost) {
     const newPlayer = new Map([
-      ['position', playerPosition],
       ['avatar', null],
       ['points', 0],
       ['host', isHost],
     ]);
     return newPlayer;
-  }
-
-  /**
-   * Assigns random avatar to player.
-   * @param {Number} code Room code where player will be placed.
-   * @returns Randomly generated avatar.
-   */
-  selectAvatar(code) {
-    let playerAvatar = null;
-    const roomInfo = this.availableRooms.get(code);
-    if (roomInfo && roomInfo.has('players')) {
-      const playersMap = roomInfo.get('players');
-      if (playersMap) {
-        const amountPlayers = Array.from(playersMap.keys()).length;
-        if (amountPlayers <= 20) {
-          const playerIndex = amountPlayers - 1;
-          playerAvatar = this.avatarRoutes[playerIndex];
-        }
-      }
-    }
-    return playerAvatar;
-  }
-
-  /**
-   * Creating playerMap with given information.
-   * @param {Number} roomCode Code of room.
-   * @param {String} playerNickname Nickname of player.
-   * @param {WebSocket} socket Socket to specific client.
-   * @returns Created player Map.
-   */
-  createPlayerMap(roomCode, socket) {
-    const newPlayer = this.createPlayer(1, true);
-    newPlayer.set('avatar', this.selectAvatar(roomCode));
-    const playerMap = new Map([
-      ['playerSocket', socket],
-      ['playerInfo', newPlayer],
-    ]);
-    return playerMap;
-  }
-
-  /**
-   * Set default game configuration every time a game is created.
-   */
-  setDefaultGameConfiguration() {
-    const configurations = new Map();
-    configurations.set('maxTime', 20);
-    configurations.set('cardsPerPlayer', 5);
-    configurations.set('cardsPerRound', 100);
-    configurations.set('adaptation1a', false);
-    configurations.set('adaptation1b', false);
-    configurations.set('adaptation2a', false);
-    configurations.set('adaptation2b', false);
-    configurations.set('adaptation3a', false);
-    configurations.set('adaptation3b', false);
-    return configurations;
   }
 
   printRooms() {
@@ -370,36 +313,77 @@ class Server {
   }
 
   /**
+   * Assigns random avatar to player.
+   * @param {Number} code Room code where player will be placed.
+   * @returns Randomly generated avatar.
+   */
+  selectAvatar(code) {
+    let playerAvatar = null;
+    const roomInfo = this.availableRooms.get(code);
+    if (roomInfo && roomInfo.has('players')) {
+      const playersMap = roomInfo.get('players');
+      if (playersMap) {
+        const amountPlayers = Array.from(playersMap.keys()).length;
+        if (amountPlayers >= 0 && amountPlayers < 20) {
+          playerAvatar = this.avatarRoutes[amountPlayers];
+        }
+      }
+    }
+    return playerAvatar;
+  }
+
+  /**
+   * Creating playerMap with given information.
+   * @param {Number} roomCode Code of room.
+   * @param {WebSocket} socket Socket to specific client.
+   * @param {String} isHost Whether player is host.
+   * @returns Created player Map.
+   */
+  createPlayerMap(roomCode, socket, isHost) {
+    const newPlayer = this.createPlayer(isHost);
+    newPlayer.set('avatar', this.selectAvatar(roomCode));
+    const playerMap = new Map([
+      ['playerSocket', socket],
+      ['playerInfo', newPlayer],
+    ]);
+    return playerMap;
+  }
+
+  /**
+   * Set default game configuration every time a game is created.
+   */
+  setDefaultGameConfiguration() {
+    const configurations = new Map();
+    configurations.set('maxTime', 20);
+    configurations.set('cardsPerPlayer', 5);
+    configurations.set('cardsPerRound', 100);
+    configurations.set('adaptation1a', false);
+    configurations.set('adaptation1b', false);
+    configurations.set('adaptation2a', false);
+    configurations.set('adaptation2b', false);
+    configurations.set('adaptation3a', false);
+    configurations.set('adaptation3b', false);
+    return configurations;
+  }
+
+  /**
    * Creates room maps that store player information.
    * @param {String} playerNickname Player's nickname.
    * @param {Map} playerMap Player map with their information.
    * @param {Integer} roomCode Created room code.
    * @returns
    */
-  createRoomMaps(playerNickname, playerMap, roomCode) {
+  createRoomMap(roomCode) {
     let success = false;
-    const playerInfo = playerMap.get('playerInfo');
-    if (playerInfo) {
-      const playerPoints = playerInfo.get('points');
-      const playersMap = new Map([
-        [playerNickname, playerMap],
-      ]);
-      if (playersMap) {
-        const roomMap = new Map([
-          ['isStarted', false],
-          ['config', this.setDefaultGameConfiguration()],
-          ['players', playersMap],
-        ]);
-        // Adding to aditional map for easy access
-        if (roomMap) {
-          const roomList = [];
-          const playerRanks = { nickname: playerNickname, points: playerPoints };
-          roomList.push(playerRanks);
-          this.playerRankingPorRoom.set(roomCode, roomList);
-          this.availableRooms.set(roomCode, roomMap);
-          success = true;
-        }
-      }
+    const playerMap = new Map();
+    const roomMap = new Map([
+      ['hasStarted', false],
+      ['config', this.setDefaultGameConfiguration()],
+      ['players', playerMap],
+    ]);
+    if (roomMap) {
+      this.availableRooms.set(roomCode, roomMap);
+      success = true;
     }
     return success;
   }
@@ -418,6 +402,46 @@ class Server {
   }
 
   /**
+   * Returns player map with given nickname, in given room.
+   * @param {Number} code Code of room.
+   * @param {String} nickname Nickname of player.
+   * @returns Player map with their information.
+   */
+  getPlayersMap(code) {
+    let players = null;
+    if (code && this.availableRooms.has(code)) {
+      const roomInfo = this.availableRooms.get(code);
+      if (roomInfo && roomInfo.has('players')) {
+        players = roomInfo.get('players');
+      }
+    }
+    return players;
+  }
+
+  /**
+   *
+   * @param {*} roomCode
+   * @param {*} playerNickname
+   * @param {*} playerMap
+   */
+  addPlayerToMaps(roomCode, playerNickname, playerMap) {
+    const players = this.getPlayersMap(roomCode);
+    if (players) {
+      // Adding player to main map
+      players.set(playerNickname, playerMap);
+      // Adding to aditional map for easy access
+      if (playerMap.get('playerInfo').has('points')) {
+        const playerPoints = playerMap.get('playerInfo').get('points');
+        const playerRanks = { nickname: playerNickname, points: playerPoints };
+        const roomList = this.playerRankingPorRoom.get(roomCode);
+        if (roomList) {
+          roomList.push(playerRanks);
+        }
+      }
+    }
+  }
+
+  /**
    * Creates new room for host.
    * @param {WebSocket} socket Socket to specific client.
    * @param {Object} message Message received from client.
@@ -426,13 +450,15 @@ class Server {
     const playerNickname = message.nickname;
     const roomCode = String(this.nextRoomCode);
     this.nextRoomCode += 1;
-    console.log(`this.nextRoomCode: ${this.nextRoomCode}`);
 
     if (playerNickname && roomCode) {
-      console.log('playerNickname && roomCode');
-      const playerMap = this.createPlayerMap(roomCode, socket);
-      if (playerMap) {
-        if (this.createRoomMaps(playerNickname, playerMap, roomCode) === true) {
+      if (this.createRoomMap(roomCode) === true) {
+        const playerMap = this.createPlayerMap(roomCode, socket, true);
+        if (playerMap) {
+          const roomList = [];
+          this.playerRankingPorRoom.set(roomCode, roomList);
+          this.addPlayerToMaps(roomCode, playerNickname, playerMap);
+          // Sending room code
           this.sendRoomCode(socket, roomCode);
         }
       }
@@ -447,27 +473,20 @@ class Server {
   addToRoom(socket, message) {
     const playerNickname = message.nickname;
     const roomCode = message.sessionCode;
-    const roomInfo = this.availableRooms.get(roomCode);
-    const playersMap = roomInfo.get('players');
 
-    const playerPosition = playersMap.size + 1;
-    const newPlayer = this.createPlayer(playerPosition, false);
-    newPlayer.set('avatar', this.selectAvatar(roomCode, playerNickname));
-
-    if (this.availableRooms.has(roomCode) === true) {
-      if (playersMap.keys.length <= this.maximumClientAmount) {
-        const playerMap = new Map([
-          ['playerSocket', socket],
-          ['playerInfo', newPlayer],
-        ]);
-        playersMap.set(playerNickname, playerMap);
-
-        // Adding to aditional map for easy access
-        const roomList = this.playerRankingPorRoom.get(roomCode);
-        const playerRanks = { nickname: playerNickname, points: newPlayer.get('points') };
-        roomList.push(playerRanks);
-
-        this.sendRoomCode(socket, roomCode);
+    if (playerNickname && roomCode) {
+      const playersMap = this.getPlayersMap(roomCode);
+      if (playersMap) {
+        const playerAmount = playersMap.keys.length;
+        if (playerAmount <= this.maximumClientAmount) {
+          // Creating player map
+          const playerMap = this.createPlayerMap(roomCode, socket, false);
+          if (playerMap) {
+            this.addPlayerToMaps(roomCode, playerNickname, playerMap);
+            // Sending room code
+            this.sendRoomCode(socket, roomCode);
+          }
+        }
       }
     }
   }
@@ -483,22 +502,17 @@ class Server {
     if (socket && messageReceived) {
       const receivedCode = messageReceived.sessionCode;
       const roomInfo = this.availableRooms.get(receivedCode);
-      console.log('validateCode: ');
-      console.log(`receivedCode: ${receivedCode}`);
-      this.printRooms();
       if (roomInfo) {
-        console.log(`roomInfo: ${roomInfo}`);
         if (roomInfo) {
           codeIsValid = true;
-          console.log(`codeIsValid: ${codeIsValid}`);
-          hasGameStarted = roomInfo.get('isStarted');
+          hasGameStarted = roomInfo.get('hasStarted');
         }
       }
     }
     const newMessage = {
       type: 'handleCodeValidation',
       isValid: codeIsValid,
-      isStarted: hasGameStarted,
+      hasStarted: hasGameStarted,
     };
     socket.send(JSON.stringify(newMessage));
   }
@@ -511,9 +525,7 @@ class Server {
    */
   playerExists(code, nickname) {
     let exists = false;
-    console.log(`code: ${code}`);
     if (this.availableRooms.has(code)) {
-      console.log('code && nickname');
       const roomInfo = this.availableRooms.get(code);
       if (roomInfo.has('players')) {
         const playersMap = roomInfo.get('players');
@@ -526,26 +538,44 @@ class Server {
   }
 
   /**
+   * Orders array by points.
+   * @param {Number} roomCode Unique room code.
+   */
+  orderPlayersByPoints(roomCode) {
+    const roomPlayers = this.playerRankingPorRoom.get(roomCode);
+    if (roomPlayers) {
+      roomPlayers.sort((a, b) => a.quantity - b.quantity);
+    }
+    return roomPlayers;
+  }
+
+  /**
    * Converts Map object into a string in order to send it.
    * @param {Map} playerMap Map object with player's information.
+   * @param {Array} playerRanks Array with players ordered by highest score.
    * @returns String with all player information.
    */
-  createPlayerStringMap(playerMap) {
+  createPlayerStringMap(playerMap, playerRanks) {
     const playerStringMap = {};
     if (playerMap) {
-      playerMap.forEach((playerData, playerNickname) => {
-        if (playerData) {
-          const playerInfo = playerData.get('playerInfo');
-          if (playerInfo) {
-            playerStringMap[playerNickname] = {
-              position: playerInfo.get('position'),
-              avatar: playerInfo.get('avatar'),
-              points: playerInfo.get('points'),
-              host: playerInfo.get('host'),
-            };
+      for (let playerIndex = 0; playerIndex < playerRanks.length; playerIndex += 1) {
+        const playerRankMap = playerRanks[playerIndex];
+        if (playerRankMap) {
+          const playerName = playerRankMap.nickname;
+          const playerData = playerMap.get(playerName);
+          if (playerData) {
+            const playerInfo = playerData.get('playerInfo');
+            if (playerInfo) {
+              playerStringMap[playerName] = {
+                avatar: playerInfo.get('avatar'),
+                points: playerInfo.get('points'),
+                host: playerInfo.get('host'),
+                position: playerIndex + 1,
+              };
+            }
           }
         }
-      });
+      }
     }
     return JSON.stringify(playerStringMap);
   }
@@ -576,9 +606,11 @@ class Server {
   sendUpdatedPlayers(playerName, roomCode) {
     const roomInfo = this.availableRooms.get(roomCode);
     const playersMap = roomInfo.get('players');
+
+    const playerRanks = this.orderPlayersByPoints(roomCode);
     const newMessage = {
       type: 'handlePlayerList',
-      players: this.createPlayerStringMap(playersMap),
+      players: this.createPlayerStringMap(playersMap, playerRanks),
     };
     this.broadcastToOthers(newMessage, roomCode, playerName);
   }
@@ -610,14 +642,12 @@ class Server {
    * @param {Object} message Message sent by client.
    */
   getWaitingRoom(socket, message) {
-    console.log('getWaitingRoom');
+    this.printRooms();
     const playerNickname = message.nickname;
     const roomCode = message.sessionCode;
 
     if (playerNickname && roomCode) {
-      console.log(`roomCode: ${roomCode}`);
       if (this.playerExists(roomCode, playerNickname) === true) {
-        console.log(`playerExists: ${this.playerExists(roomCode, playerNickname)}`);
         const roomInfo = this.availableRooms.get(roomCode);
         const roomConfig = roomInfo.get('config');
         const playersMap = roomInfo.get('players');
@@ -628,10 +658,11 @@ class Server {
         this.sendUpdatedPlayers(playerNickname, roomCode, 'handlePlayerList');
 
         // Sending player personalized waiting room.
+        const playerRanks = this.orderPlayersByPoints(roomCode);
         const newMessage = {
           type: 'handleWaitingRoom',
           isHost: playerInfo.get('host'),
-          players: this.createPlayerStringMap(playersMap),
+          players: this.createPlayerStringMap(playersMap, playerRanks),
           config: this.createConfigStringMap(roomConfig),
         };
         socket.send(JSON.stringify(newMessage));
@@ -953,18 +984,20 @@ class Server {
    * Assigns random card to player.
    */
   selectNewCard() {
+    let cardMap = null;
     const randomNumber = this.getRandomNumber(1, Object.keys(this.cardRoutes).length);
     const card = this.cardRoutes[randomNumber];
 
-    const randomColor = this.getRandomNumber(0, this.cardColors.length - 1);
-    const color = this.cardColors[randomColor];
+    if (card) {
+      const randomColor = this.getRandomNumber(0, this.cardColors.length - 1);
+      const color = this.cardColors[randomColor];
 
-    const cardMap = new Map([
-      ['description', card.description],
-      ['route', card.route],
-      ['border', color],
-    ]);
-
+      cardMap = new Map([
+        ['description', card.description],
+        ['route', card.route],
+        ['border', color],
+      ]);
+    }
     return cardMap;
   }
 
@@ -1175,7 +1208,7 @@ class Server {
           const playerInfo = playerData.get('playerInfo');
           this.selectPlayerCards(playerInfo, cardAmount, boardCards);
         });
-        this.availableRooms.get(roomCode).set('isStarted', true);
+        this.availableRooms.get(roomCode).set('hasStarted', true);
 
         // Prepare cards?
         const newMessage = {
@@ -1253,11 +1286,12 @@ class Server {
       playerMap.set('playerSocket', socket);
       this.sendUpdatedPlayers(playerNickname, roomCode);
 
+      const playerRanks = this.orderPlayersByPoints(roomCode);
       // Sending player personalized waiting room.
       const newMessage = {
         type: 'handleGameRoom',
         config: this.createConfigStringMap(configMap),
-        players: this.createPlayerStringMap(playersMap),
+        players: this.createPlayerStringMap(playersMap, playerRanks),
         boardCards: this.createBoardStringMap(roomInfo.get('board')),
         playerCards: this.createPlayerCardsStringMap(playerMap),
       };
@@ -1319,9 +1353,9 @@ class Server {
                   isCorrect = true;
                   playerPoints = this.changePlayerScore(playerNickname, roomCode, 100);
                   // Deleting player's card.
-                    if (cards.has(playerCardId)) {
-                        cards.delete(playerCardId);
-                    }
+                  if (cards.has(playerCardId)) {
+                    cards.delete(playerCardId);
+                  }
                 } else {
                   isCorrect = false;
                   playerPoints = this.changePlayerScore(playerNickname, roomCode, -10);
@@ -1344,18 +1378,6 @@ class Server {
           }
         }
       }
-    }
-  }
-
-  /**
-   * Orders array by points.
-   * @param {Number} roomCode Unique room code.
-   */
-  orderPlayersByPoints(roomCode) {
-    const roomPlayers = this.playerRankingPorRoom.get(roomCode);
-    if (roomPlayers) {
-      roomPlayers.sort((a, b) => a.quantity - b.quantity);
-      console.log(`roomPlayers: ${JSON.stringify(roomPlayers)}`);
     }
   }
 
@@ -1392,15 +1414,18 @@ class Server {
   finishGame(socket, message) {
     const code = message.sessionCode;
     const roomInfo = this.availableRooms.get(code);
+    roomInfo.set('hasStarted', false);
     const playersMap = roomInfo.get('players');
+    if (playersMap) {
+      const playerRanks = this.orderPlayersByPoints(code);
+      const newMessage = {
+        type: 'handleTimesUp',
+        players: this.createPlayerStringMap(playersMap, playerRanks),
+      };
 
-    const newMessage = {
-      type: 'handleTimesUp',
-      players: this.createPlayerStringMap(playersMap),
-    };
-
-    this.saveToTop3(code, playersMap);
-    socket.send(JSON.stringify(newMessage));
+      this.saveToTop3(code, playersMap);
+      socket.send(JSON.stringify(newMessage));
+    }
   }
 
   /**
@@ -1415,26 +1440,6 @@ class Server {
         removePlayer(message);
       }
     } */
-  }
-
-  /**
-   * Returns player map with given nickname, in given room.
-   * @param {Number} code Code of room.
-   * @param {String} nickname Nickname of player.
-   * @returns Player map with their information.
-   */
-  getPlayerMap(code, nickname) {
-    let player = null;
-    if (code && nickname && this.availableRooms.has(code)) {
-      const roomInfo = this.availableRooms.get(code);
-      if (roomInfo && roomInfo.has('players')) {
-        const playersMap = roomInfo.get('players');
-        if (playersMap && playersMap.has(nickname)) {
-          player = playersMap.get(nickname);
-        }
-      }
-    }
-    return player;
   }
 }
 
@@ -1451,11 +1456,13 @@ const serverInstance = new Server();
  * @returns Boolean value that indicates if message was identified or not.
  */
 function identifyMessage(socket, receivedMessage) {
-  const messageType = receivedMessage.type;
-  if (serverInstance[messageType]) {
-    serverInstance[messageType](socket, receivedMessage);
-  } else {
-    console.log('No se reconoce ese mensaje.');
+  if (socket && receivedMessage) {
+    const messageType = receivedMessage.type;
+    if (serverInstance[messageType]) {
+      serverInstance[messageType](socket, receivedMessage);
+    } else {
+      console.log('No se reconoce ese mensaje.');
+    }
   }
 }
 

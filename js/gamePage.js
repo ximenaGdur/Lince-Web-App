@@ -102,8 +102,8 @@ class GamePage {
    */
   createBoardCard(cardData) {
     let cardElement = null;
-    const imageText = cardData.description;
     if (cardData) {
+      const imageText = cardData.description;
       cardElement = this.createContainerElement(imageText, 'board-image-container');
       if (cardElement) {
         // Creating inner element
@@ -179,9 +179,12 @@ class GamePage {
     const cardsReceived = JSON.parse(message.playerCards);
     const playerCards = document.getElementById('player-cards');
     if (cardsReceived && playerCards && this.configMap) {
+      console.log("cardsReceived: " + message.playerCards);
       playerCards.innerHTML = '';
-      Object.keys(cardsReceived).forEach((cardData, cardIndex) => {
-        const cardElement = this.createPlayerCard(cardsReceived[cardIndex]);
+      Object.keys(cardsReceived).forEach((cardData) => {
+        console.log("cardData: " + cardData);
+        console.log("cardsReceived[cardIndex]: " + cardsReceived[cardData]);
+        const cardElement = this.createPlayerCard(cardsReceived[cardData]);
         if (cardElement) {
           // Adding card element to game board
           playerCards.appendChild(cardElement);
@@ -224,14 +227,13 @@ class GamePage {
    */
   disableBoard() {
     if (this.myImages) {
-        // Removing event listener to each of the cards player
-        for (let index = 0; index < boardImage.length; index += 1) {
-            const card = boardImage[index];
-            console.log(card);
-            card.removeEventListener('click', () => { });
-        }
-        const exitButton = document.getElementById('exit-button');
-        exitButton.disabled = true;
+      // Removing event listener to each of the cards player
+      for (let index = 0; index < this.myImages.length; index += 1) {
+        const card = this.myImages[index];
+        card.removeEventListener('click', () => { });
+      }
+      const exitButton = document.getElementById('exit-button');
+      exitButton.disabled = true;
     }
   }
 
@@ -367,7 +369,6 @@ class GamePage {
   checkWinner(message) {
     let highestScore = null;
     if (message) {
-      console.log(`message: ${message}`);
       const playerArray = JSON.parse(message.players);
       if (playerArray) {
         const playerNicknames = Object.keys(playerArray);
@@ -426,6 +427,10 @@ class GamePage {
       addToTable(message.players, popUpPlayerTable);
       this.showCorrectTitle(message);
       popUpFinished.style.display = 'flex';
+      const timeForRedirect = 10 * 1000;
+      setTimeout(() => {
+        continueSession();
+      }, timeForRedirect);
     }
   }
 
@@ -459,8 +464,13 @@ class GamePage {
    * @param {WebSocket} socket Socket that connects to server.
    */
   returnToMain(socket) {
-    // send message to server letting them know player is leaving.
-    socket.send(createRemovePlayerMessage());
+    if (socket) {
+      // send message to server letting them know player is leaving.
+      const message = createRemovePlayerMessage();
+      if (message) {
+        socket.send();
+      }
+    }
     // Aqui se manda el msj de eliminar el jugador de la lista.
     window.location.href = './index.html';
   }
@@ -519,15 +529,35 @@ function addEventListeners() {
  * Loads page elements with specific information.
  */
 function loadPage() {
-  if (!roomCode) {
-    const mainContent = document.getElementsByClassName('main-content');
-    mainContent[0].innerHTML = '<h2 class="page-title" id="waiting-room-title">La sala no existe</h2>';
-    mainContent[0].innerHTML += '<img class="information-icon" src="/design/images/Icons/informationIcon.png" alt="información"></img>';
-
+  if (roomCode) {
     const correctMatchSound = document.getElementById('correctoMatchSound');
     correctMatchSound.volume = 0.1;
     const incorrectoMatchSound = document.getElementById('incorrectoMatchSound');
     incorrectoMatchSound.volume = 0.1;
+  } else {
+    const mainContent = document.getElementsByClassName('main-content');
+    if (mainContent) {
+      mainContent[0].innerHTML = '<h2 class="page-title" id="waiting-room-title">La sala no existe</h2>';
+      mainContent[0].innerHTML += '<button class="small-button" type="button" id="exit-button">Abandonar partida</button>';
+      mainContent[0].innerHTML
+      += `<dialog class="popup" id="exit-popup">
+            <h2 class="popup-title">
+              Seguro que quieres abandonar la partida y regresar a la página de inicio?
+            </h2>
+            <ul class="buttons">
+                <li class="small-button-container">
+                    <button class="small-button" id="cancel-button" type="button">
+                        Cancelar
+                    </button>
+                </li>
+                <li class="small-button-container">
+                    <button class="small-button" id="accept-button" type="button">
+                        Aceptar
+                    </button>
+                </li>
+            </ul>
+          </dialog>`;
+    }
   }
 }
 
@@ -535,8 +565,8 @@ function loadPage() {
  * When page is loaded, event listeners and page is set up
  */
 function main() {
-  addEventListeners();
   loadPage();
+  addEventListeners();
 }
 
 /** ******************* Listeners for game page ******************* */

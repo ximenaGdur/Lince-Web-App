@@ -485,7 +485,7 @@ class WaitingRoomPage {
   handleMaxTime(socket, message) {
     if (this.maxTimeRange && this.maxTimeValue) {
       const time = message.maxTime;
-      if (time >= this.timeMin && time < this.timeMax) {
+      if (time >= this.timeMin && time <= this.timeMax) {
         this.maxTimeValue.innerHTML = `${time} s`;
         this.maxTimeRange.value = time;
       }
@@ -499,7 +499,7 @@ class WaitingRoomPage {
   handleCardsPerRound(socket, message) {
     if (this.cardsPerRoundValue && this.cardsPerRoundRange) {
       const amount = message.cardsPerRound;
-      if (amount >= this.cardsRoundMin && amount < this.cardsRoundMax) {
+      if (amount >= this.cardsRoundMin && amount <= this.cardsRoundMax) {
         this.cardsPerRoundValue.innerHTML = amount;
         this.cardsPerRoundRange.value = amount;
       }
@@ -514,7 +514,7 @@ class WaitingRoomPage {
   handleCardsPerPlayer(socket, message) {
     if (this.cardsPerPlayerValue && this.cardsPerPlayerRange) {
       const amount = message.cardsPerPlayer;
-      if (amount >= this.cardsPlayerMin && amount < this.cardsPlayerMax) {
+      if (amount >= this.cardsPlayerMin && amount <= this.cardsPlayerMax) {
         this.cardsPerPlayerValue.innerHTML = amount;
         this.cardsPerPlayerRange.value = amount;
       }
@@ -534,8 +534,13 @@ class WaitingRoomPage {
    * @param {WebSocket} socket Socket that connects to server
    */
   returnToMain(socket) {
-    // send message to server letting them know player is leaving.
-    socket.send(createRemovePlayerMessage());
+    if (socket) {
+      // send message to server letting them know player is leaving.
+      const message = createRemovePlayerMessage();
+      if (message) {
+        socket.send();
+      }
+    }
     // Aqui se manda el msj de eliminar el jugador de la lista.
     window.location.href = './index.html';
   }
@@ -576,12 +581,12 @@ function addEventListeners() {
   // Creating instance of Game Page class.
   const page = new WaitingRoomPage();
 
-  if (socket && page) {
+  if (socket && page && storageInitialized() === true) {
     /**
      * When a connection is made with server.
      */
     socket.addEventListener('open', () => {
-      console.log('Conexi�n con Servidor');
+      console.log('Conexión con Servidor');
       const message = {
         type: 'getWaitingRoom',
         nickname: playerNickname,
@@ -600,49 +605,49 @@ function addEventListeners() {
         identifyMessage(page, socket, receivedMessage);
       }
     });
-
-    // Adding event for button that allows player to return to main page.
-    addingEventById('accept-button', 'click', page.returnToMain, socket);
-
-    // Adding event for cards per player bar.
-    addingEventById('cards-per-player-range', 'change', page.chooseCardsPerPlayer, socket);
-
-    // Adding event for cards per round bar.
-    addingEventById('cards-per-round-range', 'change', page.chooseCardsPerRound, socket);
-
-    // Adding event for button that allows player to close pop up.
-    addingEventById('cancel-button', 'click', closePopUp, null);
-
-    // Adding event for button that allows the user to see the exit popup.
-    addingEventById('exit-button', 'click', showExitPopup, null);
-
-    // Adding event for informationIcons
-    addingInfoEvents();
-
-    // Adding event for max time bar.
-    addingEventById('max-time-range', 'change', page.chooseMaxTime, socket);
-
-    // Adding event for radio button.
-    addingEventById('Adp1a', 'click', page.chooseAdp1a, socket);
-
-    // Adding event for radio button.
-    addingEventById('Adp1b', 'click', page.chooseAdp1b, socket);
-
-    // Adding event for radio button.
-    addingEventById('Adp2a', 'click', page.chooseAdp2a, socket);
-
-    // Adding event for radio button.
-    addingEventById('Adp2b', 'click', page.chooseAdp2b, socket);
-
-    // Adding event for radio button.
-    addingEventById('Adp3a', 'click', page.chooseAdp3a, socket);
-
-    // Adding event for radio button.
-    addingEventById('Adp3b', 'click', page.chooseAdp3b, socket);
-
-    // Adding event for button that allows player to start game
-    addingEventById('start-button', 'click', page.startGame, socket);
   }
+
+  // Adding event for button that allows player to return to main page.
+  addingEventById('accept-button', 'click', page.returnToMain, socket);
+
+  // Adding event for cards per player bar.
+  addingEventById('cards-per-player-range', 'change', page.chooseCardsPerPlayer, socket);
+
+  // Adding event for cards per round bar.
+  addingEventById('cards-per-round-range', 'change', page.chooseCardsPerRound, socket);
+
+  // Adding event for button that allows player to close pop up.
+  addingEventById('cancel-button', 'click', closePopUp, null);
+
+  // Adding event for button that allows the user to see the exit popup.
+  addingEventById('exit-button', 'click', showExitPopup, null);
+
+  // Adding event for informationIcons
+  addingInfoEvents();
+
+  // Adding event for max time bar.
+  addingEventById('max-time-range', 'change', page.chooseMaxTime, socket);
+
+  // Adding event for radio button.
+  addingEventById('Adp1a', 'click', page.chooseAdp1a, socket);
+
+  // Adding event for radio button.
+  addingEventById('Adp1b', 'click', page.chooseAdp1b, socket);
+
+  // Adding event for radio button.
+  addingEventById('Adp2a', 'click', page.chooseAdp2a, socket);
+
+  // Adding event for radio button.
+  addingEventById('Adp2b', 'click', page.chooseAdp2b, socket);
+
+  // Adding event for radio button.
+  addingEventById('Adp3a', 'click', page.chooseAdp3a, socket);
+
+  // Adding event for radio button.
+  addingEventById('Adp3b', 'click', page.chooseAdp3b, socket);
+
+  // Adding event for button that allows player to start game
+  addingEventById('start-button', 'click', page.startGame, socket);
 }
 
 /**
@@ -651,11 +656,36 @@ function addEventListeners() {
 function loadPage() {
   // Waiting Room Title
   const title = document.getElementById('waiting-room-title');
-  if (roomCode && roomCode !== '') {
-    title.innerHTML += roomCode;
-  } else {
-    const mainContent = document.getElementsByClassName('main-content');
-    mainContent[0].innerHTML = '<h2 class="page-title" id="waiting-room-title">La sala no existe</h2>';
+  if (title) {
+    if (storageInitialized() === true) {
+      title.innerHTML += roomCode;
+    } else {
+      const mainContent = document.getElementsByClassName('main-content');
+      mainContent[0].innerHTML = `<h2 class="page-title" id="waiting-room-title">
+                                    La sala no existe
+                                  </h2>`;
+      mainContent[0].innerHTML
+      += `<ul class="buttons">
+            <li class="large-button-container">
+              <button class="large-button" id="exit-button" type="button">
+                Salir
+              </button>
+            </li>
+          </ul>`;
+      mainContent[0].innerHTML
+      += `<article class="popup" id="exit-popup">
+            <h2 class="popup-title">
+                ¿Seguro que quieres abandonar la partida y regresar a la página de inicio?
+            </h2>
+            <ul class="buttons">
+                <li class="small-button-container">
+                  <button class="small-button" id="accept-button" type="button">
+                      Aceptar
+                  </button>
+                </li>
+            </ul>
+          </article>`;
+    }
   }
 }
 
@@ -663,8 +693,8 @@ function loadPage() {
  * When page is loaded, event listeners and page is set up
  */
 function main() {
-  addEventListeners();
   loadPage();
+  addEventListeners();
 }
 
 /** ******************* Listeners for game page ******************* */

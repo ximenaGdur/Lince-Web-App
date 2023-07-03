@@ -2,28 +2,30 @@
  * Creates new player row in ranking table.
  */
 function createNewPlayer(nickname, playerInfo) {
-  const iconsRoute = '/design/images/icons/';
-  const avatarRoute = `${iconsRoute}profile/${playerInfo.avatar.route}`;
-  const crownRoute = `${iconsRoute}hostCrown.png`;
+  let playerHTML = null;
+  if (nickname && playerInfo && playerInfo.avatar) {
+    playerHTML = '<tr class="table-row">';
+    const iconsRoute = '/design/images/icons/';
+    const avatarRoute = `${iconsRoute}profile/${playerInfo.avatar.route}`;
+    const crownRoute = `${iconsRoute}hostCrown.png`;
 
-  let playerHTML = '<tr class="table-row">';
+    if (playerInfo.host === true) {
+      playerHTML += '  <td class="table-col ranking-column">';
+      playerHTML += `    <img class="crown-image" src="${crownRoute}" alt="Icono de Anfitrión"/>`;
+      playerHTML += `    ${playerInfo.position}`;
+      playerHTML += '  </td>';
+    } else {
+      playerHTML += `  <td class="table-col ranking-column">${playerInfo.position}</td>`;
+    }
 
-  if (playerInfo.host === true) {
-    playerHTML += '  <td class="table-col ranking-column">';
-    playerHTML += `    <img class="crown-image" src="${crownRoute}" alt="Icono de Anfitrión"/>`;
-    playerHTML += `    ${playerInfo.position}`;
+    playerHTML += '  <td class="table-col avatar-column">';
+    playerHTML += `    <img class="profile-image" src="${avatarRoute}" alt="Icono de ${playerInfo.avatar.description}"/>`;
     playerHTML += '  </td>';
-  } else {
-    playerHTML += `  <td class="table-col ranking-column">${playerInfo.position}</td>`;
+
+    playerHTML += `  <td class="table-col name-column">${nickname}</td>`;
+    playerHTML += `  <td class="table-col score-column">${playerInfo.points} pts</td>`;
+    playerHTML += '</tr>';
   }
-
-  playerHTML += '  <td class="table-col avatar-column">';
-  playerHTML += `    <img class="profile-image" src="${avatarRoute}" alt="Icono de ${playerInfo.avatar.description}"/>`;
-  playerHTML += '  </td>';
-
-  playerHTML += `  <td class="table-col name-column">${nickname}</td>`;
-  playerHTML += `  <td class="table-col score-column">${playerInfo.points} pts</td>`;
-  playerHTML += '</tr>';
 
   return playerHTML;
 }
@@ -40,7 +42,10 @@ export function addToTable(players, playerTable) {
       Object.keys(playerArray).forEach((nickname) => {
         if (Object.hasOwn(playerArray, nickname)) {
           const playerInfo = playerArray[nickname];
-          playerTable.innerHTML += createNewPlayer(nickname, playerInfo);
+          const playerHTML = createNewPlayer(nickname, playerInfo);
+          if (playerHTML) {
+            playerTable.innerHTML += playerHTML;
+          }
         }
       });
     }

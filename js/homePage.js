@@ -169,11 +169,11 @@ class HomePage {
     // Button in codePopUp to join into a room
     const joinButton = document.getElementById('join-button');
     if (feedbackMessage && joinButton) {
-      if (receivedMessage.isValid === false && receivedMessage.isStarted === false) {
+      if (receivedMessage.isValid === false && receivedMessage.hasStarted === false) {
         feedbackMessage.innerHTML = '¡Sala no existe!';
         joinButton.style.cursor = 'default';
         joinButton.disabled = true;
-      } else if (receivedMessage.isValid === true && receivedMessage.isStarted === true) {
+      } else if (receivedMessage.isValid === true && receivedMessage.hasStarted === true) {
         feedbackMessage.innerHTML = '¡El juego en la sala ha comenzado!';
         joinButton.style.cursor = 'default';
         joinButton.disabled = true;
