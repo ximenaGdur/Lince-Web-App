@@ -77,7 +77,25 @@ class GamePage {
     const imageRoute = `/design/images/icons/board/${route}`;
     const cssClassName = (isPlayerCard === true) ? 'my-image' : 'board-image';
 
+  // If player has selected words
+  if (configMap.adaptation1a && type === 'player') {
     contentElement = document.createElement('p');
+    contentElement.classList.add('word');
+    contentElement.textContent = imageText;
+  } else if (configMap.adaptation1b && type === 'player') {
+    contentElement = document.createElement('p');
+    contentElement.classList.add('word');
+    const imgText = imageText.replace(/[aeiou]/g, '_');
+    contentElement.textContent = imgText;
+  // If player has selected images
+  } else {
+    contentElement = document.createElement('img');
+    contentElement.classList.add(className);
+    contentElement.src = imageRoute;
+    contentElement.alt = `Icono de ${imageText}`;
+  }
+  return contentElement;
+}
     if (contentElement) {
       // If player has selected words
       if (isPlayerCard === true
