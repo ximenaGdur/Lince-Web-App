@@ -74,41 +74,24 @@ class GamePage {
    */
   createCardElement(imageText, route, isPlayerCard) {
     let contentElement = null;
-    const imageRoute = `/design/images/icons/board/${route}`;
-    const cssClassName = (isPlayerCard === true) ? 'my-image' : 'board-image';
-
-  // If player has selected words
-  if (configMap.adaptation1a && type === 'player') {
-    contentElement = document.createElement('p');
-    contentElement.classList.add('word');
-    contentElement.textContent = imageText;
-  } else if (configMap.adaptation1b && type === 'player') {
-    contentElement = document.createElement('p');
-    contentElement.classList.add('word');
-    const imgText = imageText.replace(/[aeiou]/g, '_');
-    contentElement.textContent = imgText;
-  // If player has selected images
-  } else {
-    contentElement = document.createElement('img');
-    contentElement.classList.add(className);
-    contentElement.src = imageRoute;
-    contentElement.alt = `Icono de ${imageText}`;
-  }
-  return contentElement;
-}
-    if (contentElement) {
-      // If player has selected words
-      if (isPlayerCard === true
-        && (this.configMap.adaptation1a === true || this.configMap.adaptation1b)) {
-        contentElement.classList.add('word');
-        contentElement.textContent = imageText;
-      // If player has selected images
-      } else {
-        contentElement = document.createElement('img');
-        contentElement.classList.add(cssClassName);
-        contentElement.src = imageRoute;
-        contentElement.alt = `Icono de ${imageText}`;
+    // If the card belongs to player hand
+    if (isPlayerCard === true) {
+      contentElement = document.createElement('p');
+      contentElement.classList.add('word');
+      let imgText = imageText;
+      // If player has selected words with missing letters
+      if (this.configMap.adaptation1b) {
+        imgText = imageText.replace(/[aeiou]/g, '_');
       }
+      contentElement.textContent = imgText;
+    // If the card belongs to the board
+    } else {
+      const cssClassName = (isPlayerCard === true) ? 'my-image' : 'board-image';
+      const imageRoute = `/design/images/icons/board/${route}`;
+      contentElement = document.createElement('img');
+      contentElement.classList.add(cssClassName);
+      contentElement.src = imageRoute;
+      contentElement.alt = `Icono de ${imageText}`;
     }
     return contentElement;
   }
