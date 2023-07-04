@@ -1565,7 +1565,7 @@ class Server {
     this.addTop3ToArray(combinedList, fileContent);
     if (combinedList.length >= 2) {
       combinedList.sort((a, b) => b.points - a.points);
-      console.log('playerRanks: ' + JSON.stringify(playerRanks));
+      console.log('combinedList: ' + JSON.stringify(combinedList));
     }
     return combinedList;
   }
