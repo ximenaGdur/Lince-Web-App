@@ -1310,6 +1310,14 @@ class Server {
     }
   }
 
+  isAssigned(params) {
+    let cardExists = false;
+    if (boardCardsMapKeyDescription.has(newCard.get('description')) === true) {
+      cardExists = true;
+    }
+    return cardExists;
+  }
+
   /**
    * Selects random player cards.
    * @param {*} playerInfo
@@ -1320,12 +1328,17 @@ class Server {
     const boardKeys = Array.from(boardCards.keys());
     const playerCardsMap = new Map();
     for (let cardIndex = 0; cardIndex < cardAmount; cardIndex += 1) {
-      const randomNumber = this.getRandomNumber(0, boardKeys.length - 1);
-      const newCard = boardCards.get(randomNumber);
+      let randomNumber = this.getRandomNumber(0, boardKeys.length - 1);
+      let newCard = boardCards.get(randomNumber);
       if (newCard) {
-        // if (this.checkForCard(newCard, playerCardsMap)) {
-          playerCardsMap.set(newCard.get('description'), newCard);
-        // }
+        while (newCard.get('isAssigned') === true) {
+          randomNumber = this.getRandomNumber(0, boardKeys.length - 1);
+          newCard = boardCards.get(randomNumber);
+        }
+        playerCardsMap.set(newCard.get('description'), newCard);
+        console.log(boardCards.get(randomNumber).get('isAssigned'));
+        boardCards.get(randomNumber).set('isAssigned', true);
+        console.log(boardCards.get(randomNumber).get('isAssigned'));
       }
     }
     playerInfo.set('cards', playerCardsMap);
