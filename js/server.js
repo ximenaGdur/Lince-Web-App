@@ -1197,9 +1197,8 @@ class Server {
    */
   selectNewCard() {
     let cardMap = null;
-    const randomNumber = this.getRandomNumber(1, Object.keys(this.cardRoutes).length);
+    const randomNumber = this.getRandomNumber(1, Object.keys(this.cardRoutes).length - 1);
     const card = this.cardRoutes[randomNumber];
-
     if (card) {
       const randomColor = this.getRandomNumber(0, this.cardColors.length - 1);
       const color = this.cardColors[randomColor];
@@ -1208,6 +1207,7 @@ class Server {
         ['description', card.description],
         ['route', card.route],
         ['border', color],
+        ['isAssigned', false],
       ]);
     }
     return cardMap;
@@ -1219,12 +1219,11 @@ class Server {
    * @param {*} roomCode
    * @returns
    */
-  checkForCard(card, roomCode) {
-    // TODO: complete
+  checkForCard(newCard, boardCardsMapKeyDescription) {
     let cardExists = false;
-
-    cardExists = true;
-
+    if (boardCardsMapKeyDescription.has(newCard.get('description')) === true) {
+      cardExists = true;
+    }
     return cardExists;
   }
 
@@ -1239,13 +1238,17 @@ class Server {
       const amountCardsBoard = roomConfig.get('cardsPerRound');
 
       const boardCardsMap = new Map();
+      const boardCardsMapKeyDescription = new Map();
       for (let cardIndex = 0; cardIndex < amountCardsBoard; cardIndex += 1) {
-        const newCard = this.selectNewCard();
-        if (this.checkForCard(newCard, boardCardsMap) === true) {
-          boardCardsMap.set(cardIndex, newCard);
+        let newCard = this.selectNewCard();
+        while (this.checkForCard(newCard, boardCardsMapKeyDescription) === true) {
+          newCard = this.selectNewCard();
         }
+        boardCardsMap.set(cardIndex, newCard);
+        boardCardsMapKeyDescription.set(newCard.get('description'), newCard);
       }
       roomInfo.set('board', boardCardsMap);
+      roomInfo.set('boardKeyDescription', boardCardsMapKeyDescription);
     }
   }
 
@@ -1383,18 +1386,20 @@ class Server {
    */
   selectPlayerCards(playerInfo, cardAmount, boardCards) {
     const boardKeys = Array.from(boardCards.keys());
-    const playerCardsMap = playerInfo.get('cards');
-    if (playerCardsMap) {
-      for (let cardIndex = 0; cardIndex < cardAmount; cardIndex += 1) {
-        const randomNumber = this.getRandomNumber(0, boardKeys.length - 1);
-        const newCard = boardCards.get(randomNumber);
-        if (newCard) {
-          if (this.checkForCard(newCard, playerCardsMap)) {
-            playerCardsMap.set(newCard.get('description'), newCard);
-          }
+    const playerCardsMap = new Map();
+    for (let cardIndex = 0; cardIndex < cardAmount; cardIndex += 1) {
+      let randomNumber = this.getRandomNumber(0, boardKeys.length - 1);
+      let newCard = boardCards.get(randomNumber);
+      if (newCard) {
+        while (newCard.get('isAssigned') === true) {
+          randomNumber = this.getRandomNumber(0, boardKeys.length - 1);
+          newCard = boardCards.get(randomNumber);
         }
+        playerCardsMap.set(newCard.get('description'), newCard);
+        boardCards.get(randomNumber).set('isAssigned', true);
       }
     }
+    playerInfo.set('cards', playerCardsMap);
   }
 
   /**
