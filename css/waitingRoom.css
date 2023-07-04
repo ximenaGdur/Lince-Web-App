@@ -134,7 +134,7 @@
     flex-direction: column;
     margin: 1%;
     max-width: 66%;
-    min-width: 66%;
+    min-width: 82%;
 }
 
 /**
@@ -182,7 +182,8 @@
     padding: 2% 0%;
     max-height: 50%;
     max-width: 50%;
-    min-width: 50%;
+    min-width: 42%;
+    justify-content: center;
 }
 
 /**
