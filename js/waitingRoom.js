@@ -60,14 +60,20 @@ class WaitingRoomPage {
     this.option1a = document.getElementById('Adp1a');
     // Option 1b radio button.
     this.option1b = document.getElementById('Adp1b');
+    // Option 1c radio button.
+    this.option1c = document.getElementById('Adp1c');
     // Option 2a radio button.
     this.option2a = document.getElementById('Adp2a');
     // Option 2b radio button.
     this.option2b = document.getElementById('Adp2b');
+    // Option 2c radio button.
+    this.option2c = document.getElementById('Adp2c');
     // Option 3a radio button.
     this.option3a = document.getElementById('Adp3a');
     // Option 3b radio button.
     this.option3b = document.getElementById('Adp3b');
+    // Option 3c radio button.
+    this.option3c = document.getElementById('Adp3c');
     // Max time bar.
     this.maxTimeRange = document.getElementById('max-time-range');
     // Value for max time bar.
@@ -84,17 +90,21 @@ class WaitingRoomPage {
     this.startButton = document.getElementById('start-button');
 
     // Binding methods to the class instance
-    this.returnToMain = this.returnToMain.bind(this);
-    this.chooseCardsPerPlayer = this.chooseCardsPerPlayer.bind(this);
-    this.chooseCardsPerRound = this.chooseCardsPerRound.bind(this);
-    this.chooseMaxTime = this.chooseMaxTime.bind(this);
-    this.chooseAdp1a = this.chooseAdp1a.bind(this);
-    this.chooseAdp1b = this.chooseAdp1b.bind(this);
-    this.chooseAdp2a = this.chooseAdp2a.bind(this);
-    this.chooseAdp2b = this.chooseAdp2b.bind(this);
-    this.chooseAdp3a = this.chooseAdp3a.bind(this);
-    this.chooseAdp3a = this.chooseAdp3a.bind(this);
-    this.startGame = this.startGame.bind(this);
+    this.handleWaitingRoom = this.handleWaitingRoom.bind(this);
+    this.handleAdp1a = this.handleAdp1a.bind(this);
+    this.handleAdp1b = this.handleAdp1b.bind(this);
+    this.handleAdp1c = this.handleAdp1c.bind(this);
+    this.handleAdp2a = this.handleAdp2a.bind(this);
+    this.handleAdp2b = this.handleAdp2b.bind(this);
+    this.handleAdp2c = this.handleAdp2c.bind(this);
+    this.handleAdp3a = this.handleAdp3a.bind(this);
+    this.handleAdp3b = this.handleAdp3b.bind(this);
+    this.handleAdp3c = this.handleAdp3c.bind(this);
+    this.handleMaxTime = this.handleMaxTime.bind(this);
+    this.handleCardsPerPlayer = this.handleCardsPerPlayer.bind(this);
+    this.handleCardsPerRound = this.handleCardsPerRound.bind(this);
+    this.handlePlayerList = this.handlePlayerList.bind(this);
+    this.handleStartGame = this.handleStartGame.bind(this);
   }
 
   /** ******************** Functions used on script ********************* */
@@ -108,9 +118,9 @@ class WaitingRoomPage {
     if (this.startButton && this.maxTimeRange && this.maxTimeValue
       && this.cardsPerPlayerRange && this.cardsPerPlayerValue
       && this.cardsPerRoundRange && this.cardsPerRoundValue
-      && this.option1a && this.option1b
-      && this.option2a && this.option2b
-      && this.option3a && this.option3b
+      && this.option1a && this.option1b && this.option1c
+      && this.option2a && this.option2b && this.option2c
+      && this.option3a && this.option3b && this.option3c
     ) {
       isInitialized = true;
     }
@@ -140,17 +150,26 @@ class WaitingRoomPage {
       this.option1b.disabled = true;
       this.option1b.style.cursor = 'default';
 
+      this.option1c.disabled = true;
+      this.option1c.style.cursor = 'default';
+
       this.option2a.disabled = true;
       this.option2a.style.cursor = 'default';
 
       this.option2b.disabled = true;
       this.option2b.style.cursor = 'default';
 
+      this.option2c.disabled = true;
+      this.option2c.style.cursor = 'default';
+
       this.option3a.disabled = true;
       this.option3a.style.cursor = 'default';
 
       this.option3b.disabled = true;
       this.option3b.style.cursor = 'default';
+
+      this.option3c.disabled = true;
+      this.option3c.style.cursor = 'default';
     }
   }
 
@@ -177,17 +196,26 @@ class WaitingRoomPage {
       this.option1b.disabled = false;
       this.option1b.style.cursor = 'pointer';
 
+      this.option1c.disabled = false;
+      this.option1c.style.cursor = 'pointer';
+
       this.option2a.disabled = false;
       this.option2a.style.cursor = 'pointer';
 
       this.option2b.disabled = false;
       this.option2b.style.cursor = 'pointer';
 
+      this.option2c.disabled = false;
+      this.option2c.style.cursor = 'pointer';
+
       this.option3a.disabled = false;
       this.option3a.style.cursor = 'pointer';
 
       this.option3b.disabled = false;
       this.option3b.style.cursor = 'pointer';
+
+      this.option3c.disabled = false;
+      this.option3c.style.cursor = 'pointer';
     }
   }
 
@@ -200,12 +228,15 @@ class WaitingRoomPage {
     if (configMap && this.elementsInitialized() === true) {
       this.option1a.checked = configMap.adaptation1a;
       this.option1b.checked = configMap.adaptation1b;
+      this.option1c.checked = configMap.adaptation1c;
 
       this.option2a.checked = configMap.adaptation2a;
       this.option2b.checked = configMap.adaptation2b;
+      this.option2c.checked = configMap.adaptation2c;
 
       this.option3a.checked = configMap.adaptation3a;
       this.option3b.checked = configMap.adaptation3b;
+      this.option3c.checked = configMap.adaptation3c;
 
       this.maxTimeRange.value = configMap.maxTime;
       this.maxTimeValue.innerHTML = `${configMap.maxTime} s`;
@@ -352,6 +383,22 @@ class WaitingRoomPage {
 
   /**
    * Sends a message to the server to update the value of the first own
+   * adaptation as 1c when the host client selects that option.
+   * @param {WebSocket} socket Socket that connects to server.
+   */
+  chooseAdp1c(socket) {
+    if (socket && storageInitialized() === true) {
+      const message = {
+        type: 'toggleAdp1c',
+        nickname: playerNickname,
+        sessionCode: roomCode,
+      };
+      socket.send(JSON.stringify(message));
+    }
+  }
+
+  /**
+   * Sends a message to the server to update the value of the first own
    * adaptation as 2a when the host client selects that option.
    * @param {WebSocket} socket Socket that connects to server.
    */
@@ -384,6 +431,22 @@ class WaitingRoomPage {
 
   /**
    * Sends a message to the server to update the value of the first own
+   * adaptation as 2c when the host client selects that option.
+   * @param {WebSocket} socket Socket that connects to server.
+   */
+  chooseAdp2c(socket) {
+    if (socket && storageInitialized() === true) {
+      const message = {
+        type: 'toggleAdp2c',
+        nickname: playerNickname,
+        sessionCode: roomCode,
+      };
+      socket.send(JSON.stringify(message));
+    }
+  }
+
+  /**
+   * Sends a message to the server to update the value of the first own
    * adaptation as 3a when the host client selects that option.
    * @param {WebSocket} socket Socket that connects to server.
    */
@@ -407,6 +470,22 @@ class WaitingRoomPage {
     if (socket && storageInitialized() === true) {
       const message = {
         type: 'toggleAdp3b',
+        nickname: playerNickname,
+        sessionCode: roomCode,
+      };
+      socket.send(JSON.stringify(message));
+    }
+  }
+
+  /**
+   * Sends a message to the server to update the value of the first own
+   * adaptation as 3c when the host client selects that option.
+   * @param {WebSocket} socket Socket that connects to server.
+   */
+  chooseAdp3c(socket) {
+    if (socket && storageInitialized() === true) {
+      const message = {
+        type: 'toggleAdp3c',
         nickname: playerNickname,
         sessionCode: roomCode,
       };
@@ -449,6 +528,15 @@ class WaitingRoomPage {
   }
 
   /**
+   * Host has selected adaptation 1c.
+   */
+  handleAdp1c() {
+    if (this.option1c) {
+      this.option1c.checked = true;
+    }
+  }
+
+  /**
    * Host has selected adaptation 2a.
    */
   handleAdp2a() {
@@ -467,6 +555,15 @@ class WaitingRoomPage {
   }
 
   /**
+   * Host has selected adaptation 2c.
+   */
+  handleAdp2c() {
+    if (this.option2c) {
+      this.option2c.checked = true;
+    }
+  }
+
+  /**
    * Host has selected adaptation 3a.
    */
   handleAdp3a() {
@@ -481,6 +578,15 @@ class WaitingRoomPage {
   handleAdp3b() {
     if (this.option3b) {
       this.option3b.checked = true;
+    }
+  }
+
+  /**
+   * Host has selected adaptation 3c.
+   */
+  handleAdp3c() {
+    if (this.option3c) {
+      this.option3c.checked = true;
     }
   }
 
@@ -642,16 +748,25 @@ function addEventListeners() {
   addingEventById('Adp1b', 'click', page.chooseAdp1b, socket);
 
   // Adding event for radio button.
+  addingEventById('Adp1c', 'click', page.chooseAdp1c, socket);
+
+  // Adding event for radio button.
   addingEventById('Adp2a', 'click', page.chooseAdp2a, socket);
 
   // Adding event for radio button.
   addingEventById('Adp2b', 'click', page.chooseAdp2b, socket);
 
   // Adding event for radio button.
+  addingEventById('Adp2c', 'click', page.chooseAdp2c, socket);
+
+  // Adding event for radio button.
   addingEventById('Adp3a', 'click', page.chooseAdp3a, socket);
 
   // Adding event for radio button.
   addingEventById('Adp3b', 'click', page.chooseAdp3b, socket);
+
+  // Adding event for radio button.
+  addingEventById('Adp3c', 'click', page.chooseAdp3c, socket);
 
   // Adding event for button that allows player to start game
   addingEventById('start-button', 'click', page.startGame, socket);

@@ -234,6 +234,7 @@ class GamePage {
    * TODO: fix, still detecting click.
    */
   disableBoard() {
+    console.log('DISABLING');
     if (this.myImages) {
       // Removing event listener to each of the cards player
       for (let index = 0; index < this.myImages.length; index += 1) {
@@ -462,7 +463,7 @@ class GamePage {
    * Applies blur to player.
    */
   handleBlur() {
-    const blurDuration = (this.time / 8) * 1000;
+    const blurDuration = 10 * 1000;
     this.changeBlurImages('blur(2.5px)');
     setTimeout(() => {
       this.changeBlurImages('blur(0px)');
@@ -479,7 +480,7 @@ class GamePage {
       // send message to server letting them know player is leaving.
       const message = createRemovePlayerMessage();
       if (message) {
-        socket.send();
+        socket.send(message);
       }
     }
     // Aqui se manda el msj de eliminar el jugador de la lista.

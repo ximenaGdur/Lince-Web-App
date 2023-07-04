@@ -266,10 +266,13 @@ class Server {
     this.setCardsPerPlayer = this.setCardsPerPlayer.bind(this);
     this.toggleAdp1a = this.toggleAdp1a.bind(this);
     this.toggleAdp1b = this.toggleAdp1b.bind(this);
+    this.toggleAdp1c = this.toggleAdp1c.bind(this);
     this.toggleAdp2a = this.toggleAdp2a.bind(this);
     this.toggleAdp2b = this.toggleAdp2b.bind(this);
+    this.toggleAdp2c = this.toggleAdp2c.bind(this);
     this.toggleAdp3a = this.toggleAdp3a.bind(this);
     this.toggleAdp3b = this.toggleAdp3b.bind(this);
+    this.toggleAdp3c = this.toggleAdp3c.bind(this);
     this.startGame = this.startGame.bind(this);
     this.getGameRoom = this.getGameRoom.bind(this);
     this.checkMatch = this.checkMatch.bind(this);
@@ -362,10 +365,13 @@ class Server {
     configurations.set('cardsPerRound', 100);
     configurations.set('adaptation1a', false);
     configurations.set('adaptation1b', false);
+    configurations.set('adaptation1c', true);
     configurations.set('adaptation2a', false);
     configurations.set('adaptation2b', false);
+    configurations.set('adaptation2c', true);
     configurations.set('adaptation3a', false);
     configurations.set('adaptation3b', false);
+    configurations.set('adaptation3c', true);
     return configurations;
   }
 
@@ -651,10 +657,13 @@ class Server {
     if (roomConfig) {
       configStringMap.adaptation1a = roomConfig.get('adaptation1a');
       configStringMap.adaptation1b = roomConfig.get('adaptation1b');
+      configStringMap.adaptation1c = roomConfig.get('adaptation1c');
       configStringMap.adaptation2a = roomConfig.get('adaptation2a');
       configStringMap.adaptation2b = roomConfig.get('adaptation2b');
+      configStringMap.adaptation2c = roomConfig.get('adaptation2c');
       configStringMap.adaptation3a = roomConfig.get('adaptation3a');
       configStringMap.adaptation3b = roomConfig.get('adaptation3b');
+      configStringMap.adaptation3c = roomConfig.get('adaptation3c');
       configStringMap.maxTime = roomConfig.get('maxTime');
       configStringMap.cardsPerPlayer = roomConfig.get('cardsPerPlayer');
       configStringMap.cardsPerRound = roomConfig.get('cardsPerRound');
@@ -798,6 +807,7 @@ class Server {
           // Storing configuration
           roomConfig.set('adaptation1a', true);
           roomConfig.set('adaptation1b', false);
+          roomConfig.set('adaptation1c', false);
 
           // Sends to other players in room.
           const newMessage = {
@@ -827,10 +837,41 @@ class Server {
           // Storing configuration
           roomConfig.set('adaptation1b', true);
           roomConfig.set('adaptation1a', false);
+          roomConfig.set('adaptation1c', false);
 
           // Sends to other players in room.
           const newMessage = {
             type: 'handleAdp1b',
+          };
+          this.broadcastToOthers(newMessage, roomCode, playerNickname);
+        }
+      }
+    }
+  }
+
+  /**
+   * Sets adaptation 1c to guests in room.
+   * @param {WebSocket} socket Is not used, but added for consistency.
+   * @param {Object} message Message sent by client.
+   */
+  toggleAdp1c(socket, message) {
+    const roomCode = message.sessionCode;
+    const playerNickname = message.nickname;
+
+    if (roomCode && playerNickname) {
+      if (this.availableRooms.has(roomCode)) {
+        const roomMap = this.availableRooms.get(roomCode);
+        const roomConfig = roomMap.get('config');
+
+        if (roomConfig) {
+          // Storing configuration
+          roomConfig.set('adaptation1c', true);
+          roomConfig.set('adaptation1a', false);
+          roomConfig.set('adaptation1b', false);
+
+          // Sends to other players in room.
+          const newMessage = {
+            type: 'handleAdp1c',
           };
           this.broadcastToOthers(newMessage, roomCode, playerNickname);
         }
@@ -856,6 +897,7 @@ class Server {
           // Storing configuration
           roomConfig.set('adaptation2a', true);
           roomConfig.set('adaptation2b', false);
+          roomConfig.set('adaptation2c', false);
 
           // Sends to other players in room.
           const newMessage = {
@@ -885,10 +927,41 @@ class Server {
           // Storing configuration
           roomConfig.set('adaptation2b', true);
           roomConfig.set('adaptation2a', false);
+          roomConfig.set('adaptation2c', false);
 
           // Sends to other players in room.
           const newMessage = {
             type: 'handleAdp2b',
+          };
+          this.broadcastToOthers(newMessage, roomCode, playerNickname);
+        }
+      }
+    }
+  }
+
+  /**
+   * Sets adaptation 2c to guests in room.
+   * @param {WebSocket} socket Is not used, but added for consistency.
+   * @param {Object} message Message sent by client.
+   */
+  toggleAdp2c(socket, message) {
+    const roomCode = message.sessionCode;
+    const playerNickname = message.nickname;
+
+    if (roomCode && playerNickname) {
+      if (this.availableRooms.has(roomCode)) {
+        const roomMap = this.availableRooms.get(roomCode);
+        const roomConfig = roomMap.get('config');
+
+        if (roomConfig) {
+          // Storing configuration
+          roomConfig.set('adaptation2c', true);
+          roomConfig.set('adaptation1a', false);
+          roomConfig.set('adaptation1b', false);
+
+          // Sends to other players in room.
+          const newMessage = {
+            type: 'handleAdp2c',
           };
           this.broadcastToOthers(newMessage, roomCode, playerNickname);
         }
@@ -914,6 +987,7 @@ class Server {
           // Storing configuration
           roomConfig.set('adaptation3a', true);
           roomConfig.set('adaptation3b', false);
+          roomConfig.set('adaptation3c', false);
 
           // Sends to other players in room.
           const newMessage = {
@@ -943,10 +1017,41 @@ class Server {
           // Storing configuration
           roomConfig.set('adaptation3b', true);
           roomConfig.set('adaptation3a', false);
+          roomConfig.set('adaptation3c', false);
 
           // Sends to other players in room.
           const newMessage = {
             type: 'handleAdp3b',
+          };
+          this.broadcastToOthers(newMessage, roomCode, playerNickname);
+        }
+      }
+    }
+  }
+
+  /**
+   * Sets adaptation 3c to guests in room.
+   * @param {WebSocket} socket Is not used, but added for consistency.
+   * @param {Object} message Message sent by client.
+   */
+  toggleAdp3c(socket, message) {
+    const roomCode = message.sessionCode;
+    const playerNickname = message.nickname;
+
+    if (roomCode && playerNickname) {
+      if (this.availableRooms.has(roomCode)) {
+        const roomMap = this.availableRooms.get(roomCode);
+        const roomConfig = roomMap.get('config');
+
+        if (roomConfig) {
+          // Storing configuration
+          roomConfig.set('adaptation3c', true);
+          roomConfig.set('adaptation1a', false);
+          roomConfig.set('adaptation1b', false);
+
+          // Sends to other players in room.
+          const newMessage = {
+            type: 'handleAdp3c',
           };
           this.broadcastToOthers(newMessage, roomCode, playerNickname);
         }
@@ -1062,11 +1167,11 @@ class Server {
     if (this.availableRooms.has(roomCode)) {
       const roomInfo = this.availableRooms.get(roomCode);
       const roomConfig = roomInfo.get('config');
-      const cardsBoard = roomConfig.get('cardsPerRound');
+      const amountCardsBoard = roomConfig.get('cardsPerRound');
 
       const boardCardsMap = new Map();
       const boardCardsMapKeyDescription = new Map();
-      for (let cardIndex = 0; cardIndex < cardsBoard; cardIndex += 1) {
+      for (let cardIndex = 0; cardIndex < amountCardsBoard; cardIndex += 1) {
         let newCard = this.selectNewCard();
         while (this.checkForCard(newCard, boardCardsMapKeyDescription) === true) {
           newCard = this.selectNewCard();
@@ -1147,29 +1252,29 @@ class Server {
    */
   applyExtraCards(roomCode) {
     const roomInfo = this.availableRooms.get(roomCode);
-    const playersMap = roomInfo.get('players');
-    const playerNickname = this.identifyPlayerPosition(playersMap, false);
+    if (roomInfo) {
+      const boardCards = roomInfo.get('board');
+      const playersMap = roomInfo.get('players');
+      const playerNickname = this.identifyPlayerPosition(playersMap, false);
 
-    // TODO: try if it works
-
-    playersMap.forEach((playerData, otherPlayerNickname) => {
-      if (otherPlayerNickname !== playerNickname) {
-        const newCards = {
-          1: this.selectNewCard(),
-          2: this.selectNewCard(),
-          3: this.selectNewCard(),
-          4: this.selectNewCard(),
-        };
-        // TODO: add to player
-        // Sends to player.
-        const message = {
-          type: 'handlePlayerCards',
-          extraCards: JSON.stringify(newCards),
-        };
-        const socket = playerData.get('playerSocket');
-        socket.send(JSON.stringify(message));
-      }
-    });
+      playersMap.forEach((playerData, otherPlayerNickname) => {
+        const playerInfo = playerData.get('playerInfo');
+        if (playerInfo) {
+          const playerCards = playerInfo.get('cards');
+          if (playerCards && otherPlayerNickname !== playerNickname) {
+            // Creating 5 new cards
+            this.selectPlayerCards(playerInfo, 5, boardCards);
+            // Sends to player.
+            const message = {
+              type: 'handlePlayerCards',
+              playerCards: this.createPlayerCardsStringMap(playerData),
+            };
+            const socket = playerData.get('playerSocket');
+            socket.send(JSON.stringify(message));
+          }
+        }
+      });
+    }
   }
 
   /**
@@ -1199,7 +1304,7 @@ class Server {
     if (roomInfo) {
       const configMap = roomInfo.get('config');
       const maxTime = configMap.get('maxTime');
-      const specialEventTime = (maxTime / 2) * 1000;
+      const specialEventTime = (maxTime - 10) * 1000;
 
       if (configMap.get('adaptation3a') === true) {
         setTimeout(() => this.applyExtraCards(roomCode), specialEventTime);
@@ -1252,6 +1357,7 @@ class Server {
         const cardAmount = roomConfig.get('cardsPerPlayer');
         playersMap.forEach((playerData) => {
           const playerInfo = playerData.get('playerInfo');
+          playerInfo.set('cards', new Map());
           this.selectPlayerCards(playerInfo, cardAmount, boardCards);
         });
         this.availableRooms.get(roomCode).set('hasStarted', true);
