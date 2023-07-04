@@ -674,10 +674,11 @@ function addingInfoEvents() {
       const infoText = informationText[infoIndex];
       if (infoIcon && infoText) {
         infoIcon.addEventListener('click', () => {
-          infoText.style.display = 'flex';
-          setTimeout(() => {
+          if (infoText.style.display === 'flex') {
             infoText.style.display = 'none';
-          }, timeInformationText);
+          } else {
+            infoText.style.display = 'flex';
+          }
         });
       }
     }
