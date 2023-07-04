@@ -21,6 +21,12 @@ import {
 // eslint-disable-next-line import/extensions
 } from './common.js';
 
+import {
+  serverIp,
+  serverPort,
+// eslint-disable-next-line import/extensions
+} from './configClient.js';
+
 /** ******************* Creating game page class ******************* */
 
 // Player nickname
@@ -207,7 +213,7 @@ class GamePage {
     // Player table with ranking during game.
     const gamePlayerTable = document.getElementById('game-ranking');
     if (gamePlayerTable) {
-      addToTable(receivedMessage.players, gamePlayerTable);
+      addToTable(receivedMessage.players, gamePlayerTable, playerNickname);
     }
   }
 
@@ -425,7 +431,7 @@ class GamePage {
     // Player table with ranking in popup
     const popUpPlayerTable = document.getElementById('popup-ranking');
     if (popUpFinished && popUpPlayerTable) {
-      addToTable(message.players, popUpPlayerTable);
+      addToTable(message.players, popUpPlayerTable, playerNickname);
       this.showCorrectTitle(message);
       popUpFinished.style.display = 'flex';
       const timeForRedirect = 10 * 1000;
@@ -482,7 +488,7 @@ class GamePage {
  */
 function addEventListeners() {
   // Socket that connects to server
-  const socket = new WebSocket('ws://localhost:8009');
+  const socket = new WebSocket(`ws://${serverIp}:${serverPort}`);
   // Creating instance of Game Page class.
   const page = new GamePage();
   if (socket && page && storageInitialized() === true) {

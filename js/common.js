@@ -1,52 +1,91 @@
 /**
  * Creates new player row in ranking table.
  */
-function createNewPlayer(nickname, playerInfo) {
-  let playerHTML = null;
+function createNewPlayer(nickname, playerInfo, isCurrentPlayer) {
+  let playerElement = null;
+  const iconsRoute = '/design/images/icons/';
   if (nickname && playerInfo) {
-    playerHTML = '<tr class="table-row">';
-    const iconsRoute = '/design/images/icons/';
-    const avatarRoute = `${iconsRoute}profile/${playerInfo.avatar.route}`;
-    const crownRoute = `${iconsRoute}hostCrown.png`;
+    playerElement = document.createElement('tr');
+    if (playerElement) {
+      playerElement.classList.add('table-row');
 
-    if (playerInfo.host === true) {
-      playerHTML += '  <td class="table-col ranking-column">';
-      playerHTML += `    <img class="crown-image" src="${crownRoute}" alt="Icono de Anfitrión"/>`;
-      playerHTML += `    ${playerInfo.position}`;
-      playerHTML += '  </td>';
-    } else {
-      playerHTML += `  <td class="table-col ranking-column">${playerInfo.position}</td>`;
+      // Adding ranking column
+      const rankElement = document.createElement('td');
+      if (rankElement) {
+        rankElement.classList.add('table-col', 'ranking-column');
+        // Adding crown if player is host
+        if (playerInfo.host === true) {
+          const hostCrownElement = document.createElement('img');
+          hostCrownElement.classList.add('crown-image');
+          hostCrownElement.src = `${iconsRoute}hostCrown.png`;
+          hostCrownElement.alt = 'Icono de Anfitrión';
+          rankElement.appendChild(hostCrownElement);
+        }
+        // Adding ranking value
+        rankElement.innerHTML += playerInfo.position;
+        playerElement.appendChild(rankElement);
+      }
+
+      // Adding avatar
+      const avatarElement = document.createElement('td');
+      if (playerInfo.avatar && avatarElement) {
+        avatarElement.classList.add('table-col', 'avatar-column');
+        // Adding image
+        const iconElement = document.createElement('img');
+        if (iconElement) {
+          iconElement.classList.add('profile-image');
+          iconElement.src = `${iconsRoute}profile/${playerInfo.avatar.route}`;
+          iconElement.alt = `Icono de ${playerInfo.avatar.description}`;
+          avatarElement.appendChild(iconElement);
+        }
+        playerElement.appendChild(avatarElement);
+      }
+
+      // Adding player name
+      const nameElement = document.createElement('td');
+      if (nameElement) {
+        nameElement.classList.add('table-col', 'name-column');
+        nameElement.innerHTML = nickname;
+        if (isCurrentPlayer) {
+          nameElement.style.textDecoration = 'underline';
+          nameElement.style.textDecorationColor = '#CC7BA1';
+        }
+        playerElement.appendChild(nameElement);
+      }
+
+      // Adding player points
+      const pointsElement = document.createElement('td');
+      if (pointsElement) {
+        pointsElement.classList.add('table-col', 'score-column');
+        pointsElement.innerHTML = playerInfo.points;
+        playerElement.appendChild(pointsElement);
+      }
     }
-
-    if (playerInfo.avatar) {
-      playerHTML += '  <td class="table-col avatar-column">';
-      playerHTML += `    <img class="profile-image" src="${avatarRoute}" alt="Icono de ${playerInfo.avatar.description}"/>`;
-      playerHTML += '  </td>';
-    }
-
-    playerHTML += `  <td class="table-col name-column">${nickname}</td>`;
-    playerHTML += `  <td class="table-col score-column">${playerInfo.points} pts</td>`;
-    playerHTML += '</tr>';
   }
 
-  return playerHTML;
+  return playerElement;
 }
 
 /**
  * Adds new player to player list.
  */
-export function addToTable(players, playerTable) {
+export function addToTable(players, playerTable, currentPlayer) {
   // Order by points
   if (players && playerTable) {
     const playerArray = JSON.parse(players);
     if (playerArray) {
       playerTable.innerHTML = '';
       Object.keys(playerArray).forEach((nickname) => {
-        if (Object.hasOwn(playerArray, nickname)) {
-          const playerInfo = playerArray[nickname];
-          const playerHTML = createNewPlayer(nickname, playerInfo);
+        let isCurrentPlayer = false;
+        const playerInfo = playerArray[nickname];
+        if (playerInfo) {
+          if (nickname === currentPlayer) {
+            console.log('currentPlayer: ' + currentPlayer);
+            isCurrentPlayer = true;
+          }
+          const playerHTML = createNewPlayer(nickname, playerInfo, isCurrentPlayer);
           if (playerHTML) {
-            playerTable.innerHTML += playerHTML;
+            playerTable.appendChild(playerHTML);
           }
         }
       });

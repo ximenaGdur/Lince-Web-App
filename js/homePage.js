@@ -12,6 +12,12 @@ import {
 // eslint-disable-next-line import/extensions
 } from './common.js';
 
+import {
+  serverIp,
+  serverPort,
+// eslint-disable-next-line import/extensions
+} from './configClient.js';
+
 /** ****************** Class for home page functions ******************* */
 
 class HomePage {
@@ -220,7 +226,7 @@ class HomePage {
 
 function addEventListeners() {
   // Socket that connects to server
-  const socket = new WebSocket('ws://localhost:8009');
+  const socket = new WebSocket(`ws://${serverIp}:${serverPort}`);
   // Creating instance of Home Page class.
   const page = new HomePage();
 

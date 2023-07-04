@@ -1,14 +1,14 @@
 /* eslint-disable class-methods-use-this */
 /** ****************** Imports ******************* */
 
-// import { ip , port } from 'config.js';
-// const configuration = require('./config.js');
-
 // Including ws module.
 const WebSocket = require('ws');
 
 // Including fs module.
 const fs = require('fs');
+
+// eslint-disable-next-line import/extensions
+const { serverIp, serverPort } = require('./configServer.js');
 
 /** ****************** Creating constants for script ******************* */
 class Server {
@@ -521,9 +521,9 @@ class Server {
   }
 
   /**
-   * 
-   * @param {*} data 
-   * @param {*} playerRanks 
+   * Adds player ranks extracted from txt file to array.
+   * @param {Array} playerRanks Array where data will be stored.
+   * @param {String} data Extracted txt content.
    */
   addTop3ToArray(playerRanks, data) {
     const top3Array = data.split(/\r?\n/);
@@ -997,6 +997,18 @@ class Server {
   }
 
   /**
+   * Finds player with given nickname in given room.
+   */
+  removePlayerInRanking(roomCode, playerNickname) {
+    const roomPlayers = this.playerRankingPorRoom.get(roomCode);
+    for (let playerIndex = 0; playerIndex < roomPlayers.length; playerIndex += 1) {
+      if (roomPlayers[playerIndex].nickname === playerNickname) {
+        delete roomPlayers[playerIndex];
+      }
+    }
+  }
+
+  /**
    * Removes player in list for other players in room.
    * @param {WebSocket} socket Is not used, but added for consistency.
    * @param {Object} message Message sent by client.
@@ -1009,8 +1021,10 @@ class Server {
       const roomInfo = this.availableRooms.get(roomCode);
       const playersMap = roomInfo.get('players');
       if (playersMap) {
+        // Deleting from dictionaries.
         playersMap.delete(playerNickname);
-        // TODO: update ranking
+        this.removePlayerInRanking(roomCode, playerNickname);
+        // Assigning new host
         this.assignNewHost(playersMap);
         // Sending messages to other players to let them know a player has left.
         this.sendUpdatedPlayers(playerNickname, roomCode);
@@ -1338,6 +1352,20 @@ class Server {
   }
 
   /**
+   * Finds player with given nickname in given room.
+   */
+  findPlayerInRanking(roomCode, playerNickname) {
+    const roomPlayers = this.playerRankingPorRoom.get(roomCode);
+    let player = null;
+    for (let playerIndex = 0; playerIndex < roomPlayers.length; playerIndex += 1) {
+      if (roomPlayers[playerIndex].nickname === playerNickname) {
+        player = roomPlayers[playerIndex];
+      }
+    }
+    return player;
+  }
+
+  /**
    * Change a player's score in a specific room.
    * @param {String} playerNickname Player nickname.
    * @param {Number} roomCode Unique room code.
@@ -1345,21 +1373,18 @@ class Server {
    * @returns The new value of the player's points.
    */
   changePlayerScore(playerNickname, roomCode, points) {
+    // Changing player score in main dictionary
     const room = this.availableRooms.get(roomCode);
     const players = room.get('players');
     const player = players.get(playerNickname);
     const playerInfo = player.get('playerInfo');
     let playerPoints = playerInfo.get('points');
     playerPoints += points;
-    playerInfo.set('points', playerPoints);
-
-    const roomPlayers = this.playerRankingPorRoom.get(roomCode);
-    for (let playerIndex = 0; playerIndex < roomPlayers.length; playerIndex += 1) {
-      if (roomPlayers[playerIndex].nickname === playerNickname) {
-        roomPlayers[playerIndex].points = playerPoints;
-      }
+    // Changing player score in ranking dictionary
+    const playerArray = this.findPlayerInRanking(roomCode, playerNickname);
+    if (playerArray) {
+      playerPoints = playerArray.points;
     }
-
     return playerPoints;
   }
 
@@ -1420,26 +1445,23 @@ class Server {
   }
 
   /**
-   * 
-   * @param {*} playerRanks 
-   * @param {*} fileContent 
-   * @returns 
+   * Merges two lists into a combined one.
+   * @param {*} playerRanks Stored list with room ranking.
+   * @param {*} fileContent Contents of txt file with top 3 ranking.
+   * @returns Merged list with sorted scores.
    */
   mergeLists(playerRanks, fileContent) {
-    console.log(`playerRanks: ${JSON.stringify(playerRanks)}`);
     let combinedList = JSON.stringify(playerRanks);
     combinedList = JSON.parse(combinedList);
-    console.log(`combinedList: ${JSON.stringify(combinedList)}`);
     this.addTop3ToArray(playerRanks, fileContent);
     combinedList.sort((a, b) => b.points - a.points);
-    console.log(`combinedList: ${JSON.stringify(combinedList)}`);
     return combinedList;
   }
 
   /**
-   * 
-   * @param {*} combinedList 
-   * @returns 
+   * Creates a string with list contents.
+   * @param {Array} combinedList List from which to create string.
+   * @returns String with csv style format.
    */
   createStringFromList(combinedList) {
     let string = '';
@@ -1514,7 +1536,7 @@ class Server {
 }
 
 // Creating new server instance listening in given port.
-const server = new WebSocket.Server({ port: 8009 });
+const server = new WebSocket.Server({ host: serverIp, port: serverPort });
 // Creating instance of Game Page class.
 const serverInstance = new Server();
 

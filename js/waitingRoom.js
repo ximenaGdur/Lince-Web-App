@@ -16,6 +16,12 @@ import {
 // eslint-disable-next-line import/extensions
 } from './common.js';
 
+import {
+  serverIp,
+  serverPort,
+// eslint-disable-next-line import/extensions
+} from './configClient.js';
+
 /** ******************* Creating constants for script ******************* */
 
 // Player nickname
@@ -238,7 +244,7 @@ class WaitingRoomPage {
     // Container for all player table's rows.
     const playerTable = document.getElementById('waiting-room-ranking');
     // Player table in waiting room.
-    addToTable(receivedMessage.players, playerTable);
+    addToTable(receivedMessage.players, playerTable, playerNickname);
     this.changeHost(receivedMessage);
   }
 
@@ -534,11 +540,12 @@ class WaitingRoomPage {
    * @param {WebSocket} socket Socket that connects to server
    */
   returnToMain(socket) {
+    console.log('ESTOY SALIENDO');
     if (socket) {
       // send message to server letting them know player is leaving.
       const message = createRemovePlayerMessage();
       if (message) {
-        socket.send();
+        socket.send(message);
       }
     }
     // Aqui se manda el msj de eliminar el jugador de la lista.
@@ -577,7 +584,7 @@ function addingInfoEvents() {
  */
 function addEventListeners() {
   // Socket that connects to server
-  const socket = new WebSocket('ws://localhost:8009');
+  const socket = new WebSocket(`ws://${serverIp}:${serverPort}`);
   // Creating instance of Game Page class.
   const page = new WaitingRoomPage();
 

@@ -28,9 +28,8 @@ export function showExitPopup() {
  * Creates message for server indicating player has left.
  */
 export function createRemovePlayerMessage() {
-  console.log('Cerrando conexión con server.');
-  const playerNickname = localStorage.getItem('playerNickname');
-  const roomCode = localStorage.getItem('roomCode');
+  const playerNickname = sessionStorage.getItem('playerNickname');
+  const roomCode = sessionStorage.getItem('roomCode');
   if (playerNickname && roomCode) {
     const message = {
       type: 'removePlayer',
