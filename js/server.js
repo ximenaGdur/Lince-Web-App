@@ -1484,7 +1484,7 @@ class Server {
     // Changing player score in ranking dictionary
     const playerArray = this.findPlayerInRanking(roomCode, playerNickname);
     if (playerArray) {
-      playerPoints = playerArray.points;
+      playerArray.points = playerPoints;
     }
     return playerPoints;
   }
@@ -1534,6 +1534,7 @@ class Server {
                 socket.send(JSON.stringify(newMessage));
                 // If player has no cards left, finish the game.
                 if (cards.size === 0) {
+                  console.log('FINISH GAME');
                   this.finishGame(socket, message);
                 }
                 this.sendUpdatedPlayers('', roomCode, 'handlePlayerList');
@@ -1556,7 +1557,7 @@ class Server {
       const playerInfo = top3Array[arrayIndex].split(',');
       playerRanks.push({ nickname: playerInfo[0], points: playerInfo[1] });
     }
-    console.log('playerRanks: ' + playerRanks);
+    console.log('playerRanks: ' + JSON.stringify(playerRanks));
   }
 
   /**
@@ -1567,10 +1568,11 @@ class Server {
    */
   mergeLists(playerRanks, fileContent) {
     const combinedList = JSON.parse(JSON.stringify(playerRanks));
-    console.log('playerRanks: ' + playerRanks);
+    console.log('playerRanks: ' + JSON.stringify(playerRanks));
     this.addTop3ToArray(combinedList, fileContent);
     if (combinedList.length >= 2) {
       combinedList.sort((a, b) => b.points - a.points);
+      console.log('playerRanks: ' + JSON.stringify(playerRanks));
     }
     return combinedList;
   }
@@ -1622,20 +1624,23 @@ class Server {
    */
   finishGame(socket, message) {
     const code = message.sessionCode;
-    const roomInfo = this.availableRooms.get(code);
-    const playersMap = roomInfo.get('players');
-    if (playersMap) {
-      const playerRanks = this.orderPlayersByPoints(code);
-      const newMessage = {
-        type: 'handleTimesUp',
-        players: this.createPlayerStringMap(playersMap, playerRanks),
-      };
+    const player = message.playerNickname;
+    if (code && player) {
+      const roomInfo = this.availableRooms.get(code);
+      const playersMap = roomInfo.get('players');
+      if (playersMap) {
+        const playerRanks = this.orderPlayersByPoints(code);
+        const newMessage = {
+          type: 'handleTimesUp',
+          players: this.createPlayerStringMap(playersMap, playerRanks),
+        };
 
-      if (roomInfo.get('hasStarted') === true) {
-        this.saveToTop3(code);
-        roomInfo.set('hasStarted', false);
+        if (roomInfo.get('hasStarted') === true) {
+          this.saveToTop3(code);
+          roomInfo.set('hasStarted', false);
+        }
+        this.broadcastToOthers(JSON.stringify(newMessage), code, null);
       }
-      socket.send(JSON.stringify(newMessage));
     }
   }
 

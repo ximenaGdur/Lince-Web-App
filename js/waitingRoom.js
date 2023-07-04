@@ -90,21 +90,20 @@ class WaitingRoomPage {
     this.startButton = document.getElementById('start-button');
 
     // Binding methods to the class instance
-    this.handleWaitingRoom = this.handleWaitingRoom.bind(this);
-    this.handleAdp1a = this.handleAdp1a.bind(this);
-    this.handleAdp1b = this.handleAdp1b.bind(this);
-    this.handleAdp1c = this.handleAdp1c.bind(this);
-    this.handleAdp2a = this.handleAdp2a.bind(this);
-    this.handleAdp2b = this.handleAdp2b.bind(this);
-    this.handleAdp2c = this.handleAdp2c.bind(this);
-    this.handleAdp3a = this.handleAdp3a.bind(this);
-    this.handleAdp3b = this.handleAdp3b.bind(this);
-    this.handleAdp3c = this.handleAdp3c.bind(this);
-    this.handleMaxTime = this.handleMaxTime.bind(this);
-    this.handleCardsPerPlayer = this.handleCardsPerPlayer.bind(this);
-    this.handleCardsPerRound = this.handleCardsPerRound.bind(this);
-    this.handlePlayerList = this.handlePlayerList.bind(this);
-    this.handleStartGame = this.handleStartGame.bind(this);
+    this.returnToMain = this.returnToMain.bind(this);
+    this.chooseCardsPerPlayer = this.chooseCardsPerPlayer.bind(this);
+    this.chooseCardsPerRound = this.chooseCardsPerRound.bind(this);
+    this.chooseMaxTime = this.chooseMaxTime.bind(this);
+    this.chooseAdp1a = this.chooseAdp1a.bind(this);
+    this.chooseAdp1b = this.chooseAdp1b.bind(this);
+    this.chooseAdp1c = this.chooseAdp1c.bind(this);
+    this.chooseAdp2a = this.chooseAdp2a.bind(this);
+    this.chooseAdp2b = this.chooseAdp2b.bind(this);
+    this.chooseAdp2c = this.chooseAdp2c.bind(this);
+    this.chooseAdp3a = this.chooseAdp3a.bind(this);
+    this.chooseAdp3b = this.chooseAdp3b.bind(this);
+    this.chooseAdp3c = this.chooseAdp3c.bind(this);
+    this.startGame = this.startGame.bind(this);
   }
 
   /** ******************** Functions used on script ********************* */
