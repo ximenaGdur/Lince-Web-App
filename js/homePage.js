@@ -160,6 +160,29 @@ class HomePage {
     }
   }
 
+  handleTop3(socket, receivedMessage) {
+    const rowIds = ['first-place', 'second-place', 'third-place'];
+    const top3String = receivedMessage.players;
+    if (top3String) {
+      const top3Array = top3String.split(/\r?\n/);
+      for (let arrayIndex = 0; arrayIndex < rowIds.length; arrayIndex += 1) {
+        const rowElement = document.getElementById(rowIds[arrayIndex]);
+        if (rowElement) {
+          const ranking = rowElement.querySelector('.ranking-column');
+          const name = rowElement.querySelector('.name-column');
+          const score = rowElement.querySelector('.score-column');
+          if (ranking && name && score) {
+            const [playerName, playerScore] = top3Array[arrayIndex].split(',');
+            console.log('name && score');
+            ranking.innerHTML = arrayIndex + 1;
+            name.innerHTML = playerName;
+            score.innerHTML = playerScore;
+          }
+        }
+      }
+    }
+  }
+
   /**
    * Checks server response to whether code is valid or not.
    */
@@ -206,7 +229,10 @@ function addEventListeners() {
     * When a connection is made with server.
     */
     socket.addEventListener('open', () => {
-      console.log('Conexión con Servidor');
+      const message = {
+        type: 'getTop3',
+      };
+      socket.send(JSON.stringify(message));
     });
 
     /**

@@ -3,7 +3,7 @@
  */
 function createNewPlayer(nickname, playerInfo) {
   let playerHTML = null;
-  if (nickname && playerInfo && playerInfo.avatar) {
+  if (nickname && playerInfo) {
     playerHTML = '<tr class="table-row">';
     const iconsRoute = '/design/images/icons/';
     const avatarRoute = `${iconsRoute}profile/${playerInfo.avatar.route}`;
@@ -18,9 +18,11 @@ function createNewPlayer(nickname, playerInfo) {
       playerHTML += `  <td class="table-col ranking-column">${playerInfo.position}</td>`;
     }
 
-    playerHTML += '  <td class="table-col avatar-column">';
-    playerHTML += `    <img class="profile-image" src="${avatarRoute}" alt="Icono de ${playerInfo.avatar.description}"/>`;
-    playerHTML += '  </td>';
+    if (playerInfo.avatar) {
+      playerHTML += '  <td class="table-col avatar-column">';
+      playerHTML += `    <img class="profile-image" src="${avatarRoute}" alt="Icono de ${playerInfo.avatar.description}"/>`;
+      playerHTML += '  </td>';
+    }
 
     playerHTML += `  <td class="table-col name-column">${nickname}</td>`;
     playerHTML += `  <td class="table-col score-column">${playerInfo.points} pts</td>`;

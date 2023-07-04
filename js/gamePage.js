@@ -180,11 +180,11 @@ class GamePage {
     const cardsReceived = JSON.parse(message.playerCards);
     const playerCards = document.getElementById('player-cards');
     if (cardsReceived && playerCards && this.configMap) {
-      console.log("cardsReceived: " + message.playerCards);
+      console.log(`cardsReceived: ${message.playerCards}`);
       playerCards.innerHTML = '';
       Object.keys(cardsReceived).forEach((cardData) => {
-        console.log("cardData: " + cardData);
-        console.log("cardsReceived[cardIndex]: " + cardsReceived[cardData]);
+        console.log(`cardData: ${cardData}`);
+        console.log(`cardsReceived[cardIndex]: ${cardsReceived[cardData]}`);
         const cardElement = this.createPlayerCard(cardsReceived[cardData]);
         if (cardElement) {
           // Adding card element to game board

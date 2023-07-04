@@ -20,6 +20,9 @@ class Server {
     this.nextRoomCode = 74512;
     // Maximum number of clients allowed in webpage
     this.maximumClientAmount = 20;
+    // Route where top 3 txt is located
+    this.filePath = 'top3.txt';
+
     // Dictionary that stores all rooms and their information
     this.availableRooms = new Map();
     // Dictionary with player scores in order
@@ -518,6 +521,42 @@ class Server {
   }
 
   /**
+   * 
+   * @param {*} data 
+   * @param {*} playerRanks 
+   */
+  addTop3ToArray(playerRanks, data) {
+    const top3Array = data.split(/\r?\n/);
+    for (let arrayIndex = 0; arrayIndex < 3; arrayIndex += 1) {
+      const playerInfo = top3Array[arrayIndex].split(',');
+      playerRanks.push({ nickname: playerInfo[0], points: playerInfo[1] });
+    }
+  }
+
+  /**
+   * Getting top 3 from file and sending it to client.
+   * @param {WebSocket} socket Socket of player requesting waiting room.
+   */
+  getTop3(socket) {
+    const playerRanks = [];
+    fs.readFile(this.filePath, 'utf8', (err, data) => {
+      if (err) {
+        console.error(err);
+      } else {
+        this.addTop3ToArray(playerRanks, data);
+        const listString = this.createStringFromList(playerRanks);
+        if (listString) {
+          const newMessage = {
+            type: 'handleTop3',
+            players: listString,
+          };
+          socket.send(JSON.stringify(newMessage));
+        }
+      }
+    });
+  }
+
+  /**
    * Figures out if player exists in room.
    * @param {Number} code Code of specific room.
    * @param {String} nickname Nickname of specific player.
@@ -544,7 +583,7 @@ class Server {
   orderPlayersByPoints(roomCode) {
     const roomPlayers = this.playerRankingPorRoom.get(roomCode);
     if (roomPlayers) {
-      roomPlayers.sort((a, b) => a.quantity - b.quantity);
+      roomPlayers.sort((a, b) => b.points - a.points);
     }
     return roomPlayers;
   }
@@ -642,7 +681,6 @@ class Server {
    * @param {Object} message Message sent by client.
    */
   getWaitingRoom(socket, message) {
-    this.printRooms();
     const playerNickname = message.nickname;
     const roomCode = message.sessionCode;
 
@@ -1382,26 +1420,55 @@ class Server {
   }
 
   /**
-   * Saves winners if they have the highest score.
-   * @param {Map} playersMap Player Map with specific room's players.
+   * 
+   * @param {*} playerRanks 
+   * @param {*} fileContent 
+   * @returns 
    */
-  saveToTop3(roomCode, playersMap) {
-    this.orderPlayersByPoints(roomCode);
-    fs.readFile('top3.txt', 'utf8', (err, data) => {
+  mergeLists(playerRanks, fileContent) {
+    console.log(`playerRanks: ${JSON.stringify(playerRanks)}`);
+    let combinedList = JSON.stringify(playerRanks);
+    combinedList = JSON.parse(combinedList);
+    console.log(`combinedList: ${JSON.stringify(combinedList)}`);
+    this.addTop3ToArray(playerRanks, fileContent);
+    combinedList.sort((a, b) => b.points - a.points);
+    console.log(`combinedList: ${JSON.stringify(combinedList)}`);
+    return combinedList;
+  }
+
+  /**
+   * 
+   * @param {*} combinedList 
+   * @returns 
+   */
+  createStringFromList(combinedList) {
+    let string = '';
+    for (let arrayIndex = 0; arrayIndex < 3; arrayIndex += 1) {
+      string += `${combinedList[arrayIndex].nickname},${combinedList[arrayIndex].points}\n`;
+    }
+    console.log(string);
+    return string;
+  }
+
+  /**
+   * Saves winners if they have the highest score.
+   */
+  saveToTop3(roomCode) {
+    const playerRanks = this.orderPlayersByPoints(roomCode);
+    fs.readFile(this.filePath, 'utf8', (err, data) => {
       if (err) {
         console.error(err);
       } else {
-        const top3Array = data.split(/\r?\n/);
-        const topScorePlayer = new Map([
-          ['nickname', ''],
-          ['score', ''],
-        ]);
-        /* for (let arrayIndex = 0; arrayIndex < top3Array.length; arrayIndex += 1) {
-          const splitLine = top3Array[arrayIndex].split(',');
-          if (winnerPlayer.score < splitLine[1]) {
-
+        // Adding players of top 3 file to combined list.
+        const combinedList = this.mergeLists(playerRanks, data);
+        const listString = this.createStringFromList(combinedList);
+        fs.writeFile(this.filePath, listString, (writeError) => {
+          if (writeError) {
+            console.error('Error reemplazando contenidos de archivo: ', writeError);
+          } else {
+            console.log('El archivo fue escrito de forma exitosa.');
           }
-        } */
+        });
       }
     });
   }
@@ -1414,7 +1481,6 @@ class Server {
   finishGame(socket, message) {
     const code = message.sessionCode;
     const roomInfo = this.availableRooms.get(code);
-    roomInfo.set('hasStarted', false);
     const playersMap = roomInfo.get('players');
     if (playersMap) {
       const playerRanks = this.orderPlayersByPoints(code);
@@ -1423,7 +1489,11 @@ class Server {
         players: this.createPlayerStringMap(playersMap, playerRanks),
       };
 
-      this.saveToTop3(code, playersMap);
+      if (roomInfo.get('hasStarted') === true) {
+        console.log('STARTED');
+        this.saveToTop3(code);
+        roomInfo.set('hasStarted', false);
+      }
       socket.send(JSON.stringify(newMessage));
     }
   }
