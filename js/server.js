@@ -1288,14 +1288,6 @@ class Server {
     }
   }
 
-  isAssigned(params) {
-    let cardExists = false;
-    if (boardCardsMapKeyDescription.has(newCard.get('description')) === true) {
-      cardExists = true;
-    }
-    return cardExists;
-  }
-
   /**
    * Selects random player cards.
    * @param {*} playerInfo
@@ -1314,9 +1306,7 @@ class Server {
           newCard = boardCards.get(randomNumber);
         }
         playerCardsMap.set(newCard.get('description'), newCard);
-        console.log(boardCards.get(randomNumber).get('isAssigned'));
         boardCards.get(randomNumber).set('isAssigned', true);
-        console.log(boardCards.get(randomNumber).get('isAssigned'));
       }
     }
     playerInfo.set('cards', playerCardsMap);
