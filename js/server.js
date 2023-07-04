@@ -358,7 +358,7 @@ class Server {
   setDefaultGameConfiguration() {
     const configurations = new Map();
     configurations.set('maxTime', 20);
-    configurations.set('cardsPerPlayer', 5);
+    configurations.set('cardsPerPlayer', 1);
     configurations.set('cardsPerRound', 100);
     configurations.set('adaptation1a', false);
     configurations.set('adaptation1b', false);
