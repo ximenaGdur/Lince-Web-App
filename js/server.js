@@ -296,28 +296,6 @@ class Server {
     return newPlayer;
   }
 
-  printRooms() {
-    this.availableRooms.forEach((roomData, roomCode) => {
-      console.log(`[${roomCode}]: `);
-      console.log(`typeof: ${typeof (roomCode)}: `);
-
-      const configMap = roomData.get('config');
-      console.log(`config: ${JSON.stringify(Array.from(configMap))}`);
-
-      console.log('players:');
-      const playerMap = roomData.get('players');
-      playerMap.forEach((playerData, playerName) => {
-        console.log(`
-        ---- ${playerName} ----
-        `);
-        console.log(`playerSocket: ${playerData.get('playerSocket')}`);
-        console.log(`avatar: ${JSON.stringify(playerData.get('playerInfo').get('avatar'))}`);
-        console.log(`points: ${playerData.get('playerInfo').get('points')}`);
-        console.log(`host: ${playerData.get('playerInfo').get('host')}`);
-      });
-    });
-  }
-
   /**
    * Assigns random avatar to player.
    * @param {Number} code Room code where player will be placed.
@@ -1565,7 +1543,6 @@ class Server {
       const playerInfo = top3Array[arrayIndex].split(',');
       playerRanks.push({ nickname: playerInfo[0], points: playerInfo[1] });
     }
-    console.log('playerRanks: ' + JSON.stringify(playerRanks));
   }
 
   /**
@@ -1576,11 +1553,9 @@ class Server {
    */
   mergeLists(playerRanks, fileContent) {
     const combinedList = JSON.parse(JSON.stringify(playerRanks));
-    console.log('playerRanks: ' + JSON.stringify(playerRanks));
     this.addTop3ToArray(combinedList, fileContent);
     if (combinedList.length >= 2) {
       combinedList.sort((a, b) => b.points - a.points);
-      console.log('combinedList: ' + JSON.stringify(combinedList));
     }
     return combinedList;
   }
@@ -1613,7 +1588,6 @@ class Server {
         // Adding players of top 3 file to combined list.
         const combinedList = this.mergeLists(playerRanks, data);
         const listString = this.createStringFromList(combinedList);
-        console.log(listString);
         fs.writeFile(this.filePath, listString, (writeError) => {
           if (writeError) {
             console.error('Error reemplazando contenidos de archivo: ', writeError);

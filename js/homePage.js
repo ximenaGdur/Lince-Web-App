@@ -179,7 +179,6 @@ class HomePage {
           const score = rowElement.querySelector('.score-column');
           if (ranking && name && score) {
             const [playerName, playerScore] = top3Array[arrayIndex].split(',');
-            console.log('name && score');
             ranking.innerHTML = arrayIndex + 1;
             name.innerHTML = playerName;
             score.innerHTML = playerScore;

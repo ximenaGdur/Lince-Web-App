@@ -80,7 +80,6 @@ export function addToTable(players, playerTable, currentPlayer) {
         const playerInfo = playerArray[nickname];
         if (playerInfo) {
           if (nickname === currentPlayer) {
-            console.log('currentPlayer: ' + currentPlayer);
             isCurrentPlayer = true;
           }
           const playerHTML = createNewPlayer(nickname, playerInfo, isCurrentPlayer);
