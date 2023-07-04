@@ -140,6 +140,7 @@ main {
     max-width: 80%;
     min-width: 80%;
     justify-content: center;
+    align-content: center;
 }
 
 /** Style for container for text and information icon. **/
@@ -193,9 +194,13 @@ button:hover {
 
 /** Style for style for small buttons. **/
 .small-button-container {
+    display: flex;
     min-width: 31.5%;
     margin-left: 0.1%;
     margin-right: 0.1%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
 }
 
 /** Style for style for large buttons. **/
