@@ -1528,7 +1528,6 @@ class Server {
                 socket.send(JSON.stringify(newMessage));
                 // If player has no cards left, finish the game.
                 if (cards.size === 0) {
-                  console.log('FINISH GAME');
                   this.finishGame(socket, message);
                 }
                 this.sendUpdatedPlayers('', roomCode, 'handlePlayerList');
@@ -1618,23 +1617,20 @@ class Server {
    */
   finishGame(socket, message) {
     const code = message.sessionCode;
-    const player = message.playerNickname;
-    if (code && player) {
-      const roomInfo = this.availableRooms.get(code);
-      const playersMap = roomInfo.get('players');
-      if (playersMap) {
-        const playerRanks = this.orderPlayersByPoints(code);
-        const newMessage = {
-          type: 'handleTimesUp',
-          players: this.createPlayerStringMap(playersMap, playerRanks),
-        };
+    const roomInfo = this.availableRooms.get(code);
+    const playersMap = roomInfo.get('players');
+    if (playersMap) {
+      const playerRanks = this.orderPlayersByPoints(code);
+      const newMessage = {
+        type: 'handleTimesUp',
+        players: this.createPlayerStringMap(playersMap, playerRanks),
+      };
 
-        if (roomInfo.get('hasStarted') === true) {
-          this.saveToTop3(code);
-          roomInfo.set('hasStarted', false);
-        }
-        this.broadcastToOthers(JSON.stringify(newMessage), code, null);
+      if (roomInfo.get('hasStarted') === true) {
+        this.saveToTop3(code);
+        roomInfo.set('hasStarted', false);
       }
+      socket.send(JSON.stringify(newMessage));
     }
   }
 
