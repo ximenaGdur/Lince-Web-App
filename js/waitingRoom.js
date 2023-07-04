@@ -645,7 +645,6 @@ class WaitingRoomPage {
    * @param {WebSocket} socket Socket that connects to server
    */
   returnToMain(socket) {
-    console.log('ESTOY SALIENDO');
     if (socket) {
       // send message to server letting them know player is leaving.
       const message = createRemovePlayerMessage();

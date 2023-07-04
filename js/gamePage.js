@@ -187,11 +187,8 @@ class GamePage {
     const cardsReceived = JSON.parse(message.playerCards);
     const playerCards = document.getElementById('player-cards');
     if (cardsReceived && playerCards && this.configMap) {
-      console.log(`cardsReceived: ${message.playerCards}`);
       playerCards.innerHTML = '';
       Object.keys(cardsReceived).forEach((cardData) => {
-        console.log(`cardData: ${cardData}`);
-        console.log(`cardsReceived[cardIndex]: ${cardsReceived[cardData]}`);
         const cardElement = this.createPlayerCard(cardsReceived[cardData]);
         if (cardElement) {
           // Adding card element to game board
@@ -234,7 +231,6 @@ class GamePage {
    * TODO: fix, still detecting click.
    */
   disableBoard() {
-    console.log('DISABLING');
     if (this.myImages) {
       // Removing event listener to each of the cards player
       for (let index = 0; index < this.myImages.length; index += 1) {
