@@ -1129,9 +1129,8 @@ class Server {
    */
   selectNewCard() {
     let cardMap = null;
-    const randomNumber = this.getRandomNumber(1, Object.keys(this.cardRoutes).length);
+    const randomNumber = this.getRandomNumber(1, Object.keys(this.cardRoutes).length - 1);
     const card = this.cardRoutes[randomNumber];
-
     if (card) {
       const randomColor = this.getRandomNumber(0, this.cardColors.length - 1);
       const color = this.cardColors[randomColor];
@@ -1140,6 +1139,7 @@ class Server {
         ['description', card.description],
         ['route', card.route],
         ['border', color],
+        ['isAssigned', false],
       ]);
     }
     return cardMap;
@@ -1178,10 +1178,6 @@ class Server {
         }
         boardCardsMap.set(cardIndex, newCard);
         boardCardsMapKeyDescription.set(newCard.get('description'), newCard);
-        // if (this.checkForCard(newCard, boardCardsMap, boardCardsMapKeyDescription) === true) {
-        //   boardCardsMap.set(cardIndex, newCard);
-        //   boardCardsMapKeyDescription.set(newCard.get('description'), newCard);
-        // }
       }
       roomInfo.set('board', boardCardsMap);
       roomInfo.set('boardKeyDescription', boardCardsMapKeyDescription);
