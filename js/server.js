@@ -521,19 +521,6 @@ class Server {
   }
 
   /**
-   * Adds player ranks extracted from txt file to array.
-   * @param {Array} playerRanks Array where data will be stored.
-   * @param {String} data Extracted txt content.
-   */
-  addTop3ToArray(playerRanks, data) {
-    const top3Array = data.split(/\r?\n/);
-    for (let arrayIndex = 0; arrayIndex < 3; arrayIndex += 1) {
-      const playerInfo = top3Array[arrayIndex].split(',');
-      playerRanks.push({ nickname: playerInfo[0], points: playerInfo[1] });
-    }
-  }
-
-  /**
    * Getting top 3 from file and sending it to client.
    * @param {WebSocket} socket Socket of player requesting waiting room.
    */
@@ -1003,7 +990,7 @@ class Server {
     const roomPlayers = this.playerRankingPorRoom.get(roomCode);
     for (let playerIndex = 0; playerIndex < roomPlayers.length; playerIndex += 1) {
       if (roomPlayers[playerIndex].nickname === playerNickname) {
-        delete roomPlayers[playerIndex];
+        roomPlayers.splice(playerIndex, 1);
       }
     }
   }
@@ -1358,7 +1345,7 @@ class Server {
     const roomPlayers = this.playerRankingPorRoom.get(roomCode);
     let player = null;
     for (let playerIndex = 0; playerIndex < roomPlayers.length; playerIndex += 1) {
-      if (roomPlayers[playerIndex].nickname === playerNickname) {
+      if (roomPlayers[playerIndex] && roomPlayers[playerIndex].nickname === playerNickname) {
         player = roomPlayers[playerIndex];
       }
     }
@@ -1380,6 +1367,7 @@ class Server {
     const playerInfo = player.get('playerInfo');
     let playerPoints = playerInfo.get('points');
     playerPoints += points;
+    playerInfo.set('points', playerPoints);
     // Changing player score in ranking dictionary
     const playerArray = this.findPlayerInRanking(roomCode, playerNickname);
     if (playerArray) {
@@ -1445,16 +1433,32 @@ class Server {
   }
 
   /**
+   * Adds player ranks extracted from txt file to array.
+   * @param {Array} playerRanks Array where data will be stored.
+   * @param {String} data Extracted txt content.
+   */
+  addTop3ToArray(playerRanks, data) {
+    const top3Array = data.split(/\r?\n/);
+    for (let arrayIndex = 0; arrayIndex < 3; arrayIndex += 1) {
+      const playerInfo = top3Array[arrayIndex].split(',');
+      playerRanks.push({ nickname: playerInfo[0], points: playerInfo[1] });
+    }
+    console.log('playerRanks: ' + playerRanks);
+  }
+
+  /**
    * Merges two lists into a combined one.
    * @param {*} playerRanks Stored list with room ranking.
    * @param {*} fileContent Contents of txt file with top 3 ranking.
    * @returns Merged list with sorted scores.
    */
   mergeLists(playerRanks, fileContent) {
-    let combinedList = JSON.stringify(playerRanks);
-    combinedList = JSON.parse(combinedList);
-    this.addTop3ToArray(playerRanks, fileContent);
-    combinedList.sort((a, b) => b.points - a.points);
+    const combinedList = JSON.parse(JSON.stringify(playerRanks));
+    console.log('playerRanks: ' + playerRanks);
+    this.addTop3ToArray(combinedList, fileContent);
+    if (combinedList.length >= 2) {
+      combinedList.sort((a, b) => b.points - a.points);
+    }
     return combinedList;
   }
 
@@ -1466,9 +1470,11 @@ class Server {
   createStringFromList(combinedList) {
     let string = '';
     for (let arrayIndex = 0; arrayIndex < 3; arrayIndex += 1) {
-      string += `${combinedList[arrayIndex].nickname},${combinedList[arrayIndex].points}\n`;
+      const player = combinedList[arrayIndex];
+      if (player) {
+        string += `${player.nickname},${player.points}\n`;
+      }
     }
-    console.log(string);
     return string;
   }
 
@@ -1484,6 +1490,7 @@ class Server {
         // Adding players of top 3 file to combined list.
         const combinedList = this.mergeLists(playerRanks, data);
         const listString = this.createStringFromList(combinedList);
+        console.log(listString);
         fs.writeFile(this.filePath, listString, (writeError) => {
           if (writeError) {
             console.error('Error reemplazando contenidos de archivo: ', writeError);
@@ -1512,7 +1519,6 @@ class Server {
       };
 
       if (roomInfo.get('hasStarted') === true) {
-        console.log('STARTED');
         this.saveToTop3(code);
         roomInfo.set('hasStarted', false);
       }

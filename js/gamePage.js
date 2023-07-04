@@ -249,11 +249,7 @@ class GamePage {
    * @param {WebSocket} socket Socket that connects to server.
    */
   stopGame(socket) {
-    if (this.secondInterval && storageInitialized() === true) {
-      clearInterval(this.secondInterval);
-      this.time = 0;
-      this.updateTime();
-      this.disableBoard();
+    if (storageInitialized() === true) {
       const message = {
         type: 'finishGame',
         nickname: playerNickname,
@@ -431,13 +427,20 @@ class GamePage {
     // Player table with ranking in popup
     const popUpPlayerTable = document.getElementById('popup-ranking');
     if (popUpFinished && popUpPlayerTable) {
-      addToTable(message.players, popUpPlayerTable, playerNickname);
-      this.showCorrectTitle(message);
-      popUpFinished.style.display = 'flex';
-      const timeForRedirect = 10 * 1000;
-      setTimeout(() => {
-        continueSession();
-      }, timeForRedirect);
+      if (this.secondInterval) {
+        clearInterval(this.secondInterval);
+        this.time = 0;
+        this.updateTime();
+        this.disableBoard();
+
+        addToTable(message.players, popUpPlayerTable, playerNickname);
+        this.showCorrectTitle(message);
+        popUpFinished.style.display = 'flex';
+        const timeForRedirect = 10 * 1000;
+        setTimeout(() => {
+          continueSession();
+        }, timeForRedirect);
+      }
     }
   }
 
@@ -522,14 +525,8 @@ function addEventListeners() {
   // Adding event for button that allows player to close pop up.
   addingEventById('cancel-button', 'click', closePopUp, null);
 
-  // Adding event for button that allows player to continue session.
-  addingEventById('continue-button', 'click', continueSession, null);
-
   // Adding event for button that allows player to see the exit popup.
   addingEventById('exit-button', 'click', showExitPopup, null);
-
-  // Adding event for button that allows player to exit session.
-  addingEventById('home-button', 'click', page.returnToMain, socket);
 }
 
 /**
