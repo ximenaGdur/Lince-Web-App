@@ -1046,12 +1046,11 @@ class Server {
    * @param {*} roomCode
    * @returns
    */
-  checkForCard(card, roomCode) {
-    // TODO: complete
+  checkForCard(newCard, boardCardsMapKeyDescription) {
     let cardExists = false;
-
-    cardExists = true;
-
+    if (boardCardsMapKeyDescription.has(newCard.get('description')) === true) {
+      cardExists = true;
+    }
     return cardExists;
   }
 
@@ -1066,13 +1065,21 @@ class Server {
       const cardsBoard = roomConfig.get('cardsPerRound');
 
       const boardCardsMap = new Map();
+      const boardCardsMapKeyDescription = new Map();
       for (let cardIndex = 0; cardIndex < cardsBoard; cardIndex += 1) {
-        const newCard = this.selectNewCard();
-        if (this.checkForCard(newCard, boardCardsMap) === true) {
-          boardCardsMap.set(cardIndex, newCard);
+        let newCard = this.selectNewCard();
+        while (this.checkForCard(newCard, boardCardsMapKeyDescription) === true) {
+          newCard = this.selectNewCard();
         }
+        boardCardsMap.set(cardIndex, newCard);
+        boardCardsMapKeyDescription.set(newCard.get('description'), newCard);
+        // if (this.checkForCard(newCard, boardCardsMap, boardCardsMapKeyDescription) === true) {
+        //   boardCardsMap.set(cardIndex, newCard);
+        //   boardCardsMapKeyDescription.set(newCard.get('description'), newCard);
+        // }
       }
       roomInfo.set('board', boardCardsMap);
+      roomInfo.set('boardKeyDescription', boardCardsMapKeyDescription);
     }
   }
 
@@ -1215,9 +1222,9 @@ class Server {
       const randomNumber = this.getRandomNumber(0, boardKeys.length - 1);
       const newCard = boardCards.get(randomNumber);
       if (newCard) {
-        if (this.checkForCard(newCard, playerCardsMap)) {
+        // if (this.checkForCard(newCard, playerCardsMap)) {
           playerCardsMap.set(newCard.get('description'), newCard);
-        }
+        // }
       }
     }
     playerInfo.set('cards', playerCardsMap);
