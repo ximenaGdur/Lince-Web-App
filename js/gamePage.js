@@ -75,14 +75,15 @@ class GamePage {
   createCardElement(imageText, route, isPlayerCard) {
     let contentElement = null;
     // If the card belongs to player hand
-    if (isPlayerCard === true) {
+    if (this.configMap.adaptation1a && isPlayerCard === true) {
       contentElement = document.createElement('p');
       contentElement.classList.add('word');
-      let imgText = imageText;
+      contentElement.textContent = imageText;
       // If player has selected words with missing letters
-      if (this.configMap.adaptation1b) {
-        imgText = imageText.replace(/[aeiou]/g, '_');
-      }
+    } else if (this.configMap.adaptation1b && isPlayerCard === true) {
+      contentElement = document.createElement('p');
+      contentElement.classList.add('word');
+      const imgText = imageText.replace(/[aeiou]/g, '_');
       contentElement.textContent = imgText;
     // If the card belongs to the board
     } else {
