@@ -17,7 +17,6 @@ import {
 } from './common.js';
 
 import {
-  serverIp,
   serverPort,
 // eslint-disable-next-line import/extensions
 } from './configClient.js';

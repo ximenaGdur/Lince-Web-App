@@ -22,8 +22,7 @@ import {
 } from './common.js';
 
 import {
-  serverIp,
-  serverPort,
+  port,
 // eslint-disable-next-line import/extensions
 } from './configClient.js';
 
@@ -489,7 +488,7 @@ class GamePage {
  */
 function addEventListeners() {
   // Socket that connects to server
-  const socket = new WebSocket(`${location.hostname}`, serverPort);
+  const socket = new WebSocket(`${location.hostname}`, port);
   // Creating instance of Game Page class.
   const page = new GamePage();
   if (socket && page && storageInitialized() === true) {
