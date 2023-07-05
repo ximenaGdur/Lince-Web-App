@@ -8,7 +8,7 @@ const WebSocket = require('ws');
 const fs = require('fs');
 
 // eslint-disable-next-line import/extensions
-const { serverIp, serverPort } = require('./configServer.js');
+const { serverPort } = require('./configServer.js');
 
 /** ****************** Creating constants for script ******************* */
 class Server {
@@ -1719,7 +1719,7 @@ class Server {
 }
 
 // Creating new server instance listening in given port.
-const server = new WebSocket.Server({ host: serverIp, port: serverPort });
+const server = new WebSocket.Server({ port: serverPort });
 // Creating instance of Game Page class.
 const serverInstance = new Server();
 

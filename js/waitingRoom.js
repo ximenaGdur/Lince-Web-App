@@ -689,7 +689,7 @@ function addingInfoEvents() {
  */
 function addEventListeners() {
   // Socket that connects to server
-  const socket = new WebSocket(`ws://${serverIp}:${serverPort}`);
+  const socket = new WebSocket(`${location.hostname}`, serverPort);
   // Creating instance of Game Page class.
   const page = new WaitingRoomPage();
 
