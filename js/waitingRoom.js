@@ -30,12 +30,6 @@ const playerNickname = sessionStorage.getItem('playerNickname');
 // Room Code
 const roomCode = sessionStorage.getItem('roomCode');
 
-// Player's favorite configuration
-const roomConfig = localStorage.getItem('roomConfig');
-
-// Maximum time information text is on screen
-const timeInformationText = 10 * 1000;
-
 class WaitingRoomPage {
   /**
    * Initializing all class atributes.

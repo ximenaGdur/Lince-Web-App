@@ -112,16 +112,16 @@ class Server {
       { description: 'Brocoli', route: 'broccoli.png' },
       { description: 'Carne', route: 'meat.png' },
       { description: 'Hongo', route: 'mushroom.png' },
-      { description: 'Helado', route: 'iceCream.png' },
+      { description: 'Helado', route: 'icecream.png' },
       { description: 'Espaguetti', route: 'spaguetti.png' },
       { description: 'Hamburguesa', route: 'burger.png' },
-      { description: 'Huevo', route: 'friedEgg.png' },
+      { description: 'Huevo', route: 'friedegg.png' },
       { description: 'Manzana', route: 'apple.png' },
-      { description: 'Patatas', route: 'frenchFries.png' },
+      { description: 'Patatas', route: 'frenchfries.png' },
       { description: 'Pepino', route: 'cucumber.png' },
       { description: 'Pera', route: 'pear.png' },
-      { description: 'Pescado', route: 'friedFish.png' },
-      { description: 'Pollo frito', route: 'chickenLeg.png' },
+      { description: 'Pescado', route: 'friedfish.png' },
+      { description: 'Pollo frito', route: 'chickenleg.png' },
       { description: 'Pizza', route: 'pizza.png' },
       { description: 'Platanos', route: 'banana.png' },
       { description: 'Queso', route: 'cheese.png' },
@@ -131,7 +131,7 @@ class Server {
       { description: 'Atún', route: 'tuna.png' },
       { description: 'Tomate', route: 'tomato.png' },
       { description: 'Uvas', route: 'grapes.png' },
-      { description: 'Blusón', route: 'dressShirt.png' },
+      { description: 'Blusón', route: 'dressshirt.png' },
       { description: 'Tacones', route: 'heels.png' },
       { description: 'Overoles', route: 'overall.png' },
       { description: 'Sandalias', route: 'sandals.png' },
@@ -150,18 +150,18 @@ class Server {
       { description: 'Camisa', route: 'tshirt.png' },
       { description: 'Bufanda', route: 'scarf.png' },
       { description: 'Guantes', route: 'gloves.png' },
-      { description: 'Lazo', route: 'hairBow.png' },
-      { description: 'Prensa', route: 'hairClip.png' },
+      { description: 'Lazo', route: 'hairbow.png' },
+      { description: 'Prensa', route: 'hairclip.png' },
       { description: 'Leggings', route: 'legging.png' },
       { description: 'Reloj', route: 'watch.png' },
       { description: 'Dona', route: 'donut.png' },
       { description: 'Ensalada', route: 'salad.png' },
       { description: 'Kebab', route: 'kebab.png' },
-      { description: '', route: 'friedChicken.png' },
+      { description: '', route: 'friedchicken.png' },
       { description: 'Taco', route: 'taco.png' },
       { description: 'Langosta', route: 'lobster.png' },
       { description: 'Fresa', route: 'strawberry.png' },
-      { description: 'Pitahaya', route: 'dragonFruit.png' },
+      { description: 'Pitahaya', route: 'dragonfruit.png' },
       { description: 'Naranja', route: 'orange.png' },
       { description: 'Piña', route: 'pineapple.png' },
       { description: 'Aguacate', route: 'avocado.png' },
@@ -219,9 +219,9 @@ class Server {
       { description: 'Hp', route: 'hp.png' },
       { description: 'Xiaomi', route: 'xiaomi.png' },
       { description: 'Android', route: 'android.png' },
-      { description: 'Grand Theft Auto', route: 'grandTheftAuto.png' },
+      { description: 'Grand Theft Auto', route: 'grandtheftauto.png' },
       { description: 'Windows', route: 'windows.png' },
-      { description: 'Adobe Illustrator', route: 'adobeIllustrator.png' },
+      { description: 'Adobe Illustrator', route: 'adobeillustrator.png' },
       { description: 'Dropbox', route: 'dropbox.png' },
       { description: 'Discord', route: 'discord.png' },
       { description: 'Reddit', route: 'reddit.png' },
@@ -231,16 +231,16 @@ class Server {
       { description: 'Dell', route: 'dell.png' },
       { description: 'Linkedin', route: 'linkedin.png' },
       { description: 'Motorola', route: 'motorola.png' },
-      { description: 'GoogleDrive', route: 'googleDrive.png' },
+      { description: 'GoogleDrive', route: 'googledrive.png' },
       { description: 'Samsung', route: 'samsung.png' },
       { description: 'Huawei', route: 'huawei.png' },
-      { description: 'EASports', route: 'EASports.png' },
-      { description: 'GoogleMaps', route: 'googleMaps.png' },
+      { description: 'EASports', route: 'easports.png' },
+      { description: 'GoogleMaps', route: 'googlemaps.png' },
       { description: 'Sega', route: 'sega.png' },
       { description: 'AMD', route: 'amd.png' },
       { description: 'Twitch', route: 'twitch.png' },
       { description: 'Skype', route: 'skype.png' },
-      { description: 'Google Translate', route: 'googleTranslate.png' },
+      { description: 'Google Translate', route: 'googletranslate.png' },
       { description: 'Wikipedia', route: 'wikipedia.png' },
       { description: 'Paypal', route: 'paypal.png' },
       { description: 'SONY', route: 'sony.png' },
@@ -300,7 +300,7 @@ class Server {
       { description: 'Cepillo', route: 'toothbrush.png' },
       { description: 'Shampoo', route: 'shampoo.png' },
       { description: 'Jabón', route: 'soap.png' },
-      { description: 'Curita', route: 'bandAid.png' },
+      { description: 'Curita', route: 'bandaid.png' },
       { description: 'Toallitas', route: 'wipes.png' },
       { description: 'Tijeras', route: 'scissors.png' },
       { description: 'Pinturas', route: 'paints.png' },
@@ -310,8 +310,8 @@ class Server {
       { description: 'Pinzas', route: 'tweezers.png' },
       { description: 'Polvos', route: 'powder.png' },
       { description: 'Esponja', route: 'sponge.png' },
-      { description: 'Mascara', route: 'sleepingMask.png' },
-      { description: 'Cortauñas', route: 'nailClipper.png' },
+      { description: 'Mascara', route: 'sleepingmask.png' },
+      { description: 'Cortauñas', route: 'nailclipper.png' },
       { description: 'Desodorante', route: 'deodorant.png' },
       { description: 'Razuradora', route: 'razor.png' },
       { description: 'Peine', route: 'comb.png' },
@@ -532,11 +532,14 @@ class Server {
       if (this.createRoomMap(roomCode) === true) {
         const playerMap = this.createPlayerMap(roomCode, socket, true);
         if (playerMap) {
+          // Initializing maps
           const roomList = [];
           this.playerRankingPorRoom.set(roomCode, roomList);
-          this.addPlayerToMaps(roomCode, playerNickname, playerMap);
-          // Sending room code
-          this.sendRoomCode(socket, roomCode);
+          if (this.playerRankingPorRoom.get(roomCode)) {
+            this.addPlayerToMaps(roomCode, playerNickname, playerMap);
+            // Sending room code
+            this.sendRoomCode(socket, roomCode);
+          }
         }
       }
     }
@@ -751,23 +754,33 @@ class Server {
     if (playerNickname && roomCode) {
       if (this.playerExists(roomCode, playerNickname) === true) {
         const roomInfo = this.availableRooms.get(roomCode);
-        const roomConfig = roomInfo.get('config');
-        const playersMap = roomInfo.get('players');
-        const playerMap = playersMap.get(playerNickname);
-        const playerInfo = playerMap.get('playerInfo');
+        if (roomInfo) {
+          const roomConfig = roomInfo.get('config');
+          const playersMap = roomInfo.get('players');
+          if (roomConfig && playersMap) {
+            const playerMap = playersMap.get(playerNickname);
+            if (playerMap) {
+              const playerInfo = playerMap.get('playerInfo');
+              if (playerInfo) {
+                // Setting socket in dictionaries
+                playerMap.set('playerSocket', socket);
 
-        playerMap.set('playerSocket', socket);
-        this.sendUpdatedPlayers(playerNickname, roomCode, 'handlePlayerList');
+                // Sending other players request to update player list
+                this.sendUpdatedPlayers(playerNickname, roomCode);
 
-        // Sending player personalized waiting room.
-        const playerRanks = this.orderPlayersByPoints(roomCode);
-        const newMessage = {
-          type: 'handleWaitingRoom',
-          isHost: playerInfo.get('host'),
-          players: this.createPlayerStringMap(playersMap, playerRanks),
-          config: this.createConfigStringMap(roomConfig),
-        };
-        socket.send(JSON.stringify(newMessage));
+                // Sending player personalized waiting room.
+                const playerRanks = this.orderPlayersByPoints(roomCode);
+                const newMessage = {
+                  type: 'handleWaitingRoom',
+                  isHost: playerInfo.get('host'),
+                  players: this.createPlayerStringMap(playersMap, playerRanks),
+                  config: this.createConfigStringMap(roomConfig),
+                };
+                socket.send(JSON.stringify(newMessage));
+              }
+            }
+          }
+        }
       }
     }
   }
@@ -1169,14 +1182,11 @@ class Server {
   }
 
   /**
-   * Removes player in list for other players in room.
-   * @param {WebSocket} socket Is not used, but added for consistency.
-   * @param {Object} message Message sent by client.
+   * Removes player with given nickname from room.
+   * @param {*} roomCode Player's room.
+   * @param {*} playerNickname Player's nickname.
    */
-  removePlayer(socket, message) {
-    const roomCode = message.sessionCode;
-    const playerNickname = message.nickname;
-
+  deletePlayerFromRoom(roomCode, playerNickname) {
     if (roomCode && playerNickname && this.availableRooms.has(roomCode)) {
       const roomInfo = this.availableRooms.get(roomCode);
       const playersMap = roomInfo.get('players');
@@ -1190,6 +1200,18 @@ class Server {
         this.sendUpdatedPlayers(playerNickname, roomCode);
       }
     }
+  }
+
+  /**
+   * Removes player in list for other players in room.
+   * @param {WebSocket} socket Is not used, but added for consistency.
+   * @param {Object} message Message sent by client.
+   */
+  removePlayer(socket, message) {
+    const roomCode = message.sessionCode;
+    const playerNickname = message.nickname;
+
+    this.deletePlayerFromRoom(roomCode, playerNickname);
   }
 
   /**
@@ -1276,38 +1298,10 @@ class Server {
    * Identifies which player has the lowest score.
    * @param {Map} playersMap Map of players to check.
    */
-  identifyPlayerPosition(playersMap, isFirst) {
-    // Empty map with lowest score info.
-    let pickedPlayer = null;
-    // Player nicknames.
-    const playerNicknames = playersMap.keys();
-    // First player nickname.
-    let playerNickname = playerNicknames[0];
-    // First player map.
-    let playerScore = this.getPlayerScore(playerNickname, playersMap);
-    // Setting first player's score as lowest.
-    pickedPlayer = new Map([
-      ['nickname', playerNickname],
-      ['score', playerScore],
-    ]);
-
-    if (playerScore && pickedPlayer) {
-      // Finding lowest score and asigning it to score map.
-      for (let playerIndex = 1; playerIndex < playerNicknames.length; playerIndex += 1) {
-        playerNickname = playerNicknames[playerIndex];
-        playerScore = this.getPlayerScore(playerNickname, playersMap);
-        // If current player has a lower score than the lowest score recorded, store it.
-        if (playerScore) {
-          if ((isFirst === false && pickedPlayer.get('score') > playerScore)
-            || (isFirst === true && pickedPlayer.get('score') < playerScore)) {
-            pickedPlayer.set('nickname', playerNickname);
-            pickedPlayer.set('score', playerScore);
-          }
-        }
-      }
-    }
-    // Returns a map with information about player with lowest score.
-    return playerScore;
+  identifyLastPlace(roomCode) {
+    const playerRanks = this.orderPlayersByPoints(roomCode);
+    const lastPlace = playerRanks[playerRanks.length - 1];
+    return lastPlace;
   }
 
   /**
@@ -1316,16 +1310,16 @@ class Server {
    */
   applyExtraCards(roomCode) {
     const roomInfo = this.availableRooms.get(roomCode);
-    if (roomInfo) {
+    const lastPlace = this.identifyLastPlace(roomCode);
+    if (roomInfo && lastPlace) {
       const boardCards = roomInfo.get('board');
       const playersMap = roomInfo.get('players');
-      const playerNickname = this.identifyPlayerPosition(playersMap, false);
 
       playersMap.forEach((playerData, otherPlayerNickname) => {
         const playerInfo = playerData.get('playerInfo');
         if (playerInfo) {
           const playerCards = playerInfo.get('cards');
-          if (playerCards && otherPlayerNickname !== playerNickname) {
+          if (playerCards && otherPlayerNickname !== lastPlace.nickname) {
             // Creating 5 new cards
             this.selectPlayerCards(playerInfo, 5, boardCards);
             // Sends to player.
@@ -1348,14 +1342,13 @@ class Server {
   applyBlur(roomCode) {
     const roomInfo = this.availableRooms.get(roomCode);
     const playersMap = roomInfo.get('players');
-    const loserPlayer = this.identifyPlayerPosition(playersMap, false);
-    if (loserPlayer) {
-      const loserNickname = loserPlayer.get('nickname');
+    const lastPlace = this.identifyLastPlace(roomCode);
+    if (playersMap && lastPlace) {
       // Sends to other players in room.
       const newMessage = {
         type: 'handleBlur',
       };
-      this.broadcastToOthers(newMessage, roomCode, loserNickname);
+      this.broadcastToOthers(newMessage, roomCode, lastPlace.nickname);
     }
   }
 
@@ -1496,25 +1489,39 @@ class Server {
     const playerNickname = message.nickname;
     const roomCode = message.sessionCode;
 
-    if (this.playerExists(roomCode, playerNickname) === true) {
-      const roomInfo = this.availableRooms.get(roomCode);
-      const playersMap = roomInfo.get('players');
-      const configMap = roomInfo.get('config');
-      const playerMap = playersMap.get(playerNickname);
+    if (playerNickname && roomCode) {
+      if (this.playerExists(roomCode, playerNickname) === true) {
+        const roomInfo = this.availableRooms.get(roomCode);
+        if (roomInfo) {
+          const roomConfig = roomInfo.get('config');
+          const playersMap = roomInfo.get('players');
+          const roomBoard = roomInfo.get('board');
+          if (roomConfig && playersMap && roomBoard) {
+            const playerMap = playersMap.get(playerNickname);
+            if (playerMap) {
+              const playerInfo = playerMap.get('playerInfo');
+              if (playerInfo) {
+                // Setting socket in dictionaries
+                playerMap.set('playerSocket', socket);
 
-      playerMap.set('playerSocket', socket);
-      this.sendUpdatedPlayers(playerNickname, roomCode);
+                // Sending other players request to update player list
+                this.sendUpdatedPlayers(playerNickname, roomCode);
 
-      const playerRanks = this.orderPlayersByPoints(roomCode);
-      // Sending player personalized waiting room.
-      const newMessage = {
-        type: 'handleGameRoom',
-        config: this.createConfigStringMap(configMap),
-        players: this.createPlayerStringMap(playersMap, playerRanks),
-        boardCards: this.createBoardStringMap(roomInfo.get('board')),
-        playerCards: this.createPlayerCardsStringMap(playerMap),
-      };
-      socket.send(JSON.stringify(newMessage));
+                // Sending player personalized waiting room.
+                const playerRanks = this.orderPlayersByPoints(roomCode);
+                const newMessage = {
+                  type: 'handleGameRoom',
+                  config: this.createConfigStringMap(roomConfig),
+                  players: this.createPlayerStringMap(playersMap, playerRanks),
+                  boardCards: this.createBoardStringMap(roomBoard),
+                  playerCards: this.createPlayerCardsStringMap(playerMap),
+                };
+                socket.send(JSON.stringify(newMessage));
+              }
+            }
+          }
+        }
+      }
     }
   }
 
@@ -1702,20 +1709,6 @@ class Server {
       socket.send(JSON.stringify(newMessage));
     }
   }
-
-  /**
-   * Closes connection with client.
-   */
-  closeConnection(socket) {
-    /*
-    if (availableRooms.has(roomCode)) {
-      const roomMap = availableRooms.get(roomCode);
-      const roomPlayers = roomMap.get('players');
-      if (roomPlayers.has(playerNickname)) {
-        removePlayer(message);
-      }
-    } */
-  }
 }
 
 // Creating new server instance listening in given port.
@@ -1753,13 +1746,5 @@ server.on('connection', (clientSocket) => {
     console.log(`Mensaje recibido: ${message}`);
 
     identifyMessage(clientSocket, parsedMessage);
-  });
-
-  /**
-   * When socket with client is closed
-   */
-  clientSocket.on('close', () => {
-    serverInstance.closeConnection(clientSocket);
-    // TODO: arreglar esto, actualmente no se como detectar de que pagina es el socket
   });
 });
