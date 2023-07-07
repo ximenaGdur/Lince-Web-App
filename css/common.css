@@ -363,7 +363,7 @@ button:hover {
 
 /** Style for every avatar image. **/
 .profile-image {
-    width: 32%;
+    width: 50%;
 }
 
 /******************* MEDIA QUERIES *******************/

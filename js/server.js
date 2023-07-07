@@ -147,7 +147,7 @@ class Server {
       { description: 'Vestido', route: 'dress.png' },
       { description: 'Enterizo', route: 'onesie.png' },
       { description: 'Enagua', route: 'skirt.png' },
-      { description: 'Camisa', route: 'tshirt.png' },
+      { description: 'Camisa', route: 'tShirt.png' },
       { description: 'Bufanda', route: 'scarf.png' },
       { description: 'Guantes', route: 'gloves.png' },
       { description: 'Lazo', route: 'hairBow.png' },
@@ -1704,7 +1704,7 @@ class Server {
 
       if (roomInfo.get('hasStarted') === true) {
         this.saveToTop3(code);
-        // roomInfo.set('hasStarted', false);
+        roomInfo.set('hasStarted', false);
       }
       this.broadcastToOthers(newMessage, code, '');
       // socket.send(JSON.stringify(newMessage));
