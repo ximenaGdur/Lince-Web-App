@@ -21,11 +21,8 @@ import {
 // eslint-disable-next-line import/extensions
 } from './common.js';
 
-import {
-  serverIp,
-  serverPort,
 // eslint-disable-next-line import/extensions
-} from './configClient.js';
+import serverPort from './configClient.js';
 
 /** ******************* Creating game page class ******************* */
 
@@ -34,6 +31,8 @@ const playerNickname = sessionStorage.getItem('playerNickname');
 
 // Room Code
 const roomCode = sessionStorage.getItem('roomCode');
+
+let isGameActive = false;
 
 class GamePage {
   /**
@@ -145,8 +144,10 @@ class GamePage {
 
           // Add an event listener to each of the cards on the game board
           cardElement.addEventListener('click', () => {
-            cardElement.style.background = '#E6CCD7';
-            this.match(socket, cardElement);
+            if (isGameActive && this.firstCard) {
+              cardElement.style.background = '#E6CCD7';
+              this.match(socket, cardElement);
+            }
           });
         }
       });
@@ -196,7 +197,9 @@ class GamePage {
 
           // Add an event listener to each of the cards player
           cardElement.addEventListener('click', () => {
-            this.storeFirstMatch(cardElement);
+            if (isGameActive) {
+              this.storeFirstMatch(cardElement);
+            }
           });
         }
       });
@@ -426,6 +429,7 @@ class GamePage {
     const popUpPlayerTable = document.getElementById('popup-ranking');
     if (popUpFinished && popUpPlayerTable) {
       if (this.secondInterval) {
+        isGameActive = false;
         clearInterval(this.secondInterval);
         this.time = 0;
         this.updateTime();
@@ -489,7 +493,7 @@ class GamePage {
  */
 function addEventListeners() {
   // Socket that connects to server
-  const socket = new WebSocket(`ws://${serverIp}:${serverPort}`);
+  const socket = new WebSocket(`ws://${window.location.hostname}:${serverPort}`);
   // Creating instance of Game Page class.
   const page = new GamePage();
   if (socket && page && storageInitialized() === true) {
@@ -569,6 +573,7 @@ function loadPage() {
 function main() {
   loadPage();
   addEventListeners();
+  isGameActive = true;
 }
 
 /** ******************* Listeners for game page ******************* */
