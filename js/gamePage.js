@@ -334,8 +334,6 @@ class GamePage {
       this.firstCard.style.background = '';
       secondCard.style.background = '';
       this.firstCard = null;
-    } else {
-      console.log('Escoga ficha de su mano primero.');
     }
   }
 
@@ -515,7 +513,6 @@ function addEventListeners() {
     socket.addEventListener('message', (event) => {
       const receivedMessage = JSON.parse(event.data);
       if (receivedMessage) {
-        console.log(`Recibi del servidor: ${JSON.stringify(receivedMessage)}`);
         identifyMessage(page, socket, receivedMessage);
       }
     });

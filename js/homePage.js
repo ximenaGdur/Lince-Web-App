@@ -242,7 +242,6 @@ function addEventListeners() {
     */
     socket.addEventListener('message', (event) => {
       const receivedMessage = JSON.parse(event.data);
-      console.log(`Recibi del servidor: ${JSON.stringify(receivedMessage)}`);
       identifyMessage(page, socket, receivedMessage);
     });
 
