@@ -32,6 +32,8 @@ const playerNickname = sessionStorage.getItem('playerNickname');
 // Room Code
 const roomCode = sessionStorage.getItem('roomCode');
 
+let isGameActive = false;
+
 class GamePage {
   /**
    * Initializing all class atributes.
@@ -142,8 +144,10 @@ class GamePage {
 
           // Add an event listener to each of the cards on the game board
           cardElement.addEventListener('click', () => {
-            cardElement.style.background = '#E6CCD7';
-            this.match(socket, cardElement);
+            if (isGameActive) {
+              cardElement.style.background = '#E6CCD7';
+              this.match(socket, cardElement);
+            }
           });
         }
       });
@@ -193,7 +197,9 @@ class GamePage {
 
           // Add an event listener to each of the cards player
           cardElement.addEventListener('click', () => {
-            this.storeFirstMatch(cardElement);
+            if (isGameActive) {
+              this.storeFirstMatch(cardElement);
+            }
           });
         }
       });
@@ -423,6 +429,7 @@ class GamePage {
     const popUpPlayerTable = document.getElementById('popup-ranking');
     if (popUpFinished && popUpPlayerTable) {
       if (this.secondInterval) {
+        isGameActive = false;
         clearInterval(this.secondInterval);
         this.time = 0;
         this.updateTime();
@@ -566,6 +573,7 @@ function loadPage() {
 function main() {
   loadPage();
   addEventListeners();
+  isGameActive = true;
 }
 
 /** ******************* Listeners for game page ******************* */
