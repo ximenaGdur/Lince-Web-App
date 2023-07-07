@@ -689,6 +689,7 @@ function addEventListeners() {
      * When a connection is made with server.
      */
     socket.addEventListener('open', () => {
+      console.log('Conexión con Servidor');
       const message = {
         type: 'getWaitingRoom',
         nickname: playerNickname,
@@ -703,6 +704,7 @@ function addEventListeners() {
     socket.addEventListener('message', (event) => {
       const receivedMessage = JSON.parse(event.data);
       if (receivedMessage) {
+        console.log(`Recibi del servidor: ${JSON.stringify(receivedMessage)}`);
         identifyMessage(page, socket, receivedMessage);
       }
     });
