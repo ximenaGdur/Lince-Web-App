@@ -144,7 +144,7 @@ class GamePage {
 
           // Add an event listener to each of the cards on the game board
           cardElement.addEventListener('click', () => {
-            if (isGameActive) {
+            if (isGameActive && this.firstCard) {
               cardElement.style.background = '#E6CCD7';
               this.match(socket, cardElement);
             }
