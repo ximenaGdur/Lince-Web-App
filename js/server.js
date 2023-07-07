@@ -344,6 +344,16 @@ class Server {
       { description: 'Teléfono', route: 'phone.png' },
       { description: 'Monitor', route: 'monitor.png' },
       { description: 'Cámara', route: 'webcam.png' },
+      { description: 'Cutter', route: 'cutter.png' },
+      { description: 'Crayones', route: 'crayons.png' },
+      { description: 'Compas', route: 'compass.png' },
+      { description: 'Tajador', route: 'sharpener.png' },
+      { description: 'Clip', route: 'clip.png' },
+      { description: 'Regla', route: 'ruler.png' },
+      { description: 'Lapiz', route: 'pencil.png' },
+      { description: 'Pin', route: 'pin.png' },
+      { description: 'Cinta', route: 'tape' },
+      { description: 'Tiza', route: 'chalk.png' },
     ];
 
     // Binding methods to the class instance

@@ -39,7 +39,7 @@ class WaitingRoomPage {
     // Minimum amount of cards per round permitted
     this.cardsRoundMin = 100;
     // Maximum amount of cards per round permitted
-    this.cardsRoundMax = 290;
+    this.cardsRoundMax = 300;
     // Boolean for information Icon event listener
     this.infoIconClicked = true;
     // Minimum amount of time permitted
