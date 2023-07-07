@@ -21,7 +21,7 @@ class Server {
     // Maximum number of clients allowed in webpage
     this.maximumClientAmount = 20;
     // Route where top 3 txt is located
-    this.filePath = 'top3.txt';
+    this.filePath = 'topthree.txt';
 
     // Dictionary that stores all rooms and their information
     this.availableRooms = new Map();
