@@ -5,5 +5,5 @@
  */
 // eslint-disable-next-line import/prefer-default-export
 export function continueSession() {
-  window.location = './waitingRoom.xhtml';
+  window.location.href = './waitingRoom.xhtml';
 }

@@ -484,7 +484,7 @@ class GamePage {
       }
     }
     // Aqui se manda el msj de eliminar el jugador de la lista.
-    window.location = './index.html';
+    window.location.href = './index.html';
   }
 }
 
