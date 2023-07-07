@@ -33,11 +33,11 @@ class WaitingRoomPage {
    */
   constructor() {
     // Minimum amount of cards per player permitted
-    this.cardsPlayerMin = 5;
+    this.cardsPlayerMin = 1;
     // Maximum amount of cards per player permitted
     this.cardsPlayerMax = 20;
     // Minimum amount of cards per round permitted
-    this.cardsRoundMin = 5;
+    this.cardsRoundMin = 100;
     // Maximum amount of cards per round permitted
     this.cardsRoundMax = 400;
     // Boolean for information Icon event listener
