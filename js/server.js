@@ -1697,9 +1697,10 @@ class Server {
 
       if (roomInfo.get('hasStarted') === true) {
         this.saveToTop3(code);
-        roomInfo.set('hasStarted', false);
+        // roomInfo.set('hasStarted', false);
       }
-      socket.send(JSON.stringify(newMessage));
+      this.broadcastToOthers(newMessage, code, '');
+      // socket.send(JSON.stringify(newMessage));
     }
   }
 
