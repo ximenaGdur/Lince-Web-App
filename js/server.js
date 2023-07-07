@@ -352,7 +352,7 @@ class Server {
       { description: 'Regla', route: 'ruler.png' },
       { description: 'Lapiz', route: 'pencil.png' },
       { description: 'Pin', route: 'pin.png' },
-      { description: 'Cinta', route: 'tape' },
+      { description: 'Cinta', route: 'tape.png' },
       { description: 'Tiza', route: 'chalk.png' },
     ];
 
@@ -1272,15 +1272,24 @@ class Server {
       const boardCardsMap = new Map();
       const boardCardsMapKeyDescription = new Map();
       for (let cardIndex = 0; cardIndex < amountCardsBoard; cardIndex += 1) {
-        let newCard = this.selectNewCard();
-        while (this.checkForCard(newCard, boardCardsMapKeyDescription) === true) {
-          newCard = this.selectNewCard();
+        if (roomConfig.get('adaptation2b') === true) {
+          const newCard = this.selectNewCard();
+          boardCardsMap.set(cardIndex, newCard);
+        } else {
+          let newCard = this.selectNewCard();
+          while (this.checkForCard(newCard, boardCardsMapKeyDescription) === true) {
+            newCard = this.selectNewCard();
+          }
+          boardCardsMap.set(cardIndex, newCard);
+          boardCardsMapKeyDescription.set(newCard.get('description'), newCard);
         }
-        boardCardsMap.set(cardIndex, newCard);
-        boardCardsMapKeyDescription.set(newCard.get('description'), newCard);
       }
-      roomInfo.set('board', boardCardsMap);
-      roomInfo.set('boardKeyDescription', boardCardsMapKeyDescription);
+      if (roomConfig.get('adaptation2b') === true) {
+        roomInfo.set('board', boardCardsMap);
+      } else {
+        roomInfo.set('board', boardCardsMap);
+        roomInfo.set('boardKeyDescription', boardCardsMapKeyDescription);
+      }
     }
   }
 
