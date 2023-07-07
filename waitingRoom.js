@@ -495,7 +495,7 @@ class WaitingRoomPage {
         sessionCode: roomCode,
       };
       socket.send(JSON.stringify(message));
-      window.location.href = './game.xhtml';
+      window.location = './game.xhtml';
     }
   }
 
@@ -627,7 +627,7 @@ class WaitingRoomPage {
    * Starts game for a player.
    */
   handleStartGame() {
-    window.location.href = './game.xhtml';
+    window.location = './game.xhtml';
   }
 
   /**
@@ -644,7 +644,7 @@ class WaitingRoomPage {
       }
     }
     // Aqui se manda el msj de eliminar el jugador de la lista.
-    window.location.href = './index.html';
+    window.location = './index.html';
   }
 }
 

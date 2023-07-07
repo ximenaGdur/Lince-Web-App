@@ -106,7 +106,7 @@ class HomePage {
       socket.send(JSON.stringify(message));
 
       sessionStorage.setItem('roomCode', givenCode);
-      window.location.href = './waitingRoom.xhtml';
+      window.location = './waitingRoom.xhtml';
     }
   }
 
@@ -216,7 +216,7 @@ class HomePage {
    */
   handleRoomCode(socket, message) {
     sessionStorage.setItem('roomCode', message.sessionCode);
-    window.location.href = './waitingRoom.xhtml';
+    window.location = './waitingRoom.xhtml';
   }
 }
 
