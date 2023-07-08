@@ -1587,7 +1587,9 @@ class Server {
    */
   checkMatch(socket, message) {
     const playerCardId = message.playerCard;
+    const bColorPlayerCard = message.borderColorPlayerCard;
     const boardCardId = message.boardCard;
+    const bColorBoardCard = message.borderColorBoardCard;
     const roomCode = message.sessionCode;
     const playerNickname = message.nickname;
 
@@ -1606,7 +1608,7 @@ class Server {
               const cards = playerInfo.get('cards');
               if (cards) {
                 // Checks if match is correct and updates score
-                if (playerCardId === boardCardId) {
+                if (playerCardId === boardCardId && bColorPlayerCard === bColorBoardCard) {
                   isCorrect = true;
                   playerPoints = this.changePlayerScore(playerNickname, roomCode, 100);
                   // Deleting player's card.

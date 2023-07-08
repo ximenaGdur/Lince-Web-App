@@ -43,6 +43,7 @@ class GamePage {
     this.configMap = null;
     // Contains information of player card to match
     this.firstCard = null;
+    this.firstCardColorBorder = null;
     // Current player score
     this.score = 0;
     // Interval that changes time each second.
@@ -312,6 +313,7 @@ class GamePage {
       // Indicates to user, the card was clicked.
       card.style.background = '#E6CCD7';
       this.firstCard = card;
+      this.firstCardColorBorder = card.style.borderColor;
     }
   }
 
@@ -328,7 +330,9 @@ class GamePage {
         nickname: playerNickname,
         sessionCode: roomCode,
         playerCard: this.firstCard.getAttribute('id'),
+        borderColorPlayerCard: this.firstCardColorBorder,
         boardCard: secondCard.getAttribute('id'),
+        borderColorBoardCard: secondCard.style.borderColor,
       };
       socket.send(JSON.stringify(message));
       this.firstCard.style.background = '';
